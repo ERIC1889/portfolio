@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
 import translations, { skillsData } from './i18n'
+import profileImg from '/profile.jpeg?url'
 
 const HeroScene = lazy(() => import('./components/HeroScene'))
 
@@ -233,7 +234,7 @@ function App() {
         <div className="hero-orb hero-orb-1" />
         <div className="hero-orb hero-orb-2" />
         <div className="hero-content">
-          <motion.img src="/profile.jpeg" alt="Profile" className="hero-photo" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} />
+          <motion.img src={profileImg} alt="Profile" className="hero-photo" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} />
           <motion.p className="hero-greeting" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>{t.hero.greeting}</motion.p>
           <motion.h1 className="hero-name gradient-text" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.6 }}>{t.hero.name}</motion.h1>
           <motion.p className="hero-role" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.6 }}>{typedText}<span className="typing-cursor" /></motion.p>
