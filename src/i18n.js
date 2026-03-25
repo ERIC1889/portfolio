@@ -458,7 +458,7 @@ const translations = {
       title: 'Work Experience',
       data: [
         {
-          company: 'SujiHouse Inc.',
+          company: 'SuziHouse Inc.',
           role: 'CTO (Chief Technology Officer)',
           period: '2026.01 ~',
           summary: 'Overseeing technology strategy, development & innovation',
