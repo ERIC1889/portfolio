@@ -1,98 +1,96 @@
 import { useRef, useMemo } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Float, Sparkles, MeshDistortMaterial } from '@react-three/drei'
+import { Float, MeshTransmissionMaterial, MeshDistortMaterial, Environment } from '@react-three/drei'
+import * as THREE from 'three'
 
-function CoreObject() {
-  const groupRef = useRef()
-  const wireRef = useRef()
+function GlassKnot() {
+  const mesh = useRef()
   const { pointer } = useThree()
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
-    const g = groupRef.current
-    // Smooth auto-rotation + mouse parallax
-    g.rotation.y = t * 0.12 + pointer.x * 0.4
-    g.rotation.x = Math.sin(t * 0.08) * 0.15 + pointer.y * 0.3
-
-    if (wireRef.current) {
-      wireRef.current.rotation.y = t * 0.08
-      wireRef.current.rotation.z = t * 0.05
-    }
+    mesh.current.rotation.x = t * 0.06 + pointer.y * 0.12
+    mesh.current.rotation.y = t * 0.08 + pointer.x * 0.12
+    mesh.current.position.y = Math.sin(t * 0.4) * 0.08
   })
 
   return (
-    <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.4}>
-      <group ref={groupRef}>
-        {/* Core solid shape */}
-        <mesh>
-          <icosahedronGeometry args={[1.3, 1]} />
-          <MeshDistortMaterial
-            color="#3b82f6"
-            emissive="#1e40af"
-            emissiveIntensity={0.5}
-            roughness={0.2}
-            metalness={0.9}
-            distort={0.3}
-            speed={1.8}
-            transparent
-            opacity={0.55}
-          />
-        </mesh>
-        {/* Inner glow sphere */}
-        <mesh scale={0.6}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshBasicMaterial color="#60a5fa" transparent opacity={0.08} />
-        </mesh>
-        {/* Wireframe overlay */}
-        <mesh ref={wireRef} scale={1.5}>
-          <icosahedronGeometry args={[1, 1]} />
-          <meshBasicMaterial color="#60a5fa" wireframe transparent opacity={0.06} />
-        </mesh>
-        {/* Outer wireframe ring */}
-        <mesh scale={2.0}>
-          <icosahedronGeometry args={[1, 0]} />
-          <meshBasicMaterial color="#38bdf8" wireframe transparent opacity={0.03} />
-        </mesh>
-      </group>
-    </Float>
+    <mesh ref={mesh} scale={1.1}>
+      <torusKnotGeometry args={[1, 0.35, 200, 40, 2, 3]} />
+      <MeshTransmissionMaterial
+        backside
+        samples={6}
+        thickness={0.4}
+        chromaticAberration={0.15}
+        anisotropy={0.2}
+        distortion={0.3}
+        distortionScale={0.15}
+        temporalDistortion={0.1}
+        iridescence={1}
+        iridescenceIOR={1.5}
+        iridescenceThicknessRange={[100, 400]}
+        color="#a5b4fc"
+        roughness={0.05}
+        metalness={0.1}
+        envMapIntensity={1.5}
+      />
+    </mesh>
   )
 }
 
-function OrbitNodes() {
-  const groupRef = useRef()
-  const count = 10
+function InnerCore() {
+  const mesh = useRef()
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    mesh.current.rotation.y = -t * 0.15
+    mesh.current.rotation.z = t * 0.1
+  })
+  return (
+    <mesh ref={mesh} scale={0.5}>
+      <octahedronGeometry args={[1, 0]} />
+      <meshPhysicalMaterial
+        color="#6366f1"
+        emissive="#4338ca"
+        emissiveIntensity={0.8}
+        metalness={1}
+        roughness={0.05}
+        clearcoat={1}
+        clearcoatRoughness={0}
+        envMapIntensity={2}
+      />
+    </mesh>
+  )
+}
 
-  const nodes = useMemo(() => {
-    return Array.from({ length: count }, (_, i) => {
-      const phi = Math.acos(-1 + (2 * i) / count)
-      const theta = Math.sqrt(count * Math.PI) * phi
-      const r = 3.0
-      return {
-        pos: [
-          r * Math.cos(theta) * Math.sin(phi),
-          r * Math.sin(theta) * Math.sin(phi),
-          r * Math.cos(phi)
-        ],
-        size: 0.025 + Math.random() * 0.035
-      }
-    })
-  }, [])
+function OrbitingGems() {
+  const group = useRef()
+  const gems = useMemo(() =>
+    Array.from({ length: 8 }, (_, i) => ({
+      angle: (i / 8) * Math.PI * 2,
+      radius: 2.2 + (i % 2) * 0.4,
+      y: (i % 3 - 1) * 0.4,
+      size: 0.06 + (i % 3) * 0.03,
+      speed: 0.8 + i * 0.15,
+      color: ['#818cf8', '#6ee7b7', '#7dd3fc', '#fbbf24', '#c4b5fd', '#67e8f9', '#a78bfa', '#34d399'][i],
+    })), [])
 
   useFrame((state) => {
-    groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.03
-    groupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.02) * 0.1
+    group.current.rotation.y = state.clock.getElapsedTime() * 0.04
   })
 
   return (
-    <group ref={groupRef}>
-      {nodes.map((node, i) => (
-        <Float key={i} speed={1 + i * 0.15} floatIntensity={0.15}>
-          <mesh position={node.pos}>
-            <octahedronGeometry args={[node.size]} />
-            <meshStandardMaterial
-              color="#60a5fa"
-              emissive="#3b82f6"
-              emissiveIntensity={0.8}
+    <group ref={group}>
+      {gems.map((g, i) => (
+        <Float key={i} speed={g.speed} floatIntensity={0.25} rotationIntensity={0.4}>
+          <mesh position={[Math.cos(g.angle) * g.radius, g.y, Math.sin(g.angle) * g.radius]}>
+            <octahedronGeometry args={[g.size]} />
+            <meshPhysicalMaterial
+              color={g.color}
+              emissive={g.color}
+              emissiveIntensity={0.5}
+              metalness={0.9}
+              roughness={0.1}
+              clearcoat={1}
             />
           </mesh>
         </Float>
@@ -101,28 +99,49 @@ function OrbitNodes() {
   )
 }
 
+function AmbientRings() {
+  const group = useRef()
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    group.current.children.forEach((ring, i) => {
+      ring.rotation.x = Math.sin(t * 0.1 + i) * 0.3
+      ring.rotation.z = t * (0.02 + i * 0.01)
+    })
+  })
+
+  return (
+    <group ref={group}>
+      {[1.6, 2.0, 2.5].map((r, i) => (
+        <mesh key={i} rotation={[Math.PI / 4 + i * 0.4, i * 0.5, 0]}>
+          <torusGeometry args={[r, 0.005, 6, 100]} />
+          <meshBasicMaterial color="#818cf8" transparent opacity={0.06 + i * 0.02} />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
 export default function HeroScene() {
   return (
     <Canvas
-      camera={{ position: [0, 0, 6], fov: 45 }}
-      dpr={[1, 1.5]}
-      gl={{ antialias: true, alpha: true }}
-      style={{ position: 'absolute', inset: 0 }}
+      camera={{ position: [0, 0, 6], fov: 42 }}
+      dpr={[1, 2]}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      style={{ width: '100%', height: '100%' }}
     >
-      <ambientLight intensity={0.15} />
-      <pointLight position={[5, 5, 5]} color="#3b82f6" intensity={0.6} />
-      <pointLight position={[-5, -3, 3]} color="#06b6d4" intensity={0.3} />
-      <pointLight position={[0, -5, 2]} color="#8b5cf6" intensity={0.15} />
-      <CoreObject />
-      <OrbitNodes />
-      <Sparkles
-        count={50}
-        scale={9}
-        size={1.0}
-        speed={0.15}
-        color="#60a5fa"
-        opacity={0.3}
-      />
+      <color attach="background" args={['transparent']} />
+
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} color="#e0e7ff" />
+      <directionalLight position={[-4, -2, 4]} intensity={0.3} color="#c7d2fe" />
+      <spotLight position={[0, 8, 0]} intensity={0.4} color="#818cf8" angle={0.5} penumbra={1} />
+
+      <Environment preset="city" environmentIntensity={0.5} />
+
+      <GlassKnot />
+      <InnerCore />
+      <OrbitingGems />
+      <AmbientRings />
     </Canvas>
   )
 }
