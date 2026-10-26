@@ -44,7 +44,7 @@ export const projects: Project[] = [
       ['CODEF·국토부 API가 느리고 제약이 많다', 'The CODEF and land ministry APIs are slow and full of constraints'],
       ['인증 세션 재사용·간격 조회·주간 캐시, 기다림이 보이는 진행 화면', 'Reuse the auth session, space out queries, cache by the week, and show the wait on a progress screen'],
     ),
-    links: [{ label: k('서비스 suzijip.com', 'Live service: suzijip.com'), href: 'https://suzijip.com' }],
+    links: [{ label: k('회사 웹 finz.kr', 'Company website: finz.kr'), href: 'https://finz.kr' }],
     sections: [
       section('overview', OVERVIEW, [
         [
@@ -172,8 +172,8 @@ export const projects: Project[] = [
       ]),
       section('result', RESULT, [
         [
-          '회사 웹은 suzijip.com에서 운영 중이고, 청년 세금 환급 앱은 MVP까지 만들었지만 아직 출시하지 않았습니다.',
-          'The company website is live at suzijip.com. The tax refund app for young people reached MVP but has not been released yet.',
+          '회사 웹은 finz.kr에서 운영 중이고, 청년 세금 환급 앱은 MVP까지 만들었지만 아직 출시하지 않았습니다.',
+          'The company website is live at finz.kr. The tax refund app for young people reached MVP but has not been released yet.',
         ],
         [
           '이 일을 하며 기능을 만드는 것과 그 결과가 맞는지 확인하는 것을 서로 다른 일로 다루게 됐습니다.',
@@ -193,8 +193,8 @@ export const projects: Project[] = [
       ]),
       section('evidence', EVIDENCE, [
         [
-          '회사 웹은 suzijip.com에서 볼 수 있습니다. 웹·앱·백엔드 코드는 회사 비공개 저장소에 있어 링크하지 않습니다.',
-          "The company website can be seen at suzijip.com. The web, app and backend code is in the company's private repositories, so it is not linked.",
+          '회사 웹은 finz.kr에서 볼 수 있습니다. 웹·앱·백엔드 코드는 회사 비공개 저장소에 있어 링크하지 않습니다.',
+          "The company website can be seen at finz.kr. The web, app and backend code is in the company's private repositories, so it is not linked.",
         ],
       ]),
     ],

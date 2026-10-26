@@ -70,8 +70,8 @@ describe('checkLinks', () => {
     '/#cases',
     '#top',
     'tel:+821035061889',
-    'https://suzijip.com',
-    'https://suzijip.com/simulator',
+    'https://finz.kr',
+    'https://finz.kr/simulator',
     'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/README.md',
     'https://junyoung-dev-notes.vercel.app/posts/1',
     'https://github.com/ERIC1889',
@@ -83,10 +83,10 @@ describe('checkLinks', () => {
 
   it.each([
     'https://github.com/ERIC1889/InnoView', // private repositories behind the public profile
-    'https://suzijip.com.evil.example',
+    'https://finz.kr.evil.example',
     '//evil.example/path',
     'mailto:someone@else.example',
-    'http://suzijip.com',
+    'http://finz.kr',
   ])('rejects %s', (href) => {
     expect(checkLinks({ links: [{ href }] })).toHaveLength(1)
   })

@@ -46,7 +46,7 @@ export const checkKo = (content: unknown) => checkLang(content, 'ko')
 export const checkEn = (content: unknown) => checkLang(content, 'en')
 
 const ALLOWED_DOMAIN_PREFIXES = [
-  'https://suzijip.com',
+  'https://finz.kr',
   'https://junyoung-dev-notes.vercel.app',
   'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
 ]
