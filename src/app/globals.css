@@ -324,7 +324,10 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .nav-menu{background:var(--bg-alt);box-shadow:0 18px 40px rgba(0,0,0,.35)}
 
 /* ===== POPUPS (@modal) ===== */
-.modal-wide{max-width:980px;padding:28px 32px}
+.modal-wide{max-width:980px;padding:0;display:flex;flex-direction:column;overflow:hidden;max-height:88vh;max-height:calc(100dvh - 48px)}
+/* Only the inner area scrolls; dvh keeps the bottom above mobile browser toolbars. */
+.modal-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:28px 32px 32px;scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.35) transparent}
+.modal-wide .modal-close{z-index:5;background:var(--bg-alt)}
 .in-modal .sec-inner{max-width:none}
 .in-modal .case-hero,.in-modal .year-hero{padding:8px 0 16px}
 .in-modal .case-section{padding:20px 0}
@@ -333,6 +336,37 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .in-modal .year-title{font-size:2rem}
 .throughline-diff{margin:6px 0 2px;display:flex;flex-direction:column;gap:4px}
 .throughline-diff .diff-line{font-size:.84rem;line-height:1.6}
-@media(max-width:768px){.modal-wide{padding:20px 16px}.in-modal .case-question{font-size:1.35rem}}
+@media(max-width:768px){.modal-scroll{padding:18px 16px calc(32px + env(safe-area-inset-bottom))}.in-modal .case-question{font-size:1.35rem}}
 .modal-overlay{background:rgba(2,6,23,.72)}
-.modal-wide{background:var(--bg);scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.35) transparent}
+.modal-wide{background:var(--bg)}
+
+/* ===== MOBILE (≤768px) ===== */
+@media(max-width:768px){
+  /* nav: opaque enough to read over content, 44px tap targets */
+  .nav-scrolled,.nav-open{background:color-mix(in srgb,var(--bg) 92%,transparent)}
+  .nav-container{padding:0 8px 0 16px}
+  .nav-right{gap:4px}
+  .toggle-btn{min-height:38px;min-width:42px;padding:8px 10px}
+  .hamburger{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0}
+  .nav-mobile{background:color-mix(in srgb,var(--bg) 97%,transparent);max-height:calc(100dvh - 64px);overflow-y:auto;overscroll-behavior:contain}
+  .nav-mobile ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 8px}
+  /* hero: the 3D object only renders on desktop, so drop its empty slot */
+  .hero-3d{display:none}
+  .sec-head h2{word-break:keep-all}
+  .tag-sm{font-size:.7rem}
+  /* throughline: one swipeable row instead of seven stacked cards */
+  .throughline-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:4px 2px 14px;scrollbar-width:none}
+  .throughline-grid::-webkit-scrollbar{display:none}
+  .throughline-grid>*{flex:0 0 88%;scroll-snap-align:start;display:flex}
+  .throughline-grid>*>*{width:100%}
+  /* contact: compact rows; the whole row is the link */
+  .contact-grid{grid-template-columns:1fr;gap:10px}
+  .contact-card{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:14px;align-items:center;text-align:left;padding:14px 18px}
+  .contact-icon{grid-row:span 2;margin:0;font-size:1.25rem;text-align:center}
+  .contact-label{margin:0}
+  .contact-value a::after{content:'';position:absolute;inset:0}
+  /* popup: a near full-height bottom sheet */
+  .modal-overlay{align-items:flex-end;padding:0}
+  .modal-wide{max-width:none;border-radius:20px 20px 0 0;border-bottom:0;max-height:94vh;max-height:calc(100dvh - 10px)}
+  .modal-wide .modal-close{top:10px;right:10px;width:40px;height:40px}
+}

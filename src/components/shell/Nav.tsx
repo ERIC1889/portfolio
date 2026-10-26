@@ -68,7 +68,7 @@ export function Nav({ years, cases }: NavProps) {
   }
 
   return (
-    <nav ref={navRef} className={`navbar ${scrolled ? 'nav-scrolled' : ''}`}>
+    <nav ref={navRef} className={`navbar ${scrolled ? 'nav-scrolled' : ''} ${mobileOpen ? 'nav-open' : ''}`}>
       <div className="nav-container">
         <Link href="/" className="nav-logo gradient-text" onClick={closeAll}>
           JY.DEV

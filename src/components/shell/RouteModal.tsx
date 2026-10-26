@@ -53,11 +53,12 @@ export function RouteModal({ label, children }: { label: L; children: ReactNode 
         if (event.target === event.currentTarget) router.back()
       }}
     >
+      {/* The frame holds the close button; only the inner area scrolls, so × never scrolls away. */}
       <div className="modal-body modal-wide" role="dialog" aria-modal="true" aria-label={t(label)}>
         <button ref={closeRef} className="modal-close" aria-label={t(UI.close)} onClick={() => router.back()}>
           ×
         </button>
-        {children}
+        <div className="modal-scroll">{children}</div>
       </div>
     </div>
   )

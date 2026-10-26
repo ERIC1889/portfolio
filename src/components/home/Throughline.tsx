@@ -23,7 +23,7 @@ export function Throughline({ items }: { items: (Project & { scene: Scene })[] }
       <div className="sec-inner">
         <SectionHead num="02" title={SECTION_TITLES.throughline} />
         <p className="mono diff-legend">{t(UI.diffLegend)}</p>
-        <motion.div className="project-grid case-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+        <motion.div className="project-grid case-grid throughline-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           {items.map((project) => (
             <motion.div key={project.slug} variants={fadeUp}>
               <TiltCard className="glass project-card throughline-card" disableTilt={isMobile}>
