@@ -1,0 +1,12 @@
+# Upload only what the build needs; everything else in this folder stays local.
+/*
+!src
+!public
+!scripts
+!package.json
+!package-lock.json
+!next.config.ts
+!tsconfig.json
+!vitest.config.ts
+!vitest.setup.ts
+!vercel.json
