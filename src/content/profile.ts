@@ -3,7 +3,7 @@ import type { Profile } from './types'
 export const profile: Profile = {
   whoami: { ko: '~/junyoung $ whoami → 허준영 · full-stack · AI 서비스', en: '~/junyoung $ whoami → Heo Jun Young · full-stack · AI products' },
   // The quote breaks after the comma on purpose (rendered with white-space: pre-line).
-  quote: { ko: '한 가지 기술에 머물기보다,\n필요한 것을 직접 만들어 왔습니다.', en: "Not bound to one stack,\nI've built what was needed." },
+  quote: { ko: '익숙한 기술에 머물기보다,\n필요한 것을 직접 만들어 왔습니다.', en: "Beyond the tools I knew,\nI've built what was needed." },
   intro: {
     ko: '화면부터 서버, 데이터, AI까지. 아이디어로 끝내지 않고 설계·구현·배포·검증을 거쳐 결과로 남겼습니다.',
     en: "From screens to servers, data and AI. Instead of stopping at ideas, I've carried them through design, build, deployment and verification into results.",

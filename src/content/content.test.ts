@@ -16,7 +16,7 @@ describe('site content', () => {
 
   it('uses the approved English first-screen copy', () => {
     expect(profile.whoami.en).toBe('~/junyoung $ whoami → Heo Jun Young · full-stack · AI products')
-    expect(profile.quote.en).toBe("Not bound to one stack,\nI've built what was needed.")
+    expect(profile.quote.en).toBe("Beyond the tools I knew,\nI've built what was needed.")
     expect(profile.intro.en).toBe(
       "From screens to servers, data and AI. Instead of stopping at ideas, I've carried them through design, build, deployment and verification into results.",
     )
@@ -34,7 +34,7 @@ describe('site content', () => {
 describe('profile', () => {
   it('uses the approved first-screen copy word for word', () => {
     expect(profile.whoami.ko).toBe('~/junyoung $ whoami → 허준영 · full-stack · AI 서비스')
-    expect(profile.quote.ko).toBe('한 가지 기술에 머물기보다,\n필요한 것을 직접 만들어 왔습니다.')
+    expect(profile.quote.ko).toBe('익숙한 기술에 머물기보다,\n필요한 것을 직접 만들어 왔습니다.')
     expect(profile.intro.ko).toBe('화면부터 서버, 데이터, AI까지. 아이디어로 끝내지 않고 설계·구현·배포·검증을 거쳐 결과로 남겼습니다.')
   })
 
