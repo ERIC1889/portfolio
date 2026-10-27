@@ -17,3 +17,4 @@ resume_*.md
 AGENTS.md
 resume.md
 .env*
+/*.pdf

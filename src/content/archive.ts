@@ -12,6 +12,12 @@ export const archive: Archive = {
       year: 2026,
     },
     {
+      title: 'A2A 협업 기반 웰니스 일정 관리 시스템',
+      titleEn: 'A Wellness Scheduling System Based on A2A Collaboration',
+      venue: k('한국정보통신학회 춘계종합학술대회', 'Korea Institute of Information and Communication Engineering, Spring Conference'),
+      year: 2026,
+    },
+    {
       title: 'Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI',
       venue: k('APIC-IST 2025 (국제학술대회)', 'APIC-IST 2025 (international conference)'),
       year: 2025,

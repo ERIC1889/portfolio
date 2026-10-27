@@ -22,15 +22,15 @@ export const chapters: Chapter[] = [
   {
     year: 2024,
     name: { ko: '만들다', en: 'Building' },
-    lesson: { ko: '연구실과 첫 대상, 그리고 지쳐서 떠난 브라이튼', en: 'A research lab, a first grand prize, and Brighton when I was worn out' },
+    lesson: { ko: '연구실과 첫 대상, 그리고 언어를 배우러 간 브라이튼', en: 'A research lab, a first grand prize, and Brighton to learn English' },
     essay: [
       {
         ko: '학부 연구생이 되어 팀 프로젝트와 대회를 본격적으로 경험했습니다. 해커톤에서 발표 코칭 서비스 Pitches의 백엔드와 AI를 맡아 대상을 받았고, 시니어 정신건강 챗봇 Label Light로 교내 페스티벌에서도 결과를 냈습니다.',
         en: 'As an undergraduate researcher, I took on team projects and competitions in earnest. I built the backend and AI for Pitches, a presentation-coaching service that won the grand prize at a hackathon, and Label Light, a mental-health chatbot for seniors, earned an award at the campus festival.',
       },
       {
-        ko: '하지만 성과를 위해 저를 몰아붙이다 지쳤고, 학기가 끝난 뒤 영국 브라이튼에서 3개월을 보냈습니다. 다른 문화의 사람들과 지내며 좁았던 시야를 돌아봤고, 열심히 달리는 것만큼 멈춰서 방향을 보는 시간도 필요하다는 것을 배웠습니다.',
-        en: 'But I pushed myself so hard for results that I wore myself out, and after the semester I spent three months in Brighton, England. Living among people from other cultures, I looked back at how narrow my view had been, and learned that stopping to check my direction matters as much as running hard.',
+        ko: '그리고 언어의 중요성을 깨닫고, 학기가 끝난 뒤 영국 브라이튼에서 3개월 동안 영어를 공부했습니다. 다른 문화의 사람들과 지내며 좁았던 시야도 넓힐 수 있었습니다.',
+        en: 'I also came to see how much language matters, so after the semester I spent three months studying English in Brighton, England. Living among people from other cultures broadened what had been a narrow view.',
       },
     ],
   },

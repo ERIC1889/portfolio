@@ -86,7 +86,7 @@ describe('four-year story', () => {
     const text = collectStrings(chapters)
       .map((s) => s.value)
       .join('\n')
-    for (const banned of ['병역', '산업기능요원', '취업 준비', '요즘 힘들']) {
+    for (const banned of ['병역', '산업기능요원', '취업 준비', '요즘 힘들', '지쳐', '지쳤', 'worn out', 'wore myself']) {
       expect(text).not.toContain(banned)
     }
   })
@@ -138,7 +138,7 @@ describe('archive', () => {
   })
 
   it('lists papers by title, venue and year only, marking the international one', () => {
-    expect(archive.papers).toHaveLength(9)
+    expect(archive.papers).toHaveLength(10)
     const international = archive.papers.filter((p) => p.international)
     expect(international.map((p) => p.title)).toEqual([
       'Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI',
