@@ -37,7 +37,7 @@ export const chapters: Chapter[] = [
   {
     year: 2025,
     name: { ko: '함께하다', en: 'Working together' },
-    lesson: { ko: '랩장이 되어 많이 벌이다, 내 한계를 알게 된 해', en: 'I became lab lead, took on too much, and found my limits' },
+    lesson: { ko: '내 한계를 알게 된 해', en: 'The year I found my limits' },
     essay: [
       {
         ko: 'WebDB 연구실 랩장을 맡으며 처음으로 자리의 무게를 느꼈습니다. 제 일만 잘하는 것을 넘어, 함께하는 사람들을 챙기고 스터디를 이끄는 일이 얼마나 어려운지 배웠습니다.',
