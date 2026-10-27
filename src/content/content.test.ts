@@ -26,6 +26,15 @@ describe('site content', () => {
     expect(checkLinks(ALL_CONTENT)).toEqual([])
   })
 
+  it('uses no words of exhaustion or hardship anywhere on the site', () => {
+    const text = collectStrings(ALL_CONTENT)
+      .map((s) => s.value)
+      .join('\n')
+    for (const word of ['지쳐', '지쳤', '지치', '힘들', '힘겨', '괴로', 'worn out', 'wore myself', 'exhausted', 'burned out', 'burnt out']) {
+      expect(text, word).not.toContain(word)
+    }
+  })
+
   it('never exposes a local filesystem path', () => {
     expect(checkNoLocalPaths(ALL_CONTENT)).toEqual([])
   })
@@ -86,7 +95,7 @@ describe('four-year story', () => {
     const text = collectStrings(chapters)
       .map((s) => s.value)
       .join('\n')
-    for (const banned of ['병역', '산업기능요원', '취업 준비', '요즘 힘들', '지쳐', '지쳤', 'worn out', 'wore myself']) {
+    for (const banned of ['병역', '산업기능요원', '취업 준비', '요즘 힘들', '지쳐', '지쳤', 'worn out', 'wore myself', '처절', '무리했', '열심히만으로', '제대로 챙기지 못']) {
       expect(text).not.toContain(banned)
     }
   })

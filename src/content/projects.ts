@@ -572,8 +572,8 @@ export const projects: Project[] = [
           'The hackathon version built by the team of five won the grand prize at the Capstone Design & AI Hackathon (Oct 2024); the developed version won a special award at the SW-Centered University AI Startup Idea Competition (May 2025) and was presented as a paper at APIC-IST 2025.',
         ],
         [
-          '2026년 리뉴얼은 실시간 음량 피드백과 발표 후 보고서 작업이 분리되어 동작하지만, 보고서를 앱에서 보여 주는 화면은 아직 만들지 못했습니다.',
-          "In the 2026 renewal, live volume feedback and the post-talk report jobs run separately, but I haven't yet built the screen that shows the report in the app.",
+          '2026년 리뉴얼은 실시간 음량 피드백과 발표 후 보고서 작업이 분리되어 동작하지만, 보고서를 앱에서 보여 주는 화면은 다음 단계로 남아 있습니다.',
+          "In the 2026 renewal, live volume feedback and the post-talk report jobs run separately, and the screen that shows the report in the app is the next step.",
         ],
       ]),
       section('paper', ['논문 — APIC-IST 2025', 'Paper: APIC-IST 2025'], [
