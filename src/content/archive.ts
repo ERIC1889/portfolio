@@ -6,6 +6,12 @@ const k = (ko: string, en: string) => ({ ko, en })
 export const archive: Archive = {
   papers: [
     {
+      title: 'LLM을 활용한 실시간 회의 인지·감성 분석 웹 시스템의 설계 및 구현',
+      titleEn: 'Design and Implementation of an LLM-Based Web System for Real-Time Cognitive and Emotional Analysis of Meetings',
+      venue: k('한국디지털콘텐츠학회 하계종합학술대회', 'Korea Digital Contents Society, Summer Conference'),
+      year: 2026,
+    },
+    {
       title: 'Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI',
       venue: k('APIC-IST 2025 (국제학술대회)', 'APIC-IST 2025 (international conference)'),
       year: 2025,

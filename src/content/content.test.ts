@@ -138,7 +138,7 @@ describe('archive', () => {
   })
 
   it('lists papers by title, venue and year only, marking the international one', () => {
-    expect(archive.papers).toHaveLength(8)
+    expect(archive.papers).toHaveLength(9)
     const international = archive.papers.filter((p) => p.international)
     expect(international.map((p) => p.title)).toEqual([
       'Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI',
