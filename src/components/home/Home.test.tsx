@@ -34,13 +34,13 @@ describe('home page (real content)', () => {
     ])
   })
 
-  it('presents the flagship with its demo video, four features, the workbook check and both links', () => {
+  it('presents the flagship with its demo video, four features and both links, without a verification block', () => {
     renderWithProviders(<Home />)
     const flagship = sectionOf('대표 프로젝트')
     expect(within(flagship).getByRole('heading', { level: 3 })).toHaveTextContent('Finz 개인 세금 계산기')
     expect(flagship.querySelector('video')).toHaveAttribute('poster', '/media/finz/web-demo-poster.webp')
     expect(flagship.querySelectorAll('ol.feature-list > li')).toHaveLength(4)
-    expect(flagship).toHaveTextContent('21/21')
+    expect(within(flagship).queryByText('검증')).toBeNull()
     expect(within(flagship).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/finz')
     expect(within(flagship).getByRole('link', { name: /개인 세금 계산기 열기/ })).toHaveAttribute('href', 'https://www.finz.kr/personal')
     // the demo video carries the visuals here; the screens live on the case page

@@ -143,12 +143,27 @@ describe('flagship: Finz personal tax calculators', () => {
     expect(koText(security.condition)).toContain('웹 계산 기능과는 별개')
   })
 
-  it('mentions the app’s other screens, marked as example data', () => {
+  it('mentions the app’s other screens in words, as demo screens on example data, with no phone screenshots', () => {
     const app = finz.sections?.find((s) => s.anchor === 'refund-app')
     expect(koText(app?.body)).toContain('금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교')
-    const others = app?.media?.filter((m) => /app-(education|invest|spending)/.test(m.src)) ?? []
-    expect(others).toHaveLength(3)
-    for (const media of others) expect(media.caption.ko).toContain('예시 데이터')
+    expect(koText(app?.body)).toContain('예시 데이터로 동작하는 시연 화면')
+    expect(app?.media?.map((m) => m.kind)).toEqual(['video'])
+  })
+
+  it('shows the SaaS through five captioned screens from the development server', () => {
+    const saas = finz.sections?.find((s) => s.anchor === 'finz-saas')
+    expect(saas?.media).toHaveLength(5)
+    for (const media of saas?.media ?? []) expect(media.caption.ko).toContain('개발 서버 실제 화면')
+  })
+
+  it('keeps the calculator gallery to the demo video and four calculator screens', () => {
+    expect(finz.media?.map((m) => m.src)).toEqual([
+      '/media/finz/web-demo.mp4',
+      '/media/finz/web-crypto.webp',
+      '/media/finz/web-stock.webp',
+      '/media/finz/web-stock-gift.webp',
+      '/media/finz/web-six-way.webp',
+    ])
   })
 
   it('links to the live calculators: the hub first, then each one', () => {
