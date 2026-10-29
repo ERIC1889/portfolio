@@ -28,8 +28,8 @@ export const SECTION_TITLES = {
 
 export const SECTION_LEADS = {
   skills: {
-    ko: '프로젝트에서 실제로 쓴 기술만 적었습니다. 근거 링크에서 쓰인 곳을 확인할 수 있습니다.',
-    en: 'Only tools I have used in a project, each linked to where it was used.',
+    ko: '프로젝트에서 실제로 쓴 기술만 적었습니다.',
+    en: 'Only tools I have used in a project.',
   },
   other: {
     ko: '수상과 논문으로 이어진 작업입니다. 나머지 프로젝트는 전체 기록에 있습니다.',
@@ -47,7 +47,6 @@ export const SKILL_HEADINGS = {
   area: { ko: '역량', en: 'Area' },
   items: { ko: '기술', en: 'Tools' },
   did: { ko: '무엇을 했나', en: 'What I did' },
-  evidence: { ko: '근거', en: 'Where to see it' },
 } satisfies Record<string, L>
 
 export const CONTRIBUTION_LABELS: Record<keyof Contribution, L> = {
@@ -94,10 +93,6 @@ export function authorOrderLabel(order: number): L {
 
 export function checkedOn(date: string): L {
   return { ko: `${date} 확인`, en: `checked ${date}` }
-}
-
-export function capturedOn(date: string): L {
-  return { ko: `${date} 촬영`, en: `captured ${date}` }
 }
 
 export const ARCHIVE_HEADINGS = {

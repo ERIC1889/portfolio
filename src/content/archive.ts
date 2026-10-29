@@ -289,31 +289,22 @@ export const archive: Archive = {
       ],
     },
   ],
-  // Only skills with a project behind them; each row links to where it was used.
+  // Only skills with a project behind them.
   skills: [
     {
       area: k('웹·API', 'Web · API'),
       items: ['TypeScript', 'Next.js', 'Node.js · Express'],
       did: k('세금 계산기 화면과 API, 시세·환율 데이터 연동과 대체 조회, 공공 API 7종 정규화', 'Tax calculator screens and APIs, market-data integration with fallbacks, normalizing 7 public APIs'),
-      evidence: [
-        { label: k('Finz 세금 계산기', 'Finz tax calculators'), href: '/projects/finz' },
-        { label: k('SkillPilot API 클라이언트', 'SkillPilot API client'), href: 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/SkillPilot-backend/src/integrations/dataGoKr/client.js' },
-      ],
     },
     {
       area: k('Python 백엔드', 'Python backend'),
       items: ['Python', 'FastAPI', 'pytest'],
       did: k('간편인증 상태 흐름, 서버 권한·결제 검증, 계산 엔진 검증 테스트', 'Simple-auth state flow, server-side permission and payment checks, tests that verify the calculation engine'),
-      evidence: [{ label: k('Finz 모바일 앱', 'Finz mobile app'), href: '/projects/finz#refund-app' }],
     },
     {
       area: k('데이터', 'Data'),
       items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis'],
       did: k('정형 데이터와 AI 결과 분리 저장, 같은 요청의 AI 결과 재사용, 확정된 시세·환율만 캐시', 'Structured data and AI results stored apart, reuse of AI results for the same request, caching only settled prices and rates'),
-      evidence: [
-        { label: k('SkillPilot', 'SkillPilot'), href: '/projects/skillpilot' },
-        { label: k('Finz', 'Finz'), href: '/projects/finz' },
-      ],
     },
     {
       area: k('비동기·배치', 'Async · batch'),
@@ -322,17 +313,11 @@ export const archive: Archive = {
         '실거래가 주간 동기화와 재시도(Celery Beat), 발표 후 분석 작업 큐(BullMQ), 공공 데이터 주기 동기화(node-cron)',
         'Weekly price syncing with retries (Celery Beat), a post-talk analysis job queue (BullMQ), periodic public-data syncing (node-cron)',
       ),
-      evidence: [
-        { label: k('Finz 앱 백엔드', 'Finz app backend'), href: '/projects/finz#refund-app' },
-        { label: k('SkillPilot 동기화', 'SkillPilot sync'), href: '/projects/skillpilot' },
-        { label: k('Pitches 작업 큐', 'Pitches job queue'), href: '/projects/pitches' },
-      ],
     },
     {
       area: k('AI 응용', 'Applied AI'),
       items: ['OpenAI API', 'Whisper', 'ONNX Runtime', 'PyTorch'],
       did: k('LLM 응답을 서버에서 검증, 음성 입력, 이미지 분류 모델 학습과 서버 추론', 'Checking LLM responses on the server, voice input, training an image classifier and serving it'),
-      evidence: [{ label: k('ClosetMate', 'ClosetMate'), href: '/projects/closetmate' }],
     },
     {
       area: k('검증·배포', 'Testing · delivery'),
@@ -341,10 +326,6 @@ export const archive: Archive = {
         '기준값 대조 스크립트, push마다 도는 보안 테스트(GitHub Actions), 이 사이트의 콘텐츠 검증 테스트와 Vercel 배포',
         'Expected-value comparison scripts, security tests on every push (GitHub Actions), content checks for this site and Vercel deploys',
       ),
-      evidence: [
-        { label: k('Finz 계산 검증', 'Finz calculation checks'), href: '/projects/finz#validation' },
-        { label: k('이 사이트 저장소', 'This site\'s repository'), href: 'https://github.com/ERIC1889/portfolio' },
-      ],
     },
   ],
   education: {

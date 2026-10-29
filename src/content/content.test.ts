@@ -161,22 +161,11 @@ describe('archive', () => {
     expect(archive.awards.some((a) => a.name.ko.includes('대상(1등)'))).toBe(true)
   })
 
-  it('groups skills into six areas, each backed by at least one link', () => {
+  it('groups skills into six areas, each naming its tools and what was done with them', () => {
     expect(archive.skills.map((row) => row.area.ko)).toEqual(['웹·API', 'Python 백엔드', '데이터', '비동기·배치', 'AI 응용', '검증·배포'])
     for (const row of archive.skills) {
       expect(row.items.length, row.area.ko).toBeGreaterThan(0)
-      expect(row.evidence.length, row.area.ko).toBeGreaterThan(0)
-    }
-  })
-
-  it('links skill evidence inside the site only to pages and anchors that exist', () => {
-    const featured = projects.filter((p) => p.tier === 'featured')
-    for (const { href } of archive.skills.flatMap((row) => row.evidence)) {
-      if (!href.startsWith('/')) continue
-      const [path, anchor] = href.split('#')
-      const project = featured.find((p) => path === `/projects/${p.slug}`)
-      expect(project, href).toBeDefined()
-      if (anchor) expect(project?.sections?.some((s) => s.anchor === anchor), href).toBe(true)
+      expect(row.did.ko.trim(), row.area.ko).not.toBe('')
     }
   })
 

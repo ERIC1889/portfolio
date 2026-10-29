@@ -89,10 +89,10 @@ describe('CaseStudy body', () => {
     for (const href of hrefs) expect(container.querySelector(href), href).not.toBeNull()
   })
 
-  it('captions each picture with what it is and when it was captured, and opens it at full size', () => {
+  it('captions each picture with what it is, without a capture date, and opens it at full size', () => {
     renderWithProviders(<CaseStudy project={project} />)
     const figure = within(sectionNamed('화면과 시연')).getByRole('figure')
-    expect(figure).toHaveTextContent('SkillPilot 화면 · 실제 화면 · 2026-10-01 촬영')
+    expect(figure.querySelector('figcaption')).toHaveTextContent(/^SkillPilot 화면 · 실제 화면$/)
     expect(within(figure).getByRole('link')).toHaveAttribute('target', '_blank')
     expect(within(figure).getByRole('img', { name: 'SkillPilot 화면' })).toBeInTheDocument()
   })

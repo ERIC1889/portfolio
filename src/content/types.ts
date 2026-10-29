@@ -29,7 +29,7 @@ export interface Media {
   alt: L
   /** Feature · what it is (real screen / mockup) · version or source. */
   caption: L
-  /** YYYY-MM-DD the screen was captured. */
+  /** YYYY-MM-DD the screen was captured; kept as a record, not shown. */
   capturedAt: string
   /** phone: a bare mobile screenshot, framed with a bezel · device: a capture that already shows the device frame. */
   shape?: 'wide' | 'phone' | 'device'
@@ -187,7 +187,6 @@ export interface SkillRow {
   area: L
   items: string[]
   did: L
-  evidence: { label: L; href: string }[]
 }
 
 export interface Archive {

@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useLang } from '@/components/providers/LanguageProvider'
 import type { Media } from '@/content/types'
-import { UI, capturedOn } from '@/content/ui'
+import { UI } from '@/content/ui'
 
 const isPortrait = (media: Media) => media.height > media.width
 
@@ -35,9 +35,7 @@ export function MediaFigure({ media, sizes, priority = false }: { media: Media; 
         )}
         {media.kind === 'mockup' && <span className="badge badge-warn media-badge">{t(UI.mockupBadge)}</span>}
       </div>
-      <figcaption>
-        {t(media.caption)} <span className="media-date">· {t(capturedOn(media.capturedAt))}</span>
-      </figcaption>
+      <figcaption>{t(media.caption)}</figcaption>
     </figure>
   )
 }

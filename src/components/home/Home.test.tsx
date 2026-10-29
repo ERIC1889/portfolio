@@ -47,12 +47,12 @@ describe('home page (real content)', () => {
     expect(within(flagship).queryAllByRole('img')).toHaveLength(0)
   })
 
-  it('lays out skills as a table with a header row and six areas, each with evidence links', () => {
+  it('lays out skills as a table with a header row and six areas, without an evidence column', () => {
     renderWithProviders(<Home />)
     const table = within(sectionOf('기술')).getByRole('table')
-    expect(within(table).getAllByRole('columnheader').map((th) => th.textContent)).toEqual(['역량', '기술', '무엇을 했나', '근거'])
+    expect(within(table).getAllByRole('columnheader').map((th) => th.textContent)).toEqual(['역량', '기술', '무엇을 했나'])
     expect(within(table).getAllByRole('rowheader')).toHaveLength(6)
-    expect(within(table).getByRole('link', { name: /SkillPilot API 클라이언트/ })).toHaveAttribute('href', expect.stringContaining('client.js'))
+    expect(within(table).queryAllByRole('link')).toHaveLength(0)
   })
 
   it('shows SkillPilot and ClosetMate with their stack and a way into each case', () => {

@@ -34,7 +34,8 @@ describe('MediaFigure', () => {
     expect(link).toHaveAttribute('href', '/media/a/one.webp')
     expect(link).toHaveAttribute('target', '_blank')
     expect(within(link).getByRole('img', { name: '/media/a/one.webp 화면' })).toBeInTheDocument()
-    expect(screen.getByRole('figure')).toHaveTextContent('/media/a/one.webp 설명 · 2026-10-29 촬영')
+    expect(screen.getByRole('figure')).toHaveTextContent('/media/a/one.webp 설명')
+    expect(screen.getByRole('figure')).not.toHaveTextContent('촬영')
   })
 
   it('labels a mockup on the picture itself', () => {
