@@ -24,7 +24,7 @@ function pageNavHrefs() {
 describe('site metadata', () => {
   it('describes the site, sets its address and shares one card image', () => {
     expect(rootMetadata.metadataBase?.toString()).toBe('https://junyoung-portfolio.vercel.app/')
-    expect(rootMetadata.description).toBe('허준영 · 백엔드 중심 풀스택 개발자. Finz 부동산 세금 비교, SkillPilot, ClosetMate.')
+    expect(rootMetadata.description).toBe('허준영 · 백엔드 중심 풀스택 개발자. Finz 개인 세금 계산기, SkillPilot, ClosetMate.')
     expect(rootMetadata.alternates?.canonical).toBe('/')
     expect(rootMetadata.openGraph).toMatchObject({ images: [expect.objectContaining({ url: '/og.png', width: 1200, height: 630 })] })
   })
@@ -57,8 +57,8 @@ describe('/projects/[slug]', () => {
 
   it('titles and describes the page by the product, with its own canonical address', async () => {
     const meta = await ProjectRoute.generateMetadata(slugParams('finz'))
-    expect(meta.title).toBe('Finz 부동산 세금 비교')
-    expect(meta.description).toContain('세금 여섯 가지를 중과 유예 전후로 비교')
+    expect(meta.title).toBe('Finz 개인 세금 계산기')
+    expect(meta.description).toContain('해외주식 양도세·증여 평가')
     expect(meta.alternates?.canonical).toBe('/projects/finz')
     expect(meta.openGraph).toMatchObject({ url: '/projects/finz', images: [expect.objectContaining({ url: '/og.png' })] })
   })
@@ -133,6 +133,16 @@ describe('/archive', () => {
     expect(within(closetmate).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/closetmate')
   })
 
+  it('shows a captioned picture for every project that has one, labelling the mockup', () => {
+    renderWithProviders(<ArchivePage />)
+    const list = document.getElementById('projects') as HTMLElement
+    const figures = [...list.querySelectorAll('figure')]
+    expect(figures).toHaveLength(13)
+    for (const figure of figures) expect(figure.querySelector('figcaption')?.textContent?.trim()).toBeTruthy()
+    const pitches = within(list).getByText('Pitches').closest('li') as HTMLElement
+    expect(pitches.querySelector('figcaption')).toHaveTextContent('목업')
+  })
+
   it('groups papers by kind, marking author order where it is known', () => {
     renderWithProviders(<ArchivePage />)
     const papers = document.getElementById('papers') as HTMLElement
@@ -162,7 +172,7 @@ describe('/resume', () => {
     const { container } = renderWithProviders(<ResumePage />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('허준영')
     expect(screen.getByRole('link', { name: 'PDF 내려받기' })).toHaveAttribute('href', '/resume.pdf')
-    expect(container).toHaveTextContent('Finz 부동산 세금 비교')
+    expect(container).toHaveTextContent('Finz 개인 세금 계산기')
     expect(container).toHaveTextContent('주식회사 Finz Labs')
     expect(container).not.toHaveTextContent('컴세바')
     expect(container).toHaveTextContent('eric1889@naver.com')

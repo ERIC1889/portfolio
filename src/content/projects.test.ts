@@ -62,6 +62,16 @@ const BANNED: Record<string, (string | RegExp)[]> = {
   jarvis: ['1초', '1 second'],
 }
 
+describe('pictures outside the case pages', () => {
+  it('captions every card thumbnail, so the full record never shows a picture without saying what it is', () => {
+    for (const project of projects.filter((p) => p.image)) {
+      expect(project.imageCaption?.ko, project.slug).toBeTruthy()
+      expect(project.imageCaption?.en, project.slug).toBeTruthy()
+      expect(existsSync(join(PUBLIC, project.image!)), project.image).toBe(true)
+    }
+  })
+})
+
 describe('project placement', () => {
   it('matches the agreed size, home section and years for every project', () => {
     expect(projects.map((p) => [p.slug, p.tier, p.showcase, p.years])).toEqual(PLACEMENT.map((row) => [...row]))
@@ -101,12 +111,12 @@ describe('featured case studies', () => {
   })
 })
 
-describe('flagship: Finz property tax comparison', () => {
+describe('flagship: Finz personal tax calculators', () => {
   const finz = bySlug('finz')
 
   it('is the one flagship, named by its product', () => {
     expect(projects.filter((p) => p.showcase === 'flagship').map((p) => p.slug)).toEqual(['finz'])
-    expect(finz.title?.ko).toBe('Finz 부동산 세금 비교')
+    expect(finz.title?.ko).toBe('Finz 개인 세금 계산기')
     expect(finz.team?.ko).toContain('주식회사 Finz Labs')
   })
 
@@ -117,15 +127,16 @@ describe('flagship: Finz property tax comparison', () => {
     expect(media[0].kind).toBe('video')
   })
 
-  it('says who built what, including the earlier version by another developer', () => {
+  it('says what I built, what I decided with others and what is not done, without a "built by others" row', () => {
     expect(finz.contribution?.direct.length).toBeGreaterThan(0)
-    expect(koText(finz.contribution?.others)).toContain('다른 개발자')
+    expect(finz.contribution?.others).toBeUndefined()
     expect(koText(finz.contribution?.joint)).toContain('세무사')
     expect(koText(finz.contribution?.notYet)).toContain('운영 지표')
   })
 
   it('backs the calculation with measured checks against the reference workbook', () => {
-    const [workbook, engine, security] = finz.metrics ?? []
+    const [workbook, webTests, engine, security] = finz.metrics ?? []
+    expect(webTests.value).toBe('184 통과')
     expect(workbook).toMatchObject({ value: '21/21', source: 'measured' })
     expect(koText(workbook.condition)).toContain('±10원')
     expect(engine.value).toContain('58')
@@ -140,15 +151,31 @@ describe('flagship: Finz property tax comparison', () => {
     for (const media of others) expect(media.caption.ko).toContain('예시 데이터')
   })
 
-  it('links straight to the live property feature', () => {
-    expect(finz.links?.find((l) => l.kind === 'live')?.href).toBe('https://www.finz.kr/personal/property')
+  it('links to the live calculators: the hub first, then each one', () => {
+    const live = finz.links?.filter((l) => l.kind === 'live').map((l) => l.href)
+    expect(live).toEqual([
+      'https://www.finz.kr/personal',
+      'https://www.finz.kr/personal/digital-asset/calculator',
+      'https://www.finz.kr/personal/foreign-stock/capital-gains',
+      'https://www.finz.kr/personal/foreign-stock/valuation',
+      'https://www.finz.kr/personal/property',
+    ])
   })
 
-  it('keeps the refund app and FINZ in their own sections, and calls the 269 issues a tracking count', () => {
+  it('credits the crypto engine and the valuation module to the company SaaS it was adapted from', () => {
+    const direct = koText(finz.contribution?.direct)
+    expect(direct).toContain('회사 세무 SaaS의 코드를 개인용으로 옮기고')
+    expect(koText(finz.features)).not.toMatch(/가상자산 (계산 )?엔진을 (직접 )?(만들|작성)/)
+  })
+
+  it('keeps the app and the SaaS in their own sections, describing the SaaS work as verification, not fixes or code', () => {
     const anchors = finz.sections?.map((s) => s.anchor)
     expect(anchors).toContain('refund-app')
     expect(anchors).toContain('finz-saas')
-    expect(koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))).toContain('해결 건수가 아니라 관리 분류')
+    const saas = koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))
+    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(saas).toContain(fact)
+    expect(saas).not.toMatch(/\d+건 해결|해결률/)
+    expect(saas).not.toContain('엔진의 초안')
   })
 })
 

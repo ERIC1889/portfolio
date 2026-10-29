@@ -54,12 +54,12 @@ export const projects: Project[] = [
     years: [2026],
     tier: 'featured',
     showcase: 'flagship',
-    title: k('Finz 부동산 세금 비교', 'Finz property tax comparison'),
+    title: k('Finz 개인 세금 계산기', 'Finz personal tax calculators'),
     product: k(
-      '집 두 채를 양도·증여·부담부증여로 처분할 때의 세금 여섯 가지를 중과 유예 전후로 비교하고, PDF로 저장하는 웹 기능',
-      'A web feature that compares the tax on six ways of disposing of two homes (sale, gift or gift with assumed debt) before and after the surcharge grace period, and saves the result as a PDF',
+      '부동산 6Way 비교, 디지털 자산 세금, 해외주식 양도세·증여 평가를 회원가입 없이 계산하고, 계산마다 세법 조문 근거를 함께 보여 주는 웹 서비스',
+      'A web service that works out tax on disposing of two homes (6Way), on digital assets and on foreign stocks (capital gains and gift valuation) without sign-up, citing the statute behind each step',
     ),
-    audience: k('집을 두 채 가진 개인', 'Individuals who own two homes'),
+    audience: k('집·가상자산·해외주식을 가진 개인', 'Individuals with homes, crypto or foreign stocks'),
     period: '2026.04–',
     team: k('주식회사 Finz Labs (직원 5명) · 유일한 개발자', 'Finz Labs (five people) · the only developer'),
     role: k('설계·개발·운영 (직함 CTO)', 'Design, build and operation (title: CTO)'),
@@ -67,42 +67,62 @@ export const projects: Project[] = [
     statusCheckedAt: '2026-10-29',
     stack: ['Next.js', 'TypeScript', 'React', 'Vitest'],
     summary: k(
-      '부동산 세금 비교 계산기를 포함한 회사 웹 finz.kr을 혼자 설계·개발·운영하고, Finz 모바일 앱(청년 세금 환급 MVP 등)을 만들었습니다.',
-      'I designed, built and run the company website finz.kr on my own, including its property tax comparison calculator, and built the Finz mobile app (a tax refund MVP and more).',
+      '부동산·디지털 자산·해외주식 세금 계산기가 있는 회사 웹 finz.kr을 혼자 설계·개발·운영하고, Finz 모바일 앱(청년 세금 환급 MVP 등)을 만들었습니다.',
+      'I designed, built and run the company website finz.kr on my own, with its property, digital-asset and foreign-stock tax calculators, and built the Finz mobile app (a tax refund MVP and more).',
     ),
     features: pairs([
       [
-        '세무사와 함께 Python으로 작성한 세금 계산 로직을 TypeScript로 옮겨 웹에서 바로 계산',
-        'Ported the tax logic, written in Python together with a tax accountant, to TypeScript so the website calculates directly',
+        '해외주식 양도세 엔진: 매수·매도를 각자의 결제일 환율로 원화 환산하고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눔. 증여 평가(전후 2개월 평균 종가)와 증여세 추정까지',
+        'Foreign-stock capital gains engine: each buy and sell converted at its own settlement-date rate, with the gain split into a stock-price part and an exchange-rate part; plus gift valuation (two-month average close) and a gift-tax estimate',
       ],
       [
-        '국토교통부 실거래가 API 연동: 12시간 단위 재확인, 월별 동시 조회, 인증키 인코딩 실패를 피한 URL 직접 조립',
-        'Real-transaction price API integration: re-checks every 12 hours, loads months in parallel, and assembles the URL by hand to avoid failures from an encoded key',
+        '시세·환율 데이터 계층: Upbit→CoinGecko, 한국은행 ECOS→ECB로 대체 조회하고, 확정된 값만 오래 캐시하며 사용자별·전체 요청을 제한',
+        'Market-data layer: Upbit→CoinGecko and Bank of Korea ECOS→ECB fallbacks, long caching only for settled values, and per-user plus global rate limits',
       ],
       [
-        '3단계 입력(A주택·B주택·받는 사람)과 6가지 결과 비교 화면, 인쇄용 PDF 리포트',
-        'Three-step input (home A, home B, recipient), a six-way result comparison and a printable PDF report',
+        '부동산 6Way: 세무사와 함께 Python으로 작성한 계산 로직을 TypeScript로 옮기고, 국토교통부 실거래가 조회와 PDF 리포트를 붙임',
+        'Property 6Way: the tax logic written in Python with a tax accountant, ported to TypeScript, with real-transaction price lookup and a PDF report',
+      ],
+      [
+        '디지털 자산: 회사 세무 SaaS의 가상자산 계산 엔진을 개인용으로 옮겨 과세연도 판정, 시가가 없을 때의 보수적 대체값, 쉬운 오류 문구를 붙임',
+        'Digital assets: the company SaaS’s crypto tax engine adapted for individuals, with tax-year filtering, a cautious fallback when a price is missing and plain-language errors',
       ],
     ]),
     contribution: {
       direct: pairs([
         [
-          '회사 웹 v2 전체: 화면, 계산 라이브러리, 실거래가 연동, API (2026.04–)',
-          'All of the company website v2: screens, calculation library, price data integration and API (2026.04–)',
+          '회사 웹 finz.kr 전체: 화면, 계산 라이브러리, 시세·환율·실거래가 연동, API (2026.04–)',
+          'All of the company website finz.kr: screens, calculation library, market-data and price integrations, API (2026.04–)',
         ],
-        ['개인 서비스 계산기 세 가지: 부동산 6Way, 디지털 자산, 해외주식', 'All three personal-service calculators: property 6Way, digital assets and foreign stocks'],
-        ['결과 PDF 리포트', 'The result PDF report'],
+        [
+          '해외주식 양도세 엔진과 증여세 추정, 시세·환율 데이터 계층, 부동산 6Way 엔진과 PDF 리포트',
+          'The foreign-stock capital gains engine and gift-tax estimate, the market-data layer, the property 6Way engine and its PDF report',
+        ],
+        [
+          '디지털 자산 엔진·증여 평가 모듈: 회사 세무 SaaS의 코드를 개인용으로 옮기고 연도 판정·대체값·오류 문구를 더함',
+          'Digital-asset engine and gift valuation module: company SaaS code adapted for individuals, adding tax-year filtering, fallbacks and plain-language errors',
+        ],
         ['Finz 모바일 앱과 백엔드 (Expo · FastAPI, 미출시)', 'The Finz mobile app and its backend (Expo · FastAPI, not released)'],
+        [
+          '세무사용 FINZ: 가격 정책·기능 잠금 범위 사양, 개발사 작업 269건 재검증, 배포 장애 원인 분석',
+          'FINZ for tax accountants: the pricing and feature-lock spec, re-verifying 269 vendor items, the deployment-failure root cause',
+        ],
       ]),
       joint: pairs([['세금 계산 로직 정리 (세무사와 함께)', 'Working out the tax logic (with a tax accountant)']]),
-      others: pairs([['회사 웹 v1 (2026.03–04, 다른 개발자): 정적 페이지와 초기 화면', 'Company website v1 (Mar–Apr 2026, another developer): static pages and early screens']]),
       verified: pairs([
         [
-          '기준 워크북 사례와 대조: 웹 API 21개 항목, Python 엔진 테스트 43개',
-          'Checked against a reference workbook case: 21 items through the web API, 43 tests on the Python engine',
+          '기준 워크북 사례와 대조: 6Way 웹 API 21개 항목, Python 엔진 테스트 43개',
+          'Checked against a reference workbook case: 21 items through the 6Way web API, 43 tests on the Python engine',
+        ],
+        [
+          '운영 중인 웹 저장소 테스트 184개 통과: 계산 엔진 53개(가상자산 25·해외주식 28), 시세·환율 데이터 소스 31개 포함',
+          'All 184 tests in the live website’s repository pass, including 53 calculation-engine tests (crypto 25, foreign stocks 28) and 31 market-data tests',
         ],
       ]),
-      notYet: pairs([['사용자 수 같은 운영 지표는 집계하지 않음', 'No usage metrics such as user counts are collected']]),
+      notYet: pairs([
+        ['사용자 수 같은 운영 지표는 집계하지 않음', 'No usage metrics such as user counts are collected'],
+        ['디지털 자산·해외주식 결과는 PDF로 내보내지 않음', 'Digital-asset and foreign-stock results are not exported to PDF'],
+      ]),
     },
     media: [
       video(
@@ -115,6 +135,30 @@ export const projects: Project[] = [
           '부동산 6Way · 운영 사이트 실제 화면 · 예시 입력 → 결과 → B주택을 조정대상지역으로 바꿔 재계산 (37초, 편집 없음)',
           'Property 6Way · live site · sample input → results → recalculated with home B in a regulated area (37 s, unedited)',
         ],
+        '2026-10-29',
+      ),
+      shot(
+        '/media/finz/web-crypto.webp',
+        1600,
+        1449,
+        ['가상자산 매수·매도 거래를 입력하고 2027년 예상 세금을 계산한 화면', 'Crypto buys and sells entered, with the 2027 tax estimate'],
+        ['디지털 자산 세금 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Digital-asset tax calculator · live site · the site’s own sample input'],
+        '2026-10-29',
+      ),
+      shot(
+        '/media/finz/web-stock.webp',
+        1600,
+        1409,
+        ['결제일 환율로 해외주식 양도세를 계산하고 이익을 주가 몫과 환율 몫으로 나눈 화면', 'Foreign-stock gains converted at settlement-date rates and split into price and currency effects'],
+        ['해외주식 양도세 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Foreign-stock capital gains calculator · live site · the site’s own sample input'],
+        '2026-10-29',
+      ),
+      shot(
+        '/media/finz/web-stock-gift.webp',
+        1600,
+        1483,
+        ['증여일 전후 2개월 평균 종가로 해외주식 증여 평가액과 증여세를 계산한 화면', 'Gift value of a foreign stock from the two-month average close, with the gift tax'],
+        ['해외주식 증여 평가 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Foreign-stock gift valuation calculator · live site · the site’s own sample input'],
         '2026-10-29',
       ),
       shot(
@@ -160,37 +204,48 @@ export const projects: Project[] = [
       ),
     ],
     flow: flow(
-      ['입력부터 PDF까지', 'From input to PDF'],
+      ['입력부터 결과까지', 'From input to result'],
       [
-        '회사 웹 코드 기준. 검증 스크립트는 같은 계산 API에 기준 사례를 넣어 워크북 기대값과 비교합니다.',
-        "Drawn from the company website's code. The verification script sends the reference case to the same calculation API and compares it with the workbook's expected values.",
+        '운영 중인 finz.kr 코드 기준. 검증 스크립트는 6Way 계산 API에 기준 사례를 넣어 워크북 기대값과 비교합니다.',
+        'Drawn from the code running on finz.kr. The verification script sends the reference case to the 6Way calculation API and compares it with the workbook’s expected values.',
       ],
       [
         step(
           'mine',
-          ['입력 3단계', 'Three-step input'],
-          ['A주택 · B주택 · 받는 사람. 시가는 실거래가 검색으로 채울 수 있음', 'Home A · home B · recipient; market prices can be filled from a price search'],
+          ['입력', 'Input'],
+          ['주택 두 채 · 가상자산 거래 · 해외주식 종목. 시세·환율은 날짜로 자동 채우되 직접 입력한 값은 덮어쓰지 않음', 'Two homes · crypto trades · foreign stocks; prices and rates fill in by date but never overwrite what the user typed'],
         ),
         step(
           'mine',
-          ['실거래가 조회 API (Next.js)', 'Price lookup API (Next.js)'],
-          ['최근 6개월을 월별로 동시에 조회, 12시간 단위 재확인, XML 응답 해석', 'Loads the last six months in parallel, re-checks every 12 hours, parses the XML response'],
+          ['시세·환율·실거래가 API (Next.js)', 'Market-data API routes (Next.js)'],
+          ['실패하면 대체 출처로 조회하고 그 값에 표시를 남김. 확정된 값만 오래 캐시, 사용자별·전체 요청 제한', 'Falls back to a second source and marks the value; caches only settled values for long; per-user and global rate limits'],
         ),
-        step('external', ['국토교통부 실거래가 API', 'Land ministry real-transaction API'], ['인증키가 인코딩되면 실패해 URL을 직접 조립', 'Fails if the key gets encoded, so the URL is assembled by hand']),
+        step('external', ['외부 데이터', 'External data'], ['Upbit · CoinGecko · 한국은행 ECOS · ECB · Yahoo Finance · 국토교통부 실거래가', 'Upbit · CoinGecko · Bank of Korea ECOS · ECB · Yahoo Finance · land ministry prices']),
         step(
           'mine',
-          ['계산 API · TypeScript 계산 엔진', 'Calculation API · TypeScript engine'],
-          ['6가지 처분 방법 × 중과 유예 전·후, 양도세·증여세·취득세 합산', 'Six options × before and after the grace period, adding capital gains, gift and acquisition tax'],
+          ['TypeScript 계산 엔진', 'TypeScript calculation engines'],
+          ['6Way · 가상자산 · 해외주식 양도세 · 증여 평가. 결과마다 세법 조문 근거', '6Way · crypto · foreign-stock gains · gift valuation, each result with its statute'],
         ),
-        step('mine', ['결과 화면 · PDF 리포트', 'Results · PDF report'], ['요약과 6가지 비교, 숨긴 iframe에 그린 리포트를 브라우저 인쇄로 저장', 'Summary and six-way comparison; a report drawn in a hidden iframe is saved through the print dialog']),
+        step('mine', ['결과 화면 · PDF', 'Results · PDF'], ['계산 근거를 펼쳐 볼 수 있는 결과 화면, 6Way는 인쇄용 PDF 리포트', 'Results with the reasoning one tap away; a printable PDF report for 6Way']),
       ],
     ),
     metrics: [
       metric(
-        ['기준 워크북 대조 (웹 API)', 'Reference workbook check (web API)'],
+        ['기준 워크북 대조 (6Way 웹 API)', 'Reference workbook check (6Way web API)'],
         '21/21',
         ['실제 2주택 사례 1건: 6가지 경우의 중과 전·후 합계와 증가분, 집계 3개', 'One real two-home case: before/after totals and increase for six options, plus three aggregates'],
         ['단계마다 원 미만 절사, ±10원 허용 · 최대 차이 1원', 'Fractions of a won dropped at each step, ±10 won allowed · largest gap 1 won'],
+        'measured',
+        '2026-10-29',
+      ),
+      metric(
+        ['운영 웹 저장소 테스트', 'Live website repository tests'],
+        '184 통과',
+        [
+          '계산 엔진 53개(가상자산 25 · 해외주식 28, 익명화한 실제 증여 사례 포함), 시세·환율 데이터 소스 31개, 화면·입력 변환 등',
+          'Calculation engines 53 (crypto 25 · foreign stocks 28, including an anonymised real gift case), market-data sources 31, plus screens and input mapping',
+        ],
+        ['Vitest, 외부 API는 모의 응답, 로컬 실행', 'Vitest with mocked external APIs, run locally'],
         'measured',
         '2026-10-29',
       ),
@@ -212,36 +267,48 @@ export const projects: Project[] = [
       ),
     ],
     links: [
-      { kind: 'live', label: k('부동산 6Way 열기', 'Open property 6Way'), href: 'https://www.finz.kr/personal/property' },
+      { kind: 'live', label: k('개인 세금 계산기 열기', 'Open the calculators'), href: 'https://www.finz.kr/personal' },
+      { kind: 'live', label: k('디지털 자산 계산기', 'Digital-asset calculator'), href: 'https://www.finz.kr/personal/digital-asset/calculator' },
+      { kind: 'live', label: k('해외주식 양도세 계산기', 'Foreign-stock gains calculator'), href: 'https://www.finz.kr/personal/foreign-stock/capital-gains' },
+      { kind: 'live', label: k('해외주식 증여 평가 계산기', 'Foreign-stock gift valuation'), href: 'https://www.finz.kr/personal/foreign-stock/valuation' },
+      { kind: 'live', label: k('부동산 6Way', 'Property 6Way'), href: 'https://www.finz.kr/personal/property' },
       { kind: 'site', label: k('회사 웹 finz.kr', 'Company website finz.kr'), href: 'https://www.finz.kr' },
     ],
     sections: [
       section('problem', PROBLEM, [
         [
-          '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 화면이 뜨는 것보다 숫자가 맞는 것이 먼저였습니다.',
-          'People who know little about tax use this calculator, so one number can change a big decision. Getting the numbers right came before getting the screens up.',
+          '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 화면이 뜨는 것보다 숫자가 맞는 것과, 그 숫자가 어느 조문에서 나왔는지 보여 주는 것이 먼저였습니다.',
+          'People who know little about tax use these calculators, so one number can change a big decision. Getting the numbers right, and showing which statute each one comes from, came before getting the screens up.',
         ],
         [
-          '계산 로직은 세무사와 함께 Python으로 작성해 두었습니다. 이를 웹에서 바로 쓰려고 TypeScript로 옮기고, 원본과 같은 결과를 내는지 기준 사례로 확인하기로 했습니다.',
-          'The tax logic had been written in Python together with a tax accountant. To use it directly on the website I ported it to TypeScript, and decided to prove it gives the same results with a reference case.',
+          '세금은 날짜에 따라 달라집니다. 가상자산은 2027년부터 과세되고 2026-12-31 시가가 취득가액이 될 수 있으며, 해외주식은 결제일 환율로 원화 환산합니다. 그런데 그날의 시세·환율을 주는 외부 API는 느리거나 실패하고, 아직 오지 않은 날짜에는 값이 없습니다.',
+          'Tax depends on dates. Crypto is taxed from 2027 and the 2026-12-31 price can become the cost basis; foreign stocks convert at settlement-date exchange rates. But the APIs that supply those prices and rates are slow or fail, and a date that hasn’t come yet has no value at all.',
         ],
         [
-          '시가를 채우는 국토교통부 실거래가 API는 응답이 느리고, 인증키가 인코딩되면 요청이 실패했습니다.',
-          'The land ministry real-transaction price API that fills in market prices was slow, and requests failed whenever the key got encoded.',
+          '6Way 계산 로직은 세무사와 함께 Python으로 작성해 두었고, 웹에서 바로 쓰려고 TypeScript로 옮긴 뒤 원본과 같은 결과를 내는지 기준 사례로 확인하기로 했습니다.',
+          'The 6Way logic had been written in Python together with a tax accountant; I ported it to TypeScript for the website and decided to prove with a reference case that it gives the same results.',
         ],
       ]),
       section('implementation', IMPLEMENTATION, [
         [
-          '계산 엔진은 A·B 주택마다 양도·증여·부담부증여를 계산해 여섯 가지 경우를 만들고, 각 경우를 중과 유예 전과 후 규칙으로 따로 계산해 양도세·증여세·취득세를 합칩니다.',
-          'The engine builds six options (sale, gift and gift with assumed debt for homes A and B) and computes each under the rules before and after the grace period, adding up capital gains, gift and acquisition tax.',
+          '해외주식 양도세는 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
+          'Foreign-stock gains convert each buy and sell at its own settlement-date rate, truncated to the won, and show the gain split into a stock-price part and an exchange-rate part. The filing deadline is worked out as 31 May of the next year, moved past weekends and holidays.',
         ],
         [
-          '실거래가는 12시간 단위로 다시 확인하고 월별 데이터를 동시에 불러옵니다. 인증키(serviceKey)가 인코딩되면 실패해 URL을 직접 조립했습니다.',
-          'Price data is re-checked every 12 hours and monthly data is loaded in parallel. Requests failed when the serviceKey got encoded, so I assemble the URL by hand.',
+          '증여는 증여일 앞뒤 2개월 종가 평균을 증여일 환율로 환산해 평가하고(자동 조회·시세표 붙여넣기·평균 직접 입력), 받는 사람별 공제·10년 합산·신고세액공제로 증여세를 추정합니다.',
+          'A gift is valued at the average close over the two months either side of the gift date, converted at the gift-date rate (looked up, pasted from a price table or typed in), and the gift tax is estimated with relationship-based deductions, 10-year aggregation and the filing credit.',
         ],
         [
-          'PDF는 숨긴 iframe에 리포트 문서를 그린 뒤 브라우저 인쇄로 저장합니다. 화면을 캔버스로 찍어 만드는 방식에서 생기는 빈 화면 문제를 피하려는 선택입니다.',
-          "The PDF is made by drawing a report document in a hidden iframe and saving it through the browser's print dialog, which avoids the blank pages that canvas-based capture can produce.",
+          '디지털 자산은 회사 세무 SaaS의 가상자산 계산 엔진을 개인용으로 옮겼습니다. 판 날짜로 과세연도를 정하고, 2026-12-31 시가를 아직 조회할 수 없으면 실제 산 가격을 쓰는 보수적인 쪽을 택해 화면에 알리며, 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
+          'For digital assets I adapted the company SaaS’s crypto tax engine for individuals: the tax year comes from the sale date, a missing 2026-12-31 price falls back to the actual cost (the cautious choice) with a note on screen, and engine errors are rewritten in plain language.',
+        ],
+        [
+          '시세는 Upbit 1분봉을 먼저 쓰고 실패하면 CoinGecko로, 환율은 한국은행 ECOS를 먼저 쓰고 실패하면 ECB 기준환율로 대체합니다. 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 두고, 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시합니다. 아직 오지 않은 날짜는 외부를 부르지 않고 바로 거절합니다.',
+          'Prices come from Upbit 1-minute candles, falling back to CoinGecko; rates from the Bank of Korea ECOS, falling back to the ECB reference rate. Fallback values are marked and cached briefly or not at all, foreign-stock closes are cached only when the range is closed and complete, and a date that hasn’t come yet is refused without calling out.',
+        ],
+        [
+          '부동산 6Way는 A·B 주택마다 양도·증여·부담부증여를 계산해 여섯 가지 경우를 만들고, 각 경우를 중과 유예 전과 후 규칙으로 따로 계산합니다. 실거래가는 12시간 단위로 다시 확인하고 월별로 동시에 불러오며, 인증키가 인코딩되면 실패해 URL을 직접 조립했습니다. PDF는 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
+          'Property 6Way builds six options (sale, gift, gift with debt for homes A and B) and computes each under the rules before and after the grace period. Real-transaction prices are re-checked every 12 hours and loaded month by month in parallel, with the URL assembled by hand because an encoded key failed. The PDF is a report drawn in a hidden iframe and saved through the print dialog.',
         ],
       ]),
       section(
@@ -257,8 +324,8 @@ export const projects: Project[] = [
             'CODEF simple authentication checks the status every 3 seconds and treats it as expired after 270 seconds. Its six states (idle, requested, checking, done, failed, expired) are managed as a single type, and a failed or expired attempt can be retried.',
           ],
           [
-            '인증 한 번으로 얻은 세션을 연도별 조회에 다시 쓰고, 조회는 3초 간격으로 하나씩 보냅니다. 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다. 기다리는 동안에는 연도별 진행 화면을 보여 줍니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
-            'The session from a single authentication is reused for every yearly query, and the queries go out one at a time, 3 seconds apart. If an error says identical requests overlapped, it waits 5 seconds, then 10, and tries again. Meanwhile a per-year progress screen is shown. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
+            '인증 한 번으로 얻은 세션을 연도별 조회에 다시 쓰고, 조회는 3초 간격으로 하나씩 보냅니다. 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다. 기다리는 동안에는 진행 화면을 보여 줍니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
+            'The session from a single authentication is reused for every yearly query, and the queries go out one at a time, 3 seconds apart. If an error says identical requests overlapped, it waits 5 seconds, then 10, and tries again. Meanwhile a progress screen is shown. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
           ],
           [
             '결제(토스페이먼츠)를 요청한 사람이 실제 의뢰의 주인인지, 금액과 이미 결제됐는지를 서버에서 다시 확인합니다. 사용자·세무사·관리자마다 다른 화면을 보여 주지만, 실제 권한 검사는 서버가 합니다.',
@@ -269,8 +336,12 @@ export const projects: Project[] = [
             'In the same backend, Celery Beat syncs real-transaction prices for every regulated area each Monday and retries after a delay on failure. The security tests run in GitHub Actions on every push.',
           ],
           [
-            '같은 앱에 생애주기 금융 화면(금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교)과 AI 세무 상담 챗봇, 세무사 상담 연결 화면도 만들었습니다. 아래 화면의 값은 모두 예시 데이터입니다.',
-            'The same app also has life-stage finance screens (a financial-literacy quiz, mock investing, a spending and assets dashboard, financial product comparison), an AI tax chat assistant and screens that connect users with tax accountants. All values in the screens below are example data.',
+            '같은 앱에서 세무사 목록 → 의뢰 → 서류 업로드 → 채팅(5초 간격 갱신) → 결제로 이어지는 세무사 상담 연결을 실제 백엔드 API로 만들었습니다.',
+            'In the same app I built the tax-accountant connection on the real backend API: accountant list → request → document upload → chat (refreshed every 5 s) → payment.',
+          ],
+          [
+            '생애주기 금융 기능(금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교)은 예시 데이터로 동작하는 시연 화면입니다. 상품 비교의 검색은 입력한 문장에서 상품 종류·기간·정렬 조건을 뽑아내는 규칙 기반 파서로 만들었습니다.',
+            'The life-stage finance features (a financial-literacy quiz, mock investing, a spending and assets dashboard, financial product comparison) are demo screens running on example data; the product search is a rule-based parser that pulls the product type, term and sort order out of a typed sentence.',
           ],
         ],
         {
@@ -319,8 +390,8 @@ export const projects: Project[] = [
               '/media/finz/app-education.webp',
               720,
               1561,
-              ['틀린 문항을 AI 해설과 개념 카드로 이어 주는 금융 교육 퀴즈 결과', 'Financial-literacy quiz results linking wrong answers to AI explanations and concept cards'],
-              ['금융 교육 퀴즈 · 앱 실제 화면 · 예시 데이터', 'Financial-literacy quiz · real app screen · example data'],
+              ['금융 교육 퀴즈 결과와 오답 해설 화면', 'Financial-literacy quiz results with explanations for wrong answers'],
+              ['금융 교육 퀴즈 · 시연 화면 · 예시 데이터', 'Financial-literacy quiz · demo screen · example data'],
               '2026-04-19',
               'phone',
             ),
@@ -328,8 +399,8 @@ export const projects: Project[] = [
               '/media/finz/app-invest.webp',
               720,
               1561,
-              ['보유 종목과 투자 성향 대비 포트폴리오 차이를 보여 주는 모의투자 화면', 'Mock investing with holdings and the gap between risk profile and portfolio'],
-              ['모의투자 · 앱 실제 화면 · 예시 데이터', 'Mock investing · real app screen · example data'],
+              ['가상 자금으로 종목을 사고파는 모의투자 화면', 'Mock investing with virtual money'],
+              ['모의투자 · 시연 화면 · 예시 데이터', 'Mock investing · demo screen · example data'],
               '2026-04-19',
               'phone',
             ),
@@ -337,8 +408,8 @@ export const projects: Project[] = [
               '/media/finz/app-spending.webp',
               720,
               1561,
-              ['카테고리별 소비와 최근 3개월 소비를 보여 주는 대시보드', 'Dashboard of spending by category and over the last three months'],
-              ['소비·자산 대시보드 · 앱 실제 화면 · 예시 데이터', 'Spending and assets dashboard · real app screen · example data'],
+              ['카테고리별·월별 소비를 보여 주는 대시보드', 'Dashboard of spending by category and by month'],
+              ['소비·자산 대시보드 · 시연 화면 · 예시 데이터', 'Spending and assets dashboard · demo screen · example data'],
               '2026-04-19',
               'phone',
             ),
@@ -350,16 +421,20 @@ export const projects: Project[] = [
         ['같은 회사의 다른 작업 · 세무사용 FINZ (협력 개발사와 함께, 출시 전)', 'Also at Finz Labs · FINZ for tax accountants (with a partner company, not yet launched)'],
         [
           [
-            '세무사용 FINZ는 세무사가 쓰는 세무 SaaS로, 협력 개발사와 함께 만들었습니다. 저는 Finz Labs의 기술 담당으로 세금 계산 엔진의 초안을 만들고, 외부 API 연동과 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했습니다.',
-            "FINZ for tax accountants is a tax SaaS built together with a partner development company. As Finz Labs' technical lead, I drafted the tax calculation engine, decided the external API integrations, the deployment and operations approach and the development tools together with the vendor, and took part in development.",
+            '세무사용 FINZ는 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖춘 세무사용 SaaS로, 협력 개발사와 함께 만들고 있습니다. 저는 회사 쪽 기술 책임자로 사양을 쓰고, 개발사가 끝냈다고 한 작업을 다시 검증하고, 장애의 원인을 찾았습니다.',
+            'FINZ for tax accountants is a SaaS that calculates capital gains, gift, inheritance and comprehensive property tax, produces Hometax filing files and has an AI tax assistant; we are building it with a partner development company. As the company-side technical lead I wrote the specs, re-verified the work the vendor reported as done and found the causes of failures.',
           ],
           [
-            '배포가 실패했을 때는 코드 결함이 아니라 서버 메모리 부족이 원인임을 측정과 재현으로 확정했고, 개발사가 진단을 확인해 수정했습니다.',
-            'When deployments failed, I established through measurement and reproduction that the cause was a lack of server memory rather than a code defect; the vendor confirmed the diagnosis and fixed it.',
+            '배포가 9번 잇달아 실패했을 때, 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 1,083MB에서 1,472MB로 36% 늘어난 것(검사 대상 파일 2,619 → 3,619개)을 확인했습니다. 서버와 같은 메모리 상한(973MB)에서 오류를 재현해 코드 결함이 아니라 서버 메모리 부족이 원인임을 밝혔고, 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했습니다. 개발사는 진단이 맞다고 확인하고, 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
+            'When nine deployments failed in a row, I measured before and after the blockchain library arrived and found type-check memory up 36%, from 1,083 MB to 1,472 MB (files checked: 2,619 → 3,619). Reproducing the crash under the server’s 973 MB heap cap showed the cause was server memory, not a code defect; I tested two fixes and recommended an 8 GB server or building images in CI. The vendor confirmed the diagnosis and changed deployment so a failed build no longer takes the service down.',
           ],
           [
-            '개발사와 주고받은 이슈 원장 269건은 코드·테스트·화면 근거로 대조해 확인류 233건과 잔여 36건으로 나눠 관리했습니다(해결 건수가 아니라 관리 분류입니다). 그 과정에서 기준시가가 입력되지 않은 필지가 경고 없이 세액 계산에서 빠지는 High 등급 결함을 찾아 수정 요청에 반영했습니다.',
-            'I checked the 269 items in the issue ledger with the vendor against the code, tests and screens, and tracked them as 233 confirmed-type and 36 remaining (a tracking category, not a count of fixes). Along the way I found a High-severity defect where land parcels with no standard price entered were silently left out of the tax calculation, which went into a fix request.',
+            '개발사가 완료했다고 한 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며(PR 참조 317개 대조), 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었고, 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 약 973만 원 적게 나오는 High 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
+            'I re-checked, one by one against code, tests and screens, the 269 items the vendor reported as done: 233 confirmed and 36 left open (317 PR references cross-checked), plus 45 new defects. Two had to be fixed before launch (payment and plan locking); for a High defect, where a parcel with no standard price was silently dropped from the tax and understated it by about ₩9.73 million, I traced the exact code and sent it as the top fix request.',
+          ],
+          [
+            '문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 인식이 끊기는 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사는 상한을 8,000으로 올리며 코드 주석에 그 진단을 남겼습니다. CI가 실제로 계산 오류를 잡는지 한 줄짜리 버그 7개를 심어 7개 모두 걸리는 것을 확인했고, 제가 쓴 가격 정책·기능 잠금 범위 사양은 그대로 구현되어 코드에 출처로 남았습니다.',
+            'In an OCR field test (11 document types, 17 files) I traced incomplete recognition to the output-token cap (1,200); the vendor raised it to 8,000 and credited the diagnosis in a code comment. I planted seven one-line bugs to see whether CI really catches calculation errors, and it caught all seven; my pricing and feature-lock spec was implemented as written and is cited as the source in the code.',
           ],
         ],
         { anchor: 'finz-saas' },
@@ -376,19 +451,31 @@ export const projects: Project[] = [
             '워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에, ±10원을 허용 범위로 정했습니다. 기준 사례의 단지 이름과 금액은 고객 정보일 수 있어 공개하지 않습니다.',
             "The workbook keeps fractions while the engine drops fractions of a won at each step, so ±10 won is the agreed tolerance. The reference case's apartment names and amounts may be client data, so they are not shown.",
           ],
+          [
+            '운영 중인 웹 저장소의 테스트 184개가 모두 통과합니다. 가상자산 엔진 25개, 해외주식 엔진 28개(익명화한 실제 증여 사례를 원 단위로 맞추는 검사 포함), 시세·환율 데이터 소스 31개가 들어 있고, 외부 API는 모의 응답으로 대신해 네트워크 없이 돕니다.',
+            'All 184 tests in the live website’s repository pass: 25 for the crypto engine, 28 for the foreign-stock engines (including checks that match an anonymised real gift case to the won) and 31 for the market-data sources, with external APIs mocked so they run offline.',
+          ],
         ],
         { anchor: 'validation' },
       ),
       section('result', RESULT, [
         [
-          '부동산 6Way를 포함한 회사 웹은 finz.kr에서 운영 중입니다. 사용자 수 같은 운영 지표는 집계하지 않아 적지 않습니다.',
-          'The company website, including property 6Way, is live at finz.kr. No usage metrics such as user counts are collected, so none are given.',
+          '부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기가 finz.kr에서 운영 중입니다. 사용자 수 같은 운영 지표는 집계하지 않아 적지 않습니다.',
+          'The property 6Way, digital-asset and foreign-stock gains and gift-valuation calculators are live at finz.kr. No usage metrics such as user counts are collected, so none are given.',
+        ],
+        [
+          'Finz 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
+          'The Finz app (youth tax refund and property 6Way) won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).',
         ],
       ]),
       section('retro', RETRO, [
         [
           '기준 사례가 하나뿐입니다. 경계값·반올림·잘못된 입력 사례를 늘리고, 워크북 자체가 틀렸을 때 알아챌 방법도 정하겠습니다.',
           'There is only one reference case. I would add boundary, rounding and invalid-input cases, and decide how we would notice if the workbook itself were wrong.',
+        ],
+        [
+          '디지털 자산 엔진과 증여 평가 모듈은 회사 세무 SaaS의 코드를 옮긴 것이라, 그 뒤 SaaS에 들어간 수정(10원 미만 절사, 공제 근거 조문 정정 등)이 개인 계산기에는 아직 없습니다. 두 곳이 같은 엔진을 쓰도록 공용 패키지로 묶겠습니다.',
+          'The crypto engine and the gift-valuation module were adapted from the company SaaS, so fixes made in the SaaS since then (rounding down below 10 won, a corrected statute reference) are not in the public calculators yet. I would move the engine into a shared package both use.',
         ],
         [
           '결제 승인 뒤 저장이 실패하거나 같은 요청이 두 번 오는 것처럼 외부 시스템과 상태가 어긋나는 상황을, 실패를 일부러 일으켜 확인해 두겠습니다.',
@@ -809,12 +896,12 @@ export const projects: Project[] = [
       '발표하는 동안 말 속도·감정·음량을 분석해 색으로 알려 주고, 끝나면 코칭 보고서를 만드는 서비스',
       'A service that analyzes speaking pace, emotion and volume during a talk, shows them as colors and writes a coaching report at the end',
     ),
-    period: '2024.10–2026.05',
+    period: '2024.10–2026.10',
     team: k('2024 해커톤 5인 팀 → 2025 2인으로 발전 → 2026 혼자 리뉴얼', '2024 hackathon team of 5 → developed further by 2 in 2025 → renewed solo in 2026'),
     role: k('백엔드·AI (앱 UI는 팀원) · 2026 리뉴얼은 전체', 'Backend and AI (app UI by a teammate) · all of the 2026 renewal'),
-    status: k('2026 리뉴얼: 실시간 피드백·사후 작업 큐까지 구현, 보고서 화면 미완성', '2026 renewal: live feedback and post-talk job queue built, report screen unfinished'),
-    statusCheckedAt: '2026-10-25',
-    stack: ['Flask', 'SenseVoice-Small', 'OpenAI Assistants', 'Fastify', 'Socket.IO', 'BullMQ', 'Whisper', 'Expo'],
+    status: k('2026 리뉴얼: 실시간 피드백·발표 후 분석·보고서 화면 구현, 실기기 확인 전', '2026 renewal: live feedback, post-talk analysis and report screens built; not yet checked on a real phone'),
+    statusCheckedAt: '2026-10-29',
+    stack: ['Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'OpenAI API', 'Expo', 'Flask', 'SenseVoice-Small'],
     summary: k(
       '발표 중 말 속도와 감정을 분석해 알려 주는 코칭 서비스. 해커톤 대상과 창업 경진대회 특별상, 국제학술대회 논문으로 이어졌고 2026년에 혼자 다시 설계했습니다.',
       'A coaching service that analyzes speaking pace and emotion during a talk. It won a hackathon grand prize and a startup competition award, became an international conference paper, and I redesigned it alone in 2026.',
@@ -864,9 +951,9 @@ export const projects: Project[] = [
               ],
               [
                 k('2026 개인 리뉴얼', '2026 solo renewal'),
-                k('Socket.IO로 0.25초 조각 전송, 서버가 5초씩 모아 실시간 음량 피드백, 발표 후 작업은 BullMQ', 'Socket.IO sends 0.25 s chunks; the server gathers 5 s for live volume feedback; post-talk jobs run on BullMQ'),
+                k('Socket.IO로 0.25초 조각 전송, 서버가 5초씩 모아 음량·말 속도·간투사(·감정) 분석, 발표 후 분석은 BullMQ', 'Socket.IO sends 0.25 s chunks; the server analyzes volume, pace, filler words (and emotion) every 5 s; post-talk analysis runs on BullMQ'),
                 k('전체', 'All of it'),
-                k('실시간 피드백·작업 큐 동작, 보고서 화면 미완성', 'Live feedback and job queue work; report screen unfinished'),
+                k('보고서 화면까지 구현, 단위 테스트 30개 통과, 실기기 확인 전', 'Built through the report screen; 30 unit tests pass; not yet checked on a real phone'),
               ],
             ],
           },
@@ -874,18 +961,26 @@ export const projects: Project[] = [
       ),
       section('implementation', IMPLEMENTATION, [
         [
-          '2026 버전은 발표가 끝나면 받아쓰기(Whisper)·말 속도·간투사·LLM 보고서·PDF 생성을 BullMQ 작업으로 넘깁니다. 처음 시도를 포함해 최대 2번 시도하고, 실패하면 간격을 늘려 다시 시도하며, 동시에 2개까지 처리합니다.',
-          'In the 2026 version, transcription (Whisper), speaking rate, filler words, the LLM report and PDF generation become BullMQ jobs after the talk: at most 2 attempts including the first, a growing delay between retries, and up to 2 jobs at once.',
+          '2026 버전은 발표 중 0.25초마다 음성 조각을 Socket.IO로 보내고, 서버가 5초씩 모아 음량·말 속도·간투사를 계산합니다(감정 분석 서비스가 켜져 있으면 감정까지). 조용한 구간은 받아쓰기를 건너뛰고, 받아쓰기가 4초 안에 끝나지 않으면 음량만으로 피드백합니다.',
+          'In the 2026 version the app sends a slice of audio every 0.25 s over Socket.IO, and the server computes volume, speaking pace and filler words every 5 s (plus emotion when that service is running). Silent stretches skip transcription, and if transcription takes over 4 s the feedback falls back to volume alone.',
         ],
         [
-          'Whisper가 날것의 음성 데이터를 받지 않아 WAV 헤더를 직접 만들어 붙였고, iOS에서 녹음이 시작되지 않던 오류는 오디오 세션을 켜는 순서를 바꿔 해결했습니다.',
-          "Whisper wouldn't take raw audio data, so I built and attached the WAV header myself; recording that wouldn't start on iOS was fixed by changing the order in which the audio session is turned on.",
+          '발표가 끝나면 받아쓰기(Whisper) → LLM 보고서 → PDF를 BullMQ 작업으로 넘깁니다. 실패하면 5초 뒤 한 번 더 시도하고, 동시에 2개까지 처리합니다. 보고서·기록·홈 화면에서 결과와 PDF를 봅니다.',
+          'After the talk, transcription (Whisper) → the LLM report → a PDF run as BullMQ jobs: one retry 5 s after a failure, up to 2 jobs at once. The report, history and home screens show the results and the PDF.',
+        ],
+        [
+          'Whisper가 날것의 음성 데이터를 받지 않아 WAV 헤더를 직접 만들어 붙였습니다. iOS에서 녹음이 되지 않던 문제는 React Native 새 아키텍처를 지원하지 않던 녹음 라이브러리를 @siteed/audio-studio로 바꾸고 iOS 최소 버전을 16.4로 올려 해결했습니다.',
+          "Whisper wouldn't take raw audio data, so I build the WAV header myself. Recording that didn't work on iOS was fixed by replacing a recording library that didn't support React Native's new architecture with @siteed/audio-studio and raising the minimum iOS version to 16.4.",
         ],
       ]),
       section('validation', VALIDATION, [
         [
-          '팀 버전은 해커톤과 창업 경진대회에서 시연했습니다. 2026 버전은 iOS 시뮬레이터 빌드까지 확인했고 자동 테스트는 없습니다.',
-          'The team version was demonstrated at the hackathon and the startup competition. The 2026 version was checked as far as an iOS simulator build and has no automated tests.',
+          '팀 버전은 해커톤과 창업 경진대회에서 시연했습니다.',
+          'The team version was demonstrated at the hackathon and the startup competition.',
+        ],
+        [
+          '2026 버전은 단위 테스트 30개(Vitest, 6개 파일)가 통과하고, Docker로 띄우는 통합 테스트 6개와 감정 분석 서비스의 pytest 9개가 따로 있습니다. 휴대폰 없이 녹음부터 보고서 PDF까지 전체 흐름을 재현하는 스크립트로 확인했고 iOS 시뮬레이터 빌드는 성공했습니다. 실제 휴대폰에서는 아직 확인하지 않았습니다.',
+          'The 2026 version passes 30 unit tests (Vitest, 6 files); 6 integration tests that run under Docker and 9 pytest cases for the emotion service sit alongside. A script that replays the whole flow without a phone, from recording to the report PDF, was used to check it, and the iOS simulator build succeeds. It has not been checked on a real phone yet.',
         ],
       ]),
       section('result', RESULT, [
@@ -910,8 +1005,12 @@ export const projects: Project[] = [
       ]),
       section('retro', RETRO, [
         [
-          '2026 버전은 재시도할 때 받아쓰기와 LLM을 처음부터 다시 부르므로 비용이 겹칠 수 있습니다. 작업 단계마다 상태를 남겨 끝난 단계는 건너뛰게 하겠습니다.',
-          'On a retry the 2026 version calls transcription and the LLM again from the start, so costs can double. I would record each step so finished steps are skipped.',
+          '첫 시도가 실패하면 재시도가 남아 있어도 세션을 "실패"로 바꿔, 재시도가 성공해도 앱에는 실패로 보입니다. 마지막 시도가 실패했을 때만 상태를 바꾸도록 고치겠습니다.',
+          'When the first attempt fails, the session is marked "failed" even though a retry is pending, so a successful retry still shows as a failure in the app. I would change the status only after the last attempt fails.',
+        ],
+        [
+          '재시도하면 받아쓰기와 LLM을 처음부터 다시 부르므로 비용이 겹칠 수 있습니다. 단계마다 결과를 남겨 끝난 단계는 건너뛰게 하겠습니다.',
+          'A retry calls transcription and the LLM again from the start, so costs can double. I would keep each step’s result so finished steps are skipped.',
         ],
         [
           '2024 버전의 말 속도는 띄어쓰기 단위로 세어 한국어에서는 정확하지 않습니다.',
@@ -920,8 +1019,8 @@ export const projects: Project[] = [
       ]),
       section('evidence', EVIDENCE, [
         [
-          '2024·2026 코드는 비공개 저장소에 있습니다. 논문은 APIC-IST 2025 발표 논문입니다.',
-          'The 2024 and 2026 code are in private repositories. The paper was presented at APIC-IST 2025.',
+          '2024·2026 코드는 공개하지 않았습니다. 논문은 APIC-IST 2025 발표 논문입니다.',
+          'The 2024 and 2026 code are not public. The paper was presented at APIC-IST 2025.',
         ],
       ]),
     ],
@@ -941,6 +1040,7 @@ export const projects: Project[] = [
       'My first web service: the Naver search trend API gave only ratios, so I anchored them to the ad API’s real monthly search counts to estimate monthly volumes and chart them.',
     ),
     image: '/images/projects/media-pulse.png',
+    imageCaption: k('월별 검색량 추이 차트 · 실제 화면', "Monthly search-volume chart · real screen"),
   },
   {
     slug: 'label-light',
@@ -956,6 +1056,7 @@ export const projects: Project[] = [
       'A voice chatbot that draws Geriatric Depression Scale questions out of everyday conversation with seniors. Special Award at the 2024 Hanshin AISW Festival; first-author paper at the 2025 Korea Digital Contents Society summer conference.',
     ),
     image: '/images/projects/label-light.png',
+    imageCaption: k('음성 대화 화면 · 실제 화면', "Voice conversation screen · real screen"),
   },
   {
     slug: 'wildfire',
@@ -984,6 +1085,7 @@ export const projects: Project[] = [
       'A learning platform from a placement quiz to a study calendar, weekly and per-topic quizzes and reports. Duplicate requests on slow AI calls are blocked in the app and on the server (429). Two Korea Digital Contents Society papers.',
     ),
     image: '/images/projects/edumatrix.png',
+    imageCaption: k('학습 진행률·계획 캘린더·추천 학습이 있는 대시보드 · 실제 화면', "Dashboard with progress, a study calendar and recommendations · real screen"),
   },
   {
     slug: 'innoview',
@@ -998,6 +1100,7 @@ export const projects: Project[] = [
       'A mock-interview service that writes questions for your résumé and role, transcribes answers with Whisper and asks follow-ups. Browser WebM recordings are converted to WAV with ffmpeg on the server.',
     ),
     image: '/images/projects/innoview.png',
+    imageCaption: k('면접 질문과 답변 입력 화면 · 실제 화면', "Interview question and answer screen · real screen"),
   },
   {
     slug: 'restplanner',
@@ -1012,6 +1115,7 @@ export const projects: Project[] = [
       'A scheduling service where one LLM proposes a schedule, another LLM role reviews it against rest and overload criteria (up to twice), and nothing goes into Google Calendar until the user approves.',
     ),
     image: '/images/projects/restplanner.png',
+    imageCaption: k('일정 요청 입력 화면 · 실제 화면(로컬 실행)', "Schedule request screen · real screen (local run)"),
   },
   {
     slug: 'ai-hiring-textmining',
@@ -1071,6 +1175,7 @@ export const projects: Project[] = [
       'The LLM conversation backend for an NPC caregiver service in the metaverse (Quest 3). Excellence Award at the Hanshin ABC Camp Hackathon (team).',
     ),
     image: '/images/projects/llm-dolbom.png',
+    imageCaption: k('메타버스 속 NPC 대화 장면 · 팀 결과물 화면', "An NPC conversation in the metaverse · the team's build"),
   },
   {
     slug: 'patentry',
@@ -1093,6 +1198,7 @@ export const projects: Project[] = [
       'A career assessment and roadmap platform for high-school students. Honorable Mention at the SUMTECH Hackathon (team).',
     ),
     image: '/images/projects/dreamtrack.png',
+    imageCaption: k('회원가입 화면 · 실제 화면', "Sign-up screen · real screen"),
   },
   {
     slug: 'teamflow',
@@ -1106,6 +1212,7 @@ export const projects: Project[] = [
       'A browser prototype that transcribes what is said in a meeting and shows the emotion of each sentence and a summary of the meeting (team of 3).',
     ),
     image: '/images/projects/teamflow.png',
+    imageCaption: k('회의 화면과 AI 퍼실리테이터 패널 · 실제 화면(로컬 실행)', "Meeting screen with the AI facilitator panel · real screen (local run)"),
   },
   {
     slug: 'unifit',
@@ -1119,6 +1226,7 @@ export const projects: Project[] = [
       'A full-stack prototype for managing coursework, career plans and team projects in one place (29 tables, role-based permissions).',
     ),
     image: '/images/projects/unifit.png',
+    imageCaption: k('진로 로드맵 화면 · 실제 화면', "Career roadmap screen · real screen"),
   },
   {
     slug: 'formcoach',

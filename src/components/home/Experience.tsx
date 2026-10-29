@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useLang } from '@/components/providers/LanguageProvider'
 import { StatTiles } from '@/components/common/StatTiles'
-import type { Archive, Award, Stat } from '@/content/types'
+import type { Archive, Award, L, Stat } from '@/content/types'
 import { HOME_IDS, SECTION_TITLES, UI } from '@/content/ui'
 import { SectionHead } from './SectionHead'
 
@@ -11,7 +11,7 @@ import { SectionHead } from './SectionHead'
 export const awardMonth = (date: string) => `20${date.slice(0, 5)}`
 
 /** One column of dated rows (work, then school), the record in numbers, and the three awards that matter most. */
-export function Experience({ archive, topAwards, stats }: { archive: Archive; topAwards: Award[]; stats: Stat[] }) {
+export function Experience({ archive, topAwards, stats, caseNames }: { archive: Archive; topAwards: Award[]; stats: Stat[]; caseNames: Record<string, L> }) {
   const { t } = useLang()
   const { education } = archive
   return (
@@ -57,7 +57,14 @@ export function Experience({ archive, topAwards, stats }: { archive: Archive; to
           {topAwards.map((award) => (
             <li key={award.name.ko}>
               <span className="mono award-date">{awardMonth(award.date)}</span>
-              <span className="award-name">{t(award.name)}</span>
+              <span className="award-name">
+                {t(award.name)}
+                {award.project && caseNames[award.project] && (
+                  <Link href={`/projects/${award.project}`} className="award-project">
+                    {t(caseNames[award.project])} <span aria-hidden="true">→</span>
+                  </Link>
+                )}
+              </span>
               <span className="award-org">
                 {t(award.org)}
                 {award.team && <span className="badge">{t(UI.team)}</span>}

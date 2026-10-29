@@ -10,7 +10,7 @@ import { SITE_URL, archive, profile } from '@/content'
 import { pageMetadata } from './_lib/pages'
 
 const TITLE = '허준영 | 백엔드 중심 풀스택 개발자'
-const DESCRIPTION = '허준영 · 백엔드 중심 풀스택 개발자. Finz 부동산 세금 비교, SkillPilot, ClosetMate.'
+const DESCRIPTION = '허준영 · 백엔드 중심 풀스택 개발자. Finz 개인 세금 계산기, SkillPilot, ClosetMate.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

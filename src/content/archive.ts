@@ -152,6 +152,7 @@ export const archive: Archive = {
         '2026 AI-SW-Centered University AI & Blockchain Business Model Competition, Excellence Award',
       ),
       org: k('SW 중심 대학', 'SW-Centered University Program'),
+      project: 'finz',
     },
     {
       date: '26.07.22',
@@ -283,8 +284,8 @@ export const archive: Archive = {
       context: k('직원 5명 스타트업의 유일한 개발자, 인력 관리는 맡지 않음', 'The only developer at a five-person startup; no people management'),
       responsibilities: [
         k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
-        k('Finz 모바일 앱: 청년 세금 환급 MVP, 생애주기 금융 화면, AI 세무 상담 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, life-stage finance screens, AI tax chat (Expo · FastAPI, not released)'),
-        k('세무사용 FINZ 기술 결정·개발 참여·QA (협력 개발사와 함께)', 'Technical decisions, development and QA for FINZ for tax accountants (with a partner development company)'),
+        k('Finz 모바일 앱: 청년 세금 환급 MVP, 세무사 상담 연결, 생애주기 금융 시연 화면 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, tax-accountant connection, life-stage finance demo screens (Expo · FastAPI, not released)'),
+        k('세무사용 FINZ: 사양 작성, 개발사 작업 재검증, 배포 장애 원인 분석 (협력 개발사와 함께)', 'FINZ for tax accountants: specs, re-verifying the vendor’s work, finding the cause of deployment failures (with a partner development company)'),
       ],
     },
   ],
@@ -293,9 +294,9 @@ export const archive: Archive = {
     {
       area: k('웹·API', 'Web · API'),
       items: ['TypeScript', 'Next.js', 'Node.js · Express'],
-      did: k('세금 비교 화면과 계산 API, 공공 API 7종 연동과 정규화', 'Tax comparison screens and calculation API; integrating and normalizing 7 public APIs'),
+      did: k('세금 계산기 화면과 API, 시세·환율 데이터 연동과 대체 조회, 공공 API 7종 정규화', 'Tax calculator screens and APIs, market-data integration with fallbacks, normalizing 7 public APIs'),
       evidence: [
-        { label: k('Finz 부동산 6Way', 'Finz property 6Way'), href: '/projects/finz' },
+        { label: k('Finz 세금 계산기', 'Finz tax calculators'), href: '/projects/finz' },
         { label: k('SkillPilot API 클라이언트', 'SkillPilot API client'), href: 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/SkillPilot-backend/src/integrations/dataGoKr/client.js' },
       ],
     },
@@ -308,7 +309,7 @@ export const archive: Archive = {
     {
       area: k('데이터', 'Data'),
       items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis'],
-      did: k('정형 데이터와 AI 결과 분리 저장, 같은 요청의 AI 결과 재사용, 실거래가 캐시', 'Structured data and AI results stored apart, reuse of AI results for the same request, caching real-transaction prices'),
+      did: k('정형 데이터와 AI 결과 분리 저장, 같은 요청의 AI 결과 재사용, 확정된 시세·환율만 캐시', 'Structured data and AI results stored apart, reuse of AI results for the same request, caching only settled prices and rates'),
       evidence: [
         { label: k('SkillPilot', 'SkillPilot'), href: '/projects/skillpilot' },
         { label: k('Finz', 'Finz'), href: '/projects/finz' },

@@ -34,15 +34,15 @@ describe('home page (real content)', () => {
     ])
   })
 
-  it('presents the flagship with its demo video, three features, the workbook check and both links', () => {
+  it('presents the flagship with its demo video, four features, the workbook check and both links', () => {
     renderWithProviders(<Home />)
     const flagship = sectionOf('대표 프로젝트')
-    expect(within(flagship).getByRole('heading', { level: 3 })).toHaveTextContent('Finz 부동산 세금 비교')
+    expect(within(flagship).getByRole('heading', { level: 3 })).toHaveTextContent('Finz 개인 세금 계산기')
     expect(flagship.querySelector('video')).toHaveAttribute('poster', '/media/finz/web-demo-poster.webp')
-    expect(flagship.querySelectorAll('ol.feature-list > li')).toHaveLength(3)
+    expect(flagship.querySelectorAll('ol.feature-list > li')).toHaveLength(4)
     expect(flagship).toHaveTextContent('21/21')
     expect(within(flagship).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/finz')
-    expect(within(flagship).getByRole('link', { name: /부동산 6Way 열기/ })).toHaveAttribute('href', 'https://www.finz.kr/personal/property')
+    expect(within(flagship).getByRole('link', { name: /개인 세금 계산기 열기/ })).toHaveAttribute('href', 'https://www.finz.kr/personal')
     // the demo video carries the visuals here; the screens live on the case page
     expect(within(flagship).queryAllByRole('img')).toHaveLength(0)
   })
@@ -96,6 +96,8 @@ describe('home page (real content)', () => {
     expect(experience).toHaveTextContent('국제 1 · 1저자 3')
     expect(experience.querySelectorAll('.award-rows > li')).toHaveLength(3)
     expect(experience.querySelector('.award-rows > li')).toHaveTextContent('2024.10캡스톤 디자인 및 AI 해커톤 대상(1등)')
+    const awardLinks = [...experience.querySelectorAll('.award-rows a')].map((a) => a.getAttribute('href'))
+    expect(awardLinks).toEqual(['/projects/pitches', '/projects/pitches', '/projects/finz'])
     expect(within(experience).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
     expect(within(experience).getByRole('link', { name: /4년 이야기/ })).toHaveAttribute('href', '/story')
   })

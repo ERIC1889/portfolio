@@ -27,17 +27,27 @@ function Block({ id, title, count, children }: { id: string; title: L; count?: n
   )
 }
 
+/** A case's first picture, or a card's thumbnail with its caption; nothing when a picture can't say what it shows. */
+export function cardPicture(project: Project): { src: string; alt: L; caption: L } | undefined {
+  const media = project.media?.find((m) => m.kind !== 'video')
+  if (media) return { src: media.src, alt: media.alt, caption: media.caption }
+  if (project.image && project.imageCaption) return { src: project.image, alt: project.imageCaption, caption: project.imageCaption }
+  return undefined
+}
+
 function ProjectCard({ project }: { project: Project }) {
   const { t } = useLang()
   const featured = project.tier === 'featured'
-  // Only real screens get a thumbnail here; mockups need their label and stay on the case page.
-  const picture = featured ? project.media?.find((m) => m.kind === 'screenshot') : undefined
+  const picture = cardPicture(project)
   return (
     <li className={`archive-card${featured ? ' is-featured' : ''}`}>
       {picture && (
-        <div className="archive-card-media">
-          <Image src={picture.src} alt={t(picture.alt)} width={picture.width} height={picture.height} sizes="(max-width: 640px) 100vw, 320px" />
-        </div>
+        <figure className="archive-card-media">
+          <div className="archive-card-frame">
+            <Image src={picture.src} alt={t(picture.alt)} fill sizes="(max-width: 640px) 100vw, 320px" style={{ objectFit: 'contain' }} />
+          </div>
+          <figcaption>{t(picture.caption)}</figcaption>
+        </figure>
       )}
       <div className="archive-card-body">
         <p className="archive-card-head">
@@ -65,10 +75,10 @@ function ProjectCard({ project }: { project: Project }) {
   )
 }
 
-type Props = { archive: Archive; projects: Project[]; stats: Stat[] }
+type Props = { archive: Archive; projects: Project[]; stats: Stat[]; caseNames: Record<string, L> }
 
 /** Everything on one page: the numbers first, then each record laid out to scan. */
-export function ArchiveView({ archive, projects, stats }: Props) {
+export function ArchiveView({ archive, projects, stats, caseNames }: Props) {
   const { t } = useLang()
   const years = [...new Set(projects.map((p) => p.years[0]))].sort((a, b) => b - a)
   const top = new Set(archive.topAwards)
@@ -158,7 +168,17 @@ export function ArchiveView({ archive, projects, stats }: Props) {
                     {top.has(award.name.ko) && <span className="badge badge-accent">{t(UI.featuredAward)}</span>}
                     {award.team && <span className="badge">{t(UI.team)}</span>}
                   </p>
-                  <p className="muted">{t(award.org)}</p>
+                  <p className="muted">
+                    {t(award.org)}
+                    {award.project && caseNames[award.project] && (
+                      <>
+                        {' · '}
+                        <Link href={`/projects/${award.project}`}>
+                          {t(caseNames[award.project])} <span aria-hidden="true">→</span>
+                        </Link>
+                      </>
+                    )}
+                  </p>
                 </div>
               </li>
             ))}
