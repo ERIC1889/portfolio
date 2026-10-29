@@ -1,85 +1,168 @@
 'use client'
 
+import Link from 'next/link'
+import type { ReactNode } from 'react'
 import { useLang } from '@/components/providers/LanguageProvider'
+import { Gallery } from '@/components/common/Media'
+import { SmartLink, StackList, StatusBadge } from '@/components/common/bits'
 import { PageNav } from '@/components/shell/PageNav'
+import { projectTitle } from '@/content/select'
 import type { L, Project } from '@/content/types'
-import { projectName } from '@/content/select'
-import { NAV_LABELS, UI } from '@/content/ui'
+import { SHOWCASE_LABELS, UI } from '@/content/ui'
 import { CaseSection } from './CaseSection'
+import { ContributionTable, FlowDiagram } from './parts'
 
 type Neighbour = { slug: string; name: L }
 
-function MetaRow({ label, children, mono }: { label: L; children: string; mono?: boolean }) {
+/** Section anchors: the section's own anchor, or its id (numbered when an id repeats). */
+export function sectionAnchors(project: Project): string[] {
+  const seen = new Map<string, number>()
+  return (project.sections ?? []).map((section) => {
+    if (section.anchor) return section.anchor
+    const n = (seen.get(section.id) ?? 0) + 1
+    seen.set(section.id, n)
+    return n === 1 ? section.id : `${section.id}-${n}`
+  })
+}
+
+function Fact({ label, children }: { label: L; children: ReactNode }) {
   const { t } = useLang()
   return (
-    <div className="case-meta-row">
+    <div className="fact">
       <dt>{t(label)}</dt>
-      <dd className={mono ? 'mono' : undefined}>{children}</dd>
+      <dd>{children}</dd>
     </div>
   )
 }
 
-type Variant = 'page' | 'modal'
-
-export function CaseStudy({
-  project,
-  prev,
-  next,
-  variant = 'page',
-}: {
-  project: Project
-  prev?: Neighbour
-  next?: Neighbour
-  variant?: Variant
-}) {
+export function CaseStudy({ project, prev, next }: { project: Project; prev?: Neighbour; next?: Neighbour }) {
   const { t } = useLang()
-  const name = t(projectName(project))
-  const hunk = `${project.years.join('→')} ${name}`
+  const sections = project.sections ?? []
+  const anchors = sectionAnchors(project)
+  const validationIndex = sections.findIndex((section) => section.id === 'validation')
+  const evidenceIndex = sections.findIndex((section) => section.id === 'evidence')
+  const links = project.links ?? []
+  const headerLinks = links.slice(0, 2)
 
-  const Root = variant === 'page' ? 'main' : 'div'
+  const toc: { href: string; label: L }[] = [
+    ...(project.media?.length ? [{ href: '#screens', label: UI.mediaHeading }] : []),
+    ...(project.features?.length ? [{ href: '#features', label: UI.featuresHeading }] : []),
+    ...(project.contribution ? [{ href: '#contribution', label: UI.contributionHeading }] : []),
+    ...(project.flow ? [{ href: '#flow', label: project.flow.title }] : []),
+    ...sections.map((section, i) => ({ href: `#${anchors[i]}`, label: section.title })),
+  ]
 
   return (
-    <Root className={variant === 'page' ? 'case-page' : 'case-page in-modal'}>
-      <section className="sec case-hero">
-        <div className="sec-inner">
-          <p className="sec-num">{name}</p>
-          <h1 className="case-question">{t(project.question ?? project.summary)}</h1>
-          <dl className="glass case-meta">
-            <MetaRow label={UI.period} mono>
-              {project.period}
-            </MetaRow>
-            {project.team && <MetaRow label={UI.team}>{t(project.team)}</MetaRow>}
-            {project.role && <MetaRow label={UI.role}>{t(project.role)}</MetaRow>}
-            {project.status && <MetaRow label={UI.status}>{t(project.status)}</MetaRow>}
-            <MetaRow label={UI.stack} mono>
-              {project.stack.join(' · ')}
-            </MetaRow>
+    <main id="main" className="case">
+      <div className="wrap">
+        <p className="breadcrumb">
+          <Link href="/#projects">
+            <span aria-hidden="true">←</span> {t(UI.backToProjects)}
+          </Link>
+        </p>
+
+        <header className="case-header">
+          {project.showcase && <p className="kicker">{t(SHOWCASE_LABELS[project.showcase])}</p>}
+          <h1>{t(projectTitle(project))}</h1>
+          <p className="case-product">{t(project.product ?? project.summary)}</p>
+          <dl className="facts">
+            {project.audience && <Fact label={UI.audience}>{t(project.audience)}</Fact>}
+            <Fact label={UI.period}>
+              <span className="mono">{project.period}</span>
+            </Fact>
+            {project.team && <Fact label={UI.team}>{t(project.team)}</Fact>}
+            {project.role && <Fact label={UI.role}>{t(project.role)}</Fact>}
+            {project.status && (
+              <Fact label={UI.status}>
+                <StatusBadge project={project} />
+              </Fact>
+            )}
+            <Fact label={UI.stack}>
+              <StackList items={project.stack} />
+            </Fact>
           </dl>
-          {project.image && (
-            <figure className="case-figure">
-              <img className="case-image" src={project.image} alt={name} />
-              {project.imageCaption && <figcaption className="case-caption">{t(project.imageCaption)}</figcaption>}
-            </figure>
+          {(headerLinks.length > 0 || validationIndex !== -1) && (
+            <div className="actions">
+              {headerLinks.map((link, i) => (
+                <SmartLink key={link.href} href={link.href} className={i === 0 ? 'btn btn-primary' : 'btn'}>
+                  {t(link.label)}
+                </SmartLink>
+              ))}
+              {validationIndex !== -1 && (
+                <a href={`#${anchors[validationIndex]}`} className="btn">
+                  {t(sections[validationIndex].title)} <span aria-hidden="true">↓</span>
+                </a>
+              )}
+              {links.length > headerLinks.length && evidenceIndex !== -1 && (
+                <a href={`#${anchors[evidenceIndex]}`} className="btn">
+                  {t(sections[evidenceIndex].title)} <span aria-hidden="true">↓</span>
+                </a>
+              )}
+            </div>
           )}
+        </header>
+
+        <div className="case-layout">
+          <nav className="toc" aria-labelledby="toc-title">
+            <p id="toc-title" className="label">
+              {t(UI.onThisPage)}
+            </p>
+            <ol>
+              {toc.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href}>{t(item.label)}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <div className="case-main">
+            {project.media && project.media.length > 0 && (
+              <section id="screens" className="case-block" aria-labelledby="screens-title">
+                <h2 id="screens-title">{t(UI.mediaHeading)}</h2>
+                <Gallery media={project.media} />
+              </section>
+            )}
+            {project.features && project.features.length > 0 && (
+              <section id="features" className="case-block" aria-labelledby="features-title">
+                <h2 id="features-title">{t(UI.featuresHeading)}</h2>
+                <ol className="feature-list">
+                  {project.features.map((feature) => (
+                    <li key={feature.ko}>{t(feature)}</li>
+                  ))}
+                </ol>
+              </section>
+            )}
+            {project.contribution && (
+              <section id="contribution" className="case-block" aria-labelledby="contribution-title">
+                <h2 id="contribution-title">{t(UI.contributionHeading)}</h2>
+                <ContributionTable contribution={project.contribution} />
+              </section>
+            )}
+            {project.flow && (
+              <section id="flow" className="case-block" aria-labelledby="flow-title">
+                <h2 id="flow-title">{t(project.flow.title)}</h2>
+                <FlowDiagram flow={project.flow} />
+              </section>
+            )}
+            {sections.map((section, i) => (
+              <CaseSection
+                key={anchors[i]}
+                section={section}
+                anchor={anchors[i]}
+                metrics={i === validationIndex ? project.metrics : undefined}
+                links={i === evidenceIndex ? links : undefined}
+              />
+            ))}
+          </div>
         </div>
-      </section>
 
-      {project.sections?.map((section, i) => (
-        <CaseSection
-          key={`${section.id}-${i}`}
-          section={section}
-          hunk={hunk}
-          links={section.id === 'evidence' ? project.links : undefined}
+        <PageNav
+          prev={prev && { href: `/projects/${prev.slug}`, label: prev.name }}
+          center={{ href: '/#projects', label: UI.backToProjects }}
+          next={next && { href: `/projects/${next.slug}`, label: next.name }}
         />
-      ))}
-
-      {/* Full page: real page loads, with the case list in the middle. Popup: swap the popup in place. */}
-      <PageNav
-        prev={prev && { href: `/projects/${prev.slug}`, label: t(prev.name) }}
-        center={variant === 'page' ? { href: '/#cases', label: NAV_LABELS.casesAll } : undefined}
-        next={next && { href: `/projects/${next.slug}`, label: t(next.name) }}
-        mode={variant === 'page' ? 'hard' : 'replace'}
-      />
-    </Root>
+      </div>
+    </main>
   )
 }

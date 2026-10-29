@@ -5,7 +5,7 @@ import { findHolds, runReleaseCheck, shouldBlock } from './release'
 
 const held = featuredProject('suzihouse', '수지하우스', [2026], {
   sections: [
-    { id: 'overview', title: l('개요'), body: [l('본문')] },
+    { id: 'problem', title: l('문제'), body: [l('본문')] },
     { id: 'implementation', title: l('FINZ'), body: [l('본문')], hold: true, holdKey: 'finz' },
     { id: 'implementation', title: l('보류 키 없음'), body: [l('본문')], hold: true },
   ],

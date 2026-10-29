@@ -18,3 +18,5 @@ AGENTS.md
 resume.md
 .env*
 /*.pdf
+/*.docx
+codex_*.md

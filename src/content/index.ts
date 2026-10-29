@@ -8,25 +8,21 @@ import {
   selectByYear,
   selectChapter,
   selectFeatured,
+  selectPaperCounts,
   selectProject,
-  selectThroughline,
+  selectShowcase,
+  selectTopAwards,
 } from './select'
-import type { L, Year } from './types'
-import { UI } from './ui'
+import type { Showcase, Year } from './types'
 
 export { archive, chapters, profile, projects, FEATURED_ORDER, YEARS }
 
+export const SITE_URL = 'https://junyoung-portfolio.vercel.app'
+
 export const getFeatured = () => selectFeatured(projects)
+export const getShowcase = (showcase: Showcase) => selectShowcase(projects, showcase)
 export const getProject = (slug: string) => selectProject(projects, slug)
-export const getThroughline = () => selectThroughline(projects)
 export const getByYear = (year: Year) => selectByYear(projects, year)
 export const getChapter = (year: Year) => selectChapter(chapters, year)
-export const getLines = () => projects.filter((p) => p.tier === 'line')
-
-/** The hero's small line of counts, taken from the data so it never drifts. */
-export const getHeroStats = (): { label: L; value: number }[] => [
-  { label: UI.statAwards, value: archive.awards.length },
-  { label: UI.statPapers, value: archive.papers.length },
-  { label: UI.statProjects, value: projects.length },
-]
-
+export const getPaperCounts = () => selectPaperCounts(archive.papers)
+export const getTopAwards = () => selectTopAwards(archive)

@@ -1,19 +1,22 @@
-import { Archive } from '@/components/home/Archive'
 import { Contact } from '@/components/home/Contact'
-import { FeaturedCases } from '@/components/home/FeaturedCases'
-import { Hero } from '@/components/home/Hero'
-import { JourneyLog } from '@/components/home/JourneyLog'
-import { Throughline } from '@/components/home/Throughline'
-import { archive, chapters, getFeatured, getHeroStats, getLines, getThroughline, profile } from '@/content'
+import { Experience } from '@/components/home/Experience'
+import { Flagship } from '@/components/home/Flagship'
+import { Intro } from '@/components/home/Intro'
+import { Showcase } from '@/components/home/Showcase'
+import { Skills } from '@/components/home/Skills'
+import { archive, getPaperCounts, getShowcase, getTopAwards, profile } from '@/content'
+import { HOME_IDS, SECTION_LEADS, SECTION_TITLES } from '@/content/ui'
 
 export default function Home() {
+  const [flagship] = getShowcase('flagship')
   return (
-    <main>
-      <Hero profile={profile} stats={getHeroStats()} />
-      <JourneyLog chapters={chapters} />
-      <Throughline items={getThroughline()} />
-      <FeaturedCases projects={getFeatured()} />
-      <Archive archive={archive} lines={getLines()} />
+    <main id="main">
+      <Intro profile={profile} />
+      {flagship && <Flagship project={flagship} />}
+      <Skills rows={archive.skills} />
+      <Showcase id={HOME_IDS.supporting} title={SECTION_TITLES.supporting} projects={getShowcase('supporting')} />
+      <Showcase id={HOME_IDS.other} title={SECTION_TITLES.other} lead={SECTION_LEADS.other} projects={getShowcase('other')} compact />
+      <Experience archive={archive} topAwards={getTopAwards()} paperCounts={getPaperCounts()} />
       <Contact profile={profile} />
     </main>
   )

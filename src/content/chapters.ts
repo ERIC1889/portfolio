@@ -44,8 +44,8 @@ export const chapters: Chapter[] = [
         en: 'Leading the WebDB lab, I felt the weight of a role for the first time. Beyond doing my own work well, I learned how to look after the people I work with and how to lead a study group.',
       },
       {
-        ko: '캡스톤 SkillPilot의 팀장과 백엔드를 맡으면서 산학협력, 공모전, 학술대회까지 많은 일을 동시에 맡았습니다. 그 과정에서 일의 우선순위를 정하는 법과, 제가 감당할 수 있는 범위를 아는 것이 얼마나 중요한지 배웠습니다. 한 해의 끝에는 학교 대표로 CES 2026을 참관했습니다(2026.01.06~09).',
-        en: "While leading the SkillPilot capstone team and building its backend, I also took on industry-academia projects, competitions and conferences, all at once. Along the way I learned to set priorities, and how much it matters to know how much I can take on. The year closed with a visit to CES 2026 as a representative of my school (Jan 6–9, 2026).",
+        ko: '캡스톤 SkillPilot의 팀장과 백엔드를 맡으면서 산학협력, 공모전, 학술대회까지 많은 일을 동시에 맡았습니다. 그 과정에서 일의 우선순위를 정하는 법과, 제가 감당할 수 있는 범위를 아는 것이 얼마나 중요한지 배웠습니다. 이듬해 1월에는 학교 대표로 CES 2026을 참관했습니다(2026.01.06~09).',
+        en: "While leading the SkillPilot capstone team and building its backend, I also took on industry-academia projects, competitions and conferences, all at once. Along the way I learned to set priorities, and how much it matters to know how much I can take on. The following January, I visited CES 2026 as a representative of my school (Jan 6–9, 2026).",
       },
     ],
   },

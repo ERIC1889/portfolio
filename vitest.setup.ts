@@ -1,11 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { afterEach, beforeEach, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
-import { MotionGlobalConfig } from 'framer-motion'
-
-// Finish framer-motion animations instantly so enter/exit states are observable in jsdom.
-MotionGlobalConfig.skipAnimations = true
-
 // jsdom lacks these browser APIs. Defaults: a desktop viewport and nothing scrolled into view.
 class NoopIntersectionObserver {
   readonly root = null

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { screen, within } from '@testing-library/react'
 import { renderWithProviders } from '@/test/render'
+import { l } from '@/test/fixtures'
 import { PageNav } from './PageNav'
 
 function linksIn() {
@@ -13,20 +14,20 @@ describe('PageNav', () => {
   it('reads previous · center · next from left to right', () => {
     renderWithProviders(
       <PageNav
-        prev={{ href: '/projects/skillpilot', label: 'SkillPilot' }}
-        center={{ href: '/#cases', label: { ko: '사례 목록', en: 'All cases' } }}
-        next={{ href: '/projects/pitches', label: 'Pitches' }}
+        prev={{ href: '/projects/suzihouse', label: l('수지하우스') }}
+        center={{ href: '/#projects', label: l('프로젝트 목록') }}
+        next={{ href: '/projects/closetmate', label: l('ClosetMate') }}
       />,
     )
     expect(linksIn()).toEqual([
-      ['/projects/skillpilot', '← SkillPilot'],
-      ['/#cases', '사례 목록'],
-      ['/projects/pitches', 'Pitches →'],
+      ['/projects/suzihouse', '← 수지하우스'],
+      ['/#projects', '프로젝트 목록'],
+      ['/projects/closetmate', 'ClosetMate →'],
     ])
   })
 
   it('keeps the center link when there is no previous or next page', () => {
-    renderWithProviders(<PageNav center={{ href: '/', label: { ko: '홈', en: 'Home' } }} />)
+    renderWithProviders(<PageNav center={{ href: '/', label: l('홈') }} />)
     expect(linksIn()).toEqual([['/', '홈']])
   })
 })

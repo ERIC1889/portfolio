@@ -2,7 +2,7 @@ import type { Chapter, Project, SectionId } from '@/content/types'
 
 export const l = (ko: string, en = '') => ({ ko, en })
 
-const SECTION_IDS: SectionId[] = ['overview', 'problem', 'decision', 'implementation', 'validation', 'result', 'retro', 'evidence']
+const SECTION_IDS: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'retro', 'evidence']
 
 export function featuredProject(slug: string, name: string, years: Project['years'], extra: Partial<Project> = {}): Project {
   return {
@@ -10,20 +10,36 @@ export function featuredProject(slug: string, name: string, years: Project['year
     name,
     years,
     tier: 'featured',
+    showcase: 'supporting',
+    title: l(`${name} 제품`),
+    product: l(`${name}는 이런 서비스`),
     period: '2025.01–2025.06',
-    stack: ['Next.js', 'TypeScript'],
-    summary: l(`${name} 요약`),
-    question: l(`${name}에서 무엇을 확인했나?`),
+    team: l('개인 프로젝트'),
     role: l('개발'),
     status: l('미출시'),
+    statusCheckedAt: '2026-10-29',
+    stack: ['Next.js', 'TypeScript'],
+    summary: l(`${name} 요약`),
+    features: [l(`${name} 기능 하나`), l(`${name} 기능 둘`)],
+    media: [
+      {
+        kind: 'screenshot',
+        src: `/media/${slug}/screen.webp`,
+        width: 1600,
+        height: 900,
+        alt: l(`${name} 화면`),
+        caption: l(`${name} 화면 · 실제 화면`),
+        capturedAt: '2026-10-01',
+      },
+    ],
     sections: SECTION_IDS.map((id) => ({ id, title: l(`${id} 제목`), body: [l(`${id} 본문`)] })),
     ...extra,
   }
 }
 
 export const FIXTURE_PROJECTS: Project[] = [
-  featuredProject('pitches', 'Pitches', [2024, 2026], { image: '/images/projects/pitches.png' }),
-  featuredProject('suzihouse', '수지하우스', [2026]),
+  featuredProject('pitches', 'Pitches', [2024, 2026], { showcase: 'other' }),
+  featuredProject('suzihouse', '수지하우스', [2026], { showcase: 'flagship' }),
   featuredProject('skillpilot', 'SkillPilot', [2025]),
   featuredProject('closetmate', 'ClosetMate', [2026]),
   {
@@ -34,7 +50,6 @@ export const FIXTURE_PROJECTS: Project[] = [
     period: '2023.03–2023.10',
     stack: ['Express', 'MongoDB'],
     summary: l('검색 트렌드 시각화'),
-    scene: { minus: l('비율만 준다'), plus: l('기준점으로 엮었다') },
   },
   {
     slug: 'patentry',

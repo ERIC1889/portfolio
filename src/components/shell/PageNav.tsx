@@ -1,46 +1,36 @@
 'use client'
 
+import Link from 'next/link'
 import { useLang } from '@/components/providers/LanguageProvider'
 import type { L } from '@/content/types'
 import { UI } from '@/content/ui'
-import { NavLink, type LinkMode } from './NavLink'
 
-type Step = { href: string; label: string }
+type Step = { href: string; label: L }
 
 /** Bottom navigation: ← previous · center (home or list) · next →, in the same place on every page. */
-export function PageNav({
-  prev,
-  center,
-  next,
-  mode = 'soft',
-}: {
-  prev?: Step
-  center?: { href: string; label: L }
-  next?: Step
-  mode?: LinkMode
-}) {
+export function PageNav({ prev, center, next }: { prev?: Step; center?: Step; next?: Step }) {
   const { t } = useLang()
   return (
-    <nav className="sec-inner page-nav" aria-label={t(UI.pageNav)}>
+    <nav className="page-nav" aria-label={t(UI.pageNav)}>
       <div className="page-nav-side">
         {prev && (
-          <NavLink href={prev.href} mode={mode} className="page-nav-link">
-            ← {prev.label}
-          </NavLink>
+          <Link href={prev.href}>
+            <span aria-hidden="true">←</span> {t(prev.label)}
+          </Link>
         )}
       </div>
       {center ? (
-        <NavLink href={center.href} mode={mode} className="btn-glass page-nav-center">
+        <Link href={center.href} className="btn page-nav-center">
           {t(center.label)}
-        </NavLink>
+        </Link>
       ) : (
         <span />
       )}
       <div className="page-nav-side page-nav-next">
         {next && (
-          <NavLink href={next.href} mode={mode} className="page-nav-link">
-            {next.label} →
-          </NavLink>
+          <Link href={next.href}>
+            {t(next.label)} <span aria-hidden="true">→</span>
+          </Link>
         )}
       </div>
     </nav>

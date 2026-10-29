@@ -47,8 +47,10 @@ export const checkEn = (content: unknown) => checkLang(content, 'en')
 
 const ALLOWED_DOMAIN_PREFIXES = [
   'https://finz.kr',
+  'https://www.finz.kr',
   'https://junyoung-dev-notes.vercel.app',
   'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
+  'https://github.com/ERIC1889/portfolio',
 ]
 
 const ALLOWED_EXACT = [
@@ -60,7 +62,7 @@ const ALLOWED_EXACT = [
 function isAllowedHref(href: string): boolean {
   if (ALLOWED_EXACT.includes(href)) return true
   if (href.startsWith('/') && !href.startsWith('//')) return true
-  if (href.startsWith('#') || href.startsWith('tel:')) return true
+  if (href.startsWith('#')) return true
   return ALLOWED_DOMAIN_PREFIXES.some((prefix) => href === prefix || href.startsWith(`${prefix}/`) || href.startsWith(`${prefix}?`))
 }
 
@@ -70,12 +72,19 @@ export function checkLinks(content: unknown): string[] {
     .map((found) => `${found.path}: link not allowed (${found.value})`)
 }
 
-const PROMPT = '~/junyoung $'
-
 export function checkNoLocalPaths(content: unknown): string[] {
   return collectAllStrings(content)
-    .filter((found) => found.value.includes('/Users/') || found.value.split(PROMPT).join('').includes('~/'))
+    .filter((found) => found.value.includes('/Users/') || found.value.includes('~/'))
     .map((found) => `${found.path}: local path exposed`)
+}
+
+// Korean mobile and landline numbers, with or without the +82 prefix.
+const PHONE = /(?:\+82[\s-]?|\b0)(?:1[016789]|2|[3-6][1-5])[\s.-]?\d{3,4}[\s.-]?\d{4}\b/
+
+export function checkNoPhoneNumbers(content: unknown): string[] {
+  return collectAllStrings(content)
+    .filter((found) => PHONE.test(found.value) || found.value.startsWith('tel:'))
+    .map((found) => `${found.path}: phone number exposed`)
 }
 
 export function checkBanned(project: Project, rules: (string | RegExp)[]): string[] {
@@ -89,14 +98,20 @@ export function checkBanned(project: Project, rules: (string | RegExp)[]): strin
   return errors
 }
 
-const SECTION_ORDER: SectionId[] = ['overview', 'problem', 'decision', 'implementation', 'validation', 'result', 'paper', 'retro', 'evidence']
-const REQUIRED_SECTIONS: SectionId[] = ['overview', 'problem', 'decision', 'implementation', 'validation', 'result', 'retro', 'evidence']
+const DATE = /^\d{4}-\d{2}-\d{2}$/
 
+const SECTION_ORDER: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'paper', 'retro', 'evidence']
+const REQUIRED_SECTIONS: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'retro', 'evidence']
+
+/** A featured project answers what it is, who did what and how it was checked, in the agreed section order. */
 export function checkFeaturedShape(project: Project): string[] {
   const errors: string[] = []
-  for (const field of ['question', 'status', 'role'] as const) {
+  for (const field of ['title', 'product', 'status', 'role', 'team'] as const) {
     if (!project[field]?.ko.trim()) errors.push(`${project.slug}: missing ${field}`)
   }
+  if (!project.showcase) errors.push(`${project.slug}: missing showcase`)
+  if (!project.statusCheckedAt || !DATE.test(project.statusCheckedAt)) errors.push(`${project.slug}: statusCheckedAt must be YYYY-MM-DD`)
+  if (!project.media?.length) errors.push(`${project.slug}: missing media`)
   const ids = (project.sections ?? []).map((section) => section.id)
   for (const required of REQUIRED_SECTIONS) {
     if (!ids.includes(required)) errors.push(`${project.slug}: missing section ${required}`)
@@ -104,22 +119,39 @@ export function checkFeaturedShape(project: Project): string[] {
   const ranks = ids.map((id) => SECTION_ORDER.indexOf(id))
   const outOfOrder = ranks.findIndex((rank, i) => i > 0 && rank < ranks[i - 1])
   if (outOfOrder !== -1) errors.push(`${project.slug}: section ${ids[outOfOrder]} is out of order`)
+  const anchors = (project.sections ?? []).flatMap((section) => (section.anchor ? [section.anchor] : []))
+  if (new Set(anchors).size !== anchors.length) errors.push(`${project.slug}: section anchors repeat`)
   return errors
 }
 
-export function checkThroughline(projects: Project[]): string[] {
+/** Every picture or video says what it is and when it was captured; a mockup says so in its caption. */
+export function checkMedia(project: Project): string[] {
+  const all = [...(project.media ?? []), ...(project.sections ?? []).flatMap((section) => section.media ?? [])]
   const errors: string[] = []
-  const withNumber = projects.filter((project) => project.throughline !== undefined)
-  const counts = new Map<number, number>()
-  for (const project of withNumber) {
-    counts.set(project.throughline!, (counts.get(project.throughline!) ?? 0) + 1)
-    if (!project.scene) errors.push(`${project.slug}: throughline project has no scene`)
+  for (const media of all) {
+    const where = `${project.slug} ${media.src}`
+    if (!media.src.startsWith('/')) errors.push(`${where}: src must be a site path`)
+    if (!DATE.test(media.capturedAt)) errors.push(`${where}: capturedAt must be YYYY-MM-DD`)
+    if (!(media.width > 0 && media.height > 0)) errors.push(`${where}: missing size`)
+    if (!media.alt.ko.trim() || !media.alt.en.trim()) errors.push(`${where}: missing alt text`)
+    if (!media.caption.ko.trim() || !media.caption.en.trim()) errors.push(`${where}: missing caption`)
+    if (media.kind === 'video' && !media.poster) errors.push(`${where}: video needs a poster`)
+    if (media.kind === 'mockup' && !(media.caption.ko.includes('목업') && /mockup/i.test(media.caption.en))) {
+      errors.push(`${where}: a mockup must be labelled as one`)
+    }
   }
-  for (const [n, count] of counts) {
-    if (count > 1) errors.push(`throughline ${n} is used ${count} times`)
-    if (n < 1 || n > 7) errors.push(`throughline ${n} is outside 1..7`)
-  }
-  const missing = [1, 2, 3, 4, 5, 6, 7].filter((n) => !counts.has(n))
-  if (missing.length) errors.push(`throughline missing ${missing.join(', ')}`)
   return errors
+}
+
+/** A number always carries what was measured, the conditions, its source and the date it was checked. */
+export function checkMetrics(project: Project): string[] {
+  return (project.metrics ?? []).flatMap((metric) => {
+    const errors: string[] = []
+    const where = `${project.slug} ${metric.label.ko}`
+    if (!metric.value.trim()) errors.push(`${where}: missing value`)
+    if (!metric.target.ko.trim()) errors.push(`${where}: missing target`)
+    if (!metric.condition.ko.trim()) errors.push(`${where}: missing condition`)
+    if (!DATE.test(metric.checkedAt)) errors.push(`${where}: checkedAt must be YYYY-MM-DD`)
+    return errors
+  })
 }

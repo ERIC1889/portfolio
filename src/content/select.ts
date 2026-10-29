@@ -1,12 +1,18 @@
-import type { Chapter, L, Project, Scene, Year } from './types'
+import type { Archive, Award, Chapter, L, Project, Showcase, Year } from './types'
 
 export function projectName(project: Pick<Project, 'name' | 'nameEn'>): L {
   return { ko: project.name, en: project.nameEn ?? project.name }
 }
 
+/** The product title for headings, falling back to the project name. */
+export function projectTitle(project: Pick<Project, 'name' | 'nameEn' | 'title'>): L {
+  return project.title ?? projectName(project)
+}
+
 export const YEARS: Year[] = [2023, 2024, 2025, 2026]
 
-export const FEATURED_ORDER = ['suzihouse', 'closetmate', 'skillpilot', 'pitches'] as const
+/** Featured projects in page order: the flagship, the two supporting projects, then other work. */
+export const FEATURED_ORDER = ['suzihouse', 'skillpilot', 'closetmate', 'pitches'] as const
 
 export function selectFeatured(projects: Project[]): Project[] {
   return FEATURED_ORDER.map((slug) => projects.find((p) => p.slug === slug && p.tier === 'featured')).filter(
@@ -14,15 +20,13 @@ export function selectFeatured(projects: Project[]): Project[] {
   )
 }
 
+export function selectShowcase(projects: Project[], showcase: Showcase): Project[] {
+  return selectFeatured(projects).filter((p) => p.showcase === showcase)
+}
+
 /** Only featured projects have their own page. */
 export function selectProject(projects: Project[], slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug && p.tier === 'featured')
-}
-
-export function selectThroughline(projects: Project[]): (Project & { scene: Scene })[] {
-  return projects
-    .filter((p): p is Project & { scene: Scene; throughline: number } => p.throughline !== undefined && p.scene !== undefined)
-    .sort((a, b) => a.throughline - b.throughline)
 }
 
 export function selectByYear(projects: Project[], year: Year) {
@@ -36,4 +40,19 @@ export function selectByYear(projects: Project[], year: Year) {
 
 export function selectChapter(chapters: Chapter[], year: Year): Chapter | undefined {
   return chapters.find((c) => c.year === year)
+}
+
+/** Conference papers only (international and domestic); contest and campus entries are listed but not counted. */
+export function selectPaperCounts(papers: Archive['papers']) {
+  const conference = papers.filter((p) => p.kind === 'international' || p.kind === 'domestic')
+  return {
+    conference: conference.length,
+    international: conference.filter((p) => p.kind === 'international').length,
+    firstAuthor: conference.filter((p) => p.authorOrder === 1).length,
+  }
+}
+
+/** The awards named in `topAwards`, in that order. */
+export function selectTopAwards(archive: Pick<Archive, 'awards' | 'topAwards'>): Award[] {
+  return archive.topAwards.map((name) => archive.awards.find((a) => a.name.ko === name)).filter((a): a is Award => a !== undefined)
 }

@@ -1,35 +1,25 @@
 import type { Profile } from './types'
 
+// Public contact is email and professional profiles only (phone and address removed on purpose).
 export const profile: Profile = {
-  whoami: { ko: '~/junyoung $ whoami → 허준영 · full-stack · AI 서비스', en: '~/junyoung $ whoami → Heo Jun Young · full-stack · AI products' },
-  // The quote breaks after the comma on purpose (rendered with white-space: pre-line).
+  name: { ko: '허준영', en: 'Heo Jun Young' },
+  role: { ko: '백엔드 중심 풀스택 개발자 · 2027년 2월 졸업 예정', en: 'Backend-focused full-stack developer · graduating Feb 2027' },
+  // The owner's own words; the line breaks after the comma on purpose.
   quote: { ko: '익숙한 기술에 머물기보다,\n필요한 것을 직접 만들어 왔습니다.', en: "Beyond the tools I knew,\nI've built what was needed." },
   intro: {
-    ko: '화면부터 서버, 데이터, AI까지. 아이디어로 끝내지 않고 설계·구현·배포·검증을 거쳐 결과로 남겼습니다.',
-    en: "From screens to servers, data and AI. Instead of stopping at ideas, I've carried them through design, build, deployment and verification into results.",
+    ko: 'TypeScript와 Python으로 웹과 API를 만들고, 외부 데이터 연동과 계산 결과 검증을 맡아 왔습니다.',
+    en: "I build web apps and APIs in TypeScript and Python, and I've handled external data integrations and checking that calculated results are right.",
   },
-  photo: '/profile.jpeg',
+  coreStack: ['TypeScript', 'Node.js', 'Next.js', 'Python · FastAPI', 'MySQL · PostgreSQL', 'Redis'],
   contacts: [
-    { kind: 'phone', label: { ko: '전화', en: 'Phone' }, value: { ko: '+82 10-3506-1889', en: '+82 10-3506-1889' }, href: 'tel:+821035061889' },
-    {
-      kind: 'email',
-      label: { ko: '이메일', en: 'Email' },
-      value: { ko: 'eric1889@naver.com', en: 'eric1889@naver.com' },
-      href: 'mailto:eric1889@naver.com',
-    },
-    { kind: 'address', label: { ko: '주소', en: 'Location' }, value: { ko: '서울특별시 서초구', en: 'Seocho-gu, Seoul' } },
-    { kind: 'languages', label: { ko: '언어', en: 'Languages' }, value: { ko: '한국어 · 영어', en: 'Korean · English' } },
-    {
-      kind: 'github',
-      label: { ko: 'GitHub', en: 'GitHub' },
-      value: { ko: 'github.com/ERIC1889', en: 'github.com/ERIC1889' },
-      href: 'https://github.com/ERIC1889',
-    },
+    { kind: 'email', label: { ko: '이메일', en: 'Email' }, value: 'eric1889@naver.com', href: 'mailto:eric1889@naver.com' },
+    { kind: 'github', label: { ko: 'GitHub', en: 'GitHub' }, value: 'github.com/ERIC1889', href: 'https://github.com/ERIC1889' },
     {
       kind: 'linkedin',
       label: { ko: 'LinkedIn', en: 'LinkedIn' },
-      value: { ko: 'LinkedIn', en: 'LinkedIn' },
+      value: 'LinkedIn',
       href: 'https://www.linkedin.com/in/%EC%A4%80%EC%98%81-%ED%97%88-8142a130a/',
     },
+    { kind: 'blog', label: { ko: '기술 블로그', en: 'Tech blog' }, value: 'junyoung-dev-notes.vercel.app', href: 'https://junyoung-dev-notes.vercel.app' },
   ],
 }

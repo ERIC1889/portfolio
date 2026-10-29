@@ -10,60 +10,73 @@ export const archive: Archive = {
       titleEn: 'Design and Implementation of an LLM-Based Web System for Real-Time Cognitive and Emotional Analysis of Meetings',
       venue: k('한국디지털콘텐츠학회 하계종합학술대회', 'Korea Digital Contents Society, Summer Conference'),
       year: 2026,
+      kind: 'domestic',
+      authorOrder: 1,
     },
     {
       title: 'A2A 협업 기반 웰니스 일정 관리 시스템',
       titleEn: 'A Wellness Scheduling System Based on A2A Collaboration',
       venue: k('한국정보통신학회 춘계종합학술대회', 'Korea Institute of Information and Communication Engineering, Spring Conference'),
       year: 2026,
+      kind: 'domestic',
+      authorOrder: 1,
     },
     {
       title: 'Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI',
       venue: k('APIC-IST 2025 (국제학술대회)', 'APIC-IST 2025 (international conference)'),
       year: 2025,
-      international: true,
+      kind: 'international',
+      authorOrder: 2,
     },
     {
       title: '개인 맞춤형 AI 학습 비서 시스템: EduMatrix 설계 및 제작',
       titleEn: 'A Personalized AI Learning Assistant: Design and Implementation of EduMatrix',
       venue: k('한국디지털콘텐츠학회 추계종합학술대회', 'Korea Digital Contents Society, Fall Conference'),
       year: 2025,
+      kind: 'domestic',
     },
     {
       title: '개인 맞춤형 AI 학습 비서 시스템: EduMatrix 설계',
       titleEn: 'A Personalized AI Learning Assistant: Design of EduMatrix',
       venue: k('한국디지털콘텐츠학회 하계종합학술대회', 'Korea Digital Contents Society, Summer Conference'),
       year: 2025,
+      kind: 'domestic',
     },
     {
       title: 'LLM을 활용한 시니어 정신 건강 검사 서비스 개발',
       titleEn: 'Developing an LLM-Based Mental Health Screening Service for Seniors',
       venue: k('한국디지털콘텐츠학회 하계종합학술대회', 'Korea Digital Contents Society, Summer Conference'),
       year: 2025,
+      kind: 'domestic',
+      authorOrder: 1,
     },
     {
       title: '제한적 고객 프로파일 정보에서의 라벨 추정 기반 고객 분류 기법',
       titleEn: 'Customer Classification by Label Estimation from Limited Customer Profiles',
       venue: k('한국인터넷정보통신학회', 'Korean Society of Internet Information and Communications'),
       year: 2025,
+      kind: 'domestic',
     },
     {
       title: '인적, 사회적 요인을 고려한 다요인 산불 예측 모델 설계',
       titleEn: 'Designing a Multi-Factor Wildfire Prediction Model with Human and Social Factors',
       venue: k('제23회 통계청 논문 공모전', '23rd Statistics Korea Paper Contest'),
       year: 2025,
+      kind: 'contest',
     },
     {
       title: '메타버스와 LLM을 활용한 디지털 돌봄 서비스 개발',
       titleEn: 'Developing a Digital Care Service with the Metaverse and LLMs',
       venue: k('한신 ABC 캠프 해커톤', 'Hanshin ABC Camp Hackathon'),
       year: 2024,
+      kind: 'campus',
     },
     {
       title: 'LLM을 활용한 시니어 정신건강 검사 서비스 개발',
       titleEn: 'Developing an LLM-Based Mental Health Screening Service for Seniors',
       venue: k('한신 AISW 페스티벌', 'Hanshin AISW Festival'),
       year: 2024,
+      kind: 'campus',
     },
   ],
   awards: [
@@ -71,21 +84,29 @@ export const archive: Archive = {
       date: '24.09.06',
       name: k('한신 ABC 캠프 해커톤 우수상', 'Hanshin ABC Camp Hackathon, Excellence Award'),
       org: k('한신대 AI빅데이터 센터', 'Hanshin University AI Big Data Center'),
+      team: true,
+      project: 'llm-dolbom',
     },
     {
       date: '24.10.24 ~ 24.10.27',
       name: k('캡스톤 디자인 및 AI 해커톤 대상(1등)', 'Capstone Design & AI Hackathon, Grand Prize (1st place)'),
       org: k('한국 컴퓨터 교육 학회', 'Korean Association of Computer Education'),
+      team: true,
+      project: 'pitches',
     },
     {
       date: '24.11.19',
       name: k('2024 한신 AISW 페스티벌 일반부 특별상', '2024 Hanshin AISW Festival, Special Award (General)'),
       org: k('한신대 SW중심 대학', 'Hanshin University SW-Centered University Program'),
+      team: true,
+      project: 'label-light',
     },
     {
       date: '25.05.16',
       name: k('SW 중심 대학 AI 창업 아이디어 경진대회 특별상', 'SW-Centered University AI Startup Idea Competition, Special Award'),
       org: k('고려대 SW 중심 대학', 'Korea University SW-Centered University Program'),
+      team: true,
+      project: 'pitches',
     },
     {
       date: '25.07.22',
@@ -101,6 +122,8 @@ export const archive: Archive = {
       date: '25.10.30 ~ 25.10.31',
       name: k('SUMTECH 해커톤 장려상', 'SUMTECH Hackathon, Honorable Mention'),
       org: k('SW 중심 대학', 'SW-Centered University Program'),
+      team: true,
+      project: 'dreamtrack',
     },
     {
       date: '25.11.06 ~ 25.11.07',
@@ -135,6 +158,12 @@ export const archive: Archive = {
       name: k('2026년 하계종합학술대회 및 대학생논문경진대회 동상', '2026 Summer Conference & Student Paper Competition, Bronze Award'),
       org: k('한국 디지털 콘텐츠 학회', 'Korea Digital Contents Society'),
     },
+  ],
+  // Claude's pick until the owner chooses (required-inputs §21).
+  topAwards: [
+    '캡스톤 디자인 및 AI 해커톤 대상(1등)',
+    'SW 중심 대학 AI 창업 아이디어 경진대회 특별상',
+    '2026년 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회 우수상',
   ],
   activities: [
     {
@@ -246,12 +275,83 @@ export const archive: Archive = {
       ),
     },
   ],
-  work: [{ company: k('컴세바 입시 컨설팅 학원', 'Comseba Admissions Consulting Academy'), role: k('코딩 강사', 'Coding instructor'), period: '2025.07–2025.10' }],
+  experience: [
+    {
+      org: k('수지하우스 (finz.kr)', 'SuziHouse (finz.kr)'),
+      title: k('CTO · 개발 담당', 'CTO · sole developer'),
+      period: '2026.01–',
+      context: k('직원 5명 스타트업의 유일한 개발자, 인력 관리는 맡지 않음', 'The only developer at a five-person startup; no people management'),
+      responsibilities: [
+        k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
+        k('청년 세금 환급 모바일 앱 MVP (Expo · FastAPI, 미출시)', 'MVP of a tax refund mobile app for young people (Expo · FastAPI, not released)'),
+        k('세무 SaaS FINZ 기술 결정·개발 참여·QA (협력 개발사와 함께)', 'Technical decisions, development and QA for the FINZ tax SaaS (with a partner development company)'),
+      ],
+    },
+    {
+      org: k('컴세바 입시 컨설팅 학원', 'Comseba Admissions Consulting Academy'),
+      title: k('코딩 강사', 'Coding instructor'),
+      period: '2025.07–2025.10',
+      context: k('입시 컨설팅 학원의 코딩 수업', 'Coding classes at an admissions consulting academy'),
+      responsibilities: [],
+    },
+  ],
+  // Only skills with a project behind them; each row links to where it was used.
   skills: [
-    { group: k('웹·API', 'Web · API'), items: ['TypeScript', 'JavaScript', 'React', 'Next.js', 'Node.js'] },
-    { group: k('데이터·비동기 처리', 'Data · async processing'), items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'BullMQ'] },
-    { group: k('모바일·Python', 'Mobile · Python'), items: ['Expo / React Native', 'Python', 'FastAPI'] },
-    { group: k('AI·품질 도구', 'AI · quality tools'), items: ['OpenAI API', 'Whisper', 'ONNX Runtime', 'Vitest', 'pytest', 'GitHub Actions'] },
+    {
+      area: k('웹·API', 'Web · API'),
+      items: ['TypeScript', 'Next.js', 'Node.js · Express'],
+      did: k('세금 비교 화면과 계산 API, 공공 API 7종 연동과 정규화', 'Tax comparison screens and calculation API; integrating and normalizing 7 public APIs'),
+      evidence: [
+        { label: k('수지하우스 6Way', 'SuziHouse 6Way'), href: '/projects/suzihouse' },
+        { label: k('SkillPilot API 클라이언트', 'SkillPilot API client'), href: 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/SkillPilot-backend/src/integrations/dataGoKr/client.js' },
+      ],
+    },
+    {
+      area: k('Python 백엔드', 'Python backend'),
+      items: ['Python', 'FastAPI', 'pytest'],
+      did: k('간편인증 상태 흐름, 서버 권한·결제 검증, 계산 엔진 검증 테스트', 'Simple-auth state flow, server-side permission and payment checks, tests that verify the calculation engine'),
+      evidence: [{ label: k('청년 세금 환급 앱', 'Tax refund app'), href: '/projects/suzihouse#refund-app' }],
+    },
+    {
+      area: k('데이터', 'Data'),
+      items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis'],
+      did: k('정형 데이터와 AI 결과 분리 저장, 같은 요청의 AI 결과 재사용, 실거래가 캐시', 'Structured data and AI results stored apart, reuse of AI results for the same request, caching real-transaction prices'),
+      evidence: [
+        { label: k('SkillPilot', 'SkillPilot'), href: '/projects/skillpilot' },
+        { label: k('수지하우스', 'SuziHouse'), href: '/projects/suzihouse' },
+      ],
+    },
+    {
+      area: k('비동기·배치', 'Async · batch'),
+      items: ['Celery', 'BullMQ', 'node-cron'],
+      did: k(
+        '실거래가 주간 동기화와 재시도(Celery Beat), 발표 후 분석 작업 큐(BullMQ), 공공 데이터 주기 동기화(node-cron)',
+        'Weekly price syncing with retries (Celery Beat), a post-talk analysis job queue (BullMQ), periodic public-data syncing (node-cron)',
+      ),
+      evidence: [
+        { label: k('환급 앱 백엔드', 'Refund app backend'), href: '/projects/suzihouse#refund-app' },
+        { label: k('SkillPilot 동기화', 'SkillPilot sync'), href: '/projects/skillpilot' },
+        { label: k('Pitches 작업 큐', 'Pitches job queue'), href: '/projects/pitches' },
+      ],
+    },
+    {
+      area: k('AI 응용', 'Applied AI'),
+      items: ['OpenAI API', 'Whisper', 'ONNX Runtime', 'PyTorch'],
+      did: k('LLM 응답을 서버에서 검증, 음성 입력, 이미지 분류 모델 학습과 서버 추론', 'Checking LLM responses on the server, voice input, training an image classifier and serving it'),
+      evidence: [{ label: k('ClosetMate', 'ClosetMate'), href: '/projects/closetmate' }],
+    },
+    {
+      area: k('검증·배포', 'Testing · delivery'),
+      items: ['Vitest', 'pytest', 'GitHub Actions', 'Vercel'],
+      did: k(
+        '기준값 대조 스크립트, push마다 도는 보안 테스트(GitHub Actions), 이 사이트의 콘텐츠 검증 테스트와 Vercel 배포',
+        'Expected-value comparison scripts, security tests on every push (GitHub Actions), content checks for this site and Vercel deploys',
+      ),
+      evidence: [
+        { label: k('수지하우스 검증', 'SuziHouse checks'), href: '/projects/suzihouse#validation' },
+        { label: k('이 사이트 저장소', 'This site\'s repository'), href: 'https://github.com/ERIC1889/portfolio' },
+      ],
+    },
   ],
   education: {
     school: { ko: '한신대학교', en: 'Hanshin University' },

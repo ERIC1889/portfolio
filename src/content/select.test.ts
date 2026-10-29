@@ -1,75 +1,64 @@
 import { describe, expect, it } from 'vitest'
-import type { Chapter, Project, Tier, Year } from './types'
-import { projectName, selectByYear, selectChapter, selectFeatured, selectProject, selectThroughline } from './select'
-
-const l = (ko: string) => ({ ko, en: '' })
-
-function p(slug: string, tier: Tier, years: Year[], throughline?: number): Project {
-  return {
-    slug,
-    name: slug,
-    years,
-    tier,
-    period: '',
-    stack: [],
-    summary: l(slug),
-    ...(throughline ? { throughline, scene: { minus: l('-'), plus: l('+') } } : {}),
-  }
-}
-
-const PROJECTS: Project[] = [
-  p('pitches', 'featured', [2024, 2026], 2),
-  p('media-pulse', 'card', [2023], 1),
-  p('skillpilot', 'featured', [2025], 3),
-  p('patentry', 'line', [2024]),
-  p('suzihouse', 'featured', [2026], 6),
-  p('closetmate', 'featured', [2026], 5),
-  p('label-light', 'card', [2024]),
-]
+import { FIXTURE_PROJECTS, l } from '@/test/fixtures'
+import type { Archive, Chapter } from './types'
+import {
+  projectName,
+  projectTitle,
+  selectByYear,
+  selectChapter,
+  selectFeatured,
+  selectPaperCounts,
+  selectProject,
+  selectShowcase,
+  selectTopAwards,
+} from './select'
 
 describe('selectFeatured', () => {
-  it('returns only featured projects in the fixed order suzihouse, closetmate, skillpilot, pitches', () => {
-    expect(selectFeatured(PROJECTS).map((x) => x.slug)).toEqual(['suzihouse', 'closetmate', 'skillpilot', 'pitches'])
+  it('returns only featured projects in page order: flagship, the two supporting projects, other work', () => {
+    expect(selectFeatured(FIXTURE_PROJECTS).map((p) => p.slug)).toEqual(['suzihouse', 'skillpilot', 'closetmate', 'pitches'])
+  })
+})
+
+describe('selectShowcase', () => {
+  it('picks the projects of one home section, keeping page order', () => {
+    expect(selectShowcase(FIXTURE_PROJECTS, 'flagship').map((p) => p.slug)).toEqual(['suzihouse'])
+    expect(selectShowcase(FIXTURE_PROJECTS, 'supporting').map((p) => p.slug)).toEqual(['skillpilot', 'closetmate'])
+    expect(selectShowcase(FIXTURE_PROJECTS, 'other').map((p) => p.slug)).toEqual(['pitches'])
   })
 })
 
 describe('selectProject', () => {
   it('finds a featured project by slug', () => {
-    expect(selectProject(PROJECTS, 'skillpilot')?.slug).toBe('skillpilot')
+    expect(selectProject(FIXTURE_PROJECTS, 'skillpilot')?.slug).toBe('skillpilot')
   })
 
   it('returns nothing for a card or an unknown slug (no case page exists for them)', () => {
-    expect(selectProject(PROJECTS, 'label-light')).toBeUndefined()
-    expect(selectProject(PROJECTS, 'foo')).toBeUndefined()
-  })
-})
-
-describe('selectThroughline', () => {
-  it('orders scene projects by their throughline number and skips the rest', () => {
-    expect(selectThroughline(PROJECTS).map((x) => x.slug)).toEqual(['media-pulse', 'pitches', 'skillpilot', 'closetmate', 'suzihouse'])
+    expect(selectProject(FIXTURE_PROJECTS, 'media-pulse')).toBeUndefined()
+    expect(selectProject(FIXTURE_PROJECTS, 'foo')).toBeUndefined()
   })
 })
 
 describe('selectByYear', () => {
   it('groups a year by size, and lists a multi-year project in each of its years', () => {
-    const y2024 = selectByYear(PROJECTS, 2024)
-    expect(y2024.featured.map((x) => x.slug)).toEqual(['pitches'])
-    expect(y2024.cards.map((x) => x.slug)).toEqual(['label-light'])
-    expect(y2024.lines.map((x) => x.slug)).toEqual(['patentry'])
-    expect(selectByYear(PROJECTS, 2026).featured.map((x) => x.slug)).toEqual(['suzihouse', 'closetmate', 'pitches'])
+    const y2024 = selectByYear(FIXTURE_PROJECTS, 2024)
+    expect(y2024.featured.map((p) => p.slug)).toEqual(['pitches'])
+    expect(y2024.lines.map((p) => p.slug)).toEqual(['patentry'])
+    expect(selectByYear(FIXTURE_PROJECTS, 2026).featured.map((p) => p.slug)).toEqual(['suzihouse', 'closetmate', 'pitches'])
+    expect(selectByYear(FIXTURE_PROJECTS, 2023).cards.map((p) => p.slug)).toEqual(['media-pulse'])
   })
 })
 
-describe('projectName', () => {
+describe('projectName / projectTitle', () => {
+  const suzi = FIXTURE_PROJECTS[1]
+
   it('uses the English name for English readers when one exists', () => {
-    expect(projectName({ ...p('suzihouse', 'featured', [2026]), name: '수지하우스', nameEn: 'SuziHouse' })).toEqual({
-      ko: '수지하우스',
-      en: 'SuziHouse',
-    })
+    expect(projectName({ name: '수지하우스', nameEn: 'SuziHouse' })).toEqual({ ko: '수지하우스', en: 'SuziHouse' })
+    expect(projectName({ name: 'Pitches' })).toEqual({ ko: 'Pitches', en: 'Pitches' })
   })
 
-  it('keeps a brand name as-is in both languages', () => {
-    expect(projectName(p('pitches', 'featured', [2024]))).toEqual({ ko: 'pitches', en: 'pitches' })
+  it('prefers the product title and falls back to the name', () => {
+    expect(projectTitle(suzi).ko).toBe('수지하우스 제품')
+    expect(projectTitle({ name: 'Patentry' })).toEqual({ ko: 'Patentry', en: 'Patentry' })
   })
 })
 
@@ -78,5 +67,21 @@ describe('selectChapter', () => {
     const chapters: Chapter[] = [{ year: 2023, name: l('배우다'), lesson: l('-'), essay: [] }]
     expect(selectChapter(chapters, 2023)?.name.ko).toBe('배우다')
     expect(selectChapter(chapters, 2024)).toBeUndefined()
+  })
+})
+
+describe('selectPaperCounts', () => {
+  it('counts conference papers only, with international and first-author ones', () => {
+    const paper = (kind: Archive['papers'][number]['kind'], authorOrder?: number) => ({ title: 't', venue: l('v'), year: 2025, kind, authorOrder })
+    const counts = selectPaperCounts([paper('international', 2), paper('domestic', 1), paper('domestic'), paper('contest', 1), paper('campus')])
+    expect(counts).toEqual({ conference: 3, international: 1, firstAuthor: 1 })
+  })
+})
+
+describe('selectTopAwards', () => {
+  it('returns the named awards in the chosen order and skips unknown names', () => {
+    const award = (name: string) => ({ date: '24.10.24', name: l(name), org: l('주최') })
+    const awards = [award('가'), award('나'), award('다')]
+    expect(selectTopAwards({ awards, topAwards: ['다', '없음', '가'] }).map((a) => a.name.ko)).toEqual(['다', '가'])
   })
 })

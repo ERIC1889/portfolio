@@ -1,16 +1,14 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useLang } from '@/components/providers/LanguageProvider'
-import { fadeUp } from '@/components/motion'
 import type { L } from '@/content/types'
 
-export function SectionHead({ num, title }: { num: string; title: L }) {
+export function SectionHead({ id, title, lead }: { id: string; title: L; lead?: L }) {
   const { t } = useLang()
   return (
-    <motion.div className="sec-head" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-      <span className="sec-num">{num}</span>
-      <h2>{t(title)}</h2>
-    </motion.div>
+    <div className="section-head">
+      <h2 id={id}>{t(title)}</h2>
+      {lead && <p className="section-lead">{t(lead)}</p>}
+    </div>
   )
 }

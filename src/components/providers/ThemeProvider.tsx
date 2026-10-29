@@ -1,14 +1,14 @@
 'use client'
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
-import { isTheme, THEME_KEY, type Theme } from '@/lib/theme'
+import { DEFAULT_THEME, isTheme, THEME_KEY, type Theme } from '@/lib/theme'
 
 type ThemeContextValue = { theme: Theme; toggleTheme(): void }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>(DEFAULT_THEME)
 
   useEffect(() => {
     const applied = document.documentElement.dataset.theme

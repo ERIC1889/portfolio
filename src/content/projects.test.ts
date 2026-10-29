@@ -1,7 +1,11 @@
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { projects } from './projects'
 import { findHolds } from './release'
-import { checkBanned, checkFeaturedShape, checkThroughline, collectStrings } from './validate'
+import { checkBanned, checkFeaturedShape, checkMedia, checkMetrics, collectStrings } from './validate'
+
+const PUBLIC = join(__dirname, '..', '..', 'public')
 
 const bySlug = (slug: string) => {
   const project = projects.find((p) => p.slug === slug)
@@ -9,47 +13,38 @@ const bySlug = (slug: string) => {
   return project
 }
 
-// spec §4.5 — size, years and throughline order
+const koText = (value: unknown) =>
+  collectStrings(value)
+    .filter((s) => s.lang === 'ko')
+    .map((s) => s.value)
+    .join(' ')
+
+// Plan §3.2–3.3 and decisions D2/D3: one flagship, two supporting projects, Pitches as other work.
 const PLACEMENT = [
-  ['suzihouse', 'featured', [2026], 6],
-  ['closetmate', 'featured', [2026], 5],
-  ['skillpilot', 'featured', [2025], 3],
-  ['pitches', 'featured', [2024, 2026], 2],
-  ['media-pulse', 'card', [2023], 1],
-  ['label-light', 'card', [2024], undefined],
-  ['wildfire', 'card', [2025], 4],
-  ['edumatrix', 'card', [2025], undefined],
-  ['innoview', 'card', [2025], undefined],
-  ['restplanner', 'card', [2025], undefined],
-  ['ai-hiring-textmining', 'card', [2026], undefined],
-  ['jarvis', 'card', [2026], 7],
-  ['dev-blog', 'card', [2026], undefined],
-  ['llm-dolbom', 'line', [2024], undefined],
-  ['patentry', 'line', [2024], undefined],
-  ['dreamtrack', 'line', [2025], undefined],
-  ['teamflow', 'line', [2026], undefined],
-  ['unifit', 'line', [2026], undefined],
-  ['formcoach', 'line', [2026], undefined],
+  ['suzihouse', 'featured', 'flagship', [2026]],
+  ['skillpilot', 'featured', 'supporting', [2025]],
+  ['closetmate', 'featured', 'supporting', [2026]],
+  ['pitches', 'featured', 'other', [2024, 2026]],
+  ['media-pulse', 'card', undefined, [2023]],
+  ['label-light', 'card', undefined, [2024]],
+  ['wildfire', 'card', undefined, [2025]],
+  ['edumatrix', 'card', undefined, [2025]],
+  ['innoview', 'card', undefined, [2025]],
+  ['restplanner', 'card', undefined, [2025]],
+  ['ai-hiring-textmining', 'card', undefined, [2026]],
+  ['jarvis', 'card', undefined, [2026]],
+  ['dev-blog', 'card', undefined, [2026]],
+  ['llm-dolbom', 'line', undefined, [2024]],
+  ['patentry', 'line', undefined, [2024]],
+  ['dreamtrack', 'line', undefined, [2025]],
+  ['teamflow', 'line', undefined, [2026]],
+  ['unifit', 'line', undefined, [2026]],
+  ['formcoach', 'line', undefined, [2026]],
 ] as const
 
-// spec §4.4 — the seven throughline scenes, word for word
-const SCENES: Record<string, [string, string]> = {
-  'media-pulse': ['검색어 트렌드 API가 비율(%)만 준다', '광고 API의 실제 월간 검색 수를 기준점으로 엮어 월별 실제 검색량을 복원'],
-  pitches: [
-    '실시간 피드백에 Whisper는 너무 느리다(10초 음성에 0.5~1.3초)',
-    '10초를 70ms에 처리하는 SenseVoice-Small을 고르고, LLM은 실시간 경로에서 빼서 발표 후 한 번만 → 무거운 분석은 요청 밖으로, 2026년엔 큐·재시도로 다시 설계',
-  ],
-  skillpilot: ['공공 API가 HTTP 200으로 에러 문자열을 보내거나 JSON 대신 XML을 준다', '에러 문구 감지 → XML로 다시 해석 → 간격 두고 재시도'],
-  wildfire: ['실제 화재가 너무 드물어 직접 예측이 불가능', '목표를 공식 위험 등급으로 바꾸고, 실제 화재일에 맞는지 따로 확인'],
-  closetmate: [
-    'LLM이 옷장에 없는 옷을 추천할 수 있다 / Expo Go가 기기 모델을 못 돌린다',
-    '옷 ID·후보 조합을 서버에서 대조, 실패 시 보조 모델 후 재검증 / 분류는 서버 ONNX로',
-  ],
-  suzihouse: ['CODEF·국토부 API가 느리고 제약이 많다', '인증 세션 재사용·간격 조회·주간 캐시, 기다림이 보이는 진행 화면'],
-  jarvis: ['로컬 LLM 답이 끝날 때까지 기다리면 말이 늦다', '답을 문장 단위로 끊어 나오는 대로 읽기'],
-}
+const FEATURED = ['suzihouse', 'skillpilot', 'closetmate', 'pitches']
 
-// spec §4.7 / §5 / §6 — claims the code does not support
+// Claims the code or the owner's answers do not support.
 const BANNED: Record<string, (string | RegExp)[]> = {
   'label-light': ['파인튜닝', 'fine-tun', /GPT-4o(?!-mini)/],
   'llm-dolbom': ['심리 상태 분석', 'psychological state'],
@@ -59,61 +54,152 @@ const BANNED: Record<string, (string | RegExp)[]> = {
   teamflow: ['SaaS'],
   unifit: ['AI'],
   patentry: ['특허 데이터', 'patent data'],
-  pitches: ['Canvas', '200ms', '프론트엔드 주도', 'frontend lead', '이중 시간축', 'dual time', '150ms 미만', 'under 150', 'A10G', 'T4'],
-  suzihouse: ['21개 테이블', '24개 API', '120개 테스트', '86.6', 'API 키 노출', 'API key exposure'],
+  pitches: ['Canvas', '200ms', '프론트엔드 주도', 'frontend lead', '이중 시간축', 'dual time', '150ms 미만', 'under 150', 'A10G', 'T4', '진행 중'],
+  suzihouse: ['21개 테이블', '24개 API', '120개 테스트', '86.6', 'API 키 노출', 'API key exposure', '해결한', 'resolved', '래미안', '아크로', '외주 개발', '외주사'],
   closetmate: ['온디바이스', 'on-device', '97.49', '86.68', '67.29'],
+  skillpilot: ['대신 관리자', '테스트를 대신', 'instead of tests', 'substitute for tests', '적중률', 'hit rate', '비용 절감', 'cost saving'],
   wildfire: ['0.909', '0.77', '정확도', 'accuracy'],
   jarvis: ['1초', '1 second'],
 }
 
 describe('project placement', () => {
-  it('matches the agreed size, years and throughline for every project', () => {
-    expect(projects.map((p) => [p.slug, p.tier, p.years, p.throughline])).toEqual(PLACEMENT.map((row) => [...row]))
+  it('matches the agreed size, home section and years for every project', () => {
+    expect(projects.map((p) => [p.slug, p.tier, p.showcase, p.years])).toEqual(PLACEMENT.map((row) => [...row]))
   })
 
-  it('gives every card a single −/+ scene', () => {
-    for (const card of projects.filter((p) => p.tier === 'card')) {
-      expect(card.scene, card.slug).toBeDefined()
+  it('gives only featured projects case-study sections', () => {
+    for (const project of projects.filter((p) => p.tier !== 'featured')) {
+      expect(project.sections, project.slug).toBeUndefined()
+      expect(project.showcase, project.slug).toBeUndefined()
     }
   })
 })
 
 describe('featured case studies', () => {
-  it.each(['suzihouse', 'closetmate', 'skillpilot', 'pitches'])('%s follows the case-study shape', (slug) => {
+  it.each(FEATURED)('%s follows the case-study shape', (slug) => {
     expect(checkFeaturedShape(bySlug(slug))).toEqual([])
   })
 
-  // The owner released the FINZ section on 2026-10-26; nothing is on hold for production.
+  it.each(FEATURED)('%s captions and dates every picture and video', (slug) => {
+    expect(checkMedia(bySlug(slug))).toEqual([])
+  })
+
+  it.each(FEATURED)('%s points every picture, video and poster at a file that exists', (slug) => {
+    const project = bySlug(slug)
+    const media = [...(project.media ?? []), ...(project.sections ?? []).flatMap((s) => s.media ?? [])]
+    for (const path of media.flatMap((m) => [m.src, ...(m.poster ? [m.poster] : [])])) {
+      expect(existsSync(join(PUBLIC, path)), path).toBe(true)
+    }
+  })
+
+  it('gives every number what was measured, the conditions, a source and a date', () => {
+    for (const project of projects) expect(checkMetrics(project)).toEqual([])
+  })
+
   it('holds nothing back, so production can ship', () => {
     expect(findHolds(projects)).toEqual([])
   })
+})
 
-  it('presents the APIC-IST paper of Pitches as paper-reported results', () => {
-    const paper = bySlug('pitches').sections?.find((s) => s.id === 'paper')
-    expect(paper).toBeDefined()
-    const text = collectStrings(paper)
-      .filter((s) => s.lang === 'ko')
-      .map((s) => s.value)
-      .join(' ')
-    for (const needle of ['APIC-IST 2025', '125ms', '20', '논문']) expect(text).toContain(needle)
+describe('flagship: SuziHouse property tax comparison', () => {
+  const suzi = bySlug('suzihouse')
+
+  it('is the one flagship, named by its product', () => {
+    expect(projects.filter((p) => p.showcase === 'flagship').map((p) => p.slug)).toEqual(['suzihouse'])
+    expect(suzi.title?.ko).toBe('수지하우스 부동산 세금 비교')
   })
 
-  it('dates ClosetMate 2026.03–2026.06 and links no repository', () => {
-    const closetmate = bySlug('closetmate')
-    expect(closetmate.period).toBe('2026.03–2026.06')
-    expect(closetmate.links).toBeUndefined()
+  it('shows at least three screens and a demo video', () => {
+    const media = suzi.media ?? []
+    expect(media.filter((m) => m.kind === 'screenshot').length).toBeGreaterThanOrEqual(3)
+    expect(media.filter((m) => m.kind === 'video')).toHaveLength(1)
+    expect(media[0].kind).toBe('video')
+  })
+
+  it('says who built what, including the earlier version by another developer', () => {
+    expect(suzi.contribution?.direct.length).toBeGreaterThan(0)
+    expect(koText(suzi.contribution?.others)).toContain('다른 개발자')
+    expect(koText(suzi.contribution?.joint)).toContain('세무사')
+    expect(koText(suzi.contribution?.notYet)).toContain('운영 지표')
+  })
+
+  it('backs the calculation with measured checks against the reference workbook', () => {
+    const [workbook, engine, security] = suzi.metrics ?? []
+    expect(workbook).toMatchObject({ value: '21/21', source: 'measured' })
+    expect(koText(workbook.condition)).toContain('±10원')
+    expect(engine.value).toContain('58')
+    expect(koText(security.condition)).toContain('웹 계산 기능과는 별개')
+  })
+
+  it('links straight to the live property feature', () => {
+    expect(suzi.links?.find((l) => l.kind === 'live')?.href).toBe('https://www.finz.kr/personal/property')
+  })
+
+  it('keeps the refund app and FINZ in their own sections, and calls the 269 issues a tracking count', () => {
+    const anchors = suzi.sections?.map((s) => s.anchor)
+    expect(anchors).toContain('refund-app')
+    expect(anchors).toContain('finz')
+    const finz = koText(suzi.sections?.find((s) => s.anchor === 'finz'))
+    expect(finz).toContain('해결 건수가 아니라 관리 분류')
   })
 })
 
-describe('throughline', () => {
-  it('has exactly one scene for each of 1..7', () => {
-    expect(checkThroughline(projects)).toEqual([])
+describe('supporting: SkillPilot', () => {
+  const skillpilot = bySlug('skillpilot')
+
+  it('describes the error handling as the two branches in client.js', () => {
+    const text = koText(skillpilot.sections?.find((s) => s.id === 'implementation'))
+    expect(text).toContain('0.5초, 1초 간격으로 최대 2번 다시 시도')
+    expect(text).toContain('JSON으로 읽히지 않으면 XML로 해석')
   })
 
-  it.each(Object.entries(SCENES))('%s uses the approved wording', (slug, [minus, plus]) => {
-    const scene = bySlug(slug).scene
-    expect(scene?.minus.ko).toBe(minus)
-    expect(scene?.plus.ko).toBe(plus)
+  it('links the client, sync and AI-reuse code and the final presentation directly', () => {
+    const hrefs = skillpilot.links?.map((l) => l.href) ?? []
+    expect(hrefs[0]).toMatch(/integrations\/dataGoKr\/client\.js$/)
+    expect(hrefs.some((h) => h.endsWith('certificationSync.service.js'))).toBe(true)
+    expect(hrefs.some((h) => h.endsWith('ai.service.js'))).toBe(true)
+    expect(hrefs.some((h) => h.endsWith('.pdf'))).toBe(true)
+  })
+
+  it('does not lead with a login screen', () => {
+    expect(skillpilot.media?.some((m) => /login/i.test(m.src))).toBe(false)
+  })
+})
+
+describe('supporting: ClosetMate', () => {
+  const closetmate = bySlug('closetmate')
+
+  it('dates the course project and links no repository', () => {
+    expect(closetmate.period).toBe('2026.03–2026.06')
+    expect(closetmate.links).toBeUndefined()
+  })
+
+  it('states the benchmark setup and that 43 images are a flow check, not accuracy', () => {
+    const [timing, , flowCheck] = closetmate.metrics ?? []
+    expect(koText(timing.condition)).toContain('Apple M5 CPU')
+    expect(koText(timing.condition)).toContain('워밍업 5회·측정 30회')
+    expect(flowCheck.value).toBe('43장')
+    expect(koText(flowCheck.condition)).toContain('정확도 수치 아님')
+  })
+})
+
+describe('other work: Pitches', () => {
+  const pitches = bySlug('pitches')
+
+  it('presents the APIC-IST paper as paper-reported results', () => {
+    const text = koText(pitches.sections?.find((s) => s.id === 'paper'))
+    for (const needle of ['APIC-IST 2025', '125ms', '20세션', '논문']) expect(text).toContain(needle)
+  })
+
+  it('marks 70ms as a public benchmark and the 2024 picture as a mockup', () => {
+    const text = koText(pitches)
+    expect(text).toContain('공개 벤치마크')
+    expect(pitches.media?.map((m) => m.kind)).toEqual(['mockup'])
+  })
+
+  it('separates the three versions in one table', () => {
+    const table = pitches.sections?.find((s) => s.table)?.table
+    expect(table?.rows.map((row) => row[0].ko)).toEqual(['2024–25 팀 버전', 'APIC-IST 2025 논문', '2026 개인 리뉴얼'])
   })
 })
 
