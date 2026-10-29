@@ -138,8 +138,8 @@ export const projects: Project[] = [
         800,
         ['부동산 6Way 시연: 두 주택 입력, 결과 비교, 조건 변경 후 재계산', 'Property 6Way demo: entering two homes, comparing results, recalculating after a change'],
         [
-          '부동산 6Way · 운영 사이트 실제 화면 · 예시 입력 → 결과 → B주택을 조정대상지역으로 바꿔 재계산 (37초, 편집 없음)',
-          'Property 6Way · live site · sample input → results → recalculated with home B in a regulated area (37 s, unedited)',
+          '부동산 6Way · 운영 사이트 실제 화면 · 예시 입력 → 결과 → B주택을 조정대상지역으로 바꿔 재계산',
+          'Property 6Way · live site · sample input → results → recalculated with home B in a regulated area',
         ],
         '2026-10-29',
       ),
@@ -327,8 +327,8 @@ export const projects: Project[] = [
               720,
               ['청년 소득세 환급 앱 시연 영상', 'Tax refund app demo video'],
               [
-                '청년 소득세 환급 · 앱 실제 화면을 단계별 설명과 함께 편집한 영상 (1분 45초, 예시 데이터)',
-                'Tax refund for young people · real app screens edited with step captions (1 min 45 s, sample data)',
+                '청년 소득세 환급 · 앱 실제 화면을 단계별 설명과 함께 편집한 영상',
+                'Tax refund for young people · real app screens edited with step captions',
               ],
               '2026-09-10',
             ),
@@ -372,7 +372,7 @@ export const projects: Project[] = [
               1600,
               836,
               ['자연어로 케이스를 입력하면 오른쪽 작업 타임라인에 조회·계산 과정이 쌓이는 AI 세무 어시스턴트', 'AI tax assistant: a case typed in plain language, with lookups and calculations collecting in the task timeline'],
-              ['세무사용 FINZ · AI 세무 어시스턴트 · 개발 서버 실제 화면(시연용 가명 데이터)', 'FINZ for tax accountants · AI tax assistant · real screen on the development server (demo pseudonyms)'],
+              ['세무사용 FINZ · AI 세무 어시스턴트 · 개발 서버 실제 화면', 'FINZ for tax accountants · AI tax assistant · real screen on the development server'],
               '2026-10-12',
             ),
             shot(
@@ -380,7 +380,7 @@ export const projects: Project[] = [
               1600,
               836,
               ['양도인 → 자산 → 양수인 → 세액·전자신고로 이어지는 양도소득세 신고 위저드', 'Capital gains filing wizard: seller → assets → buyer → tax and e-filing'],
-              ['양도소득세 신고 4단계 위저드 · 개발 서버 실제 화면(시연용 가명 데이터)', 'Four-step capital gains filing wizard · real screen on the development server (demo pseudonyms)'],
+              ['양도소득세 신고 4단계 위저드 · 개발 서버 실제 화면', 'Four-step capital gains filing wizard · real screen on the development server'],
               '2026-10-12',
             ),
             shot(
@@ -388,7 +388,7 @@ export const projects: Project[] = [
               1600,
               836,
               ['등기부·건축물대장은 공공조회, 감정평가서·매매계약서는 스캔본 OCR로 불러오는 화면', 'Loading documents: public lookups for the register and building ledger, OCR for appraisals and contracts'],
-              ['서류 불러오기(공공조회·OCR) · 개발 서버 실제 화면', 'Document loading (public lookup and OCR) · real screen on the development server'],
+              ['서류 불러오기 · 개발 서버 실제 화면', 'Document loading · real screen on the development server'],
               '2026-10-12',
             ),
             shot(
@@ -396,7 +396,7 @@ export const projects: Project[] = [
               1600,
               836,
               ['단일자산·1세대1주택·지분양도·공동명의 등 경우별 탭이 있는 부동산 양도세 계산 화면', 'Property capital gains calculator with tabs for each case: single asset, one-home household, partial share, joint ownership'],
-              ['부동산 양도세 계산기 · 개발 서버 실제 화면(시연용 가명 데이터)', 'Property capital gains calculator · real screen on the development server (demo pseudonyms)'],
+              ['부동산 양도세 계산기 · 개발 서버 실제 화면', 'Property capital gains calculator · real screen on the development server'],
               '2026-10-12',
             ),
             shot(
@@ -516,7 +516,7 @@ export const projects: Project[] = [
         1600,
         885,
         ['학습 로드맵과 학습 캘린더가 있는 대시보드', 'Dashboard with the study roadmap and study calendar'],
-        ['대시보드: 주차별 학습 로드맵·캘린더 · 실제 화면(로컬 실행)', 'Dashboard: weekly study roadmap and calendar · real screen (local run)'],
+        ['대시보드: 주차별 학습 로드맵·캘린더 · 실제 화면', 'Dashboard: weekly study roadmap and calendar · real screen'],
         '2026-05-04',
       ),
       video(
@@ -526,8 +526,8 @@ export const projects: Project[] = [
         710,
         ['SkillPilot 시연 영상', 'SkillPilot demo video'],
         [
-          '시연: 대시보드 → 학습 기록 → AI 모의면접 → CBT 모의고사 → AI 오답 해설 → 학습 메이트 (3분, 편집 없음)',
-          'Demo: dashboard → study log → AI mock interview → CBT mock exam → AI answer review → study companion (3 min, unedited)',
+          '시연: 대시보드 → 학습 기록 → AI 모의면접 → CBT 모의고사 → AI 오답 해설 → 학습 메이트',
+          'Demo: dashboard → study log → AI mock interview → CBT mock exam → AI answer review → study companion',
         ],
         '2026-05-04',
       ),
@@ -536,7 +536,7 @@ export const projects: Project[] = [
         1600,
         885,
         ['학습 기록, 학습 시간 추이 차트, 학습 잔디밭이 있는 대시보드 아래쪽', 'Lower dashboard with the study log, a study-time trend chart and a study heatmap'],
-        ['대시보드 위젯: 학습 기록·추이·잔디밭 · 실제 화면(로컬 실행)', 'Dashboard widgets: study log, trend, heatmap · real screen (local run)'],
+        ['대시보드 위젯: 학습 기록·추이·잔디밭 · 실제 화면', 'Dashboard widgets: study log, trend, heatmap · real screen'],
         '2026-05-04',
       ),
       shot(
@@ -544,7 +544,7 @@ export const projects: Project[] = [
         1600,
         885,
         ['AI 오답 분석 화면', 'AI wrong-answer analysis'],
-        ['AI 오답 분석 · 실제 화면(로컬 실행)', 'AI wrong-answer analysis · real screen (local run)'],
+        ['AI 오답 분석 · 실제 화면', 'AI wrong-answer analysis · real screen'],
         '2026-05-04',
       ),
       shot(
@@ -552,7 +552,7 @@ export const projects: Project[] = [
         1600,
         885,
         ['AI 모의면접 설정 화면', 'AI mock interview setup'],
-        ['AI 모의면접 설정 · 실제 화면(로컬 실행)', 'AI mock interview setup · real screen (local run)'],
+        ['AI 모의면접 설정 · 실제 화면', 'AI mock interview setup · real screen'],
         '2026-05-04',
       ),
     ],
@@ -697,8 +697,8 @@ export const projects: Project[] = [
         893,
         ['상황을 입력해 받은 코디 추천 결과', 'Outfit suggestions for a described occasion'],
         [
-          '추천 결과 · 실제 앱 화면(시뮬레이터) · gpt-5.4-nano, 후보 10개, 응답 4,804ms',
-          'Suggestions · real app screen (simulator) · gpt-5.4-nano, 10 candidates, 4,804 ms',
+          '추천 결과 · 실제 앱 화면 · gpt-5.4-nano, 후보 10개, 응답 4,804ms',
+          'Suggestions · real app screen · gpt-5.4-nano, 10 candidates, 4,804 ms',
         ],
         '2026-05-25',
         'device',
@@ -748,14 +748,14 @@ export const projects: Project[] = [
         540,
         1030,
         ['ClosetMate 시연 영상', 'ClosetMate demo video'],
-        ['시연 · 실제 앱 화면 녹화 (2분 33초, 편집 없음)', 'Demo · real app screen recording (2 min 33 s, unedited)'],
+        ['시연 · 실제 앱 화면 녹화', 'Demo · real app screen recording'],
         '2026-05-25',
         'device',
       ),
     ],
     flow: flow(
       ['사진에서 추천까지', 'From photo to suggestion'],
-      ['서버 추천 코드(runner · schema · candidate_generator) 기준', 'Drawn from the server recommendation code (runner, schema, candidate_generator)'],
+      ['서버 추천 코드 기준', 'Drawn from the server recommendation code'],
       [
         step('mine', ['사진 등록 (Expo 앱)', 'Add a photo (Expo app)'], ['서버 ONNX(MobileNetV3)가 종류를 분류하고, 사용자가 확인·수정', 'Server-side ONNX (MobileNetV3) labels it and the user checks or corrects it']),
         step('mine', ['옷장 저장 (PostgreSQL)', 'Saved to the wardrobe (PostgreSQL)']),
@@ -1086,7 +1086,7 @@ export const projects: Project[] = [
       'A scheduling service where one LLM proposes a schedule, another LLM role reviews it against rest and overload criteria (up to twice), and nothing goes into Google Calendar until the user approves.',
     ),
     image: '/images/projects/restplanner.png',
-    imageCaption: k('일정 요청 입력 화면 · 실제 화면(로컬 실행)', "Schedule request screen · real screen (local run)"),
+    imageCaption: k('일정 요청 입력 화면 · 실제 화면', "Schedule request screen · real screen"),
   },
   {
     slug: 'ai-hiring-textmining',
@@ -1183,7 +1183,7 @@ export const projects: Project[] = [
       'A browser prototype that transcribes what is said in a meeting and shows the emotion of each sentence and a summary of the meeting (team of 3).',
     ),
     image: '/images/projects/teamflow.png',
-    imageCaption: k('회의 화면과 AI 퍼실리테이터 패널 · 실제 화면(로컬 실행)', "Meeting screen with the AI facilitator panel · real screen (local run)"),
+    imageCaption: k('회의 화면과 AI 퍼실리테이터 패널 · 실제 화면', "Meeting screen with the AI facilitator panel · real screen"),
   },
   {
     slug: 'unifit',
