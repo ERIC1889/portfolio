@@ -55,14 +55,12 @@ describe('profile', () => {
     ])
   })
 
-  it('lists the six contact channels with their public links', () => {
-    expect(profile.contacts.map((c) => c.kind)).toEqual(['phone', 'email', 'address', 'languages', 'github', 'linkedin'])
+  it('lists email, languages and professional profiles only (no phone, no address)', () => {
+    expect(profile.contacts.map((c) => c.kind)).toEqual(['email', 'languages', 'github', 'linkedin'])
     const href = (kind: string) => profile.contacts.find((c) => c.kind === kind)?.href
-    expect(href('phone')).toBe('tel:+821035061889')
     expect(href('email')).toBe('mailto:eric1889@naver.com')
     expect(href('github')).toBe('https://github.com/ERIC1889')
     expect(href('linkedin')).toBe('https://www.linkedin.com/in/%EC%A4%80%EC%98%81-%ED%97%88-8142a130a/')
-    expect(href('address')).toBeUndefined()
   })
 })
 

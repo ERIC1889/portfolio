@@ -69,7 +69,7 @@ describe('checkLinks', () => {
     '/projects/pitches',
     '/#cases',
     '#top',
-    'tel:+821035061889',
+    'tel:+82000000000',
     'https://finz.kr',
     'https://finz.kr/simulator',
     'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/README.md',

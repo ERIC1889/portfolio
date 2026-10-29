@@ -12,6 +12,7 @@ import { projectName } from '@/content/select'
 
 export const metadata: Metadata = {
   title: '허준영 | Portfolio',
+  robots: { index: false, follow: false },
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>💻</text></svg>",
   },

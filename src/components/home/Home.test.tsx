@@ -32,7 +32,7 @@ const profile: Profile = {
   contacts: [
     { kind: 'email', label: l('이메일'), value: l('eric1889@naver.com'), href: 'mailto:eric1889@naver.com' },
     { kind: 'github', label: l('GitHub'), value: l('github.com/ERIC1889'), href: 'https://github.com/ERIC1889' },
-    { kind: 'address', label: l('주소'), value: l('서울특별시 서초구') },
+    { kind: 'address', label: l('주소'), value: l('서울특별시') },
   ],
 }
 
@@ -186,6 +186,6 @@ describe('Contact', () => {
     const github = screen.getByRole('link', { name: 'github.com/ERIC1889' })
     expect(github).toHaveAttribute('target', '_blank')
     expect(github).toHaveAttribute('rel', 'noopener noreferrer')
-    expect(screen.getByText('서울특별시 서초구')).toBeInTheDocument()
+    expect(screen.getByText('서울특별시')).toBeInTheDocument()
   })
 })
