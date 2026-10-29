@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { archive, chapters, getPaperCounts, getTopAwards, profile, projects } from './index'
+import { archive, chapters, getPaperCounts, getRecordStats, getTopAwards, profile, projects } from './index'
 import * as ui from './ui'
 import { checkEn, checkKo, checkLinks, checkNoLocalPaths, checkNoPhoneNumbers, collectStrings } from './validate'
 
@@ -30,6 +30,11 @@ describe('site content', () => {
     for (const word of ['지쳐', '지쳤', '지치', '힘들', '힘겨', '괴로', 'worn out', 'wore myself', 'exhausted', 'burned out', 'burnt out']) {
       expect(text, word).not.toContain(word)
     }
+  })
+
+  it('names the company Finz Labs everywhere and leaves out the coding-instructor job', () => {
+    const text = textOf(ALL_CONTENT)
+    for (const old of ['수지하우스', 'SuziHouse', '컴세바', 'Comseba']) expect(text, old).not.toContain(old)
   })
 
   it('makes no unmeasurable claims', () => {
@@ -139,9 +144,21 @@ describe('archive', () => {
     expect(untranslated.map((p) => p.title)).toEqual([])
   })
 
-  it('lists work with its context: SuziHouse first, then the coding-instructor job', () => {
-    expect(archive.experience.map((w) => w.org.ko)).toEqual(['수지하우스 (finz.kr)', '컴세바 입시 컨설팅 학원'])
+  it('lists work with its context: Finz Labs only', () => {
+    expect(archive.experience.map((w) => w.org.ko)).toEqual(['주식회사 Finz Labs (finz.kr)'])
     expect(archive.experience[0].context.ko).toContain('유일한 개발자')
+  })
+
+  it('counts the record from the data: projects, conference papers, awards, activities', () => {
+    expect(getRecordStats().map((s) => [s.label.ko, s.value])).toEqual([
+      ['프로젝트', projects.length],
+      ['학술대회 논문', 7],
+      ['수상', archive.awards.length],
+      ['대외 활동', archive.activities.length],
+    ])
+    expect(getRecordStats()[1].note?.ko).toBe('국제 1 · 1저자 3')
+    // the awards note claims a first-place grand prize; keep it true
+    expect(archive.awards.some((a) => a.name.ko.includes('대상(1등)'))).toBe(true)
   })
 
   it('groups skills into six areas, each backed by at least one link', () => {

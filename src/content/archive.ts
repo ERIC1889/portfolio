@@ -277,22 +277,15 @@ export const archive: Archive = {
   ],
   experience: [
     {
-      org: k('수지하우스 (finz.kr)', 'SuziHouse (finz.kr)'),
+      org: k('주식회사 Finz Labs (finz.kr)', 'Finz Labs (finz.kr)'),
       title: k('CTO · 개발 담당', 'CTO · sole developer'),
       period: '2026.01–',
       context: k('직원 5명 스타트업의 유일한 개발자, 인력 관리는 맡지 않음', 'The only developer at a five-person startup; no people management'),
       responsibilities: [
         k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
-        k('청년 세금 환급 모바일 앱 MVP (Expo · FastAPI, 미출시)', 'MVP of a tax refund mobile app for young people (Expo · FastAPI, not released)'),
-        k('세무 SaaS FINZ 기술 결정·개발 참여·QA (협력 개발사와 함께)', 'Technical decisions, development and QA for the FINZ tax SaaS (with a partner development company)'),
+        k('Finz 모바일 앱: 청년 세금 환급 MVP, 생애주기 금융 화면, AI 세무 상담 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, life-stage finance screens, AI tax chat (Expo · FastAPI, not released)'),
+        k('세무사용 FINZ 기술 결정·개발 참여·QA (협력 개발사와 함께)', 'Technical decisions, development and QA for FINZ for tax accountants (with a partner development company)'),
       ],
-    },
-    {
-      org: k('컴세바 입시 컨설팅 학원', 'Comseba Admissions Consulting Academy'),
-      title: k('코딩 강사', 'Coding instructor'),
-      period: '2025.07–2025.10',
-      context: k('입시 컨설팅 학원의 코딩 수업', 'Coding classes at an admissions consulting academy'),
-      responsibilities: [],
     },
   ],
   // Only skills with a project behind them; each row links to where it was used.
@@ -302,7 +295,7 @@ export const archive: Archive = {
       items: ['TypeScript', 'Next.js', 'Node.js · Express'],
       did: k('세금 비교 화면과 계산 API, 공공 API 7종 연동과 정규화', 'Tax comparison screens and calculation API; integrating and normalizing 7 public APIs'),
       evidence: [
-        { label: k('수지하우스 6Way', 'SuziHouse 6Way'), href: '/projects/suzihouse' },
+        { label: k('Finz 부동산 6Way', 'Finz property 6Way'), href: '/projects/finz' },
         { label: k('SkillPilot API 클라이언트', 'SkillPilot API client'), href: 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/SkillPilot-backend/src/integrations/dataGoKr/client.js' },
       ],
     },
@@ -310,7 +303,7 @@ export const archive: Archive = {
       area: k('Python 백엔드', 'Python backend'),
       items: ['Python', 'FastAPI', 'pytest'],
       did: k('간편인증 상태 흐름, 서버 권한·결제 검증, 계산 엔진 검증 테스트', 'Simple-auth state flow, server-side permission and payment checks, tests that verify the calculation engine'),
-      evidence: [{ label: k('청년 세금 환급 앱', 'Tax refund app'), href: '/projects/suzihouse#refund-app' }],
+      evidence: [{ label: k('Finz 모바일 앱', 'Finz mobile app'), href: '/projects/finz#refund-app' }],
     },
     {
       area: k('데이터', 'Data'),
@@ -318,7 +311,7 @@ export const archive: Archive = {
       did: k('정형 데이터와 AI 결과 분리 저장, 같은 요청의 AI 결과 재사용, 실거래가 캐시', 'Structured data and AI results stored apart, reuse of AI results for the same request, caching real-transaction prices'),
       evidence: [
         { label: k('SkillPilot', 'SkillPilot'), href: '/projects/skillpilot' },
-        { label: k('수지하우스', 'SuziHouse'), href: '/projects/suzihouse' },
+        { label: k('Finz', 'Finz'), href: '/projects/finz' },
       ],
     },
     {
@@ -329,7 +322,7 @@ export const archive: Archive = {
         'Weekly price syncing with retries (Celery Beat), a post-talk analysis job queue (BullMQ), periodic public-data syncing (node-cron)',
       ),
       evidence: [
-        { label: k('환급 앱 백엔드', 'Refund app backend'), href: '/projects/suzihouse#refund-app' },
+        { label: k('Finz 앱 백엔드', 'Finz app backend'), href: '/projects/finz#refund-app' },
         { label: k('SkillPilot 동기화', 'SkillPilot sync'), href: '/projects/skillpilot' },
         { label: k('Pitches 작업 큐', 'Pitches job queue'), href: '/projects/pitches' },
       ],
@@ -348,7 +341,7 @@ export const archive: Archive = {
         'Expected-value comparison scripts, security tests on every push (GitHub Actions), content checks for this site and Vercel deploys',
       ),
       evidence: [
-        { label: k('수지하우스 검증', 'SuziHouse checks'), href: '/projects/suzihouse#validation' },
+        { label: k('Finz 계산 검증', 'Finz calculation checks'), href: '/projects/finz#validation' },
         { label: k('이 사이트 저장소', 'This site\'s repository'), href: 'https://github.com/ERIC1889/portfolio' },
       ],
     },

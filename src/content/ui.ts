@@ -92,13 +92,6 @@ export function authorOrderLabel(order: number): L {
   return { ko: `${order}저자`, en: `${ORDINALS[order - 1] ?? `${order}th`} author` }
 }
 
-export function paperSummary(counts: { conference: number; international: number; firstAuthor: number }): L {
-  return {
-    ko: `학술대회 논문 ${counts.conference}편 (국제 ${counts.international} · 1저자 ${counts.firstAuthor})`,
-    en: `${counts.conference} conference papers (${counts.international} international · ${counts.firstAuthor} as first author)`,
-  }
-}
-
 export function checkedOn(date: string): L {
   return { ko: `${date} 확인`, en: `checked ${date}` }
 }
@@ -112,10 +105,30 @@ export const ARCHIVE_HEADINGS = {
   papers: { ko: '논문·발표', en: 'Papers and talks' },
   awards: { ko: '수상', en: 'Awards' },
   activities: { ko: '활동', en: 'Activities' },
+  background: { ko: '경력·학력·자격', en: 'Work, education, certifications' },
   experience: { ko: '경력', en: 'Work' },
   education: { ko: '학력', en: 'Education' },
   certs: { ko: '자격', en: 'Certifications' },
 } satisfies Record<string, L>
+
+export const STAT_LABELS = {
+  projects: { ko: '프로젝트', en: 'Projects' },
+  papers: { ko: '학술대회 논문', en: 'Conference papers' },
+  awards: { ko: '수상', en: 'Awards' },
+  activities: { ko: '대외 활동', en: 'Activities' },
+} satisfies Record<string, L>
+
+export const STAT_NOTES = {
+  years: { ko: '2023–2026', en: '2023–2026' },
+  grandPrize: { ko: '해커톤 대상(1등) 포함', en: 'Including a hackathon grand prize (1st)' },
+} satisfies Record<string, L>
+
+export function paperNote(counts: { international: number; firstAuthor: number }): L {
+  return {
+    ko: `국제 ${counts.international} · 1저자 ${counts.firstAuthor}`,
+    en: `${counts.international} international · ${counts.firstAuthor} as first author`,
+  }
+}
 
 export const UI = {
   skipToContent: { ko: '본문으로 건너뛰기', en: 'Skip to content' },
@@ -133,16 +146,13 @@ export const UI = {
   whatIBuilt: { ko: '내가 만든 것', en: 'What I built' },
   verification: { ko: '검증', en: 'Verification' },
   stack: { ko: '기술', en: 'Stack' },
-  screens: { ko: '화면', en: 'Screens' },
-  moreScreens: { ko: '화면 더 보기', en: 'More screens' },
   allProjects: { ko: '전체 기록 보기', en: 'See the full record' },
   story: { ko: '4년 이야기', en: 'The four-year story' },
-  work: { ko: '일', en: 'Work' },
-  education: { ko: '학력', en: 'Education' },
   topAwards: { ko: '대표 수상', en: 'Selected awards' },
   papers: { ko: '논문', en: 'Papers' },
-  allPapers: { ko: '논문·발표 전체', en: 'All papers and talks' },
-  awardsCount: { ko: '전체 수상', en: 'All awards' },
+  featuredAward: { ko: '대표', en: 'Selected' },
+  archiveJump: { ko: '기록 바로가기', en: 'Jump to' },
+  recordStats: { ko: '기록 요약', en: 'At a glance' },
   team: { ko: '팀', en: 'Team' },
   gpa: { ko: '학점', en: 'GPA' },
   backToProjects: { ko: '프로젝트 목록', en: 'All projects' },
@@ -174,6 +184,5 @@ export const UI = {
     ko: '모든 프로젝트와 논문, 수상, 활동을 모았습니다.',
     en: 'Every project, paper, award and activity in one place.',
   },
-  resumeTitle: { ko: '이력서', en: 'Résumé' },
   resumePdf: { ko: 'PDF 내려받기', en: 'Download PDF' },
 } satisfies Record<string, L>

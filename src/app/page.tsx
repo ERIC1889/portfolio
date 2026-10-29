@@ -4,7 +4,7 @@ import { Flagship } from '@/components/home/Flagship'
 import { Intro } from '@/components/home/Intro'
 import { Showcase } from '@/components/home/Showcase'
 import { Skills } from '@/components/home/Skills'
-import { archive, getPaperCounts, getShowcase, getTopAwards, profile } from '@/content'
+import { archive, getRecordStats, getShowcase, getTopAwards, profile } from '@/content'
 import { HOME_IDS, SECTION_LEADS, SECTION_TITLES } from '@/content/ui'
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <Skills rows={archive.skills} />
       <Showcase id={HOME_IDS.supporting} title={SECTION_TITLES.supporting} projects={getShowcase('supporting')} />
       <Showcase id={HOME_IDS.other} title={SECTION_TITLES.other} lead={SECTION_LEADS.other} projects={getShowcase('other')} compact />
-      <Experience archive={archive} topAwards={getTopAwards()} paperCounts={getPaperCounts()} />
+      <Experience archive={archive} topAwards={getTopAwards()} stats={getRecordStats().slice(0, 3)} />
       <Contact profile={profile} />
     </main>
   )

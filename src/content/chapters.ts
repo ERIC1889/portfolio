@@ -2,7 +2,7 @@ import type { Chapter } from './types'
 
 // Source: the four-year reflection (ex.md), condensed to what matters for a developer's story.
 // Left out on purpose: military-service and job-hunting plans, present-tense distress,
-// private details (people, places, social life) and the specifics of internal disagreements at SuziHouse.
+// private details (people, places, social life) and the specifics of internal disagreements at Finz Labs.
 export const chapters: Chapter[] = [
   {
     year: 2023,
@@ -55,8 +55,8 @@ export const chapters: Chapter[] = [
     lesson: { ko: '실무에서 소통과 검증을 배운 해', en: 'The year real work taught me communication and verification' },
     essay: [
       {
-        ko: '스타트업 수지하우스에서 CTO로 웹과 앱을 맡아, 처음으로 실제 서비스를 만드는 실무를 경험했습니다. 실무에서는 코드만큼 소통과 의사결정이 중요하다는 것을 배웠습니다.',
-        en: "At the startup SuziHouse, I took charge of the web and app as CTO and built a real service on the job for the first time. I learned that in real work, communication and decision-making matter as much as code.",
+        ko: '스타트업 Finz Labs에서 CTO로 웹과 앱을 맡아, 처음으로 실제 서비스를 만드는 실무를 경험했습니다. 실무에서는 코드만큼 소통과 의사결정이 중요하다는 것을 배웠습니다.',
+        en: "At the startup Finz Labs, I took charge of the web and app as CTO and built a real service on the job for the first time. I learned that in real work, communication and decision-making matter as much as code.",
       },
       {
         ko: '무엇보다 만드는 것과 그 결과가 맞는지 확인하는 것은 다른 일이라는 것을 배웠습니다. 그래서 지금은 기능을 끝냈다고 말하기 전에, 무엇으로 확인했는지부터 설명하려고 합니다. 그 와중에도 ClosetMate를 만들고 Pitches를 혼자 다시 설계했습니다.',

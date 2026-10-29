@@ -101,7 +101,7 @@ export interface Project {
   statusCheckedAt?: string
   stack: string[]
   summary: L
-  /** Product title used on the case page (e.g. "SuziHouse property tax comparison"). */
+  /** Product title used on the case page (e.g. "Finz property tax comparison"). */
   title?: L
   /** What the product is, in one sentence. */
   product?: L
@@ -117,6 +117,13 @@ export interface Project {
   image?: string
   imageCaption?: L
   sections?: CaseSection[]
+}
+
+/** A count on the record summary, with what it covers. */
+export interface Stat {
+  value: number
+  label: L
+  note?: L
 }
 
 export interface Chapter {

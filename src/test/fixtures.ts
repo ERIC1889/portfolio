@@ -39,7 +39,7 @@ export function featuredProject(slug: string, name: string, years: Project['year
 
 export const FIXTURE_PROJECTS: Project[] = [
   featuredProject('pitches', 'Pitches', [2024, 2026], { showcase: 'other' }),
-  featuredProject('suzihouse', '수지하우스', [2026], { showcase: 'flagship' }),
+  featuredProject('finz', 'Finz', [2026], { showcase: 'flagship' }),
   featuredProject('skillpilot', 'SkillPilot', [2025]),
   featuredProject('closetmate', 'ClosetMate', [2026]),
   {

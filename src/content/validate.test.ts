@@ -60,8 +60,8 @@ describe('checkKo / checkEn', () => {
 
 describe('checkLinks', () => {
   it.each([
-    '/projects/suzihouse',
-    '/projects/suzihouse#refund-app',
+    '/projects/finz',
+    '/projects/finz#refund-app',
     '#validation',
     'https://finz.kr',
     'https://www.finz.kr/personal/property',

@@ -13,7 +13,6 @@ export function Flagship({ project }: { project: Project }) {
   const { t } = useLang()
   const media = project.media ?? []
   const video = media.find((m) => m.kind === 'video')
-  const shots = media.filter((m) => m.kind !== 'video').slice(0, 3)
   const live = project.links?.find((link) => link.kind === 'live')
   const check = project.metrics?.[0]
   return (
@@ -63,13 +62,6 @@ export function Flagship({ project }: { project: Project }) {
             </div>
           </div>
         </article>
-        {shots.length > 0 && (
-          <div className="shot-strip">
-            {shots.map((shot) => (
-              <MediaFigure key={shot.src} media={shot} sizes="(max-width: 640px) 100vw, 340px" />
-            ))}
-          </div>
-        )}
       </div>
     </section>
   )

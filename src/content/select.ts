@@ -12,7 +12,7 @@ export function projectTitle(project: Pick<Project, 'name' | 'nameEn' | 'title'>
 export const YEARS: Year[] = [2023, 2024, 2025, 2026]
 
 /** Featured projects in page order: the flagship, the two supporting projects, then other work. */
-export const FEATURED_ORDER = ['suzihouse', 'skillpilot', 'closetmate', 'pitches'] as const
+export const FEATURED_ORDER = ['finz', 'skillpilot', 'closetmate', 'pitches'] as const
 
 export function selectFeatured(projects: Project[]): Project[] {
   return FEATURED_ORDER.map((slug) => projects.find((p) => p.slug === slug && p.tier === 'featured')).filter(

@@ -3,10 +3,10 @@ import { featuredProject, l } from '@/test/fixtures'
 import pkg from '../../package.json'
 import { findHolds, runReleaseCheck, shouldBlock } from './release'
 
-const held = featuredProject('suzihouse', '수지하우스', [2026], {
+const held = featuredProject('finz', 'Finz', [2026], {
   sections: [
     { id: 'problem', title: l('문제'), body: [l('본문')] },
-    { id: 'implementation', title: l('FINZ'), body: [l('본문')], hold: true, holdKey: 'finz' },
+    { id: 'implementation', title: l('FINZ'), body: [l('본문')], hold: true, holdKey: 'finz-saas' },
     { id: 'implementation', title: l('보류 키 없음'), body: [l('본문')], hold: true },
   ],
 })
@@ -14,7 +14,7 @@ const clean = featuredProject('skillpilot', 'SkillPilot', [2025])
 
 describe('findHolds', () => {
   it('names each held section by slug and hold key, falling back to the section id', () => {
-    expect(findHolds([clean, held])).toEqual(['suzihouse#finz', 'suzihouse#implementation'])
+    expect(findHolds([clean, held])).toEqual(['finz#finz-saas', 'finz#implementation'])
   })
 
   it('finds nothing when no section is held', () => {
@@ -36,14 +36,14 @@ describe('runReleaseCheck', () => {
     const log = { error: vi.fn(), warn: vi.fn() }
     expect(runReleaseCheck([held], 'production', log)).toBe(1)
     expect(log.error).toHaveBeenCalledWith(expect.stringContaining('공개 보류 항목이 남아 있어 운영 배포를 중단합니다'))
-    expect(log.error).toHaveBeenCalledWith(expect.stringContaining('suzihouse#finz'))
+    expect(log.error).toHaveBeenCalledWith(expect.stringContaining('finz#finz-saas'))
   })
 
   it('lets a preview build through but warns about the holds', () => {
     const log = { error: vi.fn(), warn: vi.fn() }
     expect(runReleaseCheck([held], 'preview', log)).toBe(0)
     expect(log.error).not.toHaveBeenCalled()
-    expect(log.warn).toHaveBeenCalledWith(expect.stringContaining('suzihouse#finz'))
+    expect(log.warn).toHaveBeenCalledWith(expect.stringContaining('finz#finz-saas'))
   })
 
   it('passes a production build silently when nothing is held', () => {

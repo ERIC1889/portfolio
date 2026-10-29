@@ -14,13 +14,13 @@ describe('PageNav', () => {
   it('reads previous · center · next from left to right', () => {
     renderWithProviders(
       <PageNav
-        prev={{ href: '/projects/suzihouse', label: l('수지하우스') }}
+        prev={{ href: '/projects/finz', label: l('Finz') }}
         center={{ href: '/#projects', label: l('프로젝트 목록') }}
         next={{ href: '/projects/closetmate', label: l('ClosetMate') }}
       />,
     )
     expect(linksIn()).toEqual([
-      ['/projects/suzihouse', '← 수지하우스'],
+      ['/projects/finz', '← Finz'],
       ['/#projects', '프로젝트 목록'],
       ['/projects/closetmate', 'ClosetMate →'],
     ])

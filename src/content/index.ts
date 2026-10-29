@@ -13,7 +13,8 @@ import {
   selectShowcase,
   selectTopAwards,
 } from './select'
-import type { Showcase, Year } from './types'
+import type { Showcase, Stat, Year } from './types'
+import { STAT_LABELS, STAT_NOTES, paperNote } from './ui'
 
 export { archive, chapters, profile, projects, FEATURED_ORDER, YEARS }
 
@@ -26,3 +27,14 @@ export const getByYear = (year: Year) => selectByYear(projects, year)
 export const getChapter = (year: Year) => selectChapter(chapters, year)
 export const getPaperCounts = () => selectPaperCounts(archive.papers)
 export const getTopAwards = () => selectTopAwards(archive)
+
+/** The record in four counts, taken from the data so they never drift. */
+export function getRecordStats(): Stat[] {
+  const papers = getPaperCounts()
+  return [
+    { value: projects.length, label: STAT_LABELS.projects, note: STAT_NOTES.years },
+    { value: papers.conference, label: STAT_LABELS.papers, note: paperNote(papers) },
+    { value: archive.awards.length, label: STAT_LABELS.awards, note: STAT_NOTES.grandPrize },
+    { value: archive.activities.length, label: STAT_LABELS.activities, note: STAT_NOTES.years },
+  ]
+}

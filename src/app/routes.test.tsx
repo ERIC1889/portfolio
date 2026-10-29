@@ -24,7 +24,7 @@ function pageNavHrefs() {
 describe('site metadata', () => {
   it('describes the site, sets its address and shares one card image', () => {
     expect(rootMetadata.metadataBase?.toString()).toBe('https://junyoung-portfolio.vercel.app/')
-    expect(rootMetadata.description).toBe('허준영 · 백엔드 중심 풀스택 개발자. 수지하우스 부동산 세금 비교, SkillPilot, ClosetMate.')
+    expect(rootMetadata.description).toBe('허준영 · 백엔드 중심 풀스택 개발자. Finz 부동산 세금 비교, SkillPilot, ClosetMate.')
     expect(rootMetadata.alternates?.canonical).toBe('/')
     expect(rootMetadata.openGraph).toMatchObject({ images: [expect.objectContaining({ url: '/og.png', width: 1200, height: 630 })] })
   })
@@ -32,7 +32,7 @@ describe('site metadata', () => {
   it('lists every page in the sitemap and points robots at it', () => {
     expect(sitemap().map((entry) => entry.url)).toEqual([
       'https://junyoung-portfolio.vercel.app',
-      'https://junyoung-portfolio.vercel.app/projects/suzihouse',
+      'https://junyoung-portfolio.vercel.app/projects/finz',
       'https://junyoung-portfolio.vercel.app/projects/skillpilot',
       'https://junyoung-portfolio.vercel.app/projects/closetmate',
       'https://junyoung-portfolio.vercel.app/projects/pitches',
@@ -46,7 +46,7 @@ describe('site metadata', () => {
 
 describe('/projects/[slug]', () => {
   it('pre-renders exactly the four featured cases, flagship first', () => {
-    expect(ProjectRoute.generateStaticParams()).toEqual([{ slug: 'suzihouse' }, { slug: 'skillpilot' }, { slug: 'closetmate' }, { slug: 'pitches' }])
+    expect(ProjectRoute.generateStaticParams()).toEqual([{ slug: 'finz' }, { slug: 'skillpilot' }, { slug: 'closetmate' }, { slug: 'pitches' }])
     expect(ProjectRoute.dynamicParams).toBe(false)
   })
 
@@ -56,11 +56,11 @@ describe('/projects/[slug]', () => {
   })
 
   it('titles and describes the page by the product, with its own canonical address', async () => {
-    const meta = await ProjectRoute.generateMetadata(slugParams('suzihouse'))
-    expect(meta.title).toBe('수지하우스 부동산 세금 비교')
+    const meta = await ProjectRoute.generateMetadata(slugParams('finz'))
+    expect(meta.title).toBe('Finz 부동산 세금 비교')
     expect(meta.description).toContain('세금 여섯 가지를 중과 유예 전후로 비교')
-    expect(meta.alternates?.canonical).toBe('/projects/suzihouse')
-    expect(meta.openGraph).toMatchObject({ url: '/projects/suzihouse', images: [expect.objectContaining({ url: '/og.png' })] })
+    expect(meta.alternates?.canonical).toBe('/projects/finz')
+    expect(meta.openGraph).toMatchObject({ url: '/projects/finz', images: [expect.objectContaining({ url: '/og.png' })] })
   })
 
   it('shows the product name as the page heading', async () => {
@@ -69,7 +69,7 @@ describe('/projects/[slug]', () => {
   })
 
   it('links the flagship to the list and the next case, with no previous link', async () => {
-    renderWithProviders(await ProjectRoute.default(slugParams('suzihouse')))
+    renderWithProviders(await ProjectRoute.default(slugParams('finz')))
     expect(pageNavHrefs()).toEqual(['/#projects', '/projects/skillpilot'])
   })
 
@@ -106,13 +106,33 @@ describe('/story', () => {
     expect(within(year2025).getByRole('link', { name: 'SkillPilot' })).toHaveAttribute('href', '/projects/skillpilot')
   })
 
-  it('redirects the old year pages to the matching year', async () => {
+  it('redirects the old year pages to the matching year, and the old flagship address to the new one', async () => {
     const redirects = await nextConfig.redirects!()
-    expect(redirects).toEqual([2023, 2024, 2025, 2026].map((year) => ({ source: `/journey/${year}`, destination: `/story#y${year}`, permanent: true })))
+    expect(redirects).toEqual([
+      ...[2023, 2024, 2025, 2026].map((year) => ({ source: `/journey/${year}`, destination: `/story#y${year}`, permanent: true })),
+      { source: '/projects/suzihouse', destination: '/projects/finz', permanent: true },
+    ])
   })
 })
 
 describe('/archive', () => {
+  it('opens with the record in four numbers and links to each part', () => {
+    renderWithProviders(<ArchivePage />)
+    const stats = document.querySelector('.stat-tiles') as HTMLElement
+    expect([...stats.querySelectorAll('.stat-value')].map((v) => v.textContent)).toEqual(['19', '7', '13', '17'])
+    const jump = screen.getByRole('navigation', { name: '기록 바로가기' })
+    expect(within(jump).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#projects', '#papers', '#awards', '#background', '#activities'])
+  })
+
+  it('groups projects by year, newest first, with the featured ones linking to their case pages', () => {
+    renderWithProviders(<ArchivePage />)
+    const list = document.getElementById('projects') as HTMLElement
+    expect(within(list).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['2026', '2025', '2024', '2023'])
+    expect(within(list).getAllByRole('listitem')).toHaveLength(19)
+    const closetmate = within(list).getByText('ClosetMate').closest('li') as HTMLElement
+    expect(within(closetmate).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/closetmate')
+  })
+
   it('groups papers by kind, marking author order where it is known', () => {
     renderWithProviders(<ArchivePage />)
     const papers = document.getElementById('papers') as HTMLElement
@@ -126,17 +146,13 @@ describe('/archive', () => {
     expect(within(papers).getAllByText('2저자')).toHaveLength(1)
   })
 
-  it('lists every project, featured ones linking to their case pages', () => {
-    renderWithProviders(<ArchivePage />)
-    const list = document.getElementById('projects') as HTMLElement
-    expect(within(list).getAllByRole('listitem')).toHaveLength(19)
-    expect(within(list).getByRole('link', { name: 'ClosetMate' })).toHaveAttribute('href', '/projects/closetmate')
-  })
-
-  it('marks team awards', () => {
+  it('lists awards newest first, marking the three selected ones and team awards', () => {
     renderWithProviders(<ArchivePage />)
     const awards = document.getElementById('awards') as HTMLElement
-    expect(within(awards).getAllByRole('listitem')).toHaveLength(13)
+    const items = within(awards).getAllByRole('listitem')
+    expect(items).toHaveLength(13)
+    expect(items[0]).toHaveTextContent('26.07.22')
+    expect(within(awards).getAllByText('대표')).toHaveLength(3)
     expect(within(awards).getAllByText('팀')).toHaveLength(5)
   })
 })
@@ -146,7 +162,9 @@ describe('/resume', () => {
     const { container } = renderWithProviders(<ResumePage />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('허준영')
     expect(screen.getByRole('link', { name: 'PDF 내려받기' })).toHaveAttribute('href', '/resume.pdf')
-    expect(container).toHaveTextContent('수지하우스 부동산 세금 비교')
+    expect(container).toHaveTextContent('Finz 부동산 세금 비교')
+    expect(container).toHaveTextContent('주식회사 Finz Labs')
+    expect(container).not.toHaveTextContent('컴세바')
     expect(container).toHaveTextContent('eric1889@naver.com')
     expect(container.textContent).not.toMatch(/010[\s-]?\d{4}|\+82/)
   })

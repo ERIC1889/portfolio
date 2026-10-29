@@ -49,27 +49,26 @@ const SKILLPILOT_REPO = 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilo
 export const projects: Project[] = [
   // ── flagship ──────────────────────────────────────────────────────────────
   {
-    slug: 'suzihouse',
-    name: '수지하우스',
-    nameEn: 'SuziHouse',
+    slug: 'finz',
+    name: 'Finz',
     years: [2026],
     tier: 'featured',
     showcase: 'flagship',
-    title: k('수지하우스 부동산 세금 비교', 'SuziHouse property tax comparison'),
+    title: k('Finz 부동산 세금 비교', 'Finz property tax comparison'),
     product: k(
       '집 두 채를 양도·증여·부담부증여로 처분할 때의 세금 여섯 가지를 중과 유예 전후로 비교하고, PDF로 저장하는 웹 기능',
       'A web feature that compares the tax on six ways of disposing of two homes (sale, gift or gift with assumed debt) before and after the surcharge grace period, and saves the result as a PDF',
     ),
     audience: k('집을 두 채 가진 개인', 'Individuals who own two homes'),
     period: '2026.04–',
-    team: k('직원 5명 스타트업 · 유일한 개발자', 'Five-person startup · the only developer'),
+    team: k('주식회사 Finz Labs (직원 5명) · 유일한 개발자', 'Finz Labs (five people) · the only developer'),
     role: k('설계·개발·운영 (직함 CTO)', 'Design, build and operation (title: CTO)'),
     status: k('운영 중 (finz.kr)', 'Live (finz.kr)'),
     statusCheckedAt: '2026-10-29',
     stack: ['Next.js', 'TypeScript', 'React', 'Vitest'],
     summary: k(
-      '부동산 세금 비교 계산기를 포함한 회사 웹 finz.kr을 혼자 설계·개발·운영하고, 청년 세금 환급 앱 MVP를 만들었습니다.',
-      'I designed, built and run the company website finz.kr on my own, including its property tax comparison calculator, and built the MVP of a tax refund app for young people.',
+      '부동산 세금 비교 계산기를 포함한 회사 웹 finz.kr을 혼자 설계·개발·운영하고, Finz 모바일 앱(청년 세금 환급 MVP 등)을 만들었습니다.',
+      'I designed, built and run the company website finz.kr on my own, including its property tax comparison calculator, and built the Finz mobile app (a tax refund MVP and more).',
     ),
     features: pairs([
       [
@@ -93,6 +92,7 @@ export const projects: Project[] = [
         ],
         ['개인 서비스 계산기 세 가지: 부동산 6Way, 디지털 자산, 해외주식', 'All three personal-service calculators: property 6Way, digital assets and foreign stocks'],
         ['결과 PDF 리포트', 'The result PDF report'],
+        ['Finz 모바일 앱과 백엔드 (Expo · FastAPI, 미출시)', 'The Finz mobile app and its backend (Expo · FastAPI, not released)'],
       ]),
       joint: pairs([['세금 계산 로직 정리 (세무사와 함께)', 'Working out the tax logic (with a tax accountant)']]),
       others: pairs([['회사 웹 v1 (2026.03–04, 다른 개발자): 정적 페이지와 초기 화면', 'Company website v1 (Mar–Apr 2026, another developer): static pages and early screens']]),
@@ -106,8 +106,8 @@ export const projects: Project[] = [
     },
     media: [
       video(
-        '/media/suzihouse/web-demo.mp4',
-        '/media/suzihouse/web-demo-poster.webp',
+        '/media/finz/web-demo.mp4',
+        '/media/finz/web-demo-poster.webp',
         1280,
         800,
         ['부동산 6Way 시연: 두 주택 입력, 결과 비교, 조건 변경 후 재계산', 'Property 6Way demo: entering two homes, comparing results, recalculating after a change'],
@@ -118,7 +118,7 @@ export const projects: Project[] = [
         '2026-10-29',
       ),
       shot(
-        '/media/suzihouse/web-six-way.webp',
+        '/media/finz/web-six-way.webp',
         1600,
         956,
         ['여섯 가지 처분 방법별 중과 유예 전후 세금 비교', 'Tax for the six options before and after the surcharge grace period'],
@@ -126,7 +126,7 @@ export const projects: Project[] = [
         '2026-10-29',
       ),
       shot(
-        '/media/suzihouse/web-report.webp',
+        '/media/finz/web-report.webp',
         1100,
         1556,
         ['PDF로 저장되는 비교 리포트 첫 장', 'First page of the comparison report saved as a PDF'],
@@ -134,7 +134,7 @@ export const projects: Project[] = [
         '2026-10-29',
       ),
       shot(
-        '/media/suzihouse/web-mobile.webp',
+        '/media/finz/web-mobile.webp',
         780,
         1688,
         ['휴대폰에서 본 결과 요약', 'Result summary on a phone'],
@@ -143,7 +143,7 @@ export const projects: Project[] = [
         'phone',
       ),
       shot(
-        '/media/suzihouse/web-summary.webp',
+        '/media/finz/web-summary.webp',
         1600,
         579,
         ['세금이 가장 적은 경우와 최대 세금 차이를 보여 주는 결과 요약', 'Result summary showing the cheapest option and the largest tax gap'],
@@ -151,7 +151,7 @@ export const projects: Project[] = [
         '2026-10-29',
       ),
       shot(
-        '/media/suzihouse/web-input.webp',
+        '/media/finz/web-input.webp',
         1600,
         1097,
         ['A주택 시가·취득가액·취득일·조정대상지역·전세보증금 입력 화면', 'Input for home A: market price, purchase price, date, regulated area and lease deposit'],
@@ -246,7 +246,7 @@ export const projects: Project[] = [
       ]),
       section(
         'implementation',
-        ['같은 회사의 다른 작업 · 청년 세금 환급 앱 (MVP, 미출시)', 'Also at SuziHouse · tax refund app for young people (MVP, not released)'],
+        ['같은 회사의 다른 작업 · Finz 모바일 앱 (청년 세금 환급 MVP, 미출시)', 'Also at Finz Labs · Finz mobile app (tax refund MVP, not released)'],
         [
           [
             'Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다.',
@@ -268,13 +268,17 @@ export const projects: Project[] = [
             '같은 백엔드에서 실거래가 데이터는 Celery Beat로 매주 월요일 조정대상지역 전체를 동기화하고, 실패하면 시간을 두고 다시 시도합니다. 보안 테스트는 GitHub Actions에서 push마다 실행됩니다.',
             'In the same backend, Celery Beat syncs real-transaction prices for every regulated area each Monday and retries after a delay on failure. The security tests run in GitHub Actions on every push.',
           ],
+          [
+            '같은 앱에 생애주기 금융 화면(금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교)과 AI 세무 상담 챗봇, 세무사 상담 연결 화면도 만들었습니다. 아래 화면의 값은 모두 예시 데이터입니다.',
+            'The same app also has life-stage finance screens (a financial-literacy quiz, mock investing, a spending and assets dashboard, financial product comparison), an AI tax chat assistant and screens that connect users with tax accountants. All values in the screens below are example data.',
+          ],
         ],
         {
           anchor: 'refund-app',
           media: [
             video(
-              '/media/suzihouse/app-demo.mp4',
-              '/media/suzihouse/app-demo-poster.webp',
+              '/media/finz/app-demo.mp4',
+              '/media/finz/app-demo-poster.webp',
               1280,
               720,
               ['청년 소득세 환급 앱 시연 영상', 'Tax refund app demo video'],
@@ -285,7 +289,7 @@ export const projects: Project[] = [
               '2026-09-10',
             ),
             shot(
-              '/media/suzihouse/app-auth-method.webp',
+              '/media/finz/app-auth-method.webp',
               720,
               1561,
               ['간편인증 수단을 고르는 화면', 'Choosing a simple-authentication method'],
@@ -294,7 +298,7 @@ export const projects: Project[] = [
               'phone',
             ),
             shot(
-              '/media/suzihouse/app-auth-wait.webp',
+              '/media/finz/app-auth-wait.webp',
               720,
               1561,
               ['카카오톡 인증을 기다리며 남은 시간을 보여 주는 화면', 'Waiting for KakaoTalk approval with the time remaining'],
@@ -303,7 +307,7 @@ export const projects: Project[] = [
               'phone',
             ),
             shot(
-              '/media/suzihouse/app-collect.webp',
+              '/media/finz/app-collect.webp',
               720,
               1561,
               ['연도별 소득 자료를 차례로 수집하는 진행 화면', 'Progress screen collecting income records year by year'],
@@ -311,16 +315,43 @@ export const projects: Project[] = [
               '2026-04-20',
               'phone',
             ),
+            shot(
+              '/media/finz/app-education.webp',
+              720,
+              1561,
+              ['틀린 문항을 AI 해설과 개념 카드로 이어 주는 금융 교육 퀴즈 결과', 'Financial-literacy quiz results linking wrong answers to AI explanations and concept cards'],
+              ['금융 교육 퀴즈 · 앱 실제 화면 · 예시 데이터', 'Financial-literacy quiz · real app screen · example data'],
+              '2026-04-19',
+              'phone',
+            ),
+            shot(
+              '/media/finz/app-invest.webp',
+              720,
+              1561,
+              ['보유 종목과 투자 성향 대비 포트폴리오 차이를 보여 주는 모의투자 화면', 'Mock investing with holdings and the gap between risk profile and portfolio'],
+              ['모의투자 · 앱 실제 화면 · 예시 데이터', 'Mock investing · real app screen · example data'],
+              '2026-04-19',
+              'phone',
+            ),
+            shot(
+              '/media/finz/app-spending.webp',
+              720,
+              1561,
+              ['카테고리별 소비와 최근 3개월 소비를 보여 주는 대시보드', 'Dashboard of spending by category and over the last three months'],
+              ['소비·자산 대시보드 · 앱 실제 화면 · 예시 데이터', 'Spending and assets dashboard · real app screen · example data'],
+              '2026-04-19',
+              'phone',
+            ),
           ],
         },
       ),
       section(
         'implementation',
-        ['같은 회사의 다른 작업 · 세무 SaaS FINZ (협력 개발사와 함께, 출시 전)', 'Also at SuziHouse · FINZ tax SaaS (with a partner company, not yet launched)'],
+        ['같은 회사의 다른 작업 · 세무사용 FINZ (협력 개발사와 함께, 출시 전)', 'Also at Finz Labs · FINZ for tax accountants (with a partner company, not yet launched)'],
         [
           [
-            'FINZ는 세무사가 쓰는 세무 SaaS로, 협력 개발사와 함께 만들었습니다. 저는 수지하우스 쪽 기술 담당으로 세금 계산 엔진의 초안을 만들고, 외부 API 연동과 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했습니다.',
-            "FINZ is a tax SaaS for tax accountants, built together with a partner development company. As SuziHouse's technical lead, I drafted the tax calculation engine, decided the external API integrations, the deployment and operations approach and the development tools together with the vendor, and took part in development.",
+            '세무사용 FINZ는 세무사가 쓰는 세무 SaaS로, 협력 개발사와 함께 만들었습니다. 저는 Finz Labs의 기술 담당으로 세금 계산 엔진의 초안을 만들고, 외부 API 연동과 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했습니다.',
+            "FINZ for tax accountants is a tax SaaS built together with a partner development company. As Finz Labs' technical lead, I drafted the tax calculation engine, decided the external API integrations, the deployment and operations approach and the development tools together with the vendor, and took part in development.",
           ],
           [
             '배포가 실패했을 때는 코드 결함이 아니라 서버 메모리 부족이 원인임을 측정과 재현으로 확정했고, 개발사가 진단을 확인해 수정했습니다.',
@@ -331,7 +362,7 @@ export const projects: Project[] = [
             'I checked the 269 items in the issue ledger with the vendor against the code, tests and screens, and tracked them as 233 confirmed-type and 36 remaining (a tracking category, not a count of fixes). Along the way I found a High-severity defect where land parcels with no standard price entered were silently left out of the tax calculation, which went into a fix request.',
           ],
         ],
-        { anchor: 'finz' },
+        { anchor: 'finz-saas' },
       ),
       section(
         'validation',
@@ -464,14 +495,6 @@ export const projects: Project[] = [
         885,
         ['AI 모의면접 설정 화면', 'AI mock interview setup'],
         ['AI 모의면접 설정 · 실제 화면(로컬 실행)', 'AI mock interview setup · real screen (local run)'],
-        '2026-05-04',
-      ),
-      shot(
-        '/media/skillpilot/mate.webp',
-        736,
-        924,
-        ['학습 메이트와 나눈 대화 창', 'A conversation with the study companion'],
-        ['학습 메이트 · 실제 화면(로컬 실행)', 'Study companion · real screen (local run)'],
         '2026-05-04',
       ),
     ],

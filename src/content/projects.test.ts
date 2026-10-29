@@ -21,7 +21,7 @@ const koText = (value: unknown) =>
 
 // Plan §3.2–3.3 and decisions D2/D3: one flagship, two supporting projects, Pitches as other work.
 const PLACEMENT = [
-  ['suzihouse', 'featured', 'flagship', [2026]],
+  ['finz', 'featured', 'flagship', [2026]],
   ['skillpilot', 'featured', 'supporting', [2025]],
   ['closetmate', 'featured', 'supporting', [2026]],
   ['pitches', 'featured', 'other', [2024, 2026]],
@@ -42,7 +42,7 @@ const PLACEMENT = [
   ['formcoach', 'line', undefined, [2026]],
 ] as const
 
-const FEATURED = ['suzihouse', 'skillpilot', 'closetmate', 'pitches']
+const FEATURED = ['finz', 'skillpilot', 'closetmate', 'pitches']
 
 // Claims the code or the owner's answers do not support.
 const BANNED: Record<string, (string | RegExp)[]> = {
@@ -55,7 +55,7 @@ const BANNED: Record<string, (string | RegExp)[]> = {
   unifit: ['AI'],
   patentry: ['특허 데이터', 'patent data'],
   pitches: ['Canvas', '200ms', '프론트엔드 주도', 'frontend lead', '이중 시간축', 'dual time', '150ms 미만', 'under 150', 'A10G', 'T4', '진행 중'],
-  suzihouse: ['21개 테이블', '24개 API', '120개 테스트', '86.6', 'API 키 노출', 'API key exposure', '해결한', 'resolved', '래미안', '아크로', '외주 개발', '외주사'],
+  finz: ['21개 테이블', '24개 API', '120개 테스트', '86.6', 'API 키 노출', 'API key exposure', '해결한', 'resolved', '래미안', '아크로', '외주 개발', '외주사'],
   closetmate: ['온디바이스', 'on-device', '97.49', '86.68', '67.29'],
   skillpilot: ['대신 관리자', '테스트를 대신', 'instead of tests', 'substitute for tests', '적중률', 'hit rate', '비용 절감', 'cost saving'],
   wildfire: ['0.909', '0.77', '정확도', 'accuracy'],
@@ -101,51 +101,63 @@ describe('featured case studies', () => {
   })
 })
 
-describe('flagship: SuziHouse property tax comparison', () => {
-  const suzi = bySlug('suzihouse')
+describe('flagship: Finz property tax comparison', () => {
+  const finz = bySlug('finz')
 
   it('is the one flagship, named by its product', () => {
-    expect(projects.filter((p) => p.showcase === 'flagship').map((p) => p.slug)).toEqual(['suzihouse'])
-    expect(suzi.title?.ko).toBe('수지하우스 부동산 세금 비교')
+    expect(projects.filter((p) => p.showcase === 'flagship').map((p) => p.slug)).toEqual(['finz'])
+    expect(finz.title?.ko).toBe('Finz 부동산 세금 비교')
+    expect(finz.team?.ko).toContain('주식회사 Finz Labs')
   })
 
   it('shows at least three screens and a demo video', () => {
-    const media = suzi.media ?? []
+    const media = finz.media ?? []
     expect(media.filter((m) => m.kind === 'screenshot').length).toBeGreaterThanOrEqual(3)
     expect(media.filter((m) => m.kind === 'video')).toHaveLength(1)
     expect(media[0].kind).toBe('video')
   })
 
   it('says who built what, including the earlier version by another developer', () => {
-    expect(suzi.contribution?.direct.length).toBeGreaterThan(0)
-    expect(koText(suzi.contribution?.others)).toContain('다른 개발자')
-    expect(koText(suzi.contribution?.joint)).toContain('세무사')
-    expect(koText(suzi.contribution?.notYet)).toContain('운영 지표')
+    expect(finz.contribution?.direct.length).toBeGreaterThan(0)
+    expect(koText(finz.contribution?.others)).toContain('다른 개발자')
+    expect(koText(finz.contribution?.joint)).toContain('세무사')
+    expect(koText(finz.contribution?.notYet)).toContain('운영 지표')
   })
 
   it('backs the calculation with measured checks against the reference workbook', () => {
-    const [workbook, engine, security] = suzi.metrics ?? []
+    const [workbook, engine, security] = finz.metrics ?? []
     expect(workbook).toMatchObject({ value: '21/21', source: 'measured' })
     expect(koText(workbook.condition)).toContain('±10원')
     expect(engine.value).toContain('58')
     expect(koText(security.condition)).toContain('웹 계산 기능과는 별개')
   })
 
+  it('mentions the app’s other screens, marked as example data', () => {
+    const app = finz.sections?.find((s) => s.anchor === 'refund-app')
+    expect(koText(app?.body)).toContain('금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교')
+    const others = app?.media?.filter((m) => /app-(education|invest|spending)/.test(m.src)) ?? []
+    expect(others).toHaveLength(3)
+    for (const media of others) expect(media.caption.ko).toContain('예시 데이터')
+  })
+
   it('links straight to the live property feature', () => {
-    expect(suzi.links?.find((l) => l.kind === 'live')?.href).toBe('https://www.finz.kr/personal/property')
+    expect(finz.links?.find((l) => l.kind === 'live')?.href).toBe('https://www.finz.kr/personal/property')
   })
 
   it('keeps the refund app and FINZ in their own sections, and calls the 269 issues a tracking count', () => {
-    const anchors = suzi.sections?.map((s) => s.anchor)
+    const anchors = finz.sections?.map((s) => s.anchor)
     expect(anchors).toContain('refund-app')
-    expect(anchors).toContain('finz')
-    const finz = koText(suzi.sections?.find((s) => s.anchor === 'finz'))
-    expect(finz).toContain('해결 건수가 아니라 관리 분류')
+    expect(anchors).toContain('finz-saas')
+    expect(koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))).toContain('해결 건수가 아니라 관리 분류')
   })
 })
 
 describe('supporting: SkillPilot', () => {
   const skillpilot = bySlug('skillpilot')
+
+  it('leaves the study-companion picture out', () => {
+    expect(skillpilot.media?.some((m) => m.src.includes('mate'))).toBe(false)
+  })
 
   it('describes the error handling as the two branches in client.js', () => {
     const text = koText(skillpilot.sections?.find((s) => s.id === 'implementation'))

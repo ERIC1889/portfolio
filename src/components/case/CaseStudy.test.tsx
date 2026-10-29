@@ -128,8 +128,8 @@ describe('CaseStudy body', () => {
   })
 
   it('links back to the list and to the neighbouring cases', () => {
-    renderWithProviders(<CaseStudy project={project} prev={{ slug: 'suzihouse', name: l('수지하우스') }} next={{ slug: 'closetmate', name: l('ClosetMate') }} />)
+    renderWithProviders(<CaseStudy project={project} prev={{ slug: 'finz', name: l('Finz') }} next={{ slug: 'closetmate', name: l('ClosetMate') }} />)
     const nav = screen.getByRole('navigation', { name: '페이지 이동' })
-    expect(within(nav).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['/projects/suzihouse', '/#projects', '/projects/closetmate'])
+    expect(within(nav).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['/projects/finz', '/#projects', '/projects/closetmate'])
   })
 })

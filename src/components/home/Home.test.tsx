@@ -37,13 +37,14 @@ describe('home page (real content)', () => {
   it('presents the flagship with its demo video, three features, the workbook check and both links', () => {
     renderWithProviders(<Home />)
     const flagship = sectionOf('대표 프로젝트')
-    expect(within(flagship).getByRole('heading', { level: 3 })).toHaveTextContent('수지하우스 부동산 세금 비교')
-    expect(flagship.querySelector('video')).toHaveAttribute('poster', '/media/suzihouse/web-demo-poster.webp')
+    expect(within(flagship).getByRole('heading', { level: 3 })).toHaveTextContent('Finz 부동산 세금 비교')
+    expect(flagship.querySelector('video')).toHaveAttribute('poster', '/media/finz/web-demo-poster.webp')
     expect(flagship.querySelectorAll('ol.feature-list > li')).toHaveLength(3)
     expect(flagship).toHaveTextContent('21/21')
-    expect(within(flagship).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/suzihouse')
+    expect(within(flagship).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/finz')
     expect(within(flagship).getByRole('link', { name: /부동산 6Way 열기/ })).toHaveAttribute('href', 'https://www.finz.kr/personal/property')
-    expect(within(flagship).getAllByRole('img')).toHaveLength(3)
+    // the demo video carries the visuals here; the screens live on the case page
+    expect(within(flagship).queryAllByRole('img')).toHaveLength(0)
   })
 
   it('lays out skills as a table with a header row and six areas, each with evidence links', () => {
@@ -73,12 +74,29 @@ describe('home page (real content)', () => {
     expect(within(other).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
   })
 
-  it('summarizes work, education, three top awards and papers by kind', () => {
+  it('lists work then school as dated rows, without the coding-instructor job', () => {
     renderWithProviders(<Home />)
     const experience = sectionOf('경험')
-    expect(experience).toHaveTextContent('수지하우스 (finz.kr)')
-    expect(experience).toHaveTextContent('3.7 / 4.5')
-    expect(experience).toHaveTextContent('학술대회 논문 7편 (국제 1 · 1저자 3)')
+    const rows = [...experience.querySelectorAll('.exp-row')]
+    expect(rows.map((row) => row.querySelector('.exp-when')?.textContent)).toEqual(['2026.01–', '2023.03–2027.02'])
+    expect(rows[0]).toHaveTextContent('주식회사 Finz Labs (finz.kr)')
+    expect(rows[1]).toHaveTextContent('3.7 / 4.5')
+    expect(experience).not.toHaveTextContent('컴세바')
+  })
+
+  it('shows the record as three big numbers and the three top awards', () => {
+    renderWithProviders(<Home />)
+    const experience = sectionOf('경험')
+    const stats = within(experience).getByLabelText('기록 요약')
+    expect([...stats.querySelectorAll('.stat')].map((s) => [s.querySelector('dt')?.textContent, s.querySelector('.stat-value')?.textContent])).toEqual([
+      ['프로젝트', '19'],
+      ['학술대회 논문', '7'],
+      ['수상', '13'],
+    ])
+    expect(experience).toHaveTextContent('국제 1 · 1저자 3')
+    expect(experience.querySelectorAll('.award-rows > li')).toHaveLength(3)
+    expect(experience.querySelector('.award-rows > li')).toHaveTextContent('2024.10캡스톤 디자인 및 AI 해커톤 대상(1등)')
+    expect(within(experience).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
     expect(within(experience).getByRole('link', { name: /4년 이야기/ })).toHaveAttribute('href', '/story')
   })
 
