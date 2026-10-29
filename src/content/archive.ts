@@ -285,7 +285,7 @@ export const archive: Archive = {
       responsibilities: [
         k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
         k('Finz 모바일 앱: 청년 세금 환급 MVP, 세무사 상담 연결, 생애주기 금융 시연 화면 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, tax-accountant connection, life-stage finance demo screens (Expo · FastAPI, not released)'),
-        k('세무사용 FINZ: 사양 작성, 개발사 작업 재검증, 배포 장애 원인 분석 (협력 개발사와 함께)', 'FINZ for tax accountants: specs, re-verifying the vendor’s work, finding the cause of deployment failures (with a partner development company)'),
+        k('세무사용 FINZ: 엔진 초안·외부 API·배포 방식을 함께 정하며 개발 참여, 사양 작성, 개발사 작업 재검증, 배포 장애 원인 분석 (협력 개발사와 함께)', 'FINZ for tax accountants: took part in development, deciding the engine draft, external APIs and deployment together; specs, re-verifying the vendor’s work, finding the cause of deployment failures (with a partner development company)'),
       ],
     },
   ],

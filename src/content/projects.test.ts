@@ -175,7 +175,8 @@ describe('flagship: Finz personal tax calculators', () => {
     const saas = koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))
     for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(saas).toContain(fact)
     expect(saas).not.toMatch(/\d+건 해결|해결률/)
-    expect(saas).not.toContain('엔진의 초안')
+    // the owner's account of his part (2026-10-30): decided together with the vendor and took part in development
+    expect(saas).toContain('개발사와 함께 정하며 개발에 참여')
   })
 })
 

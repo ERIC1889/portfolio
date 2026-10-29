@@ -108,7 +108,13 @@ export const projects: Project[] = [
           'FINZ for tax accountants: the pricing and feature-lock spec, re-verifying 269 vendor items, the deployment-failure root cause',
         ],
       ]),
-      joint: pairs([['세금 계산 로직 정리 (세무사와 함께)', 'Working out the tax logic (with a tax accountant)']]),
+      joint: pairs([
+        ['세금 계산 로직 정리 (세무사와 함께)', 'Working out the tax logic (with a tax accountant)'],
+        [
+          '세무사용 FINZ의 세금 계산 엔진 초안, 외부 API 연동, 배포·운영 방식, 개발 도구 (협력 개발사와 함께)',
+          'For FINZ for tax accountants: the tax-engine draft, external API integrations, the deployment and operations approach and the development tools (with the partner developer)',
+        ],
+      ]),
       verified: pairs([
         [
           '기준 워크북 사례와 대조: 6Way 웹 API 21개 항목, Python 엔진 테스트 43개',
@@ -421,8 +427,8 @@ export const projects: Project[] = [
         ['같은 회사의 다른 작업 · 세무사용 FINZ (협력 개발사와 함께, 출시 전)', 'Also at Finz Labs · FINZ for tax accountants (with a partner company, not yet launched)'],
         [
           [
-            '세무사용 FINZ는 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖춘 세무사용 SaaS로, 협력 개발사와 함께 만들고 있습니다. 저는 회사 쪽 기술 책임자로 사양을 쓰고, 개발사가 끝냈다고 한 작업을 다시 검증하고, 장애의 원인을 찾았습니다.',
-            'FINZ for tax accountants is a SaaS that calculates capital gains, gift, inheritance and comprehensive property tax, produces Hometax filing files and has an AI tax assistant; we are building it with a partner development company. As the company-side technical lead I wrote the specs, re-verified the work the vendor reported as done and found the causes of failures.',
+            '세무사용 FINZ는 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖춘 세무사용 SaaS로, 협력 개발사와 함께 개발했습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다.',
+            'FINZ for tax accountants is a SaaS that calculates capital gains, gift, inheritance and comprehensive property tax, produces Hometax filing files and has an AI tax assistant, developed together with a partner development company. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures.',
           ],
           [
             '배포가 9번 잇달아 실패했을 때, 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 1,083MB에서 1,472MB로 36% 늘어난 것(검사 대상 파일 2,619 → 3,619개)을 확인했습니다. 서버와 같은 메모리 상한(973MB)에서 오류를 재현해 코드 결함이 아니라 서버 메모리 부족이 원인임을 밝혔고, 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했습니다. 개발사는 진단이 맞다고 확인하고, 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
