@@ -6,7 +6,6 @@ export const HOME_IDS = {
   main: 'main-projects',
   skills: 'skills',
   supporting: 'more-projects',
-  other: 'other-work',
   experience: 'experience',
   contact: 'contact',
 } as const
@@ -23,7 +22,6 @@ export const SECTION_TITLES = {
   main: { ko: '대표 프로젝트', en: 'Main projects' },
   skills: { ko: '기술', en: 'Skills' },
   supporting: { ko: '보조 프로젝트', en: 'Supporting projects' },
-  other: { ko: '그 밖의 프로젝트', en: 'Other projects' },
   experience: { ko: '경험', en: 'Experience' },
   contact: { ko: '연락', en: 'Contact' },
 } satisfies Record<string, L>
@@ -32,10 +30,6 @@ export const SECTION_LEADS = {
   skills: {
     ko: '프로젝트에서 실제로 쓴 기술만 적었습니다.',
     en: 'Only tools I have used in a project.',
-  },
-  other: {
-    ko: '첫 웹 프로젝트입니다. 나머지 프로젝트는 전체 기록에 있습니다.',
-    en: 'My first web project. Every other project is in the full record.',
   },
 } satisfies Record<string, L>
 
@@ -144,6 +138,7 @@ export const UI = {
   verification: { ko: '검증', en: 'Verification' },
   stack: { ko: '기술', en: 'Stack' },
   allProjects: { ko: '전체 기록 보기', en: 'See the full record' },
+  seeAllProjects: { ko: '전체 프로젝트 보기', en: 'See all projects' },
   story: { ko: '4년 이야기', en: 'The four-year story' },
   topAwards: { ko: '대표 수상', en: 'Selected awards' },
   papers: { ko: '논문', en: 'Papers' },

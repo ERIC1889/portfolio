@@ -22,13 +22,12 @@ describe('home page (real content)', () => {
     expect(intro).not.toHaveTextContent('논문')
   })
 
-  it('orders the sections: flagship, skills, more projects, other work, experience, contact', () => {
+  it('orders the sections: main projects, skills, supporting projects, experience, contact', () => {
     renderWithProviders(<Home />)
     expect(screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)).toEqual([
       '대표 프로젝트',
       '기술',
       '보조 프로젝트',
-      '그 밖의 프로젝트',
       '경험',
       '연락',
     ])
@@ -64,16 +63,13 @@ describe('home page (real content)', () => {
     expect(within(main).getByText('목업')).toBeInTheDocument()
   })
 
-  it('lists the supporting projects, then Media Pulse with a way to the full record', () => {
+  it('lists the supporting projects with a way to all projects, leaving the rest off the home page', () => {
     renderWithProviders(<Home />)
-    expect(within(sectionOf('보조 프로젝트')).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual([
-      'EduMatrix',
-      'InnoView',
-      'Label Light',
-    ])
-    const other = sectionOf('그 밖의 프로젝트')
-    expect(other).toHaveTextContent('Media Pulse')
-    expect(within(other).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
+    const supporting = sectionOf('보조 프로젝트')
+    expect(within(supporting).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['EduMatrix', 'InnoView', 'Label Light'])
+    expect(within(supporting).getByRole('link', { name: /전체 프로젝트 보기/ })).toHaveAttribute('href', '/archive#projects')
+    expect(screen.queryByRole('heading', { name: '그 밖의 프로젝트' })).toBeNull()
+    expect(screen.queryByText('Media Pulse')).toBeNull()
   })
 
   it('lists work then school as dated rows, without the coding-instructor job', () => {
@@ -123,7 +119,6 @@ describe('home page (real content)', () => {
       'Main projects',
       'Skills',
       'Supporting projects',
-      'Other projects',
       'Experience',
       'Contact',
     ])

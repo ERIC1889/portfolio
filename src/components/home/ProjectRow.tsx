@@ -9,12 +9,12 @@ import type { Project } from '@/content/types'
 import { UI } from '@/content/ui'
 
 /** A project on the home page: one picture beside what it is, my part and its stack. */
-export function ProjectRow({ project, compact = false }: { project: Project; compact?: boolean }) {
+export function ProjectRow({ project }: { project: Project }) {
   const { t } = useLang()
   const picture = casePictures(project).find((m) => m.kind !== 'video')
   const link = project.links?.[0]
   return (
-    <article className={`project-row${compact ? ' is-compact' : ''}${picture && picture.height > picture.width ? ' has-tall' : ''}`}>
+    <article className={`project-row${picture && picture.height > picture.width ? ' has-tall' : ''}`}>
       {picture && (
         <div className="project-row-media">
           <MediaFigure media={picture} sizes="(max-width: 768px) 100vw, 400px" />
@@ -31,7 +31,7 @@ export function ProjectRow({ project, compact = false }: { project: Project; com
             {project.role && t(project.role)}
           </p>
         )}
-        {!compact && project.features && (
+        {project.features && (
           <ul className="feature-list is-plain">
             {project.features.map((feature) => (
               <li key={feature.ko}>{t(feature)}</li>
