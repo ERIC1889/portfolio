@@ -38,6 +38,12 @@ function flow(title: Pair, caption: Pair, steps: FlowStep[]): Flow {
 }
 
 
+const PROBLEM: Pair = ['문제와 선택', 'Problem and choices']
+const IMPLEMENTATION: Pair = ['구현', 'Implementation']
+const VALIDATION: Pair = ['검증', 'Verification']
+const RESULT: Pair = ['결과', 'Result']
+const RETRO: Pair = ['남은 한계와 다음', 'Limits and next steps']
+const EVIDENCE: Pair = ['코드·자료', 'Code and material']
 const OUTCOMES: Pair = ['핵심 성과', 'Key results']
 const PROBLEM_DEFINITION: Pair = ['문제 정의', 'Problem']
 const ARCHITECTURE: Pair = ['시스템 구조', 'System structure']
@@ -76,12 +82,6 @@ export const projects: Project[] = [
       'I designed, built and run the company website finz.kr on my own, with its property, digital-asset and foreign-stock tax calculators, and built the Finz mobile app (a tax refund MVP and more).',
     ),
     features: pairs([
-      ['부동산 6Way: 두 주택의 양도·증여·부담부증여 여섯 경우를 중과 유예 전후로 비교', 'Property 6Way: six options for sale, gift and gift with debt on two homes, compared before and after the surcharge grace period'],
-      ['디지털 자산 세금: 거래를 입력해 2027년 예상 세금 계산', 'Digital-asset tax: enter trades and get the estimated 2027 tax'],
-      ['해외주식 양도세: 결제일 환율로 환산하고 이익을 주가 몫과 환율 몫으로 구분', 'Foreign-stock gains: converted at settlement-date rates, with the gain split into price and currency parts'],
-      ['해외주식 증여 평가: 전후 2개월 평균 종가로 평가하고 증여세 추정', 'Foreign-stock gift valuation: two-month average close and a gift-tax estimate'],
-    ]),
-    resumeItems: pairs([
       [
         '해외주식 양도세 엔진: 매수·매도를 각자의 결제일 환율로 원화 환산하고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눔. 증여 평가(전후 2개월 평균 종가)와 증여세 추정까지',
         'Foreign-stock capital gains engine: each buy and sell converted at its own settlement-date rate, with the gain split into a stock-price part and an exchange-rate part; plus gift valuation (two-month average close) and a gift-tax estimate',
@@ -188,7 +188,7 @@ export const projects: Project[] = [
       ),
     ],
     flow: flow(
-      ARCHITECTURE,
+      ['입력부터 결과까지', 'From input to result'],
       [
         '운영 중인 finz.kr 코드 기준. 검증 스크립트는 6Way 계산 API에 기준 사례를 넣어 워크북 기대값과 비교합니다.',
         'Drawn from the code running on finz.kr. The verification script sends the reference case to the 6Way calculation API and compares it with the workbook’s expected values.',
@@ -259,72 +259,42 @@ export const projects: Project[] = [
       { kind: 'site', label: k('회사 웹 finz.kr', 'Company website finz.kr'), href: 'https://www.finz.kr' },
     ],
     sections: [
-      section(
-        'result',
-        OUTCOMES,
+      section('problem', PROBLEM, [
         [
-          ['부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기가 finz.kr에서 운영 중입니다. 사용자 수 같은 운영 지표는 집계하지 않아 적지 않습니다.', 'The property 6Way, digital-asset and foreign-stock gains and gift-valuation calculators are live at finz.kr. No usage metrics are collected, so none are given here.'],
-          ['Finz 앱으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).', 'The Finz app won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).'],
+          '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 화면이 뜨는 것보다 숫자가 맞는 것과, 그 숫자가 어느 조문에서 나왔는지 보여 주는 것이 먼저였습니다.',
+          'People who know little about tax use these calculators, so one number can change a big decision. Getting the numbers right, and showing which statute each one comes from, came before getting the screens up.',
         ],
-        { lead: true },
-      ),
-      section(
-        'problem',
-        PROBLEM_DEFINITION,
         [
-          [
-            '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 숫자가 맞는 것과 그 숫자가 어느 조문에서 나왔는지 보여 주는 것이 먼저입니다. 세금은 날짜의 시세·환율에 달렸는데, 그 값을 주는 외부 API는 느리거나 실패할 수 있습니다.',
-            'People who know little about tax use these calculators, so one number can change a big decision. Getting it right and showing which statute it came from come first. Tax depends on prices and rates on specific dates, and the external APIs behind them can be slow or fail.',
-          ],
+          '세금은 날짜에 따라 달라집니다. 가상자산은 2027년부터 과세되고 2026-12-31 시가가 취득가액이 될 수 있으며, 해외주식은 결제일 환율로 원화 환산합니다. 그런데 그날의 시세·환율을 주는 외부 API는 느리거나 실패하고, 아직 오지 않은 날짜에는 값이 없습니다.',
+          'Tax depends on dates. Crypto is taxed from 2027 and the 2026-12-31 price can become the cost basis; foreign stocks convert at settlement-date exchange rates. But the APIs that supply those prices and rates are slow or fail, and a date that hasn’t come yet has no value at all.',
         ],
-        { lead: true },
-      ),
-      section(
-        'implementation',
-        DECISIONS,
         [
-          [
-            '6Way 계산 로직은 세무사와 함께 Python으로 작성해 두었고, 웹에서 바로 쓰려고 TypeScript로 옮긴 뒤 원본과 같은 결과를 내는지 기준 사례로 확인하기로 했습니다.',
-            'The 6Way logic had been written in Python together with a tax accountant; I ported it to TypeScript for the website and decided to prove with a reference case that it gives the same results.',
-          ],
-          [
-            '시세는 Upbit 1분봉을 먼저 쓰고 실패하면 CoinGecko로, 환율은 한국은행 ECOS를 먼저 쓰고 실패하면 ECB 기준환율로 대체합니다. 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 두고, 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시합니다. 아직 오지 않은 날짜는 외부를 부르지 않고 바로 거절합니다.',
-            'Prices come from Upbit 1-minute candles, falling back to CoinGecko; rates from the Bank of Korea ECOS, falling back to the ECB reference rate. Fallback values are marked and cached briefly or not at all, foreign-stock closes are cached only when the range is closed and complete, and a date that hasn’t come yet is refused without calling out.',
-          ],
-          [
-            '보수적인 값: 판 날짜로 과세연도를 정하고, 2026-12-31 시가를 아직 조회할 수 없으면 실제 산 가격을 쓰는 보수적인 쪽을 택해 화면에 알립니다. 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
-            'Cautious values: the sale date sets the tax year, and when the 2026-12-31 price is not available yet the actual purchase price is used and the screen says so. Engine errors are rewritten in plain language.',
-          ],
+          '6Way 계산 로직은 세무사와 함께 Python으로 작성해 두었고, 웹에서 바로 쓰려고 TypeScript로 옮긴 뒤 원본과 같은 결과를 내는지 기준 사례로 확인하기로 했습니다.',
+          'The 6Way logic had been written in Python together with a tax accountant; I ported it to TypeScript for the website and decided to prove with a reference case that it gives the same results.',
         ],
-        { anchor: 'decisions' },
-      ),
-      section(
-        'implementation',
-        SOLVED,
+      ]),
+      section('implementation', IMPLEMENTATION, [
         [
-          [
-            '해외주식 이익 계산. 문제: 양도세는 원화 기준이라 달러 이익만 보면 금액이 틀리고, 왜 이 세금이 나왔는지도 알 수 없습니다. 해결: 매수·매도를 각자의 결제일 환율로 환산하고, 이익을 주가 몫과 환율 몫으로 나눠 보여 줍니다.',
-            'Foreign-stock gains. Problem: the tax is based on won, so a dollar gain alone gives the wrong figure and hides why the tax is what it is. Fix: each buy and sell converts at its own settlement-date rate, and the gain is shown split into a price part and a currency part.',
-          ],
-          [
-            '증여 평가. 문제: 평가액은 증여일 앞뒤 2개월 종가 평균이라 기간이 끝나야 확정됩니다. 해결: 확정된 종가만 캐시하고 아직 오지 않은 날짜는 바로 거절하며, 자동 조회가 안 되면 시세표 붙여넣기나 직접 입력으로 이어 갑니다.',
-            'Gift valuation. Problem: the value is the average close over the two months either side of the gift date, so it settles only when that period ends. Fix: only settled closes are cached, future dates are refused at once, and when automatic lookup is unavailable the user can paste a price table or enter the average.',
-          ],
-          [
-            '부동산 6Way. 문제: 여섯 경우가 각각 중과 유예 전후로 다시 갈리고, 실거래가 API는 인증키가 인코딩되면 실패했습니다. 해결: 경우마다 전후 규칙으로 따로 계산하고, URL을 직접 조립해 키 인코딩을 피했습니다.',
-            'Property 6Way. Problem: each of the six options splits again before and after the surcharge grace period, and the transaction-price API failed when its key got encoded. Fix: each option is computed under both sets of rules, and the URL is assembled by hand to avoid encoding the key.',
-          ],
-          [
-            '계산 결과 검증. 문제: 화면 테스트로는 숫자가 맞는지 알 수 없고, 워크북과 엔진은 원 미만 처리 방식이 달라 값이 조금씩 다릅니다. 해결: 계산 검증을 따로 두고 ±10원을 허용 범위로 정했습니다. 회사 웹 API로 비교하면 21개 항목이 모두 범위 안에 들어옵니다(최대 차이 1원).',
-            'Checking the results. Problem: UI tests cannot tell whether a number is right, and the workbook and the engine treat fractions of a won differently, so values differ slightly. Fix: calculation checks are kept separate, with ±10 won as the tolerance. Through the company web API all 21 items land within range (largest gap 1 won).',
-          ],
-          [
-            '테스트. 운영 중인 웹 저장소의 테스트 184개가 모두 통과합니다. 외부 API는 모의 응답으로 대신합니다.',
-            'Tests. All 184 tests in the live website’s repository pass, with external APIs mocked.',
-          ],
+          '해외주식 양도세는 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
+          'Foreign-stock gains convert each buy and sell at its own settlement-date rate, truncated to the won, and show the gain split into a stock-price part and an exchange-rate part. The filing deadline is worked out as 31 May of the next year, moved past weekends and holidays.',
         ],
-        { anchor: 'solved' },
-      ),
+        [
+          '증여는 증여일 앞뒤 2개월 종가 평균을 증여일 환율로 환산해 평가하고(자동 조회·시세표 붙여넣기·평균 직접 입력), 받는 사람별 공제·10년 합산·신고세액공제로 증여세를 추정합니다.',
+          'A gift is valued at the average close over the two months either side of the gift date, converted at the gift-date rate (looked up, pasted from a price table or typed in), and the gift tax is estimated with relationship-based deductions, 10-year aggregation and the filing credit.',
+        ],
+        [
+          '디지털 자산은 회사 세무 SaaS의 가상자산 계산 엔진을 개인용으로 옮겼습니다. 판 날짜로 과세연도를 정하고, 2026-12-31 시가를 아직 조회할 수 없으면 실제 산 가격을 쓰는 보수적인 쪽을 택해 화면에 알리며, 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
+          'For digital assets I adapted the company SaaS’s crypto tax engine for individuals: the tax year comes from the sale date, a missing 2026-12-31 price falls back to the actual cost (the cautious choice) with a note on screen, and engine errors are rewritten in plain language.',
+        ],
+        [
+          '시세는 Upbit 1분봉을 먼저 쓰고 실패하면 CoinGecko로, 환율은 한국은행 ECOS를 먼저 쓰고 실패하면 ECB 기준환율로 대체합니다. 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 두고, 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시합니다. 아직 오지 않은 날짜는 외부를 부르지 않고 바로 거절합니다.',
+          'Prices come from Upbit 1-minute candles, falling back to CoinGecko; rates from the Bank of Korea ECOS, falling back to the ECB reference rate. Fallback values are marked and cached briefly or not at all, foreign-stock closes are cached only when the range is closed and complete, and a date that hasn’t come yet is refused without calling out.',
+        ],
+        [
+          '부동산 6Way는 A·B 주택마다 양도·증여·부담부증여를 계산해 여섯 가지 경우를 만들고, 각 경우를 중과 유예 전과 후 규칙으로 따로 계산합니다. 실거래가는 12시간 단위로 다시 확인하고 월별로 동시에 불러오며, 인증키가 인코딩되면 실패해 URL을 직접 조립했습니다. PDF는 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
+          'Property 6Way builds six options (sale, gift, gift with debt for homes A and B) and computes each under the rules before and after the grace period. Real-transaction prices are re-checked every 12 hours and loaded month by month in parallel, with the URL assembled by hand because an encoded key failed. The PDF is a report drawn in a hidden iframe and saved through the print dialog.',
+        ],
+      ]),
       section(
         'implementation',
         ['같은 회사의 다른 작업 · Finz 모바일 앱 (청년 세금 환급 MVP, 미출시)', 'Also at Finz Labs · Finz mobile app (tax refund MVP, not released)'],
@@ -451,7 +421,36 @@ export const projects: Project[] = [
           ],
         },
       ),
-      section('retro', REFLECTION, [
+      section(
+        'validation',
+        VALIDATION,
+        [
+          [
+            '계산 검증은 화면 테스트와 나눴습니다. 기준 워크북(실제 2주택 사례)의 기대값과 비교하는 스크립트를 회사 웹 API에 돌리면 21개 항목이 모두 ±10원 안에 들어오고(최대 차이 1원), Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다.',
+            'Checking the numbers is kept apart from UI tests. A script compares the company web API against the expected values in a reference workbook (a real two-home case): all 21 items land within ±10 won (largest gap 1 won), and the Python engine has tests that match the same case to the won.',
+          ],
+          [
+            '워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에, ±10원을 허용 범위로 정했습니다. 기준 사례의 단지 이름과 금액은 고객 정보일 수 있어 공개하지 않습니다.',
+            "The workbook keeps fractions while the engine drops fractions of a won at each step, so ±10 won is the agreed tolerance. The reference case's apartment names and amounts may be client data, so they are not shown.",
+          ],
+          [
+            '운영 중인 웹 저장소의 테스트 184개가 모두 통과합니다. 가상자산 엔진 25개, 해외주식 엔진 28개(익명화한 실제 증여 사례를 원 단위로 맞추는 검사 포함), 시세·환율 데이터 소스 31개가 들어 있고, 외부 API는 모의 응답으로 대신해 네트워크 없이 돕니다.',
+            'All 184 tests in the live website’s repository pass: 25 for the crypto engine, 28 for the foreign-stock engines (including checks that match an anonymised real gift case to the won) and 31 for the market-data sources, with external APIs mocked so they run offline.',
+          ],
+        ],
+        { anchor: 'validation' },
+      ),
+      section('result', RESULT, [
+        [
+          '부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기가 finz.kr에서 운영 중입니다. 사용자 수 같은 운영 지표는 집계하지 않아 적지 않습니다.',
+          'The property 6Way, digital-asset and foreign-stock gains and gift-valuation calculators are live at finz.kr. No usage metrics such as user counts are collected, so none are given.',
+        ],
+        [
+          'Finz 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
+          'The Finz app (youth tax refund and property 6Way) won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).',
+        ],
+      ]),
+      section('retro', RETRO, [
         [
           '기준 사례가 하나뿐입니다. 경계값·반올림·잘못된 입력 사례를 늘리고, 워크북 자체가 틀렸을 때 알아챌 방법도 정하겠습니다.',
           'There is only one reference case. I would add boundary, rounding and invalid-input cases, and decide how we would notice if the workbook itself were wrong.',
@@ -465,7 +464,7 @@ export const projects: Project[] = [
           'I would deliberately cause failures to check the cases where our state drifts from an external system, such as saving failing after a payment is approved, or the same request arriving twice.',
         ],
       ]),
-      section('evidence', MATERIAL, [
+      section('evidence', EVIDENCE, [
         [
           '코드는 회사 비공개 저장소에 있어 링크하지 않습니다. 대신 운영 화면, 시연 영상, 검증 실행 결과를 이 페이지에 둡니다.',
           "The code is in the company's private repositories, so it is not linked. The live screens, demo videos and verification results are on this page instead.",
