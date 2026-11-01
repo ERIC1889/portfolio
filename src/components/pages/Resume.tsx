@@ -93,7 +93,7 @@ export function Resume({ profile, archive, projects, topAwards, siteUrl }: Props
                   .join(' · ')}
               </p>
               <ul>
-                {(project.features ?? [project.summary]).map((item) => (
+                {(project.resumeItems ?? project.features ?? [project.summary]).map((item) => (
                   <li key={item.ko}>{t(item)}</li>
                 ))}
                 {/* Only the flagship's check fits on one line; other numbers need the context on their case page. */}

@@ -79,6 +79,8 @@ export interface CaseSection {
   body: L[]
   /** Fragment id for links into this section (e.g. #refund-app). */
   anchor?: string
+  /** Shown before the contribution block, right after the features. */
+  lead?: boolean
   media?: Media[]
   table?: { head: L[]; rows: L[][] }
   hold?: boolean
@@ -106,8 +108,10 @@ export interface Project {
   /** What the product is, in one sentence. */
   product?: L
   audience?: L
-  /** The features I built myself, in a few short lines. */
+  /** What the service does, in a few short lines. */
   features?: L[]
+  /** What I did, for the résumé; falls back to the features. */
+  resumeItems?: L[]
   contribution?: Contribution
   media?: Media[]
   flow?: Flow

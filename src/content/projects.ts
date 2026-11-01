@@ -44,6 +44,14 @@ const RESULT: Pair = ['결과', 'Result']
 const RETRO: Pair = ['남은 한계와 다음', 'Limits and next steps']
 const EVIDENCE: Pair = ['코드·자료', 'Code and material']
 
+const OUTCOMES: Pair = ['핵심 성과', 'Key results']
+const PROBLEM_DEFINITION: Pair = ['문제 정의', 'Problem']
+const ARCHITECTURE: Pair = ['시스템 구조', 'System structure']
+const DECISIONS: Pair = ['주요 의사 결정', 'Key decisions']
+const SOLVED: Pair = ['핵심 기술 문제 해결', 'Technical problems solved']
+const REFLECTION: Pair = ['회고 및 개선 방향', 'Reflection and next steps']
+const MATERIAL: Pair = ['관련 자료', 'Related material']
+
 const SKILLPILOT_REPO = 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot'
 
 export const projects: Project[] = [
@@ -471,24 +479,30 @@ export const projects: Project[] = [
     showcase: 'supporting',
     title: k('SkillPilot 자격증·커리어 플랫폼', 'SkillPilot certification and career platform'),
     product: k(
-      '공공데이터 API 7종을 하나의 자격증 데이터로 정규화하고, 추천·학습 로드맵·모의시험·모의 면접까지 IT 취업 준비를 한곳에서 돕는 웹 서비스',
-      'A web service that normalizes 7 public data APIs into one set of certification data and supports IT job preparation in one place: recommendations, study roadmaps, mock exams and mock interviews',
+      '흩어진 IT 자격증 정보를 한곳에 모으고, 자격증 선택부터 학습, 모의시험, 면접 준비까지 이어 주는 웹 서비스',
+      'A web service that gathers scattered IT certification information in one place and carries you from choosing a certification through studying, mock exams and interview preparation',
     ),
     audience: k('IT 취업을 준비하는 학생', 'Students preparing for IT jobs'),
     period: '2025.09–2026.06',
-    team: k('4인 캡스톤 (AISW 캡스톤디자인)', '4-person capstone (AISW Capstone Design)'),
+    team: k('4인 캡스톤 (프론트엔드 2, AI 1, 백엔드·총괄 1)', '4-person capstone (frontend 2, AI 1, backend and lead 1)'),
     role: k('팀장 · 백엔드 전체 · 프론트엔드 개편', 'Team lead · the entire backend · frontend overhaul'),
     status: k('캡스톤 완료', 'Capstone completed'),
     statusCheckedAt: '2026-10-29',
-    stack: ['Node.js', 'Express 5', 'MySQL', 'MongoDB', 'node-cron', 'React', 'OpenAI API'],
+    stack: ['Node.js', 'Express 5', 'MySQL', 'MongoDB', 'OpenAI API', 'node-cron', 'React 19'],
     summary: k(
       '공공 API 7종을 하나의 자격증 데이터로 정규화한 IT 취업 준비 플랫폼. 4인 팀에서 팀장과 백엔드 전체, 프론트엔드 개편을 맡았습니다.',
       'An IT job-preparation platform that normalizes 7 public APIs into one set of certification data. In a team of four I was the lead, built the entire backend and overhauled the frontend.',
     ),
     features: pairs([
+      ['프로필 기반 자격증 추천, 주차별 학습 로드맵 생성·편집', 'Certification recommendations from your profile, and generating and editing a weekly study roadmap'],
+      ['자격증·시험 일정 자동 갱신', 'Automatic updates of certifications and exam schedules'],
+      ['CBT 모의고사와 오답 해설, 대화형 모의 면접', 'CBT mock exams with explanations of wrong answers, and conversational mock interviews'],
+      ['스킬갭 분석, 채용 매칭, 포트폴리오, 학습 대시보드', 'Skill-gap analysis, job matching, a portfolio and a study dashboard'],
+    ]),
+    resumeItems: pairs([
       [
-        '공공 API 7종 응답 정규화: HTTP 200 속 오류 문구는 재시도, JSON 대신 온 XML은 XML로 해석',
-        'Normalizing 7 public APIs: error text inside an HTTP 200 is retried, and XML that arrives instead of JSON is parsed as XML',
+        '공공 API 7종 응답 정규화: HTTP 200 속 오류 문구는 실패로 보고 재시도, XML·JSON 응답 모두 해석',
+        'Normalizing 7 public APIs: error text inside an HTTP 200 counts as a failure and is retried, and both XML and JSON responses are parsed',
       ],
       [
         'node-cron 주기 동기화와 관리자 수동 실행, 같은 사용자·같은 조건의 AI 결과 재사용(MongoDB)',
@@ -557,8 +571,11 @@ export const projects: Project[] = [
       ),
     ],
     flow: flow(
-      ['공공 API 동기화 흐름', 'Public API sync flow'],
-      ['client.js · certificationSync.service.js 기준', 'Drawn from client.js and certificationSync.service.js'],
+      ARCHITECTURE,
+      [
+        'React 앱이 Express REST API를 호출하고, 서버는 라우트, 컨트롤러, 서비스, 모델 계층으로 나뉩니다. 아래는 그중 공공데이터 동기화 흐름입니다.',
+        'A React app calls an Express REST API, and the server is split into route, controller, service and model layers. Below is the public data sync within it.',
+      ],
       [
         step('mine', ['동기화 시작', 'Sync starts'], ['node-cron 주기 실행 또는 관리자 수동 실행. API 키가 없으면 건너뜀', 'node-cron schedule or a manual admin run; skipped without an API key']),
         step('external', ['공공데이터 API 7종', '7 public data APIs'], ['자격증 목록·상세·통계·시험 일정 등', 'Certification lists, details, statistics, exam schedules and more']),
@@ -572,17 +589,13 @@ export const projects: Project[] = [
               ['실패로 보고 0.5초·1초 뒤 최대 2번 재시도', 'Treated as a failure; retried up to twice after 0.5 s and 1 s'],
             ],
             [
-              ['JSON으로 읽히지 않음', "Doesn't parse as JSON"],
-              ['XML로 해석', 'Parsed as XML'],
-            ],
-            [
-              ['정상 JSON', 'Valid JSON'],
-              ['그대로 다음 단계로', 'Passed on as is'],
+              ['정상 응답 (XML·JSON)', 'Valid response (XML or JSON)'],
+              ['해석해 다음 단계로', 'Parsed and passed on'],
             ],
           ],
         ),
         step('mine', ['엔드포인트별 정규화', 'Per-endpoint normalization'], ['자격증 코드로 상세·통계·일정을 결합', 'Joins details, statistics and schedules by certification code']),
-        step('mine', ['MySQL 저장 → API → 화면', 'MySQL → API → screens'], ['추천·로드맵 같은 AI 결과는 MongoDB에 따로 저장', 'AI results such as recommendations and roadmaps are stored separately in MongoDB']),
+        step('mine', ['저장 → API → 화면', 'Storage → API → screens'], ['계정과 자격증은 MySQL에, 시험 결과, 로드맵, 면접 세션, AI 결과는 MongoDB에 저장', 'Accounts and certifications go in MySQL; test results, roadmaps, interview sessions and AI results go in MongoDB']),
       ],
     ),
     links: [
@@ -597,53 +610,73 @@ export const projects: Project[] = [
       },
     ],
     sections: [
-      section('problem', PROBLEM, [
+      section(
+        'result',
+        OUTCOMES,
         [
-          '자격증 정보는 공공데이터 API 7곳에 흩어져 있었고, 응답 구조가 제각각이었습니다. 게다가 실패해도 HTTP 200으로 "SERVICE ERROR" 문자열을 보내거나, JSON을 요청했는데 XML을 돌려주기도 했습니다. 상태 코드만 보고 성공으로 처리하면 틀린 데이터가 그대로 들어옵니다.',
-          'Certification data was scattered across 7 public data APIs, each with its own structure. On failure they sometimes sent a "SERVICE ERROR" string with HTTP 200, or returned XML when JSON had been requested. Treating a call as successful by its status code alone lets wrong data straight in.',
+          ['공공데이터 API 7종을 연동해 자격증과 시험 일정을 자동으로 동기화했습니다.', 'Integrated 7 public data APIs so certifications and exam schedules sync automatically.'],
+          ['13개 화면과 16개 백엔드 기능 모듈을 구현해 캡스톤을 마쳤습니다.', 'Finished the capstone with 13 screens and 16 backend feature modules.'],
         ],
+        { lead: true },
+      ),
+      section(
+        'problem',
+        PROBLEM_DEFINITION,
         [
-          '그래서 외부 응답을 그대로 쓰지 않고 먼저 내부 구조로 정규화한 뒤 자격증 코드로 상세·통계·시험 일정을 결합했습니다. 정형 데이터는 MySQL에, AI가 만든 결과는 MongoDB에 두었습니다.',
-          'So instead of using external responses as they came, I normalized them into an internal structure first and joined details, statistics and exam schedules by certification code. Structured data went into MySQL and AI-generated results into MongoDB.',
+          [
+            '취업 준비생은 시험 일정은 Q-Net에서, 강의는 교육 플랫폼에서, 채용 정보는 또 다른 곳에서 찾아야 합니다. 어떤 자격증부터 준비할지와 공부한 내용을 어떻게 포트폴리오와 면접으로 이을지도 스스로 정해야 합니다.',
+            'Job seekers find exam schedules on Q-Net, courses on learning platforms and job postings somewhere else again. They also have to work out on their own which certification comes first and how to carry what they study into a portfolio and interviews.',
+          ],
         ],
-      ]),
-      section('implementation', IMPLEMENTATION, [
+        { lead: true },
+      ),
+      section(
+        'implementation',
+        DECISIONS,
         [
-          '7개 엔드포인트마다 정규화 함수를 두었습니다. API 호출은 두 경우를 나눠 처리합니다. 응답 본문에 오류 문구가 있으면 실패로 보고 0.5초, 1초 간격으로 최대 2번 다시 시도합니다. JSON을 요청했는데 JSON으로 읽히지 않으면 XML로 해석합니다.',
-          'Each of the 7 endpoints has its own normalization function. API calls handle two cases separately. If the body contains error text, the call is treated as a failure and retried up to twice, 0.5 s and 1 s apart. If JSON was requested but the body does not parse as JSON, it is parsed as XML.',
+          [
+            'DB 분리: 서로 연결되는 데이터는 MySQL에, 한 덩어리로 읽고 쓰는 데이터는 MongoDB에 뒀습니다. 대신 두 DB 사이의 트랜잭션을 포기했고, 지금이라면 MySQL 하나로 시작하겠습니다.',
+            'Splitting the databases: data that connects to other data went in MySQL, and data read and written as one unit went in MongoDB. That gave up transactions across the two, and today I would start with MySQL alone.',
+          ],
+          [
+            'AI 실패 처리: AI 호출이 실패하면 오류 대신 규칙 기반 추천과 로드맵을 제공했습니다. 품질은 낮아져도 온보딩 흐름은 끊기지 않습니다. 같은 사용자의 같은 조건 요청은 저장된 결과를 다시 씁니다.',
+            'Handling AI failures: when an AI call fails, rule-based recommendations and roadmaps replace the error. Quality drops, but onboarding keeps going. The same user sending the same request gets the stored result.',
+          ],
         ],
+        { anchor: 'decisions' },
+      ),
+      section(
+        'implementation',
+        SOLVED,
         [
-          '동기화는 node-cron으로 주기적으로 돌고, 관리자가 직접 실행할 수도 있습니다. API 키가 없으면 스케줄러가 건너뜁니다. AI 추천·로드맵은 같은 사용자의 같은 조건 요청이면 저장된 결과를 다시 씁니다.',
-          'Syncing runs periodically with node-cron, and an admin can also start it by hand; without an API key the scheduler skips the run. AI recommendations and roadmaps reuse the stored result when the same user sends the same request.',
+          [
+            'HTTP 200 속의 실패: 공공 API가 실패해도 200과 "SERVICE ERROR" 문자열을 보내는 경우가 있어, 상태 코드만 보면 틀린 데이터가 저장될 수 있었습니다. 오류 문구가 담긴 200을 실패로 판정해 0.5초, 1초 간격으로 최대 2번 다시 시도하게 했습니다.',
+            'Failures inside an HTTP 200: public APIs sometimes answer a failure with 200 and a "SERVICE ERROR" string, so judging by status code alone could store wrong data. A 200 with error text now counts as a failure and is retried up to twice, 0.5 s and 1 s apart.',
+          ],
+          [
+            '7개 API 정규화: 응답 구조가 제각각이라 XML과 JSON 응답을 모두 해석해 내부 구조로 먼저 바꾸고, IT 종목만 고른 뒤 자격증 코드로 상세·통계·시험 일정을 결합했습니다. 동기화는 node-cron으로 주기적으로 돌고, 관리자가 직접 실행할 수도 있습니다.',
+            'Normalizing 7 APIs: with every response shaped differently, both XML and JSON responses are parsed into an internal structure first, IT certifications are selected, and details, statistics and exam schedules are joined by certification code. Syncing runs periodically with node-cron, and an admin can also start it by hand.',
+          ],
         ],
-        [
-          '2026년 1학기에는 프론트엔드를 개편했습니다. 디자인 토큰과 공통 컴포넌트 6종을 만들어 13개 페이지를 옮기고, 대시보드에 통계 카드·도넛·학습 잔디·추이 차트를 넣었습니다. 챗봇은 API 키가 없거나 호출이 실패해도 시연이 멈추지 않도록 오프라인 대체 응답을 두었습니다.',
-          'In spring 2026 I overhauled the frontend: design tokens and 6 shared components, 13 pages migrated, and a dashboard with stat cards, a donut, a study heatmap and a trend chart. The chatbot got an offline fallback so a missing key or a failed call never stops a demo.',
-        ],
-      ]),
+        { anchor: 'solved' },
+      ),
       section('validation', VALIDATION, [
         [
           '저장소에 자동 테스트는 없습니다. 관리자 수동 실행은 실제 응답을 다시 받아 눈으로 확인하는 용도입니다.',
           'The repository has no automated tests. The manual admin run is for fetching real responses again and checking them by eye.',
         ],
       ]),
-      section('result', RESULT, [
+      section('retro', REFLECTION, [
         [
-          '자격증 데이터 동기화, AI 추천·로드맵, 모의시험과 모의 면접까지 동작하는 플랫폼으로 캡스톤을 마쳤고, 최종 발표를 맡았습니다.',
-          'We finished the capstone with a working platform, from certification data syncing to AI recommendations and roadmaps, mock exams and mock interviews, and I gave the final presentation.',
-        ],
-      ]),
-      section('retro', RETRO, [
-        [
-          '오류 문구, JSON 대신 온 XML, 결과가 하나일 때와 여럿일 때, 빈 결과·시간 초과·재시도 초과, 같은 자격증 코드 중복 실행을 자동 테스트로 확인하겠습니다.',
-          'I would cover error text, XML instead of JSON, single versus multiple items, empty results, timeouts, running out of retries and duplicate runs for the same certification code with automated tests.',
+          '자동화 테스트가 없고, 동기화 중복을 막는 unique 제약과 두 DB의 일관성 처리가 부족합니다. 다시 한다면 동기화 정규화 테스트, unique 제약, 실행 이력 기록부터 넣겠습니다.',
+          'There are no automated tests, and the unique constraints against duplicate syncs and the consistency handling across the two databases fall short. Next time I would start with sync and normalization tests, unique constraints and a record of each run.',
         ],
         [
           '저장된 AI 결과는 입력 JSON 문자열을 그대로 키로 써서 필드 순서만 달라도 놓칩니다. 키를 정규화하고 모델·프롬프트 버전과 만료 시간을 넣겠습니다.',
           'Stored AI results are keyed by the raw input JSON string, so a different field order alone causes a miss. I would normalize the key and add the model and prompt version and an expiry time.',
         ],
       ]),
-      section('evidence', EVIDENCE, [
+      section('evidence', MATERIAL, [
         [
           '정규화·재시도(client.js), 동기화(certificationSync.service.js), AI 결과 재사용(ai.service.js) 코드와 최종 발표 자료를 학교 공개 저장소에서 볼 수 있습니다.',
           "The normalizing and retry code (client.js), syncing (certificationSync.service.js), AI result reuse (ai.service.js) and the final presentation are in the school's public repository.",
@@ -659,8 +692,8 @@ export const projects: Project[] = [
     showcase: 'supporting',
     title: k('ClosetMate 옷장·코디 추천 앱', 'ClosetMate wardrobe and outfit app'),
     product: k(
-      '옷 사진을 찍으면 종류를 분류해 옷장에 넣고, 가진 옷으로만 코디를 추천하는 모바일 앱',
-      'A mobile app that classifies a photo of a garment into your wardrobe and recommends outfits only from clothes you own',
+      '옷 사진을 찍으면 종류, 색상, 스타일을 분류해 옷장에 넣고, 말이나 글로 상황을 입력하면 가진 옷으로만 코디를 추천하는 모바일 앱',
+      'A mobile app that sorts a photo of a garment by type, color and style into your wardrobe and, when you describe the occasion by voice or text, recommends outfits only from clothes you own',
     ),
     period: '2026.03–2026.06',
     team: k('개인 프로젝트', 'Solo project'),
@@ -673,6 +706,11 @@ export const projects: Project[] = [
       'An app that builds a wardrobe from photos and checks LLM outfit suggestions on the server so only owned clothes are shown. I built it alone, from planning and model training to the app and API.',
     ),
     features: pairs([
+      ['사진 기반 옷 등록과 자동 분류, 카테고리별 옷장', 'Adding clothes by photo with automatic labels, and a wardrobe by category'],
+      ['글·음성 코디 요청, 날씨와 상황을 반영한 추천', 'Outfit requests by text or voice, with suggestions that reflect the weather and occasion'],
+      ['착용 기록, 옷장 통계, 선택형 Vision 상세 분석', 'Wear history, wardrobe stats and optional detailed Vision analysis'],
+    ]),
+    resumeItems: pairs([
       [
         'LLM 추천을 서버에서 형식 → 옷 ID → 후보 조합 순서로 검증하고, 어긋나면 보조 모델로 다시 받기',
         'Checking LLM suggestions on the server in the order format → clothing IDs → candidate outfit, and asking a backup model when anything is off',
@@ -754,8 +792,11 @@ export const projects: Project[] = [
       ),
     ],
     flow: flow(
-      ['사진에서 추천까지', 'From photo to suggestion'],
-      ['서버 추천 코드 기준', 'Drawn from the server recommendation code'],
+      ARCHITECTURE,
+      [
+        'Expo 앱이 Next.js 서버를 호출합니다. 서버는 PostgreSQL에 옷장과 추천 기록을 저장하고, ONNX 모델로 옷을 분류하며, OpenAI API로 추천을 받습니다. 모델 학습은 PyTorch로 따로 진행했습니다.',
+        'The Expo app calls a Next.js server, which stores the wardrobe and suggestion records in PostgreSQL, labels clothes with an ONNX model and gets suggestions from the OpenAI API. Model training ran separately in PyTorch.',
+      ],
       [
         step('mine', ['사진 등록 (Expo 앱)', 'Add a photo (Expo app)'], ['서버 ONNX(MobileNetV3)가 종류를 분류하고, 사용자가 확인·수정', 'Server-side ONNX (MobileNetV3) labels it and the user checks or corrects it']),
         step('mine', ['옷장 저장 (PostgreSQL)', 'Saved to the wardrobe (PostgreSQL)']),
@@ -805,26 +846,61 @@ export const projects: Project[] = [
       ),
     ],
     sections: [
-      section('problem', PROBLEM, [
+      section(
+        'result',
+        OUTCOMES,
         [
-          'LLM에게 코디를 맡기면 그럴듯하지만 틀린 답이 나옵니다. 옷장에 없는 옷의 ID를 만들어 내거나, 만들 수 없는 조합을 고르기도 합니다. 그래서 LLM이 처음부터 답을 쓰게 하지 않고, 규칙으로 만든 후보 코디 중에서 고르게 한 뒤 서버에서 다시 확인하는 층을 두었습니다.',
-          'Left to an LLM, outfit suggestions come out plausible but wrong: invented clothing IDs or impossible combinations. So instead of letting the LLM write an answer from scratch, I had it choose from rule-built candidate outfits and added a layer on the server that checks the answer again.',
+          ['사진 등록부터 분류, 후보 생성, LLM 추천, 서버 검증까지 전체 흐름을 구현했습니다.', 'Built the whole flow from adding a photo through labeling, candidate outfits, LLM suggestions and the server check.'],
+          ['MobileNetV3-Small과 ResNet50을 같은 조건으로 비교해 약 15분의 1 크기인 MobileNetV3-Small을 채택했습니다.', 'Compared MobileNetV3-Small and ResNet50 under the same settings and adopted MobileNetV3-Small at about one fifteenth of the size.'],
+          ['형식이 틀렸거나 옷장에 없는 옷을 담은 추천은 사용자에게 보내기 전에 차단합니다.', 'Suggestions with the wrong format or with clothes not in the wardrobe are blocked before they reach the user.'],
         ],
+        { lead: true },
+      ),
+      section(
+        'problem',
+        PROBLEM_DEFINITION,
         [
-          'Expo Go에서는 기기 안에서 분류 모델을 불러올 수 없어, 분류는 서버에서 ONNX로 돌리기로 했습니다. 돈이 드는 Vision 분석은 사용자가 직접 누를 때만 호출합니다.',
-          'Expo Go could not load the classification model on the phone, so classification runs on the server with ONNX. The paid Vision analysis is called only when the user taps for it.',
+          [
+            '옷장은 꽉 차 있어도 가진 옷을 다 기억하지 못하고 상황에 맞게 조합하기 어렵습니다. LLM에 코디를 그냥 맡기면 그럴듯하지만 옷장에 없는 옷을 추천할 수 있습니다.',
+            "Even with a full wardrobe it's hard to remember everything you own and combine it for the occasion. Left alone, an LLM can give plausible suggestions that include clothes you don't have.",
+          ],
         ],
-      ]),
-      section('implementation', IMPLEMENTATION, [
+        { lead: true },
+      ),
+      section(
+        'implementation',
+        DECISIONS,
         [
-          'LLM 응답을 받으면 ① 응답 형식 → ② 추천한 옷 ID가 실제 옷장에 있는지 → ③ 그 조합이 미리 만든 후보에 있는지를 차례로 확인합니다. 하나라도 어긋나면 보조 모델에게 다시 받아 같은 검사를 거치고, 어떤 모델이 답했는지와 보조 모델로 넘어갔는지를 기록합니다.',
-          'When the LLM responds, the server checks in order: ① the format → ② whether the recommended clothing IDs exist in the wardrobe → ③ whether the combination is among the prepared candidates. If anything is off, it asks the backup model and runs the same checks, recording which model answered and whether it fell back.',
+          [
+            '후보 안에서만 고르는 LLM: LLM이 처음부터 답을 쓰지 않고, 규칙으로 만든 후보(색상, 스타일, 날씨, 최근 착용 반영) 중에서 고르게 했습니다.',
+            'An LLM that only picks from candidates: instead of writing an answer from scratch, it chooses from rule-based candidates that reflect color, style, weather and recent wear.',
+          ],
+          [
+            '가벼운 모델 우선: 백본을 고정한 전이학습에서 두 모델을 비교해 MobileNetV3-Small을 골랐습니다. Fashion Product Images Small 유효 샘플 약 3만 5천 장을 8:2로 나눠 10 epoch 학습했고, 학습 시간은 약 23분과 53분이었습니다. CPU 추론에서는 MobileNetV3가 오히려 느렸고, 이 결과를 그대로 기록했습니다.',
+            'The lighter model first: with a frozen backbone I compared the two models and chose MobileNetV3-Small. About 35,000 valid samples from Fashion Product Images Small were split 8:2 and trained for 10 epochs, taking about 23 and 53 minutes. On CPU, MobileNetV3 was actually slower, and I recorded that as it was.',
+          ],
+          [
+            '서버 추론: Expo Go에서는 기기 안에서 모델을 불러올 수 없어 서버에서 ONNX로 추론했습니다. 돈이 드는 Vision 분석은 사용자가 직접 누를 때만 호출합니다.',
+            'Server inference: Expo Go could not load the model on the phone, so inference runs on the server with ONNX. The paid Vision analysis is called only when the user taps for it.',
+          ],
         ],
+        { anchor: 'decisions' },
+      ),
+      section(
+        'implementation',
+        SOLVED,
         [
-          '분류 모델은 MobileNetV3-Small과 ResNet50을 고정된 백본 위에 분류기를 얹는 방식으로 같은 조건에서 학습해 비교했습니다. CPU 추론에서는 파일이 15분의 1인 MobileNetV3가 오히려 느렸고, 이 결과를 그대로 기록했습니다.',
-          'I trained MobileNetV3-Small and ResNet50 with a classifier on a frozen backbone under the same settings and compared them. On CPU, MobileNetV3, at one fifteenth of the file size, was actually slower, and I recorded that as it was.',
+          [
+            '없는 옷을 추천하는 문제: Structured Outputs로 형식을 강제하고, 서버에서 ① 응답 형식 → ② 옷 ID → ③ 후보 조합 순서로 검증했습니다. 실패하면 보조 모델로 다시 받아 같은 검사를 거치고, 사용 모델과 대체 여부를 기록했습니다.',
+            'Suggesting clothes that do not exist: Structured Outputs enforce the format, and the server checks ① the format → ② clothing IDs → ③ the candidate outfit, in that order. On failure the backup model answers, the same checks run, and the model used and any fallback are recorded.',
+          ],
+          [
+            '하나의 모델로 세 분류: 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다. MobileNetV3-Small 기준 학습 파라미터는 약 2만 3천 개입니다.',
+            'Three labels from one model: heads for 7 categories, 11 colors and 5 styles sit on a frozen backbone, and only the heads are trained. With MobileNetV3-Small that is about 23,000 trainable parameters.',
+          ],
         ],
-      ]),
+        { anchor: 'solved' },
+      ),
       section('validation', VALIDATION, [
         [
           '직접 찍은 옷 사진과 학습 데이터셋 이미지 43장으로 사진 업로드부터 추천까지 전체 흐름을 손으로 돌려 봤습니다. 이것은 동작 확인이지 정확도 측정이 아닙니다.',
@@ -835,23 +911,17 @@ export const projects: Project[] = [
           'The training code never applied the validation transforms, so I do not report classification accuracy until evaluation is separated and re-measured on a fixed test set.',
         ],
       ]),
-      section('result', RESULT, [
+      section('retro', REFLECTION, [
         [
-          '사진 → 분류 → 옷장 → 후보 생성 → LLM 추천 → 검증으로 이어지는 흐름이 동작합니다. 형식이 틀렸거나 옷장에 없는 옷을 담은 응답은 사용자에게 가기 전에 걸러집니다.',
-          'The flow from photo → classification → wardrobe → candidates → LLM suggestion → check works. Responses with the wrong format or with clothes that are not in the wardrobe are filtered out before they reach the user.',
+          '정확도를 고정 테스트 세트로 다시 재고, 조명과 그림자에 약한 색상 분류를 개선하겠습니다.',
+          'I would re-measure accuracy on a fixed test set and improve color labeling, which is weak under changing light and shadows.',
+        ],
+        [
+          'API 호출 자체가 실패하면 보조 모델로 넘어가지 않는 부분과 모델이 스스로 매긴 확신도로 결과를 거르는 부분을 고치겠습니다. 서버가 받은 URL을 그대로 불러오는 부분과 x-user-id 헤더만으로 사용자를 구분하는 부분은 공개 서비스라면 가장 먼저 막아야 할 곳입니다.',
+          "I would fix the case where a failed API call doesn't fall back to the backup model, and filtering by the model's own self-rated confidence. Fetching whatever URL the server receives and telling users apart by the x-user-id header alone are the first things to close off for a public service.",
         ],
       ]),
-      section('retro', RETRO, [
-        [
-          '모델이 스스로 매긴 확신도로 결과를 거르는 부분과, API 호출 자체가 실패하면 보조 모델로 넘어가지 않는 부분을 고치겠습니다.',
-          "I would fix filtering by the model's own self-rated confidence, and the case where a failed API call doesn't fall back to the backup model.",
-        ],
-        [
-          '서버가 받은 URL을 그대로 불러오는 부분과 x-user-id 헤더만으로 사용자를 구분하는 부분은, 공개 서비스라면 가장 먼저 막아야 할 곳입니다.',
-          'Fetching whatever URL the server receives, and telling users apart by the x-user-id header alone, are the first things to close off for a public service.',
-        ],
-      ]),
-      section('evidence', EVIDENCE, [['코드는 비공개 저장소에 있습니다. 화면과 시연 영상, 측정 조건을 이 페이지에 둡니다.', 'The code is in a private repository. Screens, a demo video and the measurement conditions are on this page.']]),
+      section('evidence', MATERIAL, [['코드는 비공개 저장소에 있습니다. 화면과 시연 영상, 측정 조건을 이 페이지에 둡니다.', 'The code is in a private repository. Screens, a demo video and the measurement conditions are on this page.']]),
     ],
   },
 
@@ -864,19 +934,38 @@ export const projects: Project[] = [
     showcase: 'other',
     title: k('Pitches 발표 코칭', 'Pitches presentation coaching'),
     product: k(
-      '발표하는 동안 말 속도·감정·음량을 분석해 색으로 알려 주고, 끝나면 코칭 보고서를 만드는 서비스',
-      'A service that analyzes speaking pace, emotion and volume during a talk, shows them as colors and writes a coaching report at the end',
+      '발표하는 동안 말 속도, 감정, 음정 변화를 분석해 색으로 바로 알려 주고, 발표가 끝나면 AI 코칭 보고서를 만들어 주는 모바일 서비스',
+      'A mobile service that analyzes speaking pace, emotion and pitch during a talk, shows them right away as colors and writes an AI coaching report at the end',
     ),
     period: '2024.10–2026.10',
-    team: k('2024 해커톤 5인 팀 → 2025 2인으로 발전 → 2026 혼자 리뉴얼', '2024 hackathon team of 5 → developed further by 2 in 2025 → renewed solo in 2026'),
-    role: k('백엔드·AI (앱 UI는 팀원) · 2026 리뉴얼은 전체', 'Backend and AI (app UI by a teammate) · all of the 2026 renewal'),
+    team: k('2024 해커톤 5인(백엔드 2, 프론트엔드 2, 디자인 1) → 2025 2인 → 2026 혼자 리뉴얼', '2024 hackathon team of 5 (backend 2, frontend 2, design 1) → 2 in 2025 → renewed alone in 2026'),
+    role: k('팀장 · 백엔드·AI 모델 적용 · 연구·발표 (앱 UI는 팀원) · 2026 리뉴얼은 전체', 'Team lead · backend and applying the AI models · research and presenting (app UI by a teammate) · all of the 2026 renewal'),
     status: k('2026 리뉴얼: 실시간 피드백·발표 후 분석·보고서 화면 구현, 실기기 확인 전', '2026 renewal: live feedback, post-talk analysis and report screens built; not yet checked on a real phone'),
     statusCheckedAt: '2026-10-29',
-    stack: ['Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'OpenAI API', 'Expo', 'Flask', 'SenseVoice-Small'],
+    stack: ['SenseVoice-Small', 'FunASR', 'WebSocket', 'asyncio', 'GPT-4o-mini', 'AWS', 'Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'Expo'],
     summary: k(
       '발표 중 말 속도와 감정을 분석해 알려 주는 코칭 서비스. 해커톤 대상과 창업 경진대회 특별상, 국제학술대회 논문으로 이어졌고 2026년에 혼자 다시 설계했습니다.',
       'A coaching service that analyzes speaking pace and emotion during a talk. It won a hackathon grand prize and a startup competition award, became an international conference paper, and I redesigned it alone in 2026.',
     ),
+    features: pairs([
+      ['실시간 말 속도·감정·음정 피드백과 색상 지표', 'Live feedback on pace, emotion and pitch with color indicators'],
+      ['실시간 받아쓰기, 한국어·영어 지원', 'Live transcription in Korean and English'],
+      ['발표 요약·음성 분석·개선 제안으로 구성된 보고서', 'A report with a talk summary, voice analysis and suggestions'],
+    ]),
+    resumeItems: pairs([
+      [
+        '발표 중 말 속도와 감정을 분석해 알려 주는 코칭 서비스. 해커톤 대상과 창업 경진대회 특별상, 국제학술대회 논문으로 이어졌고 2026년에 혼자 다시 설계했습니다.',
+        'A coaching service that analyzes speaking pace and emotion during a talk. It won a hackathon grand prize and a startup competition award, became an international conference paper, and I redesigned it alone in 2026.',
+      ],
+    ]),
+    contribution: {
+      direct: pairs([
+        ['팀 버전: 백엔드 개발, AI 모델 선정·적용, 연구와 발표, 논문 2저자', 'Team version: backend, choosing and applying the AI models, research and presenting, second author of the paper'],
+        ['2026 리뉴얼: 전체', '2026 renewal: all of it'],
+      ]),
+      others: pairs([['팀 버전의 앱 UI', 'The app UI of the team version']]),
+      notYet: pairs([['2026 버전은 실제 휴대폰 확인 전', 'The 2026 version has not been checked on a real phone yet']]),
+    },
     image: '/images/projects/pitches.png',
     imageCaption: k('2024년 대회 제출 당시의 화면 디자인 목업', 'Screen design mockup from the 2024 competition submission'),
     media: [
@@ -892,19 +981,50 @@ export const projects: Project[] = [
     ],
     sections: [
       section(
+        'result',
+        OUTCOMES,
+        [
+          ['캡스톤 디자인 및 AI 해커톤 대상(1등, 2024.10), SW중심대학 AI 창업 아이디어 경진대회 특별상(2025.05).', 'Grand prize (1st place) at the Capstone Design & AI Hackathon (Oct 2024); special award at the SW-Centered University AI Startup Idea Competition (May 2025).'],
+          ['APIC-IST 2025 국제학술대회 논문(2저자).', 'A paper at the APIC-IST 2025 international conference (second author).'],
+          ['논문 측정 기준 음성-지표 지연 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms(추론, 네트워크, 화면 표시 포함).', 'As measured in the paper: 125 ms on average from speech to indicator (σ = 18 ms) and 170 ms at worst with 20 concurrent sessions (inference, network and rendering included).'],
+          ['소규모 사용자 조사(5명)에서 5명 모두 실시간 표시가 말 속도 교정에 도움이 된다고 응답했습니다.', 'In a small user survey (5 people), all five said the live indicators helped them correct their pace.'],
+        ],
+        { lead: true },
+      ),
+      section(
         'problem',
-        PROBLEM,
+        PROBLEM_DEFINITION,
         [
           [
-            '발표 중 피드백은 바로 와야 하는데, 음성을 글로 바꾸고 감정을 분석하고 LLM으로 조언을 만드는 일은 모두 무겁습니다. 한 요청 안에서 처리하면 화면이 멈춥니다.',
-            'Feedback during a talk has to arrive right away, but transcription, emotion analysis and LLM advice are all heavy. Doing them in one request freezes the screen.',
+            '논문이 인용한 조사에서 대학생의 61%가 발표 불안을 겪지만, 오프라인 코칭은 비용과 지역 제약이 큽니다. 기존 서비스는 녹음 후 분석이 많거나, 영어 중심이거나, 맞춤형 설명이 부족합니다. 발표 도중 바로 고칠 수 있는 낮은 지연의 피드백이 필요했습니다.',
+            "In a survey the paper cites, 61% of undergraduates report presentation anxiety, while in-person coaching is limited by cost and region. Existing services often analyze after recording, focus on English or lack tailored explanations. Talks needed low-latency feedback you can act on while speaking.",
+          ],
+        ],
+        { lead: true },
+      ),
+      section(
+        'implementation',
+        ARCHITECTURE,
+        [
+          [
+            '실시간 피드백: 앱이 음성을 서버로 보내면 SenseVoice-Small이 분석하고, 결과를 WebSocket의 JSON으로 돌려줘 색상 지표를 갱신합니다.',
+            'Live feedback: the app sends audio to the server, SenseVoice-Small analyzes it, and the result returns as JSON over WebSocket to update the color indicators.',
           ],
           [
-            '그래서 실시간 경로와 무거운 분석을 나눴습니다. 실시간에는 빠른 모델(SenseVoice-Small, 공개 벤치마크 기준 10초 음성에 70ms)을 쓰고, LLM 보고서는 발표가 끝난 뒤 한 번만 만듭니다.',
-            'So I split the live path from the heavy analysis: a fast model on the live path (SenseVoice-Small, 70 ms for 10 s of audio in its public benchmark) and the LLM report once, after the talk.',
+            '받아쓰기: 앱에서 기기 음성 인식으로 처리하고, 불가능하면 서버 인식을 사용합니다.',
+            'Transcription: handled by speech recognition on the device, or by the server when that is unavailable.',
+          ],
+          [
+            '보고서 생성: 발표가 끝나면 받아쓰기와 지표를 GPT-4o-mini에 보내 보고서를 만듭니다. 호출은 세션당 한 번이라 비용을 낮게 유지합니다.',
+            'Report: after the talk, the transcript and metrics go to GPT-4o-mini to write the report. It is called once per session, which keeps costs low.',
+          ],
+          [
+            '위 세 흐름은 논문 기준 구조입니다. 시기별 구조와 역할은 아래 표로 구분합니다.',
+            'These three flows are the structure in the paper. The table below separates the structure and my part by period.',
           ],
         ],
         {
+          anchor: 'architecture',
           table: {
             head: [k('구분', 'Version'), k('구조', 'Architecture'), k('내 역할', 'My part'), k('상태', 'Status')],
             rows: [
@@ -930,20 +1050,40 @@ export const projects: Project[] = [
           },
         },
       ),
-      section('implementation', IMPLEMENTATION, [
+      section(
+        'implementation',
+        DECISIONS,
         [
-          '2026 버전은 발표 중 0.25초마다 음성 조각을 Socket.IO로 보내고, 서버가 5초씩 모아 음량·말 속도·간투사를 계산합니다(감정 분석 서비스가 켜져 있으면 감정까지). 조용한 구간은 받아쓰기를 건너뛰고, 받아쓰기가 4초 안에 끝나지 않으면 음량만으로 피드백합니다.',
-          'In the 2026 version the app sends a slice of audio every 0.25 s over Socket.IO, and the server computes volume, speaking pace and filler words every 5 s (plus emotion when that service is running). Silent stretches skip transcription, and if transcription takes over 4 s the feedback falls back to volume alone.',
+          [
+            '실시간 모델: 논문이 인용한 공개 벤치마크에서 SenseVoice-Small은 10초 오디오를 약 70ms에 처리해 Whisper-Large-V3(1,281ms)보다 15배 이상 빠릅니다. 다국어와 감정 인식도 지원해 선택했습니다.',
+            'The live model: in the public benchmark the paper cites, SenseVoice-Small handles 10 s of audio in about 70 ms, over 15 times faster than Whisper-Large-V3 (1,281 ms). It also supports multiple languages and emotion recognition, so I chose it.',
+          ],
+          [
+            '역할 분리: 빠른 판정은 음성 모델이, 설명형 보고서는 GPT-4o-mini가 맡게 나눴습니다.',
+            'Splitting the work: the speech model makes the fast calls and GPT-4o-mini writes the explanatory report.',
+          ],
         ],
+        { anchor: 'decisions' },
+      ),
+      section(
+        'implementation',
+        SOLVED,
         [
-          '발표가 끝나면 받아쓰기(Whisper) → LLM 보고서 → PDF를 BullMQ 작업으로 넘깁니다. 실패하면 5초 뒤 한 번 더 시도하고, 동시에 2개까지 처리합니다. 보고서·기록·홈 화면에서 결과와 PDF를 봅니다.',
-          'After the talk, transcription (Whisper) → the LLM report → a PDF run as BullMQ jobs: one retry 5 s after a failure, up to 2 jobs at once. The report, history and home screens show the results and the PDF.',
+          [
+            '낮은 지연 유지(논문): 오디오를 짧은 프레임으로 나누고, 여러 세션의 프레임을 asyncio 이벤트 루프로 묶어 병렬 처리했습니다. 20개 세션에서 GPU 사용률은 약 70%에서 안정되었고 최악 지연은 170ms였습니다.',
+            'Keeping latency low (paper): audio is split into short frames, and frames from many sessions are batched and processed in parallel on an asyncio event loop. With 20 sessions, GPU use settled at about 70% and worst-case latency was 170 ms.',
+          ],
+          [
+            '실시간 경로 보호(2026): 발표 후 Whisper, LLM, PDF 생성을 BullMQ 작업과 별도 워커로 분리해 실시간 경로를 막지 않게 했습니다. 실패하면 5초 뒤 한 번 더 시도하고, 동시에 2개까지 처리합니다. 받아쓰기가 4초 안에 끝나지 않으면 음량만으로 피드백합니다.',
+            'Protecting the live path (2026): after the talk, Whisper, the LLM and PDF generation run as BullMQ jobs on a separate worker so they never block the live path: one retry 5 s after a failure, up to 2 jobs at once. If transcription takes over 4 s, feedback falls back to volume alone.',
+          ],
+          [
+            '음성 처리(2026): Whisper가 날것의 음성 데이터를 받지 않아 WAV 헤더를 직접 만들어 붙였습니다. iOS에서 녹음이 되지 않던 문제는 React Native 새 아키텍처를 지원하지 않던 녹음 라이브러리를 @siteed/audio-studio로 바꾸고 iOS 최소 버전을 16.4로 올려 해결했습니다.',
+            "Audio handling (2026): Whisper wouldn't take raw audio data, so I build the WAV header myself. Recording that didn't work on iOS was fixed by replacing a recording library that didn't support React Native's new architecture with @siteed/audio-studio and raising the minimum iOS version to 16.4.",
+          ],
         ],
-        [
-          'Whisper가 날것의 음성 데이터를 받지 않아 WAV 헤더를 직접 만들어 붙였습니다. iOS에서 녹음이 되지 않던 문제는 React Native 새 아키텍처를 지원하지 않던 녹음 라이브러리를 @siteed/audio-studio로 바꾸고 iOS 최소 버전을 16.4로 올려 해결했습니다.',
-          "Whisper wouldn't take raw audio data, so I build the WAV header myself. Recording that didn't work on iOS was fixed by replacing a recording library that didn't support React Native's new architecture with @siteed/audio-studio and raising the minimum iOS version to 16.4.",
-        ],
-      ]),
+        { anchor: 'solved' },
+      ),
       section('validation', VALIDATION, [
         [
           '팀 버전은 해커톤과 창업 경진대회에서 시연했습니다.',
@@ -952,12 +1092,6 @@ export const projects: Project[] = [
         [
           '2026 버전은 단위 테스트 30개(Vitest, 6개 파일)가 통과하고, Docker로 띄우는 통합 테스트 6개와 감정 분석 서비스의 pytest 9개가 따로 있습니다. 휴대폰 없이 녹음부터 보고서 PDF까지 전체 흐름을 재현하는 스크립트로 확인했고 iOS 시뮬레이터 빌드는 성공했습니다. 실제 휴대폰에서는 아직 확인하지 않았습니다.',
           'The 2026 version passes 30 unit tests (Vitest, 6 files); 6 integration tests that run under Docker and 9 pytest cases for the emotion service sit alongside. A script that replays the whole flow without a phone, from recording to the report PDF, was used to check it, and the iOS simulator build succeeds. It has not been checked on a real phone yet.',
-        ],
-      ]),
-      section('result', RESULT, [
-        [
-          '팀 버전으로 캡스톤 디자인 및 AI 해커톤 대상(2024.10)과 SW중심대학 AI 창업 아이디어 경진대회 특별상(2025.05)을 받았고, APIC-IST 2025에서 논문을 발표했습니다.',
-          'The team version won the grand prize at the Capstone Design & AI Hackathon (Oct 2024) and a special award at the SW-Centered University AI Startup Idea Competition (May 2025), and was presented as a paper at APIC-IST 2025.',
         ],
       ]),
       section('paper', ['논문 — APIC-IST 2025', 'Paper: APIC-IST 2025'], [
@@ -970,11 +1104,15 @@ export const projects: Project[] = [
           "Model choice: 10 s of audio takes 518 ms with Whisper-Small, 1,281 ms with Whisper-Large-V3 and 70 ms with SenseVoice-Small (citing SenseVoice's public benchmark).",
         ],
         [
-          '측정: 말에서 화면 표시까지 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms. 다국어 시험(5명)과 사용자 설문(5명)을 함께 보고했습니다.',
-          'Measurements: 125 ms on average from speech to on-screen display (σ = 18 ms), 170 ms at worst with 20 concurrent sessions, with a multilingual test (5 people) and a user survey (5 people).',
+          '측정: 말에서 화면 표시까지 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms(추론, 네트워크, 화면 표시 포함, NVIDIA A10G GPU 1개). 다국어 시험(5명)과 사용자 설문(5명)을 함께 보고했습니다.',
+          'Measurements: 125 ms on average from speech to on-screen display (σ = 18 ms), 170 ms at worst with 20 concurrent sessions (inference, network and rendering included, on one NVIDIA A10G GPU), with a multilingual test (5 people) and a user survey (5 people).',
         ],
       ]),
-      section('retro', RETRO, [
+      section('retro', REFLECTION, [
+        [
+          '사용자 조사가 5명으로 적었습니다. 지연 수치는 논문 시점 구조의 값이고 2026 버전에서 다시 재지 않았으며, 2026 버전은 실제 휴대폰 확인 전입니다. 다음은 재측정, 큐 재시도 처리 보완, 장기 추적 대시보드입니다.',
+          'The user survey had only 5 people. The latency figures belong to the structure at the time of the paper and were not re-measured on the 2026 version, which has not been checked on a real phone yet. Next come re-measuring, better queue retries and a long-term tracking dashboard.',
+        ],
         [
           '첫 시도가 실패하면 재시도가 남아 있어도 세션을 "실패"로 바꿔, 재시도가 성공해도 앱에는 실패로 보입니다. 마지막 시도가 실패했을 때만 상태를 바꾸도록 고치겠습니다.',
           'When the first attempt fails, the session is marked "failed" even though a retry is pending, so a successful retry still shows as a failure in the app. I would change the status only after the last attempt fails.',
@@ -988,7 +1126,7 @@ export const projects: Project[] = [
           "The 2024 version counts speaking rate by spaces between words, so it isn't exact for Korean.",
         ],
       ]),
-      section('evidence', EVIDENCE, [
+      section('evidence', MATERIAL, [
         [
           '2024·2026 코드는 공개하지 않았습니다. 논문은 APIC-IST 2025 발표 논문입니다.',
           'The 2024 and 2026 code are not public. The paper was presented at APIC-IST 2025.',
@@ -1004,11 +1142,12 @@ export const projects: Project[] = [
     years: [2023],
     tier: 'card',
     period: '2023.03–2023.10',
-    role: k('첫 웹 프로젝트', 'My first web project'),
-    stack: ['Node.js', 'Express', 'MongoDB', 'Plotly.js', 'Naver API'],
+    team: k('3인 · 첫 웹 프로젝트', 'Team of 3 · my first web project'),
+    role: k('팀장 · 백엔드 · DB · API 연동 · 프론트엔드 구조와 피드백', 'Team lead · backend · database · API integration · frontend structure and feedback'),
+    stack: ['Node.js', 'Express', 'MongoDB', 'Python', 'Plotly.js', 'Naver API'],
     summary: k(
-      '네이버 검색어 트렌드 API가 비율만 주자, 광고 API의 실제 월간 검색 수를 기준점으로 엮어 월별 검색량을 추정해 차트로 보여 준 첫 웹 서비스.',
-      'My first web service: the Naver search trend API gave only ratios, so I anchored them to the ad API’s real monthly search counts to estimate monthly volumes and chart them.',
+      '유명인 키워드의 월별 네이버 검색량 추이를 추정해 기기별 차트로 보여 주는 웹 서비스. 트렌드 API가 상대값만 주자 세 API를 비교 검증하고, 네이버 검색광고 API의 월간 검색 수를 기준값으로 삼아 검색량을 추정했습니다.',
+      'A web service that estimates monthly Naver search volume for celebrity keywords and charts it by device. The trend API gave only relative values, so I compared and checked three APIs and used the monthly search counts from the Naver search ad API as the baseline for the estimate.',
     ),
     image: '/images/projects/media-pulse.png',
     imageCaption: k('월별 검색량 추이 차트 · 실제 화면', "Monthly search-volume chart · real screen"),
@@ -1021,7 +1160,7 @@ export const projects: Project[] = [
     period: '2024.04–2024.11',
     team: k('2인 · 1저자 논문', 'Team of 2 · first-author paper'),
     role: k('기획 · 백엔드 · AI 챗봇 설계', 'Planning · backend · AI chatbot design'),
-    stack: ['Express', 'MySQL', 'OpenAI Assistants', 'Whisper', 'Google TTS'],
+    stack: ['Express', 'MySQL', 'OpenAI Assistants', 'GPT-4o-mini', 'Whisper', 'Google TTS'],
     summary: k(
       '시니어가 일상 대화를 나누는 동안 우울 척도(GDS) 문항을 대화 속에서 끌어내는 음성 챗봇. 직접 설문과 일상 대화 방식을 비교해 거부감이 적은 대화 방식으로 구성하고, 모델 3종을 비교해 고른 GPT-4o-mini에 파인튜닝, RAG, 프롬프트를 결합했습니다. 2024 한신 AISW 페스티벌 일반부 특별상, 2025 한국디지털콘텐츠학회 하계 1저자 논문.',
       'A voice chatbot that draws Geriatric Depression Scale questions out of everyday conversation with seniors. After comparing a direct questionnaire with everyday conversation, it uses conversation, which people resist less. GPT-4o-mini, chosen from three compared models, combines fine-tuning, RAG and prompts. Special Award at the 2024 Hanshin AISW Festival; first-author paper at the 2025 Korea Digital Contents Society summer conference.',
@@ -1066,8 +1205,8 @@ export const projects: Project[] = [
     tier: 'card',
     period: '2025.05–2025.12',
     team: k('초안은 팀 · 오픈소스 개발자 대회', 'Team draft · Open Source Developer Competition'),
-    role: k('이후 리뉴얼과 직무별 면접 추가는 직접 진행', 'Later renewal and role-based interviews by me'),
-    stack: ['React', 'Express', 'MySQL', 'Whisper', 'OpenAI Assistants', 'TensorFlow.js'],
+    role: k('초안 백엔드·프론트엔드·AI 모델 · 이후 리뉴얼과 직무별 면접 추가는 혼자 진행', 'Backend, frontend and AI models in the draft · later renewal and role-based interviews on my own'),
+    stack: ['React', 'Express', 'MySQL', 'Whisper', 'Google TTS', 'OpenAI Assistants', 'TensorFlow.js'],
     summary: k(
       '이력서와 직무에 맞는 면접 질문을 만들고, 답변을 음성, 텍스트, 영상으로 분석해 꼬리 질문을 이어 가는 모의 면접 서비스. 표정, 시선, 자세와 발음, 말 속도를 함께 살펴보고, 꼬리 질문이 끝없이 이어지지 않도록 면접을 서버에서 15문항으로 제한했습니다.',
       'A mock-interview service that writes questions for your résumé and role, analyzes answers through voice, text and video, and asks follow-ups. It looks at facial expression, eye contact, posture, pronunciation and speaking pace, and the server caps an interview at 15 questions so follow-ups cannot run on forever.',

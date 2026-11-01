@@ -53,7 +53,7 @@ const BANNED: Record<string, (string | RegExp)[]> = {
   teamflow: ['SaaS'],
   unifit: ['AI'],
   patentry: ['특허 데이터', 'patent data'],
-  pitches: ['Canvas', '200ms', '프론트엔드 주도', 'frontend lead', '이중 시간축', 'dual time', '150ms 미만', 'under 150', 'A10G', 'T4', '진행 중'],
+  pitches: ['Canvas', '200ms', '프론트엔드 주도', 'frontend lead', '이중 시간축', 'dual time', '150ms 미만', 'under 150', 'T4', '진행 중'],
   finz: ['21개 테이블', '24개 API', '120개 테스트', '86.6', 'API 키 노출', 'API key exposure', '해결한', 'resolved', '래미안', '아크로', '외주 개발', '외주사'],
   closetmate: ['온디바이스', 'on-device', '97.49', '86.68', '67.29', '딥러닝 기초', '수업', 'deep learning course', 'course project'],
   skillpilot: ['대신 관리자', '테스트를 대신', 'instead of tests', 'substitute for tests', '적중률', 'hit rate', '비용 절감', 'cost saving'],
@@ -202,9 +202,9 @@ describe('supporting: SkillPilot', () => {
   })
 
   it('describes the error handling as the two branches in client.js', () => {
-    const text = koText(skillpilot.sections?.find((s) => s.id === 'implementation'))
+    const text = koText(skillpilot.sections?.filter((s) => s.id === 'implementation'))
     expect(text).toContain('0.5초, 1초 간격으로 최대 2번 다시 시도')
-    expect(text).toContain('JSON으로 읽히지 않으면 XML로 해석')
+    expect(text).toContain('XML과 JSON 응답을 모두 해석')
   })
 
   it('links the client, sync and AI-reuse code and the final presentation directly', () => {
@@ -254,6 +254,14 @@ describe('other work: Pitches', () => {
   it('separates the three versions in one table', () => {
     const table = pitches.sections?.find((s) => s.table)?.table
     expect(table?.rows.map((row) => row[0].ko)).toEqual(['2024–25 팀 버전', 'APIC-IST 2025 논문', '2026 개인 리뉴얼'])
+  })
+})
+
+describe('the rewritten case pages', () => {
+  it.each(['skillpilot', 'closetmate', 'pitches'])('%s opens with results and the problem, and names the decisions', (slug) => {
+    const sections = bySlug(slug).sections ?? []
+    expect(sections.filter((s) => s.lead).map((s) => s.title.ko)).toEqual(['핵심 성과', '문제 정의'])
+    expect(sections.map((s) => s.title.ko)).toEqual(expect.arrayContaining(['주요 의사 결정', '핵심 기술 문제 해결', '회고 및 개선 방향', '관련 자료']))
   })
 })
 

@@ -116,9 +116,10 @@ export function checkFeaturedShape(project: Project): string[] {
   for (const required of REQUIRED_SECTIONS) {
     if (!ids.includes(required)) errors.push(`${project.slug}: missing section ${required}`)
   }
-  const ranks = ids.map((id) => SECTION_ORDER.indexOf(id))
+  const ordered = (project.sections ?? []).filter((section) => !section.lead).map((section) => section.id)
+  const ranks = ordered.map((id) => SECTION_ORDER.indexOf(id))
   const outOfOrder = ranks.findIndex((rank, i) => i > 0 && rank < ranks[i - 1])
-  if (outOfOrder !== -1) errors.push(`${project.slug}: section ${ids[outOfOrder]} is out of order`)
+  if (outOfOrder !== -1) errors.push(`${project.slug}: section ${ordered[outOfOrder]} is out of order`)
   const anchors = (project.sections ?? []).flatMap((section) => (section.anchor ? [section.anchor] : []))
   if (new Set(anchors).size !== anchors.length) errors.push(`${project.slug}: section anchors repeat`)
   return errors

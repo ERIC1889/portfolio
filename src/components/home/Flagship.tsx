@@ -45,7 +45,7 @@ export function Flagship({ project }: { project: Project }) {
           </div>
           {project.features && (
             <div className="flagship-features">
-              <h4 className="label">{t(UI.whatIBuilt)}</h4>
+              <h4 className="label">{t(UI.featuresHeading)}</h4>
               <ol className="feature-list is-grid">
                 {project.features.map((feature) => (
                   <li key={feature.ko}>{t(feature)}</li>

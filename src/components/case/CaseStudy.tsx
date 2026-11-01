@@ -47,10 +47,24 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
   const toc: { href: string; label: L }[] = [
     ...(project.media?.length ? [{ href: '#screens', label: UI.mediaHeading }] : []),
     ...(project.features?.length ? [{ href: '#features', label: UI.featuresHeading }] : []),
+    ...sections.flatMap((section, i) => (section.lead ? [{ href: `#${anchors[i]}`, label: section.title }] : [])),
     ...(project.contribution ? [{ href: '#contribution', label: UI.contributionHeading }] : []),
     ...(project.flow ? [{ href: '#flow', label: project.flow.title }] : []),
-    ...sections.map((section, i) => ({ href: `#${anchors[i]}`, label: section.title })),
+    ...sections.flatMap((section, i) => (section.lead ? [] : [{ href: `#${anchors[i]}`, label: section.title }])),
   ]
+
+  const renderSections = (lead: boolean) =>
+    sections.map((section, i) =>
+      Boolean(section.lead) === lead ? (
+        <CaseSection
+          key={anchors[i]}
+          section={section}
+          anchor={anchors[i]}
+          metrics={i === validationIndex ? project.metrics : undefined}
+          links={i === evidenceIndex ? links : undefined}
+        />
+      ) : null,
+    )
 
   return (
     <main id="main" className="case">
@@ -133,6 +147,7 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
                 </ol>
               </section>
             )}
+            {renderSections(true)}
             {project.contribution && (
               <section id="contribution" className="case-block" aria-labelledby="contribution-title">
                 <h2 id="contribution-title">{t(UI.contributionHeading)}</h2>
@@ -145,15 +160,7 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
                 <FlowDiagram flow={project.flow} />
               </section>
             )}
-            {sections.map((section, i) => (
-              <CaseSection
-                key={anchors[i]}
-                section={section}
-                anchor={anchors[i]}
-                metrics={i === validationIndex ? project.metrics : undefined}
-                links={i === evidenceIndex ? links : undefined}
-              />
-            ))}
+            {renderSections(false)}
           </div>
         </div>
 

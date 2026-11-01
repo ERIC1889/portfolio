@@ -99,7 +99,7 @@ describe('CaseStudy body', () => {
 
   it('splits my part from other people’s work in a labelled table', () => {
     renderWithProviders(<CaseStudy project={project} />)
-    const table = within(sectionNamed('내 역할과 협업 범위')).getByRole('table')
+    const table = within(sectionNamed('담당 역할 및 기여')).getByRole('table')
     expect(within(table).getAllByRole('rowheader').map((th) => th.textContent)).toEqual(['직접 구현', '다른 사람 구현', '아직 안 한 일'])
   })
 
