@@ -303,24 +303,24 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            '해외주식 이익 계산. 문제: 양도세는 원화 기준이라 달러 이익만 계산하면 금액이 틀리고, 사용자는 왜 이 세금이 나왔는지 알 수 없습니다. 해결: 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
-            'Foreign-stock gains. Problem: the tax is based on won, so a dollar gain alone gives the wrong figure and leaves people unable to see why they owe it. Fix: each buy and sell converts at its own settlement-date rate, truncated to the won, and the gain is shown split into a price part and a currency part. The filing deadline is May 31 of the next year, or the next weekday if that falls on a weekend or holiday.',
+            '해외주식 이익 계산. 문제: 양도세는 원화 기준이라 달러 이익만 계산하면 금액이 틀리고, 왜 이 세금이 나왔는지도 알 수 없습니다. 해결: 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가 몫과 환율 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
+            'Foreign-stock gains. Problem: the tax is based on won, so a dollar gain alone gives the wrong figure and hides why the tax is what it is. Fix: each buy and sell converts at its own settlement-date rate, truncated to the won, and the gain is shown split into a price part and a currency part. The filing deadline is May 31 of the next year, or the next weekday if that falls on a weekend or holiday.',
           ],
           [
-            '증여 평가. 문제: 평가액은 증여일 앞뒤 2개월 종가 평균이어서, 기간이 끝나지 않으면 값이 아직 확정되지 않습니다. 해결: 평균을 증여일 환율로 환산하고, 자동 조회가 안 되면 시세표 붙여넣기나 평균 직접 입력으로 이어 갑니다. 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시하고, 아직 오지 않은 날짜는 외부를 부르지 않고 바로 거절합니다. 받는 사람별 공제·10년 합산·신고세액공제로 증여세를 추정합니다.',
-            'Gift valuation. Problem: the value is the average close over the two months either side of the gift date, so it is not settled until that period ends. Fix: the average converts at the gift-date rate, and when automatic lookup is unavailable the user can paste a price table or enter the average. Closes are cached only once the period has ended with enough trading days, and future dates are refused without calling outside. The gift-tax estimate applies per-recipient deductions, ten-year aggregation and the filing credit.',
+            '증여 평가. 문제: 평가액은 증여일 앞뒤 2개월 종가 평균이라 기간이 끝나야 확정됩니다. 해결: 평균을 증여일 환율로 환산하고, 자동 조회가 안 되면 시세표 붙여넣기나 직접 입력으로 이어 갑니다. 종가는 기간이 끝나고 거래일이 충분할 때만 캐시하고, 아직 오지 않은 날짜는 바로 거절합니다.',
+            'Gift valuation. Problem: the value is the average close over the two months either side of the gift date, so it settles only when that period ends. Fix: the average converts at the gift-date rate, and when automatic lookup is unavailable the user can paste a price table or enter the average. Closes are cached only once the period has ended with enough trading days, and future dates are refused at once.',
           ],
           [
-            '부동산 6Way. 문제: A·B 주택마다 양도·증여·부담부증여가 있어 여섯 경우가 나오고, 각 경우가 중과 유예 전후로 다시 갈립니다. 실거래가 API는 인증키가 인코딩되면 실패했습니다. 해결: 여섯 경우를 전후 규칙으로 따로 계산하고, 실거래가는 12시간 단위로 다시 확인하며 월별로 동시에 불러오고, URL을 직접 조립해 키 인코딩을 피했습니다. PDF는 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
-            'Property 6Way. Problem: sale, gift and gift with debt on homes A and B give six options, each splitting again before and after the surcharge grace period, and the transaction-price API failed when its key got encoded. Fix: the six options are computed under each set of rules, prices are rechecked every 12 hours and loaded by month concurrently, and the URL is assembled by hand to avoid encoding the key. The PDF draws the report in a hidden iframe and saves through the browser’s print.',
+            '부동산 6Way. 문제: 주택마다 양도·증여·부담부증여가 있어 여섯 경우가 나오고, 각각 중과 유예 전후로 다시 갈립니다. 실거래가 API는 인증키가 인코딩되면 실패했습니다. 해결: 여섯 경우를 전후 규칙으로 따로 계산하고, 실거래가는 월별로 동시에 불러오며 URL을 직접 조립해 키 인코딩을 피했습니다.',
+            'Property 6Way. Problem: sale, gift and gift with debt on two homes give six options, each splitting again before and after the surcharge grace period, and the transaction-price API failed when its key got encoded. Fix: the six options are computed under each set of rules, prices load by month concurrently, and the URL is assembled by hand to avoid encoding the key.',
           ],
           [
-            '계산 결과 검증. 문제: 화면 테스트로는 숫자가 맞는지 알 수 없고, 기준 워크북은 소수점을 그대로 두는 반면 엔진은 단계마다 원 미만을 버려 값이 조금씩 다릅니다. 해결: 계산 검증을 화면 테스트와 나누고 ±10원을 허용 범위로 정했습니다. 기대값과 비교하는 스크립트를 회사 웹 API에 돌리면 21개 항목이 모두 범위 안에 들어오고(최대 차이 1원), Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 기준 사례의 단지 이름과 금액은 고객 정보일 수 있어 공개하지 않습니다.',
-            'Checking the results. Problem: UI tests cannot tell whether a number is right, and the reference workbook keeps fractions while the engine drops fractions of a won at each step, so values differ slightly. Fix: checking the numbers is kept apart from UI tests, with ±10 won as the tolerance. A script comparing the company web API with the expected values lands all 21 items within range (largest gap 1 won), and the Python engine has tests matching the same case to the won. The reference case’s complex name and amounts stay private, as they could be customer data.',
+            '계산 결과 검증. 문제: 화면 테스트로는 숫자가 맞는지 알 수 없고, 워크북과 엔진은 원 미만 처리 방식이 달라 값이 조금씩 다릅니다. 해결: 계산 검증을 화면 테스트와 나누고 ±10원을 허용 범위로 정했습니다. 회사 웹 API로 비교하면 21개 항목이 모두 범위 안에 들어오고(최대 차이 1원), Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다.',
+            'Checking the results. Problem: UI tests cannot tell whether a number is right, and the workbook and the engine treat fractions of a won differently, so values differ slightly. Fix: checking the numbers is kept apart from UI tests, with ±10 won as the tolerance. Through the company web API all 21 items land within range (largest gap 1 won), and the Python engine has tests matching the same case to the won.',
           ],
           [
-            '운영 중인 웹 저장소의 테스트 184개가 모두 통과합니다. 가상자산 엔진 25개, 해외주식 엔진 28개(익명화한 실제 증여 사례를 원 단위로 맞추는 검사 포함), 시세·환율 데이터 소스 31개가 들어 있고, 외부 API는 모의 응답으로 대신해 네트워크 없이 돕니다.',
-            'All 184 tests in the live website’s repository pass: 25 for the crypto engine, 28 for the foreign-stock engines (including checks that match an anonymised real gift case to the won) and 31 for the market-data sources, with external APIs mocked so they run offline.',
+            '테스트. 운영 중인 웹 저장소의 테스트 184개가 모두 통과합니다. 계산 엔진 53개(익명화한 실제 증여 사례 포함)와 시세·환율 데이터 소스 31개가 들어 있고, 외부 API는 모의 응답으로 대신합니다.',
+            'Tests. All 184 tests in the live website’s repository pass, including 53 for the calculation engines (with an anonymised real gift case) and 31 for the market-data sources, with external APIs mocked.',
           ],
         ],
         { anchor: 'solved' },
@@ -654,20 +654,20 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            'HTTP 200 속의 실패. 문제: 공공 API는 실패해도 HTTP 200으로 "SERVICE ERROR"나 "INVALID_REQUEST_PARAMETER_ERROR" 문구를 보내는 경우가 있습니다. 상태 코드만 보면 오류 문서가 성공으로 처리되어 틀린 데이터가 저장될 수 있습니다. 해결: 상태 코드에 더해 응답 본문의 오류 문구를 검사해 실패로 판정하고, 0.5초, 1초 간격으로 최대 2번 다시 시도합니다. 요청마다 타임아웃을 두어 느린 API가 동기화 전체를 붙잡지 않게 했습니다.',
-            'Failures inside an HTTP 200. Problem: public APIs sometimes answer a failure with HTTP 200 and text such as "SERVICE ERROR" or "INVALID_REQUEST_PARAMETER_ERROR". Judging by status code alone treats the error document as success and can store wrong data. Fix: besides the status code, the body is checked for error text and counted as a failure, retried up to twice, 0.5 s and 1 s apart. Each request has a timeout so a slow API cannot hold up the whole sync.',
+            'HTTP 200 속의 실패. 문제: 공공 API는 실패해도 HTTP 200으로 "SERVICE ERROR" 같은 문구를 보내는 경우가 있어, 상태 코드만 보면 틀린 데이터가 저장될 수 있습니다. 해결: 응답 본문의 오류 문구까지 검사해 실패로 판정하고, 0.5초, 1초 간격으로 최대 2번 다시 시도합니다. 요청마다 타임아웃도 두었습니다.',
+            'Failures inside an HTTP 200. Problem: public APIs sometimes answer a failure with HTTP 200 and text such as "SERVICE ERROR", so judging by status code alone could store wrong data. Fix: the body is checked for error text too, counted as a failure and retried up to twice, 0.5 s and 1 s apart. Each request also has a timeout.',
           ],
           [
-            '제각각인 응답 구조. 문제: 응답은 대부분 XML이고, 목록 위치가 API마다 다르며, 결과가 하나면 배열이 아니라 객체로 옵니다. 그대로 쓰면 배열을 기대하는 처리가 깨집니다. 해결: XML과 JSON 응답을 모두 해석하고, 목록 추출을 한 함수로 모아 항상 배열로 돌려줍니다. 페이지 단위 수집도 공통화하고, 7개 엔드포인트마다 정규화 함수를 두어 내부 구조로 바꾼 뒤 IT 종목만 골라 저장합니다.',
-            'Responses of every shape. Problem: most responses are XML, the list sits in a different place per API, and a single result arrives as an object rather than an array, which breaks code expecting an array. Fix: both XML and JSON responses are parsed, and list extraction lives in one function that always returns an array. Paged collection is shared too, and each of the 7 endpoints has a normalization function that maps to an internal structure before IT certifications are selected and stored.',
+            '제각각인 응답 구조. 문제: 응답은 대부분 XML이고 목록 위치가 API마다 다르며, 결과가 하나면 배열이 아니라 객체로 옵니다. 해결: XML과 JSON 응답을 모두 해석하고, 목록 추출을 한 함수로 모아 항상 배열로 돌려줍니다. 7개 엔드포인트마다 정규화 함수를 두어 내부 구조로 바꾼 뒤 IT 종목만 골라 저장합니다.',
+            'Responses of every shape. Problem: most responses are XML, the list sits in a different place per API, and a single result arrives as an object rather than an array. Fix: both XML and JSON responses are parsed, and list extraction lives in one function that always returns an array. Each of the 7 endpoints has a normalization function that maps to an internal structure before IT certifications are selected and stored.',
           ],
           [
-            '서비스 키 처리. 문제: 공공데이터포털 서비스 키는 이미 인코딩된 값으로 주어지는 경우가 많아, 다른 파라미터처럼 인코딩하면 인증이 깨질 수 있습니다. API마다 키가 다를 수도 있습니다. 해결: 키 부분은 문자열로 직접 붙이고 나머지 파라미터만 인코딩하며, 전역 설정 대신 호출할 때마다 키를 전달합니다. 키가 없는 API는 건너뛰고 경고를 남겨, 나머지 동기화는 계속됩니다.',
-            'Service keys. Problem: portal service keys often come already encoded, so encoding them like other parameters can break authentication, and keys can differ per API. Fix: the key is appended as a string and only the other parameters are encoded, with the key passed in on each call rather than read from global settings. An API without a key is skipped with a warning and the rest of the sync continues.',
+            '서비스 키 처리. 문제: 서비스 키는 이미 인코딩된 값으로 주어지는 경우가 많아, 다시 인코딩하면 인증이 깨질 수 있습니다. 해결: 키는 문자열로 직접 붙이고 나머지 파라미터만 인코딩합니다. 키가 없는 API는 건너뛰고 경고를 남겨, 나머지 동기화는 계속됩니다.',
+            'Service keys. Problem: service keys often come already encoded, so encoding them again can break authentication. Fix: the key is appended as a string and only the other parameters are encoded. An API without a key is skipped with a warning and the rest of the sync continues.',
           ],
           [
-            '자격증과 시험 일정 결합. 문제: 국가기술자격은 자격증 코드로 일정을 잇지만, 국가전문자격 일정에는 코드가 없습니다. 같은 일정을 다시 받으면 중복될 수도 있습니다. 해결: 코드가 있으면 코드로, 없으면 종목명으로 매칭하고, 자격증과 시험일을 기준으로 찾아 있으면 접수 기간만 갱신합니다. 다만 DB의 unique 제약은 없어 동시 실행까지 막지는 못합니다.',
-            'Joining certifications and exam schedules. Problem: national technical certifications link to schedules by certification code, but professional ones have no code, and fetching a schedule again could duplicate it. Fix: matching uses the code when there is one and the certification name otherwise, and a schedule is found by certification and exam date, updating only the registration period when it exists. There is no unique constraint in the database, though, so concurrent runs are not prevented.',
+            '자격증과 시험 일정 결합. 문제: 국가전문자격 일정에는 자격증 코드가 없고, 같은 일정을 다시 받으면 중복될 수 있습니다. 해결: 코드가 없으면 종목명으로 매칭하고, 자격증과 시험일로 찾아 있으면 접수 기간만 갱신합니다. 다만 DB의 unique 제약이 없어 동시 실행까지 막지는 못합니다.',
+            'Joining certifications and exam schedules. Problem: professional certification schedules have no certification code, and fetching a schedule again could duplicate it. Fix: without a code, matching uses the name, and a schedule found by certification and exam date only has its registration period updated. There is no unique constraint in the database, though, so concurrent runs are not prevented.',
           ],
           [
             '모델 파라미터 호환. 문제: 신모델은 max_completion_tokens만, 구모델은 max_tokens만 받아 모델을 바꾸면 챗봇 호출이 400으로 실패합니다. 해결: 이 오류가 오면 다른 파라미터로 바로 다시 호출합니다.',
@@ -913,20 +913,20 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            '옷장에 없는 옷을 추천하는 문제. 문제: LLM에 코디를 맡기면 그럴듯하지만 옷장에 없는 옷의 ID를 만들어 내거나 만들 수 없는 조합을 고릅니다. 해결: 색상과 스타일 조합으로 점수를 매긴 후보를 규칙으로 먼저 만들고(기온이 28도 이상이면 아우터를 빼고, 최근 입은 옷은 점수를 낮춤), LLM은 그중에서만 고르게 했습니다. 응답은 JSON Schema(strict)로 강제하고 서버에서 다시 파싱한 뒤, 모든 옷 ID가 옷장에 있는지와 조합이 후보에 있는지를 확인합니다.',
-            'Suggesting clothes that are not in the wardrobe. Problem: left alone, an LLM produces plausible outfits with invented clothing IDs or impossible combinations. Fix: rule-based candidates scored on color and style come first (outerwear is dropped at 28°C and above, and recently worn clothes score lower), and the LLM chooses only among them. The response is forced to a strict JSON Schema and parsed again on the server, which then checks that every clothing ID exists in the wardrobe and the combination is a candidate.',
+            '옷장에 없는 옷을 추천하는 문제. 문제: LLM에 맡기면 옷장에 없는 옷의 ID를 만들어 내거나 만들 수 없는 조합을 고릅니다. 해결: 색상과 스타일로 점수를 매긴 후보를 규칙으로 먼저 만들고(기온 28도 이상이면 아우터 제외, 최근 입은 옷은 점수 낮춤), LLM은 그중에서만 고르게 했습니다. 응답은 JSON Schema(strict)로 강제하고, 서버에서 옷 ID와 후보 조합을 다시 확인합니다.',
+            'Suggesting clothes that are not in the wardrobe. Problem: left alone, an LLM invents clothing IDs or picks impossible combinations. Fix: rule-based candidates scored on color and style come first (no outerwear at 28°C and above, lower scores for recently worn clothes), and the LLM chooses only among them. The response is forced to a strict JSON Schema, and the server checks clothing IDs and the candidate outfit again.',
           ],
           [
-            '실패했을 때의 처리. 형식, 옷 ID, 후보 조합, 모델이 매긴 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거칩니다. 보조 모델도 실패하면 틀린 추천을 보내지 않고 오류로 끝냅니다. 어떤 모델이 답했는지, 대체가 일어났는지, 그 이유와 토큰, 지연 시간을 기록합니다.',
-            'Handling failures. If the format, clothing IDs, candidate outfit or the model’s confidence fall short, a backup model answers and goes through the same checks. If it fails too, the request ends in an error rather than sending a wrong suggestion. The model used, whether it fell back, the reason, tokens and latency are recorded.',
+            '실패했을 때의 처리. 형식, 옷 ID, 후보 조합, 모델이 매긴 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거치고, 그래도 실패하면 틀린 추천 대신 오류로 끝냅니다. 사용 모델, 대체 이유, 토큰, 지연 시간을 기록합니다.',
+            'Handling failures. If the format, clothing IDs, candidate outfit or the model’s confidence fall short, a backup model answers and goes through the same checks, and a second failure ends in an error rather than a wrong suggestion. The model used, the reason for falling back, tokens and latency are recorded.',
           ],
           [
-            '하나의 모델로 세 분류. 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다. MobileNetV3-Small 기준 학습 파라미터는 약 2만 3천 개입니다. 입력 이미지는 백본에 맞춰 ImageNet 기준으로 정규화합니다.',
-            'Three labels from one model. Heads for 7 categories, 11 colors and 5 styles sit on a frozen backbone, and only the heads are trained: about 23,000 parameters with MobileNetV3-Small. Input images are normalized to ImageNet values to match the backbone.',
+            '하나의 모델로 세 분류. 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다(MobileNetV3-Small 기준 약 2만 3천 개). 입력 이미지는 백본에 맞춰 ImageNet 기준으로 정규화합니다.',
+            'Three labels from one model. Heads for 7 categories, 11 colors and 5 styles sit on a frozen backbone, and only the heads are trained (about 23,000 parameters with MobileNetV3-Small). Input images are normalized to ImageNet values to match the backbone.',
           ],
           [
-            '확인 방법. 직접 찍은 옷 사진과 학습 데이터셋 이미지 43장으로 사진 업로드부터 추천까지 전체 흐름을 손으로 돌려 봤습니다. 이것은 동작 확인이지 정확도 측정이 아닙니다.',
-            'How it was checked. I ran the whole flow, from upload to suggestion, by hand with 43 images: my own clothing photos plus dataset images. This checks that it works; it does not measure accuracy.',
+            '확인 방법. 직접 찍은 옷 사진과 데이터셋 이미지 43장으로 전체 흐름을 손으로 돌려 봤습니다. 동작 확인이며 정확도 측정이 아닙니다.',
+            'How it was checked. I ran the whole flow by hand with 43 images: my own clothing photos plus dataset images. This checks that it works; it does not measure accuracy.',
           ],
         ],
         { anchor: 'solved' },
@@ -1100,28 +1100,28 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            '낮은 지연 유지(논문). 문제: 발표 중 피드백은 바로 와야 하는데, 큰 음성 모델은 10초 오디오에 1초 이상 걸립니다. 해결: SenseVoice-Small을 쓰고, 오디오를 짧은 프레임으로 나눠 여러 세션의 프레임을 asyncio 이벤트 루프로 묶어 병렬 처리했습니다. 결과: 20세션에서 GPU 사용률은 약 70%에서 안정되었고, 추론, 네트워크, 화면 표시를 포함한 지연은 평균 125ms, 최악 170ms로 보고했습니다.',
-            'Keeping latency low (paper). Problem: feedback during a talk must be immediate, but large speech models take over a second for 10 s of audio. Fix: SenseVoice-Small, with audio split into short frames and frames from many sessions batched in parallel on an asyncio event loop. Result: with 20 sessions GPU use settled at about 70%, and latency including inference, network and rendering was reported at 125 ms on average and 170 ms at worst.',
+            '낮은 지연 유지(논문). 문제: 발표 중 피드백은 바로 와야 하는데, 큰 음성 모델은 10초 오디오에 1초 이상 걸립니다. 해결: SenseVoice-Small을 쓰고, 여러 세션의 프레임을 asyncio 이벤트 루프로 묶어 병렬 처리했습니다. 20세션에서 GPU 사용률은 약 70%에서 안정되었고, 지연은 평균 125ms, 최악 170ms로 보고했습니다.',
+            'Keeping latency low (paper). Problem: feedback during a talk must be immediate, but large speech models take over a second for 10 s of audio. Fix: SenseVoice-Small, with frames from many sessions batched in parallel on an asyncio event loop. With 20 sessions GPU use settled at about 70%, and latency was reported at 125 ms on average and 170 ms at worst.',
           ],
           [
-            '느린 외부 호출이 실시간 판정을 막는 문제(2026). 문제: 부분 받아쓰기와 감정 분석은 느리거나 실패할 수 있는데, 기다리면 다음 판정이 밀립니다. 해결: 앱이 0.25초마다 음성 조각을 Socket.IO로 보내면 서버가 5초씩 모아 판정합니다. 음량을 먼저 계산하고, 받아쓰기와 감정 분석은 병렬로 부르며 각각 4초와 3초 제한을 둡니다. 실패하거나 시간을 넘기면 있는 값만으로 판정해 음량 피드백은 계속 나갑니다.',
-            'Slow external calls blocking live feedback (2026). Problem: partial transcription and emotion analysis can be slow or fail, and waiting for them delays the next call. Fix: the app sends a slice of audio every 0.25 s over Socket.IO and the server judges every 5 s. Volume comes first, then transcription and emotion run in parallel with 4 s and 3 s limits. On failure or timeout the judgment uses what it has, so volume feedback keeps going.',
+            '느린 외부 호출이 실시간 판정을 막는 문제(2026). 문제: 부분 받아쓰기와 감정 분석은 느리거나 실패할 수 있어, 기다리면 다음 판정이 밀립니다. 해결: 서버가 0.25초 음성 조각을 5초씩 모아 음량을 먼저 계산하고, 받아쓰기와 감정 분석은 병렬로 부르며 각각 4초와 3초 제한을 둡니다. 실패해도 음량 피드백은 계속 나갑니다.',
+            'Slow external calls blocking live feedback (2026). Problem: partial transcription and emotion analysis can be slow or fail, and waiting for them delays the next call. Fix: the server gathers 0.25 s slices of audio into 5 s windows and computes volume first, then calls transcription and emotion in parallel with 4 s and 3 s limits. Volume feedback keeps going even when they fail.',
           ],
           [
-            '무음 구간의 비용과 잘못된 받아쓰기(2026). 문제: 조용한 구간까지 Whisper에 보내면 비용이 들고, "시청해 주셔서 감사합니다"처럼 없는 말을 만들어 내기도 합니다. 해결: 음량이 기준보다 낮으면 받아쓰기와 감정 분석을 건너뛰고, 받아쓰기 결과는 자주 나오는 문구 목록으로 한 번 더 걸러 말 속도와 간투사 계산에 쓰지 않습니다.',
-            'Cost and false transcription during silence (2026). Problem: sending silent stretches to Whisper costs money and can produce phrases nobody said, such as a video sign-off. Fix: below a volume threshold, transcription and emotion analysis are skipped, and transcripts are checked against a list of common false phrases before they count toward pace and filler words.',
+            '무음 구간의 비용과 잘못된 받아쓰기(2026). 문제: 조용한 구간까지 Whisper에 보내면 비용이 들고, "시청해 주셔서 감사합니다"처럼 없는 말을 만들어 내기도 합니다. 해결: 음량이 기준보다 낮으면 받아쓰기와 감정 분석을 건너뛰고, 자주 나오는 문구는 목록으로 걸러 말 속도와 간투사 계산에서 뺍니다.',
+            'Cost and false transcription during silence (2026). Problem: sending silent stretches to Whisper costs money and can produce phrases nobody said, such as a video sign-off. Fix: below a volume threshold, transcription and emotion analysis are skipped, and common false phrases are filtered out of the pace and filler-word counts.',
           ],
           [
-            '무거운 분석 분리(2026). 문제: 발표 후 Whisper, LLM, PDF를 요청 안에서 처리하면 오래 걸리고 실시간 서버를 막습니다. 해결: 녹음 파일을 확정해 경로를 기록한 뒤에만 BullMQ 작업을 넣고, 별도 워커가 받아쓰기 → 지표 집계 → LLM 보고서 → PDF를 처리합니다. 실패하면 5초 뒤 한 번 더 시도하고 동시에 2개까지 처리하며, 결과는 세션 기준 upsert로 저장해 다시 실행해도 중복되지 않습니다. 1초도 안 되는 녹음은 Whisper에 보내지 않습니다.',
-            'Moving heavy analysis out (2026). Problem: running Whisper, the LLM and the PDF inside a request takes long and blocks the live server. Fix: only after the recording is finalized and its path saved does a BullMQ job go in, and a separate worker runs transcription → metric aggregation → LLM report → PDF. A failure retries once after 5 s, up to 2 jobs run at once, and results are upserted per session so a rerun creates no duplicates. Recordings under a second are not sent to Whisper.',
+            '무거운 분석 분리(2026). 문제: 발표 후 Whisper, LLM, PDF를 요청 안에서 처리하면 오래 걸리고 실시간 서버를 막습니다. 해결: 녹음 파일을 확정한 뒤에만 BullMQ 작업을 넣고, 별도 워커가 받아쓰기 → 지표 집계 → LLM 보고서 → PDF를 처리합니다. 실패하면 5초 뒤 한 번 더 시도하고, 결과는 세션 기준 upsert로 저장해 다시 실행해도 중복되지 않습니다.',
+            'Moving heavy analysis out (2026). Problem: running Whisper, the LLM and the PDF inside a request takes long and blocks the live server. Fix: only after the recording is finalized does a BullMQ job go in, and a separate worker runs transcription → metric aggregation → LLM report → PDF. A failure retries once after 5 s, and results are upserted per session so a rerun creates no duplicates.',
           ],
           [
             'Whisper가 날것의 음성 데이터를 받지 않아 WAV 헤더를 직접 만들어 붙였습니다. iOS에서 녹음이 되지 않던 문제는 React Native 새 아키텍처를 지원하지 않던 녹음 라이브러리를 @siteed/audio-studio로 바꾸고 iOS 최소 버전을 16.4로 올려 해결했습니다.',
             "Whisper wouldn't take raw audio data, so I build the WAV header myself. Recording that didn't work on iOS was fixed by replacing a recording library that didn't support React Native's new architecture with @siteed/audio-studio and raising the minimum iOS version to 16.4.",
           ],
           [
-            '확인 방법(2026). 단위 테스트 30개(Vitest, 6개 파일)가 통과하고, Docker로 띄우는 통합 테스트 6개와 감정 분석 서비스의 pytest 9개가 따로 있습니다. 휴대폰 없이 녹음부터 보고서 PDF까지 재현하는 스크립트로 확인했고 iOS 시뮬레이터 빌드는 성공했습니다. 실제 휴대폰에서는 아직 확인하지 않았습니다.',
-            'How it was checked (2026). 30 unit tests pass (Vitest, 6 files), with 6 integration tests that run under Docker and 9 pytest cases for the emotion service alongside. A script replays the flow without a phone, from recording to the report PDF, and the iOS simulator build succeeds. It has not been checked on a real phone yet.',
+            '확인 방법(2026). 단위 테스트 30개(Vitest)가 통과하고, Docker 통합 테스트 6개와 감정 분석 서비스 pytest 9개가 따로 있습니다. 휴대폰 없이 녹음부터 보고서 PDF까지 재현하는 스크립트로 확인했고 iOS 시뮬레이터 빌드는 성공했지만, 실제 휴대폰에서는 아직 확인하지 않았습니다.',
+            'How it was checked (2026). 30 unit tests pass (Vitest), with 6 Docker integration tests and 9 pytest cases for the emotion service alongside. A script replays the flow without a phone, from recording to the report PDF, and the iOS simulator build succeeds, but it has not been checked on a real phone yet.',
           ],
         ],
         { anchor: 'solved' },
@@ -1216,8 +1216,8 @@ export const projects: Project[] = [
         PROBLEM_DEFINITION,
         [
           [
-            '65세 이상 인구가 전체의 19.2%에 이르고(논문이 인용한 2023년 통계) 노인 우울이 문제가 되지만, 노인을 위한 자가 점검 서비스는 부족합니다. 정신건강 검사라는 말 자체에 거부감이 있고, 글을 읽고 입력하는 것이 불편한 사용자도 많습니다.',
-            'People aged 65 and over make up 19.2% of the population (2023 figure cited in the paper) and depression among them is a concern, yet self-check services for seniors are scarce. Many resist the idea of a mental health test, and many find reading and typing difficult.',
+            '65세 이상 인구가 전체의 19.2%에 이르지만(논문이 인용한 2023년 통계) 노인을 위한 자가 점검 서비스는 부족합니다. 정신건강 검사라는 말 자체에 거부감이 있고, 글을 읽고 입력하는 것이 불편한 사용자도 많습니다.',
+            'People aged 65 and over make up 19.2% of the population (2023 figure cited in the paper), yet self-check services for seniors are scarce. Many resist the idea of a mental health test, and many find reading and typing difficult.',
           ],
         ],
         { lead: true },
@@ -1242,12 +1242,12 @@ export const projects: Project[] = [
             'The service is split into interface, data processing, LLM and voice modules, using an Express server and MySQL, with the OpenAI Assistants API handling conversation.',
           ],
           [
-            '음성 대화는 브라우저 녹음(WebM) → 서버에서 ffmpeg로 WAV 변환 → Whisper 받아쓰기 → Assistant 응답 → Google TTS 음성(MP3) 재생 순서로 이어집니다. 스레드 ID를 화면에 돌려주어 대화를 이어 갑니다.',
-            'A voice exchange runs from a browser recording (WebM) → conversion to WAV with ffmpeg on the server → Whisper transcription → the Assistant’s response → playback of Google TTS speech (MP3). The thread ID goes back to the page so the conversation continues.',
+            '음성 대화는 브라우저 녹음(WebM) → ffmpeg로 WAV 변환 → Whisper 받아쓰기 → Assistant 응답 → Google TTS 재생 순서로 이어지고, 스레드 ID로 대화를 이어 갑니다.',
+            'A voice exchange runs from a browser recording (WebM) → conversion to WAV with ffmpeg → Whisper transcription → the Assistant’s response → Google TTS playback, and a thread ID keeps the conversation going.',
           ],
           [
-            '대화가 끝나면 GDS 점수, 현재 감정 상태, 개선 방안을 담은 보고서를 만듭니다. 이전 대화 내용을 LLM에 전달해 시간에 따른 변화를 볼 수 있게 설계했습니다.',
-            'After the conversation, a report gives the GDS score, current emotional state and suggestions. Earlier conversations are passed to the LLM so changes over time can be followed.',
+            '대화가 끝나면 GDS 점수, 감정 상태, 개선 방안을 담은 보고서를 만들고, 이전 대화 내용을 LLM에 전달해 변화를 볼 수 있게 설계했습니다.',
+            'After the conversation, a report gives the GDS score, emotional state and suggestions, and earlier conversations are passed to the LLM so changes can be followed.',
           ],
         ],
         { anchor: 'architecture' },
@@ -1257,12 +1257,12 @@ export const projects: Project[] = [
         DECISIONS,
         [
           [
-            '검사 방식: 직접 설문은 결과가 명확하지만 거부감을 일으킬 수 있고, 일상 대화는 결과가 다소 부정확할 수 있지만 거부감이 적습니다. 두 방식을 시험해 보고, 서비스 목적에 맞춰 일상 대화 방식으로 구성했습니다.',
-            'How to assess: a direct questionnaire is clear but can provoke resistance, while everyday conversation can be less exact but meets less resistance. After testing both, I built the service around conversation to fit its purpose.',
+            '검사 방식: 직접 설문은 결과가 명확하지만 거부감을 일으킬 수 있고, 일상 대화는 다소 부정확할 수 있지만 거부감이 적습니다. 두 방식을 시험해 보고 일상 대화 방식으로 구성했습니다.',
+            'How to assess: a direct questionnaire is clear but can provoke resistance, while everyday conversation can be less exact but meets less resistance. After testing both, I built the service around conversation.',
           ],
           [
-            '모델 선정: GPT-4o, GPT-4o-mini, Llama 3.1 8B를 가격, 응답 속도, 대화 자연스러움, 튜닝 편의성, 사용자 만족도로 비교해 가격 대비 성능이 좋은 GPT-4o-mini를 골랐습니다.',
-            'Choosing the model: GPT-4o, GPT-4o-mini and Llama 3.1 8B were compared on price, response speed, how natural the conversation felt, ease of tuning and user satisfaction, and GPT-4o-mini won on value for money.',
+            '모델 선정: GPT-4o, GPT-4o-mini, Llama 3.1 8B를 가격, 응답 속도, 대화 자연스러움, 튜닝 편의성, 사용자 만족도로 비교해 GPT-4o-mini를 골랐습니다.',
+            'Choosing the model: GPT-4o, GPT-4o-mini and Llama 3.1 8B were compared on price, response speed, how natural the conversation felt, ease of tuning and user satisfaction, and GPT-4o-mini was chosen.',
           ],
         ],
         { anchor: 'decisions' },
@@ -1272,11 +1272,11 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            '일관된 평가와 자연스러운 대화. 문제: 평가는 일관되어야 하는데, 대화는 설문처럼 들리지 않아야 합니다. 해결: 세 방법을 나눠 썼습니다. Kaggle, AIHub, 공공데이터포털, 국립정신건강센터에서 모은 정신과 대화 데이터를 상황과 역할에 맞게 전처리해 OpenAI Fine-Tuning API로 파인튜닝하고, GDS 자료와 보고서 양식은 RAG로 참고하게 했으며, 30문항의 GDS를 일상 대화처럼 묻는 것은 프롬프트로 맞췄습니다.',
-            'Consistent assessment in natural conversation. Problem: the assessment must be consistent, but the conversation must not sound like a questionnaire. Fix: three methods with separate jobs. Psychiatric conversation data from Kaggle, AIHub, the public data portal and the National Center for Mental Health was preprocessed by situation and role and used with the OpenAI Fine-Tuning API; RAG supplies GDS material and the report template; and prompts ask the 30 GDS questions like everyday conversation.',
+            '일관된 평가와 자연스러운 대화. 문제: 평가는 일관되어야 하는데 대화는 설문처럼 들리지 않아야 합니다. 해결: Kaggle, AIHub, 공공데이터포털, 국립정신건강센터에서 모은 정신과 대화 데이터를 전처리해 파인튜닝하고, GDS 자료와 보고서 양식은 RAG로 참고하며, 30문항을 일상 대화처럼 묻는 것은 프롬프트로 맞췄습니다.',
+            'Consistent assessment in natural conversation. Problem: the assessment must be consistent, but the conversation must not sound like a questionnaire. Fix: psychiatric conversation data from Kaggle, AIHub, the public data portal and the National Center for Mental Health was preprocessed for fine-tuning, RAG supplies GDS material and the report template, and prompts ask the 30 questions like everyday conversation.',
           ],
           [
-            '글을 쓰기 어려운 사용자. 문제: 시니어는 글을 읽고 입력하는 것을 불편해할 수 있습니다. 해결: Whisper와 Google TTS로 음성으로만 대화할 수 있게 했고, 화면 정보를 줄이고 큰 글씨와 간결한 버튼을 썼습니다.',
+            '글을 쓰기 어려운 사용자. 문제: 시니어는 글을 읽고 입력하는 것을 불편해할 수 있습니다. 해결: Whisper와 Google TTS로 음성으로만 대화하게 하고, 화면 정보를 줄여 큰 글씨와 간결한 버튼을 썼습니다.',
             'Users who find typing hard. Problem: seniors may find reading and typing uncomfortable. Fix: Whisper and Google TTS allow a voice-only conversation, with less on screen, large text and simple buttons.',
           ],
           [
@@ -1345,12 +1345,8 @@ export const projects: Project[] = [
         PROBLEM_DEFINITION,
         [
           [
-            '기존 학습 관리 시스템은 콘텐츠 제공과 성적 관리에 집중해, 학습자의 패턴을 활용한 일정 조정과 피드백이 제한적입니다. AI 학습 서비스도 시험 대비나 언어 학습처럼 특정 분야에 맞춰져 범용 학습으로 넓히기 어렵습니다.',
-            'Existing learning management systems focus on delivering content and managing grades, with limited scheduling and feedback based on how each learner studies. AI learning services tend to target one field, such as exam preparation or languages, and are hard to extend to general study.',
-          ],
-          [
-            '그래서 학습자가 스스로 목표를 세우고, 노트와 퀴즈 결과에 따라 학습 계획을 고쳐 나가는 흐름을 하나의 시스템으로 구상했습니다.',
-            'So I planned one system in which learners set their own goals and keep adjusting their plan from their notes and quiz results.',
+            '기존 학습 관리 시스템은 콘텐츠 제공과 성적 관리에 집중해, 학습자의 패턴을 활용한 일정 조정과 피드백이 제한적입니다. AI 학습 서비스도 시험 대비나 언어 학습처럼 특정 분야에 맞춰져 있습니다. 그래서 학습자가 목표를 세우고 노트와 퀴즈 결과로 계획을 고쳐 나가는 흐름을 하나의 시스템으로 구상했습니다.',
+            'Existing learning management systems focus on delivering content and managing grades, with limited scheduling and feedback based on how each learner studies, and AI learning services tend to target one field, such as exam preparation or languages. So I planned one system in which learners set goals and keep adjusting their plan from notes and quiz results.',
           ],
         ],
         { lead: true },
@@ -1371,8 +1367,8 @@ export const projects: Project[] = [
         ARCHITECTURE,
         [
           [
-            '시스템을 6개 모듈로 나눠 설계했습니다. 화면 모듈은 노트 편집과 대시보드를, 백엔드·외부 API 연결 모듈은 LLM과 외부 콘텐츠 통신을, 데이터 저장 모듈은 학습 데이터 보관을 맡습니다. 학습 일정·성과 관리 모듈은 목표에 맞춰 일정을 만들고 조정하고, AI 퀴즈 생성 모듈은 학습 내용으로 문제를 만들어 채점하며, AI 분석·추천 모듈은 학습 기록과 퀴즈 결과로 다음 학습을 제안합니다.',
-            'The system is designed as six modules. The interface handles note editing and the dashboard; backend and external APIs handle LLM and content communication; storage keeps the study data; schedule and progress build and adjust plans around goals; quiz generation writes and grades questions from study material; analysis and recommendation suggest what to study next from records and quiz results.',
+            '시스템을 6개 모듈로 나눠 설계했습니다. 화면, 백엔드·외부 API 연결, 데이터 저장 모듈이 기반을 맡고, 학습 일정·성과 관리 모듈은 일정을 만들고 조정하며, AI 퀴즈 생성 모듈은 문제를 만들어 채점하고, AI 분석·추천 모듈은 학습 기록과 퀴즈 결과로 다음 학습을 제안합니다.',
+            'The system is designed as six modules. Interface, backend and external APIs, and storage form the base; schedule and progress build and adjust plans; quiz generation writes and grades questions; analysis and recommendation suggest what to study next from records and quiz results.',
           ],
           [
             '요청 처리 흐름은 요청 수신 → 의도 분석(AI Agent) → 모델 선택(라우팅) → 데이터 연동(MCP) → 응답 생성 → 로그 저장으로 설계했습니다.',
@@ -1386,23 +1382,23 @@ export const projects: Project[] = [
         DECISIONS,
         [
           [
-            '데이터 저장: 사용자 개인정보, 인증, 학습 계획처럼 형식이 정해진 데이터는 MySQL에, 채팅, 퀴즈, AI 피드백 로그처럼 구조가 바뀌기 쉬운 데이터는 MongoDB에 나눠 저장하도록 설계했습니다.',
+            '데이터 저장: 개인정보, 인증, 학습 계획처럼 형식이 정해진 데이터는 MySQL에, 채팅, 퀴즈, AI 피드백 로그처럼 구조가 바뀌기 쉬운 데이터는 MongoDB에 나눠 저장하도록 설계했습니다.',
             'Storage: data with a fixed shape, such as personal details, authentication and study plans, goes in MySQL, while data whose shape changes easily, such as chats, quizzes and AI feedback logs, goes in MongoDB.',
           ],
           [
-            'AI 구조: 요청마다 같은 프롬프트로 답하는 대신, 요청 의도를 먼저 분석해 GPT, Claude, Gemini 같은 모델이나 외부 도구 중 알맞은 쪽으로 보내는 AI Agent 라우팅을 구상했습니다. 외부 API와 내부 DB 연동은 MCP가 맡도록 나눴습니다.',
-            'AI structure: rather than answering every request with the same prompt, I planned AI Agent routing that first analyzes the intent and sends the request to a suitable model, such as GPT, Claude or Gemini, or to an external tool. MCP is set apart to handle external APIs and internal databases.',
+            'AI 구조: 요청 의도를 먼저 분석해 GPT, Claude, Gemini 같은 모델이나 외부 도구 중 알맞은 쪽으로 보내는 AI Agent 라우팅을 구상했고, 외부 API와 내부 DB 연동은 MCP가 맡도록 나눴습니다.',
+            'AI structure: I planned AI Agent routing that first analyzes the intent and sends a request to a suitable model, such as GPT, Claude or Gemini, or to an external tool, with MCP set apart for external APIs and internal databases.',
           ],
           [
-            '학습 순환: 활동 기록, 노트 내용, 이전 퀴즈 결과로 객관식·주관식·서술형 문제를 만들고, 제출 즉시 채점해 강점과 취약점을 요약한 리포트가 다음 학습 계획으로 이어지도록 설계했습니다.',
-            'The study loop: multiple-choice, short-answer and essay questions come from activity records, notes and earlier quiz results, and immediate grading feeds a report on strengths and weaknesses into the next study plan.',
+            '학습 순환: 활동 기록, 노트, 이전 퀴즈 결과로 문제를 만들고, 제출 즉시 채점해 강점과 취약점 리포트가 다음 계획으로 이어지도록 설계했습니다.',
+            'The study loop: questions come from activity records, notes and earlier quiz results, and immediate grading feeds a report on strengths and weaknesses into the next plan.',
           ],
         ],
         { anchor: 'decisions' },
       ),
       section('retro', REFLECTION, [
         [
-          '설계한 구조를 실제 사용자 데이터로 검증하지 못했습니다. 다음에는 구상한 AI Agent 구조를 실제로 적용해 시험해 보고, 두 DB를 함께 쓸 때의 일관성 부담도 함께 확인하고 싶습니다.',
+          '설계한 구조를 실제 사용자 데이터로 검증하지 못했습니다. 다음에는 구상한 AI Agent 구조를 적용해 시험해 보고, 두 DB를 함께 쓸 때의 일관성 부담도 확인하고 싶습니다.',
           'I did not validate the design with real user data. Next I would like to apply the planned AI Agent structure and try it out, and check the consistency burden of using two databases together.',
         ],
       ]),
@@ -1467,16 +1463,16 @@ export const projects: Project[] = [
         ARCHITECTURE,
         [
           [
-            'React 앱이 Express API를 호출하고, MySQL 14개 테이블에 이력서·자기소개서, 면접 세션, 질문과 답변, 음성 분석, 피드백을 저장합니다. 로그인은 JWT와 bcrypt로 처리하고, 이력서 PDF는 서버에서 읽어 들입니다.',
-            'A React app calls an Express API, with 14 MySQL tables holding résumés and cover letters, interview sessions, questions and answers, voice analysis and feedback. Login uses JWT and bcrypt, and résumé PDFs are parsed on the server.',
+            'React 앱이 Express API를 호출하고, MySQL 14개 테이블에 이력서, 면접 세션, 질문과 답변, 음성 분석, 피드백을 저장합니다.',
+            'A React app calls an Express API, with 14 MySQL tables holding résumés, interview sessions, questions and answers, voice analysis and feedback.',
           ],
           [
-            '면접은 자기소개 요청 → 초기 질문 → 꼬리 질문 → 다음 질문 → 마무리 순서로 진행합니다. 기업과 직무에 맞는 OpenAI Assistant가 질문을 만들고, 질문은 Google TTS 음성으로 읽어 주며, 답변은 Whisper로 받아 적습니다.',
+            '면접은 자기소개 요청 → 초기 질문 → 꼬리 질문 → 다음 질문 → 마무리 순서로 진행합니다. 기업과 직무에 맞는 OpenAI Assistant가 질문을 만들고, Google TTS로 읽어 주며, 답변은 Whisper로 받아 적습니다.',
             'An interview runs from a self-introduction request → the first question → follow-ups → the next question → the close. An OpenAI Assistant matched to the company and role writes the questions, Google TTS reads them aloud, and Whisper transcribes the answers.',
           ],
           [
-            '표정, 시선, 자세는 웹캠 영상을 브라우저에서 분석합니다. 음성 답변은 AssemblyAI 감정 분석과 전사문 평가를 합쳐 발음, 감정, 말 속도, 필러 단어 지표로 저장합니다. 끝나면 세션 피드백을 만들고 최종 리포트를 PDF로 내보냅니다.',
-            'Expression, eye contact and posture are analyzed from the webcam in the browser. Spoken answers combine AssemblyAI sentiment analysis with an evaluation of the transcript and are stored as pronunciation, emotion, pace and filler-word metrics. At the end come session feedback and a final report exported to PDF.',
+            '표정, 시선, 자세는 브라우저에서 분석하고, 음성 답변은 AssemblyAI 감정 분석과 전사문 평가를 합쳐 발음, 감정, 말 속도, 필러 단어 지표로 저장합니다. 끝나면 세션 피드백과 PDF 리포트를 만듭니다.',
+            'Expression, eye contact and posture are analyzed in the browser, and spoken answers combine AssemblyAI sentiment analysis with an evaluation of the transcript, stored as pronunciation, emotion, pace and filler-word metrics. At the end come session feedback and a PDF report.',
           ],
         ],
         { anchor: 'architecture' },
@@ -1486,8 +1482,8 @@ export const projects: Project[] = [
         DECISIONS,
         [
           [
-            '직무별·기업별 면접관: 하나의 프롬프트에 모든 직무를 넣지 않고, 카카오, 네이버, 쿠팡, 배민 같은 기업과 직무마다 Assistant를 나눠 맞는 면접관을 고르게 했습니다.',
-            'Interviewers by role and company: instead of one prompt for every role, companies such as Kakao, Naver, Coupang and Baemin and each role have their own Assistant, and the matching interviewer is selected.',
+            '직무별·기업별 면접관: 하나의 프롬프트에 모든 직무를 넣지 않고, 기업과 직무마다 Assistant를 나눠 맞는 면접관을 고르게 했습니다.',
+            'Interviewers by role and company: instead of one prompt for every role, each company and role has its own Assistant, and the matching interviewer is selected.',
           ],
           [
             '영상은 브라우저에서 분석: 프레임 이미지를 서버로 보내면 데이터가 너무 커서, 브라우저에서 분석하고 결과 값만 넘깁니다.',
@@ -1501,16 +1497,16 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            '끝나지 않는 면접. 문제: AI 면접관이 꼬리 질문을 끝없이 만들어 면접이 끝나지 않았습니다. 해결: 프롬프트를 고치는 것과 함께 서버 규칙으로 제한했습니다. 면접은 총 15문항이고 15번째는 고정된 마무리 질문입니다. 꼬리 질문은 답변이 짧을 때(기본 100자 미만) 한 번까지만 만들고, 남은 문항이 부족하면 만들지 않습니다.',
-            'Interviews that never ended. Problem: the AI interviewer kept generating follow-ups. Fix: prompt changes plus server rules. An interview has 15 questions, the 15th a fixed closing question. A follow-up is generated only for short answers (under 100 characters by default), at most once, and not when too few questions remain.',
+            '끝나지 않는 면접. 문제: AI 면접관이 꼬리 질문을 끝없이 만들어 면접이 끝나지 않았습니다. 해결: 프롬프트 수정과 함께 서버 규칙으로 제한했습니다. 총 15문항에 15번째는 고정된 마무리 질문이고, 꼬리 질문은 답변이 짧을 때 한 번까지만 만듭니다.',
+            'Interviews that never ended. Problem: the AI interviewer kept generating follow-ups. Fix: prompt changes plus server rules. There are 15 questions, the 15th a fixed closing question, and a follow-up comes only after a short answer, at most once.',
           ],
           [
-            '직무에 맞는 질문. 문제: 직무마다 필요한 질문이 다른데, RAG로 구성한 모델이 자료를 제대로 가져오지 못하는 경우가 있었습니다. 해결: 직무별·기업별 질문 데이터(JSONL 23개)와 검색용 자료를 따로 준비해 파인튜닝과 프롬프트를 다르게 구성하고, 프롬프트 수정을 반복했습니다.',
-            'Questions that fit the role. Problem: each role needs different questions, and models built with RAG sometimes failed to retrieve the right material. Fix: question data by role and company (23 JSONL files) and search material were prepared separately, with different fine-tuning and prompts, refined through repeated prompt changes.',
+            '직무에 맞는 질문. 문제: RAG로 구성한 모델이 자료를 제대로 가져오지 못하는 경우가 있었습니다. 해결: 직무별·기업별 질문 데이터(JSONL 23개)와 검색용 자료를 따로 준비해 파인튜닝과 프롬프트를 다르게 구성하고, 프롬프트 수정을 반복했습니다.',
+            'Questions that fit the role. Problem: models built with RAG sometimes failed to retrieve the right material. Fix: question data by role and company (23 JSONL files) and search material were prepared separately, with different fine-tuning and prompts, refined through repeated prompt changes.',
           ],
           [
-            '음성 처리. 문제: 브라우저 녹음은 WebM이고, 네트워크 오류로 받아쓰기가 실패하면 면접 흐름이 끊깁니다. 해결: 서버에서 ffmpeg로 WAV로 변환해 Whisper에 넘기고, OpenAI 연결 오류가 나면 다시 말해 달라는 안내를 돌려줍니다. Assistant 응답은 최대 60초까지 기다립니다.',
-            'Audio handling. Problem: browser recordings are WebM, and a network failure during transcription would break the interview. Fix: the server converts to WAV with ffmpeg before Whisper, and an OpenAI connection error returns a prompt to try again. Assistant responses are awaited for up to 60 seconds.',
+            '음성 처리. 문제: 브라우저 녹음은 WebM이고, 네트워크 오류가 나면 면접 흐름이 끊깁니다. 해결: 서버에서 ffmpeg로 WAV로 바꿔 Whisper에 넘기고, OpenAI 연결 오류가 나면 다시 말해 달라고 안내합니다.',
+            'Audio handling. Problem: browser recordings are WebM, and a network error would break the interview. Fix: the server converts to WAV with ffmpeg before Whisper, and an OpenAI connection error prompts the user to try again.',
           ],
         ],
         { anchor: 'solved' },
