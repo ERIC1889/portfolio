@@ -1,4 +1,4 @@
-import type { Archive, Award, Chapter, L, Project, Showcase, Year } from './types'
+import type { Archive, Award, Chapter, L, Media, Project, Showcase, Year } from './types'
 
 export function projectName(project: Pick<Project, 'name' | 'nameEn'>): L {
   return { ko: project.name, en: project.nameEn ?? project.name }
@@ -11,29 +11,42 @@ export function projectTitle(project: Pick<Project, 'name' | 'nameEn' | 'title'>
 
 export const YEARS: Year[] = [2023, 2024, 2025, 2026]
 
-/** Featured projects in page order: the flagship, the two supporting projects, then other work. */
-export const FEATURED_ORDER = ['finz', 'skillpilot', 'closetmate', 'pitches'] as const
+/** Projects with their own page, in page order: main, then supporting, then other. */
+export const CASE_ORDER = ['finz', 'skillpilot', 'pitches', 'closetmate', 'edumatrix', 'innoview', 'label-light', 'media-pulse'] as const
 
-export function selectFeatured(projects: Project[]): Project[] {
-  return FEATURED_ORDER.map((slug) => projects.find((p) => p.slug === slug && p.tier === 'featured')).filter(
-    (p): p is Project => p !== undefined,
-  )
+/** The projects the résumé lists. */
+export const RESUME_ORDER = ['finz', 'skillpilot', 'pitches', 'closetmate'] as const
+
+const hasPage = (project: Project) => project.showcase !== undefined
+
+function inOrder(projects: Project[], order: readonly string[]): Project[] {
+  return order.map((slug) => projects.find((p) => p.slug === slug && hasPage(p))).filter((p): p is Project => p !== undefined)
 }
+
+export const selectCases = (projects: Project[]) => inOrder(projects, CASE_ORDER)
+export const selectResumeProjects = (projects: Project[]) => inOrder(projects, RESUME_ORDER)
 
 export function selectShowcase(projects: Project[], showcase: Showcase): Project[] {
-  return selectFeatured(projects).filter((p) => p.showcase === showcase)
+  return selectCases(projects).filter((p) => p.showcase === showcase)
 }
 
-/** Only featured projects have their own page. */
 export function selectProject(projects: Project[], slug: string): Project | undefined {
-  return projects.find((p) => p.slug === slug && p.tier === 'featured')
+  return selectCases(projects).find((p) => p.slug === slug)
+}
+
+/** The pictures for a project page: its media, or its thumbnail when that is all it has. */
+export function casePictures(project: Project): Media[] {
+  if (project.media?.length) return project.media
+  if (!project.image || !project.imageCaption || !project.imageSize) return []
+  const [width, height] = project.imageSize
+  return [{ kind: 'screenshot', src: project.image, width, height, alt: project.imageCaption, caption: project.imageCaption }]
 }
 
 export function selectByYear(projects: Project[], year: Year) {
   const inYear = projects.filter((p) => p.years.includes(year))
   return {
-    featured: selectFeatured(inYear),
-    cards: inYear.filter((p) => p.tier === 'card'),
+    featured: selectCases(inYear),
+    cards: inYear.filter((p) => p.tier === 'card' && !hasPage(p)),
     lines: inYear.filter((p) => p.tier === 'line'),
   }
 }

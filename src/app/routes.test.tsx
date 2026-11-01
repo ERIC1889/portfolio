@@ -34,8 +34,12 @@ describe('site metadata', () => {
       'https://junyoung-portfolio.vercel.app',
       'https://junyoung-portfolio.vercel.app/projects/finz',
       'https://junyoung-portfolio.vercel.app/projects/skillpilot',
-      'https://junyoung-portfolio.vercel.app/projects/closetmate',
       'https://junyoung-portfolio.vercel.app/projects/pitches',
+      'https://junyoung-portfolio.vercel.app/projects/closetmate',
+      'https://junyoung-portfolio.vercel.app/projects/edumatrix',
+      'https://junyoung-portfolio.vercel.app/projects/innoview',
+      'https://junyoung-portfolio.vercel.app/projects/label-light',
+      'https://junyoung-portfolio.vercel.app/projects/media-pulse',
       'https://junyoung-portfolio.vercel.app/story',
       'https://junyoung-portfolio.vercel.app/archive',
       'https://junyoung-portfolio.vercel.app/resume',
@@ -45,14 +49,14 @@ describe('site metadata', () => {
 })
 
 describe('/projects/[slug]', () => {
-  it('pre-renders exactly the four featured cases, flagship first', () => {
-    expect(ProjectRoute.generateStaticParams()).toEqual([{ slug: 'finz' }, { slug: 'skillpilot' }, { slug: 'closetmate' }, { slug: 'pitches' }])
+  it('pre-renders exactly the eight cases, flagship first', () => {
+    expect(ProjectRoute.generateStaticParams()).toEqual(['finz', 'skillpilot', 'pitches', 'closetmate', 'edumatrix', 'innoview', 'label-light', 'media-pulse'].map((slug) => ({ slug })))
     expect(ProjectRoute.dynamicParams).toBe(false)
   })
 
   it('sends an unknown slug and a card-only project to the 404 page', async () => {
     await expect(ProjectRoute.default(slugParams('foo'))).rejects.toMatchObject(NOT_FOUND)
-    await expect(ProjectRoute.default(slugParams('media-pulse'))).rejects.toMatchObject(NOT_FOUND)
+    await expect(ProjectRoute.default(slugParams('wildfire'))).rejects.toMatchObject(NOT_FOUND)
   })
 
   it('titles and describes the page by the product, with its own canonical address', async () => {
@@ -74,8 +78,8 @@ describe('/projects/[slug]', () => {
   })
 
   it('links the last case to the previous one and the list, with no next link', async () => {
-    renderWithProviders(await ProjectRoute.default(slugParams('pitches')))
-    expect(pageNavHrefs()).toEqual(['/projects/closetmate', '/#projects'])
+    renderWithProviders(await ProjectRoute.default(slugParams('media-pulse')))
+    expect(pageNavHrefs()).toEqual(['/projects/label-light', '/#projects'])
   })
 
   it('renders every featured case with each table-of-contents entry pointing at a real section', async () => {

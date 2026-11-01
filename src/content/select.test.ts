@@ -6,24 +6,26 @@ import {
   projectTitle,
   selectByYear,
   selectChapter,
-  selectFeatured,
+  selectCases,
+  selectResumeProjects,
   selectPaperCounts,
   selectProject,
   selectShowcase,
   selectTopAwards,
 } from './select'
 
-describe('selectFeatured', () => {
-  it('returns only featured projects in page order: flagship, the two supporting projects, other work', () => {
-    expect(selectFeatured(FIXTURE_PROJECTS).map((p) => p.slug)).toEqual(['finz', 'skillpilot', 'closetmate', 'pitches'])
+describe('selectCases', () => {
+  it('returns the projects with a page in page order', () => {
+    expect(selectCases(FIXTURE_PROJECTS).map((p) => p.slug)).toEqual(['finz', 'skillpilot', 'pitches', 'closetmate'])
+    expect(selectResumeProjects(FIXTURE_PROJECTS).map((p) => p.slug)).toEqual(['finz', 'skillpilot', 'pitches', 'closetmate'])
   })
 })
 
 describe('selectShowcase', () => {
   it('picks the projects of one home section, keeping page order', () => {
     expect(selectShowcase(FIXTURE_PROJECTS, 'flagship').map((p) => p.slug)).toEqual(['finz'])
-    expect(selectShowcase(FIXTURE_PROJECTS, 'supporting').map((p) => p.slug)).toEqual(['skillpilot', 'closetmate'])
-    expect(selectShowcase(FIXTURE_PROJECTS, 'other').map((p) => p.slug)).toEqual(['pitches'])
+    expect(selectShowcase(FIXTURE_PROJECTS, 'main').map((p) => p.slug)).toEqual(['skillpilot', 'pitches'])
+    expect(selectShowcase(FIXTURE_PROJECTS, 'supporting').map((p) => p.slug)).toEqual(['closetmate'])
   })
 })
 
@@ -43,7 +45,7 @@ describe('selectByYear', () => {
     const y2024 = selectByYear(FIXTURE_PROJECTS, 2024)
     expect(y2024.featured.map((p) => p.slug)).toEqual(['pitches'])
     expect(y2024.lines.map((p) => p.slug)).toEqual(['patentry'])
-    expect(selectByYear(FIXTURE_PROJECTS, 2026).featured.map((p) => p.slug)).toEqual(['finz', 'closetmate', 'pitches'])
+    expect(selectByYear(FIXTURE_PROJECTS, 2026).featured.map((p) => p.slug)).toEqual(['finz', 'pitches', 'closetmate'])
     expect(selectByYear(FIXTURE_PROJECTS, 2023).cards.map((p) => p.slug)).toEqual(['media-pulse'])
   })
 })

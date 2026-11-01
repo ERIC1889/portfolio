@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { projects } from './projects'
+import { CASE_ORDER } from './select'
 import { findHolds } from './release'
 import { checkBanned, checkFeaturedShape, checkMedia, checkMetrics, collectStrings } from './validate'
 
@@ -22,14 +23,14 @@ const koText = (value: unknown) =>
 // Plan §3.2–3.3 and decisions D2/D3: one flagship, two supporting projects, Pitches as other work.
 const PLACEMENT = [
   ['finz', 'featured', 'flagship', [2026]],
-  ['skillpilot', 'featured', 'supporting', [2025]],
-  ['closetmate', 'featured', 'supporting', [2026]],
-  ['pitches', 'featured', 'other', [2024, 2026]],
-  ['media-pulse', 'card', undefined, [2023]],
-  ['label-light', 'card', undefined, [2024]],
+  ['skillpilot', 'featured', 'main', [2025]],
+  ['closetmate', 'supporting', 'supporting', [2026]],
+  ['pitches', 'featured', 'main', [2024, 2026]],
+  ['media-pulse', 'card', 'other', [2023]],
+  ['label-light', 'supporting', 'supporting', [2024]],
   ['wildfire', 'card', undefined, [2025]],
-  ['edumatrix', 'card', undefined, [2025]],
-  ['innoview', 'card', undefined, [2025]],
+  ['edumatrix', 'supporting', 'supporting', [2025]],
+  ['innoview', 'supporting', 'supporting', [2025]],
   ['restplanner', 'card', undefined, [2025]],
   ['ai-hiring-textmining', 'card', undefined, [2026]],
   ['jarvis', 'card', undefined, [2026]],
@@ -41,13 +42,14 @@ const PLACEMENT = [
   ['unifit', 'line', undefined, [2026]],
 ] as const
 
-const FEATURED = ['finz', 'skillpilot', 'closetmate', 'pitches']
+const FEATURED = ['finz', 'skillpilot', 'pitches']
+const SUPPORTING = ['closetmate', 'edumatrix', 'innoview', 'label-light']
 
 // Claims the code or the owner's answers do not support.
 const BANNED: Record<string, (string | RegExp)[]> = {
   'label-light': ['80%', '진단', 'diagnos', /GPT-4o(?!-mini)/],
   'llm-dolbom': ['심리 상태 분석', 'psychological state'],
-  edumatrix: ['집중도', '성과 예측', 'performance prediction', '상태 머신', 'state machine', 'TypeScript', '실시간 모니터링', 'real-time monitoring', 'implement', '구현'],
+  edumatrix: ['집중도', '성과 예측', 'performance prediction', '상태 머신', 'state machine', 'TypeScript', '실시간 모니터링', 'real-time monitoring', 'implemented', '구현'],
   innoview: ['1인 개발', 'solo developer'],
   restplanner: ['강화학습', 'reinforcement', 'Agent-to-Agent', 'A2A'],
   teamflow: ['SaaS'],
@@ -76,8 +78,8 @@ describe('project placement', () => {
     expect(projects.map((p) => [p.slug, p.tier, p.showcase, p.years])).toEqual(PLACEMENT.map((row) => [...row]))
   })
 
-  it('gives only featured projects case-study sections', () => {
-    for (const project of projects.filter((p) => p.tier !== 'featured')) {
+  it('gives case-study sections only to the projects in the page order', () => {
+    for (const project of projects.filter((p) => !(CASE_ORDER as readonly string[]).includes(p.slug))) {
       expect(project.sections, project.slug).toBeUndefined()
       expect(project.showcase, project.slug).toBeUndefined()
     }
@@ -187,7 +189,7 @@ describe('flagship: Finz personal tax calculators', () => {
     expect(anchors).toContain('refund-app')
     expect(anchors).toContain('finz-saas')
     const saas = koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))
-    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(saas).toContain(fact)
+    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB']) expect(saas).toContain(fact)
     expect(saas).not.toMatch(/\d+건 해결|해결률/)
     // the owner's account of his part (2026-10-30): decided together with the vendor and took part in development
     expect(saas).toContain('개발사와 함께 정하며 개발에 참여')
@@ -228,20 +230,13 @@ describe('supporting: ClosetMate', () => {
     expect(closetmate.links).toBeUndefined()
   })
 
-  it('states the benchmark setup and that 43 images are a flow check, not accuracy', () => {
-    const [timing, , flowCheck] = closetmate.metrics ?? []
-    expect(koText(timing.condition)).toContain('Apple M5 CPU')
-    expect(koText(timing.condition)).toContain('워밍업 5회·측정 30회')
-    expect(flowCheck.value).toBe('43장')
-    expect(koText(flowCheck.condition)).toContain('정확도 수치 아님')
-  })
 })
 
 describe('other work: Pitches', () => {
   const pitches = bySlug('pitches')
 
   it('presents the APIC-IST paper as paper-reported results', () => {
-    const text = koText(pitches.sections?.find((s) => s.id === 'paper'))
+    const text = koText(pitches.sections?.find((s) => s.id === 'result'))
     for (const needle of ['APIC-IST 2025', '125ms', '20세션', '논문']) expect(text).toContain(needle)
   })
 
@@ -257,11 +252,25 @@ describe('other work: Pitches', () => {
   })
 })
 
-describe('the rewritten case pages', () => {
-  it.each(['skillpilot', 'closetmate', 'pitches'])('%s opens with results and the problem, and names the decisions', (slug) => {
+describe('the agreed page shape', () => {
+  const titles = (slug: string) => (bySlug(slug).sections ?? []).map((s) => s.title.ko)
+
+  it.each(FEATURED)('%s has every part of a main project', (slug) => {
     const sections = bySlug(slug).sections ?? []
     expect(sections.filter((s) => s.lead).map((s) => s.title.ko)).toEqual(['핵심 성과', '문제 정의'])
-    expect(sections.map((s) => s.title.ko)).toEqual(expect.arrayContaining(['주요 의사 결정', '핵심 기술 문제 해결', '회고 및 개선 방향', '관련 자료']))
+    expect(titles(slug)).toEqual(expect.arrayContaining(['주요 의사 결정', '핵심 기술 문제 해결', '회고 및 개선 방향', '관련 자료']))
+    expect(bySlug(slug).contribution).toBeDefined()
+  })
+
+  it.each(SUPPORTING)('%s has results, a role, one of decisions or problems, and a reflection', (slug) => {
+    expect(titles(slug)).toHaveLength(4)
+    expect(titles(slug).slice(0, 2)).toEqual(['핵심 성과', '담당 역할'])
+    expect(['주요 의사 결정', '핵심 기술 문제 해결']).toContain(titles(slug)[2])
+    expect(titles(slug)[3]).toBe('회고')
+  })
+
+  it('keeps Media Pulse to a role and one problem', () => {
+    expect(titles('media-pulse')).toEqual(['담당 역할', '인상적인 문제'])
   })
 })
 

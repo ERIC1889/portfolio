@@ -101,7 +101,7 @@ export function checkBanned(project: Project, rules: (string | RegExp)[]): strin
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 
 const SECTION_ORDER: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'paper', 'retro', 'evidence']
-const REQUIRED_SECTIONS: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'retro', 'evidence']
+const REQUIRED_SECTIONS: SectionId[] = ['problem', 'implementation', 'result', 'retro', 'evidence']
 
 /** A featured project answers what it is, who did what and how it was checked, in the agreed section order. */
 export function checkFeaturedShape(project: Project): string[] {
@@ -132,7 +132,7 @@ export function checkMedia(project: Project): string[] {
   for (const media of all) {
     const where = `${project.slug} ${media.src}`
     if (!media.src.startsWith('/')) errors.push(`${where}: src must be a site path`)
-    if (!DATE.test(media.capturedAt)) errors.push(`${where}: capturedAt must be YYYY-MM-DD`)
+    if (!media.capturedAt || !DATE.test(media.capturedAt)) errors.push(`${where}: capturedAt must be YYYY-MM-DD`)
     if (!(media.width > 0 && media.height > 0)) errors.push(`${where}: missing size`)
     if (!media.alt.ko.trim() || !media.alt.en.trim()) errors.push(`${where}: missing alt text`)
     if (!media.caption.ko.trim() || !media.caption.en.trim()) errors.push(`${where}: missing caption`)

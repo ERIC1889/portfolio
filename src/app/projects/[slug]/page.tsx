@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { CaseStudy } from '@/components/case/CaseStudy'
-import { getFeatured, getProject } from '@/content'
+import { getCases, getProject } from '@/content'
 import { projectTitle } from '@/content/select'
 import { getCasePage, pageMetadata } from '../../_lib/pages'
 
@@ -10,7 +10,7 @@ type Props = { params: Promise<{ slug: string }> }
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return getFeatured().map((project) => ({ slug: project.slug }))
+  return getCases().map((project) => ({ slug: project.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

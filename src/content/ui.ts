@@ -3,6 +3,7 @@ import type { Contribution, FlowStep, L, Metric, PaperKind, Showcase } from './t
 /** Home section ids, used as anchors by the top menu. */
 export const HOME_IDS = {
   flagship: 'projects',
+  main: 'main-projects',
   skills: 'skills',
   supporting: 'more-projects',
   other: 'other-work',
@@ -18,9 +19,10 @@ export const NAV_LABELS = {
 } satisfies Record<string, L>
 
 export const SECTION_TITLES = {
-  flagship: { ko: '대표 프로젝트', en: 'Main project' },
+  flagship: { ko: '대표 프로젝트', en: 'Main projects' },
+  main: { ko: '대표 프로젝트', en: 'Main projects' },
   skills: { ko: '기술', en: 'Skills' },
-  supporting: { ko: '다른 프로젝트', en: 'More projects' },
+  supporting: { ko: '보조 프로젝트', en: 'Supporting projects' },
   other: { ko: '그 밖의 작업', en: 'Other work' },
   experience: { ko: '경험', en: 'Experience' },
   contact: { ko: '연락', en: 'Contact' },
@@ -32,14 +34,15 @@ export const SECTION_LEADS = {
     en: 'Only tools I have used in a project.',
   },
   other: {
-    ko: '수상과 논문으로 이어진 작업입니다. 나머지 프로젝트는 전체 기록에 있습니다.',
-    en: 'Work that led to awards and papers. Every other project is in the full record.',
+    ko: '첫 웹 프로젝트입니다. 나머지 프로젝트는 전체 기록에 있습니다.',
+    en: 'My first web project. Every other project is in the full record.',
   },
 } satisfies Record<string, L>
 
 export const SHOWCASE_LABELS: Record<Showcase, L> = {
   flagship: { ko: '대표 프로젝트', en: 'Main project' },
-  supporting: { ko: '다른 프로젝트', en: 'More projects' },
+  main: { ko: '대표 프로젝트', en: 'Main project' },
+  supporting: { ko: '보조 프로젝트', en: 'Supporting project' },
   other: { ko: '그 밖의 작업', en: 'Other work' },
 }
 

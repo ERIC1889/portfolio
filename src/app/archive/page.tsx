@@ -1,5 +1,5 @@
 import { ArchiveView } from '@/components/pages/ArchiveView'
-import { archive, getCaseNames, getFeatured, getRecordStats, projects } from '@/content'
+import { archive, getCaseNames, getCases, getRecordStats, projects } from '@/content'
 import { pageMetadata } from '../_lib/pages'
 
 export const metadata = pageMetadata({
@@ -10,7 +10,7 @@ export const metadata = pageMetadata({
 
 export default function ArchivePage() {
   // Featured projects first in page order, then the rest as written.
-  const featured = getFeatured()
+  const featured = getCases()
   const rest = projects.filter((project) => !featured.includes(project))
   return <ArchiveView archive={archive} projects={[...featured, ...rest]} stats={getRecordStats()} caseNames={getCaseNames()} />
 }

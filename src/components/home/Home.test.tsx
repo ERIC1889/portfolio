@@ -27,7 +27,7 @@ describe('home page (real content)', () => {
     expect(screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)).toEqual([
       '대표 프로젝트',
       '기술',
-      '다른 프로젝트',
+      '보조 프로젝트',
       '그 밖의 작업',
       '경험',
       '연락',
@@ -55,22 +55,25 @@ describe('home page (real content)', () => {
     expect(within(table).queryAllByRole('link')).toHaveLength(0)
   })
 
-  it('shows SkillPilot and ClosetMate with their stack and a way into each case', () => {
+  it('follows the flagship with SkillPilot and Pitches, the mockup labelled', () => {
     renderWithProviders(<Home />)
-    const more = sectionOf('다른 프로젝트')
-    expect(within(more).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual([
-      'SkillPilot 자격증·커리어 플랫폼',
-      'ClosetMate 옷장·코디 추천 앱',
-    ])
-    expect(more).toHaveTextContent('Express 5')
-    expect(within(more).getByRole('link', { name: /API 클라이언트/ })).toHaveAttribute('href', expect.stringContaining('client.js'))
+    const main = screen.getAllByRole('region', { name: '대표 프로젝트' })[1]
+    expect(within(main).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['SkillPilot 자격증·커리어 플랫폼', 'Pitches 발표 코칭'])
+    expect(main).toHaveTextContent('Express 5')
+    expect(within(main).getByRole('link', { name: /API 클라이언트/ })).toHaveAttribute('href', expect.stringContaining('client.js'))
+    expect(within(main).getByText('목업')).toBeInTheDocument()
   })
 
-  it('keeps Pitches under other work, with its picture labelled as a mockup', () => {
+  it('lists the supporting projects, then Media Pulse with a way to the full record', () => {
     renderWithProviders(<Home />)
+    expect(within(sectionOf('보조 프로젝트')).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual([
+      'ClosetMate 옷장·코디 추천 앱',
+      'EduMatrix',
+      'InnoView',
+      'Label Light',
+    ])
     const other = sectionOf('그 밖의 작업')
-    expect(other).toHaveTextContent('Pitches 발표 코칭')
-    expect(within(other).getByText('목업')).toBeInTheDocument()
+    expect(other).toHaveTextContent('Media Pulse')
     expect(within(other).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
   })
 
@@ -118,9 +121,9 @@ describe('home page (real content)', () => {
     renderWithProviders(<Home />, 'en-US')
     expect(await screen.findByRole('heading', { level: 1, name: 'Heo Jun Young' })).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)).toEqual([
-      'Main project',
+      'Main projects',
       'Skills',
-      'More projects',
+      'Supporting projects',
       'Other work',
       'Experience',
       'Contact',

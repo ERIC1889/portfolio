@@ -6,7 +6,7 @@ import { useLang } from '@/components/providers/LanguageProvider'
 import { Gallery } from '@/components/common/Media'
 import { SmartLink, StackList, StatusBadge } from '@/components/common/bits'
 import { PageNav } from '@/components/shell/PageNav'
-import { projectTitle } from '@/content/select'
+import { casePictures, projectTitle } from '@/content/select'
 import type { L, Project } from '@/content/types'
 import { SHOWCASE_LABELS, UI } from '@/content/ui'
 import { CaseSection } from './CaseSection'
@@ -39,14 +39,17 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
   const { t } = useLang()
   const sections = project.sections ?? []
   const anchors = sectionAnchors(project)
+  const pictures = casePictures(project)
+  const featuresHeading = project.featuresHeading ?? UI.featuresHeading
   const validationIndex = sections.findIndex((section) => section.id === 'validation')
+  const metricsIndex = validationIndex !== -1 ? validationIndex : sections.findIndex((section) => section.id === 'result')
   const evidenceIndex = sections.findIndex((section) => section.id === 'evidence')
   const links = project.links ?? []
   const headerLinks = links.slice(0, 2)
 
   const toc: { href: string; label: L }[] = [
-    ...(project.media?.length ? [{ href: '#screens', label: UI.mediaHeading }] : []),
-    ...(project.features?.length ? [{ href: '#features', label: UI.featuresHeading }] : []),
+    ...(pictures.length ? [{ href: '#screens', label: UI.mediaHeading }] : []),
+    ...(project.features?.length ? [{ href: '#features', label: featuresHeading }] : []),
     ...sections.flatMap((section, i) => (section.lead ? [{ href: `#${anchors[i]}`, label: section.title }] : [])),
     ...(project.contribution ? [{ href: '#contribution', label: UI.contributionHeading }] : []),
     ...(project.flow ? [{ href: '#flow', label: project.flow.title }] : []),
@@ -60,7 +63,7 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
           key={anchors[i]}
           section={section}
           anchor={anchors[i]}
-          metrics={i === validationIndex ? project.metrics : undefined}
+          metrics={i === metricsIndex ? project.metrics : undefined}
           links={i === evidenceIndex ? links : undefined}
         />
       ) : null,
@@ -131,15 +134,15 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
           </nav>
 
           <div className="case-main">
-            {project.media && project.media.length > 0 && (
+            {pictures.length > 0 && (
               <section id="screens" className="case-block" aria-labelledby="screens-title">
                 <h2 id="screens-title">{t(UI.mediaHeading)}</h2>
-                <Gallery media={project.media} />
+                <Gallery media={pictures} />
               </section>
             )}
             {project.features && project.features.length > 0 && (
               <section id="features" className="case-block" aria-labelledby="features-title">
-                <h2 id="features-title">{t(UI.featuresHeading)}</h2>
+                <h2 id="features-title">{t(featuresHeading)}</h2>
                 <ol className="feature-list">
                   {project.features.map((feature) => (
                     <li key={feature.ko}>{t(feature)}</li>

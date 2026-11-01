@@ -57,7 +57,7 @@ function ProjectCard({ project }: { project: Project }) {
         <p className="mono archive-card-period">{project.period}</p>
         <p className="archive-card-summary">{t(project.summary)}</p>
         <p className="mono record-stack">{project.stack.join(' · ')}</p>
-        {featured ? (
+        {project.showcase ? (
           <p className="archive-card-link">
             <Link href={`/projects/${project.slug}`}>
               {t(UI.details)} <span aria-hidden="true">→</span>

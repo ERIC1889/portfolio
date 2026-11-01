@@ -5,10 +5,10 @@ export type L = { ko: string; en: string }
 export type Year = 2023 | 2024 | 2025 | 2026
 
 /** featured: has its own page · card: a short entry on the story and archive pages · line: one line in the archive */
-export type Tier = 'featured' | 'card' | 'line'
+export type Tier = 'featured' | 'supporting' | 'card' | 'line'
 
 /** Where a featured project sits on the home page. */
-export type Showcase = 'flagship' | 'supporting' | 'other'
+export type Showcase = 'flagship' | 'main' | 'supporting' | 'other'
 
 export type LinkKind = 'live' | 'code' | 'paper' | 'slides' | 'video' | 'test' | 'site'
 
@@ -30,7 +30,7 @@ export interface Media {
   /** Feature · what it is (real screen / mockup) · version or source. */
   caption: L
   /** YYYY-MM-DD the screen was captured; kept as a record, not shown. */
-  capturedAt: string
+  capturedAt?: string
   /** phone: a bare mobile screenshot, framed with a bezel · device: a capture that already shows the device frame. */
   shape?: 'wide' | 'phone' | 'device'
 }
@@ -108,6 +108,8 @@ export interface Project {
   /** What the product is, in one sentence. */
   product?: L
   audience?: L
+  /** Replaces the "key features" heading on the project page. */
+  featuresHeading?: L
   /** What the service does, in a few short lines. */
   features?: L[]
   /** What I did, for the résumé; falls back to the features. */
@@ -119,6 +121,8 @@ export interface Project {
   links?: LinkItem[]
   /** Thumbnail for the story and archive pages. */
   image?: string
+  /** Width and height of `image`, for showing it on the project page. */
+  imageSize?: [number, number]
   imageCaption?: L
   sections?: CaseSection[]
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { YEARS, getByYear, getChapter, getFeatured, getProject } from '@/content'
+import { YEARS, getByYear, getChapter, getCases, getProject } from '@/content'
 import { projectName } from '@/content/select'
 
 export const SITE_NAME = '허준영 포트폴리오'
@@ -16,11 +16,11 @@ export function pageMetadata({ title, description, path }: { title: string; desc
   }
 }
 
-/** A featured case with its previous and next case in FEATURED_ORDER, or nothing for an unknown slug. */
+/** A case with its previous and next case in CASE_ORDER, or nothing for an unknown slug. */
 export function getCasePage(slug: string) {
   const project = getProject(slug)
   if (!project) return undefined
-  const order = getFeatured()
+  const order = getCases()
   const index = order.findIndex((p) => p.slug === slug)
   const pick = (p: (typeof order)[number] | undefined) => p && { slug: p.slug, name: projectName(p) }
   return { project, prev: pick(order[index - 1]), next: pick(order[index + 1]) }

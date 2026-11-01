@@ -7,20 +7,20 @@ import { UI } from '@/content/ui'
 import { ProjectRow } from './ProjectRow'
 import { SectionHead } from './SectionHead'
 
-/** The supporting projects, or the other featured work with a way to the full record. */
-export function Showcase({ id, title, lead, projects, compact = false }: { id: string; title: L; lead?: L; projects: Project[]; compact?: boolean }) {
+/** A group of projects on the home page; `more` points on to the full record. */
+export function Showcase({ id, title, lead, projects, compact = false, more = false, hideHeading = false }: { id: string; title: L; lead?: L; projects: Project[]; compact?: boolean; more?: boolean; hideHeading?: boolean }) {
   const { t } = useLang()
   if (projects.length === 0) return null
   return (
-    <section className="section" aria-labelledby={id}>
+    <section className="section" {...(hideHeading ? { 'aria-label': t(title) } : { 'aria-labelledby': id })}>
       <div className="wrap">
-        <SectionHead id={id} title={title} lead={lead} />
+        {!hideHeading && <SectionHead id={id} title={title} lead={lead} />}
         <div className="project-rows">
           {projects.map((project) => (
             <ProjectRow key={project.slug} project={project} compact={compact} />
           ))}
         </div>
-        {compact && (
+        {more && (
           <p className="more-link">
             <Link href="/archive">
               {t(UI.allProjects)} <span aria-hidden="true">→</span>
