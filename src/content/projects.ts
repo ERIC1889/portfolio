@@ -1064,7 +1064,7 @@ export const projects: Project[] = [
     name: 'InnoView',
     years: [2025],
     tier: 'card',
-    period: '2025.05–2025.08',
+    period: '2025.05–2025.12',
     team: k('초안은 팀 · 오픈소스 개발자 대회', 'Team draft · Open Source Developer Competition'),
     role: k('이후 리뉴얼과 직무별 면접 추가는 직접 진행', 'Later renewal and role-based interviews by me'),
     stack: ['React', 'Express', 'MySQL', 'Whisper', 'OpenAI Assistants', 'TensorFlow.js'],
