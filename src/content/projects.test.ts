@@ -24,7 +24,7 @@ const koText = (value: unknown) =>
 const PLACEMENT = [
   ['finz', 'featured', 'flagship', [2026]],
   ['skillpilot', 'featured', 'main', [2025]],
-  ['closetmate', 'supporting', 'supporting', [2026]],
+  ['closetmate', 'featured', 'main', [2026]],
   ['pitches', 'featured', 'main', [2024, 2026]],
   ['media-pulse', 'card', 'other', [2023]],
   ['label-light', 'supporting', 'supporting', [2024]],
@@ -42,12 +42,12 @@ const PLACEMENT = [
   ['unifit', 'line', undefined, [2026]],
 ] as const
 
-const FEATURED = ['finz', 'skillpilot', 'pitches']
-const SUPPORTING = ['closetmate', 'edumatrix', 'innoview', 'label-light']
+const FEATURED = ['finz', 'skillpilot', 'pitches', 'closetmate']
+const SUPPORTING = ['edumatrix', 'innoview', 'label-light']
 
 // Claims the code or the owner's answers do not support.
 const BANNED: Record<string, (string | RegExp)[]> = {
-  'label-light': ['80%', '진단', 'diagnos', /GPT-4o(?!-mini)/],
+  'label-light': ['80%', '진단', 'diagnos'],
   'llm-dolbom': ['심리 상태 분석', 'psychological state'],
   edumatrix: ['집중도', '성과 예측', 'performance prediction', '상태 머신', 'state machine', 'TypeScript', '실시간 모니터링', 'real-time monitoring', 'implemented', '구현'],
   innoview: ['1인 개발', 'solo developer'],
@@ -189,7 +189,7 @@ describe('flagship: Finz personal tax calculators', () => {
     expect(anchors).toContain('refund-app')
     expect(anchors).toContain('finz-saas')
     const saas = koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))
-    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB']) expect(saas).toContain(fact)
+    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(saas).toContain(fact)
     expect(saas).not.toMatch(/\d+건 해결|해결률/)
     // the owner's account of his part (2026-10-30): decided together with the vendor and took part in development
     expect(saas).toContain('개발사와 함께 정하며 개발에 참여')
@@ -224,6 +224,14 @@ describe('supporting: SkillPilot', () => {
 
 describe('supporting: ClosetMate', () => {
   const closetmate = bySlug('closetmate')
+
+  it('states the benchmark setup and that 43 images are a flow check, not accuracy', () => {
+    const [timing, , flowCheck] = closetmate.metrics ?? []
+    expect(koText(timing.condition)).toContain('Apple M5 CPU')
+    expect(koText(timing.condition)).toContain('워밍업 5회·측정 30회')
+    expect(flowCheck.value).toBe('43장')
+    expect(koText(flowCheck.condition)).toContain('정확도 수치 아님')
+  })
 
   it('dates the project and links no repository', () => {
     expect(closetmate.period).toBe('2026.03–2026.06')
@@ -262,15 +270,13 @@ describe('the agreed page shape', () => {
     expect(bySlug(slug).contribution).toBeDefined()
   })
 
-  it.each(SUPPORTING)('%s has results, a role, one of decisions or problems, and a reflection', (slug) => {
-    expect(titles(slug)).toHaveLength(4)
-    expect(titles(slug).slice(0, 2)).toEqual(['핵심 성과', '담당 역할'])
-    expect(['주요 의사 결정', '핵심 기술 문제 해결']).toContain(titles(slug)[2])
-    expect(titles(slug)[3]).toBe('회고')
+  it.each(SUPPORTING)('%s explains results, the problem, my role, the structure, decisions and a reflection', (slug) => {
+    expect(titles(slug).slice(0, 3)).toEqual(['핵심 성과', '문제 정의', '담당 역할 및 기여'])
+    expect(titles(slug)).toEqual(expect.arrayContaining(['시스템 구조', '주요 의사 결정', '회고 및 개선 방향']))
   })
 
   it('keeps Media Pulse to a role and one problem', () => {
-    expect(titles('media-pulse')).toEqual(['담당 역할', '인상적인 문제'])
+    expect(titles('media-pulse')).toEqual(['담당 역할 및 기여', '인상적인 문제'])
   })
 })
 

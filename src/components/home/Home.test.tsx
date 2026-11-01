@@ -28,7 +28,7 @@ describe('home page (real content)', () => {
       '대표 프로젝트',
       '기술',
       '보조 프로젝트',
-      '그 밖의 작업',
+      '그 밖의 프로젝트',
       '경험',
       '연락',
     ])
@@ -55,10 +55,10 @@ describe('home page (real content)', () => {
     expect(within(table).queryAllByRole('link')).toHaveLength(0)
   })
 
-  it('follows the flagship with SkillPilot and Pitches, the mockup labelled', () => {
+  it('follows the flagship with SkillPilot, Pitches and ClosetMate, the mockup labelled', () => {
     renderWithProviders(<Home />)
     const main = screen.getAllByRole('region', { name: '대표 프로젝트' })[1]
-    expect(within(main).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['SkillPilot 자격증·커리어 플랫폼', 'Pitches 발표 코칭'])
+    expect(within(main).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['SkillPilot 자격증·커리어 플랫폼', 'Pitches 발표 코칭', 'ClosetMate 옷장·코디 추천 앱'])
     expect(main).toHaveTextContent('Express 5')
     expect(within(main).getByRole('link', { name: /API 클라이언트/ })).toHaveAttribute('href', expect.stringContaining('client.js'))
     expect(within(main).getByText('목업')).toBeInTheDocument()
@@ -67,12 +67,11 @@ describe('home page (real content)', () => {
   it('lists the supporting projects, then Media Pulse with a way to the full record', () => {
     renderWithProviders(<Home />)
     expect(within(sectionOf('보조 프로젝트')).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual([
-      'ClosetMate 옷장·코디 추천 앱',
       'EduMatrix',
       'InnoView',
       'Label Light',
     ])
-    const other = sectionOf('그 밖의 작업')
+    const other = sectionOf('그 밖의 프로젝트')
     expect(other).toHaveTextContent('Media Pulse')
     expect(within(other).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
   })
@@ -124,7 +123,7 @@ describe('home page (real content)', () => {
       'Main projects',
       'Skills',
       'Supporting projects',
-      'Other work',
+      'Other projects',
       'Experience',
       'Contact',
     ])

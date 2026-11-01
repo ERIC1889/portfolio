@@ -41,7 +41,7 @@ export const FIXTURE_PROJECTS: Project[] = [
   featuredProject('pitches', 'Pitches', [2024, 2026], { showcase: 'main' }),
   featuredProject('finz', 'Finz', [2026], { showcase: 'flagship' }),
   featuredProject('skillpilot', 'SkillPilot', [2025], { showcase: 'main' }),
-  featuredProject('closetmate', 'ClosetMate', [2026], { tier: 'supporting', showcase: 'supporting' }),
+  featuredProject('closetmate', 'ClosetMate', [2026], { showcase: 'main' }),
   {
     slug: 'media-pulse',
     name: 'Media Pulse',

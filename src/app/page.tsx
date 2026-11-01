@@ -15,7 +15,7 @@ export default function Home() {
       {flagship && <Flagship project={flagship} />}
       <Showcase id={HOME_IDS.main} title={SECTION_TITLES.main} projects={getShowcase('main')} hideHeading />
       <Skills rows={archive.skills} />
-      <Showcase id={HOME_IDS.supporting} title={SECTION_TITLES.supporting} projects={getShowcase('supporting')} compact />
+      <Showcase id={HOME_IDS.supporting} title={SECTION_TITLES.supporting} projects={getShowcase('supporting')} />
       <Showcase id={HOME_IDS.other} title={SECTION_TITLES.other} lead={SECTION_LEADS.other} projects={getShowcase('other')} compact more />
       <Experience archive={archive} topAwards={getTopAwards()} stats={getRecordStats().slice(0, 3)} caseNames={getCaseNames()} />
       <Contact profile={profile} />

@@ -23,7 +23,7 @@ export const SECTION_TITLES = {
   main: { ko: '대표 프로젝트', en: 'Main projects' },
   skills: { ko: '기술', en: 'Skills' },
   supporting: { ko: '보조 프로젝트', en: 'Supporting projects' },
-  other: { ko: '그 밖의 작업', en: 'Other work' },
+  other: { ko: '그 밖의 프로젝트', en: 'Other projects' },
   experience: { ko: '경험', en: 'Experience' },
   contact: { ko: '연락', en: 'Contact' },
 } satisfies Record<string, L>
@@ -43,7 +43,7 @@ export const SHOWCASE_LABELS: Record<Showcase, L> = {
   flagship: { ko: '대표 프로젝트', en: 'Main project' },
   main: { ko: '대표 프로젝트', en: 'Main project' },
   supporting: { ko: '보조 프로젝트', en: 'Supporting project' },
-  other: { ko: '그 밖의 작업', en: 'Other work' },
+  other: { ko: '그 밖의 프로젝트', en: 'Other projects' },
 }
 
 export const SKILL_HEADINGS = {

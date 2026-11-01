@@ -24,8 +24,8 @@ describe('selectCases', () => {
 describe('selectShowcase', () => {
   it('picks the projects of one home section, keeping page order', () => {
     expect(selectShowcase(FIXTURE_PROJECTS, 'flagship').map((p) => p.slug)).toEqual(['finz'])
-    expect(selectShowcase(FIXTURE_PROJECTS, 'main').map((p) => p.slug)).toEqual(['skillpilot', 'pitches'])
-    expect(selectShowcase(FIXTURE_PROJECTS, 'supporting').map((p) => p.slug)).toEqual(['closetmate'])
+    expect(selectShowcase(FIXTURE_PROJECTS, 'main').map((p) => p.slug)).toEqual(['skillpilot', 'pitches', 'closetmate'])
+    expect(selectShowcase(FIXTURE_PROJECTS, 'supporting')).toEqual([])
   })
 })
 
