@@ -46,10 +46,10 @@ const FEATURED = ['finz', 'skillpilot', 'closetmate', 'pitches']
 
 // Claims the code or the owner's answers do not support.
 const BANNED: Record<string, (string | RegExp)[]> = {
-  'label-light': ['파인튜닝', 'fine-tun', /GPT-4o(?!-mini)/],
+  'label-light': ['80%', '진단', 'diagnos', /GPT-4o(?!-mini)/],
   'llm-dolbom': ['심리 상태 분석', 'psychological state'],
-  edumatrix: ['집중도', '성과 예측', 'performance prediction', '상태 머신', 'state machine', 'TypeScript'],
-  innoview: ['감정 분석', 'emotion analysis', '음성 분석', 'voice analysis', '표정', 'facial'],
+  edumatrix: ['집중도', '성과 예측', 'performance prediction', '상태 머신', 'state machine', 'TypeScript', '실시간 모니터링', 'real-time monitoring', 'implement', '구현'],
+  innoview: ['1인 개발', 'solo developer'],
   restplanner: ['강화학습', 'reinforcement', 'Agent-to-Agent', 'A2A'],
   teamflow: ['SaaS'],
   unifit: ['AI'],
