@@ -87,8 +87,8 @@ export const projects: Project[] = [
         'Foreign-stock capital gains engine: each buy and sell converted at its own settlement-date rate, with the gain split into a stock-price part and an exchange-rate part; plus gift valuation (two-month average close) and a gift-tax estimate',
       ],
       [
-        '시세·환율 연동: Upbit→CoinGecko, 한국은행 ECOS→ECB로 대체 조회하고, 확정된 값만 오래 캐시하며 사용자별·전체 요청을 제한',
-        'Market-data integrations: Upbit→CoinGecko and Bank of Korea ECOS→ECB fallbacks, long caching only for settled values, and per-user plus global rate limits',
+        '시세·환율 데이터 계층: Upbit→CoinGecko, 한국은행 ECOS→ECB로 대체 조회하고, 확정된 값만 오래 캐시하며 사용자별·전체 요청을 제한',
+        'Market-data layer: Upbit→CoinGecko and Bank of Korea ECOS→ECB fallbacks, long caching only for settled values, and per-user plus global rate limits',
       ],
       [
         '부동산 6Way: 세무사와 함께 Python으로 작성한 계산 로직을 TypeScript로 옮기고, 국토교통부 실거래가 조회와 PDF 리포트를 붙임',
@@ -106,12 +106,12 @@ export const projects: Project[] = [
           'All of the company website finz.kr: screens, calculation library, market-data and price integrations, API (2026.04–)',
         ],
         [
-          '해외주식 양도세 엔진과 증여세 추정, 부동산 6Way 엔진과 PDF 리포트',
-          'The foreign-stock capital gains engine and gift-tax estimate, the property 6Way engine and its PDF report',
+          '해외주식 양도세 엔진과 증여세 추정, 시세·환율 데이터 계층, 부동산 6Way 엔진과 PDF 리포트',
+          'The foreign-stock capital gains engine and gift-tax estimate, the market-data layer, the property 6Way engine and its PDF report',
         ],
         [
-          '디지털 자산 엔진·증여 평가 모듈과 시세·환율 연동 일부: 회사 세무 SaaS의 코드를 개인용으로 옮기고 연도 판정·대체값·오류 문구를 더함',
-          'Digital-asset engine, gift valuation module and part of the market-data integration: company SaaS code adapted for individuals, adding tax-year filtering, fallbacks and plain-language errors',
+          '디지털 자산 엔진·증여 평가 모듈: 회사 세무 SaaS의 코드를 개인용으로 옮기고 연도 판정·대체값·오류 문구를 더함',
+          'Digital-asset engine and gift valuation module: company SaaS code adapted for individuals, adding tax-year filtering, fallbacks and plain-language errors',
         ],
         ['Finz 모바일 앱과 백엔드 (Expo · FastAPI, 미출시)', 'The Finz mobile app and its backend (Expo · FastAPI, not released)'],
         [
@@ -327,7 +327,7 @@ export const projects: Project[] = [
       ),
       section(
         'implementation',
-        ['회사의 다른 작업 · Finz 모바일 앱 (미출시)', 'Also at Finz Labs · Finz mobile app (not released)'],
+        ['같은 회사의 다른 작업 · Finz 모바일 앱 (청년 세금 환급 MVP, 미출시)', 'Also at Finz Labs · Finz mobile app (tax refund MVP, not released)'],
         [
           [
             'Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다.',
@@ -338,8 +338,16 @@ export const projects: Project[] = [
             'CODEF simple authentication checks the status every 3 seconds and treats it as expired after 270 seconds. Its six states (idle, requested, checking, done, failed, expired) are managed as a single type, and a failed or expired attempt can be retried.',
           ],
           [
-            '인증 한 번으로 얻은 세션을 연도별 조회에 다시 쓰고, 조회는 3초 간격으로 하나씩 보냅니다. 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다. 기다리는 동안에는 진행 화면을 보여 줍니다.',
-            'The session from a single authentication is reused for every yearly query, and the queries go out one at a time, 3 seconds apart. If an error says identical requests overlapped, it waits 5 seconds, then 10, and tries again. Meanwhile a progress screen is shown.',
+            '인증 한 번으로 얻은 세션을 연도별 조회에 다시 쓰고, 조회는 3초 간격으로 하나씩 보냅니다. 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다. 기다리는 동안에는 진행 화면을 보여 줍니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
+            'The session from a single authentication is reused for every yearly query, and the queries go out one at a time, 3 seconds apart. If an error says identical requests overlapped, it waits 5 seconds, then 10, and tries again. Meanwhile a progress screen is shown. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
+          ],
+          [
+            '결제(토스페이먼츠)를 요청한 사람이 실제 의뢰의 주인인지, 금액과 이미 결제됐는지를 서버에서 다시 확인합니다. 사용자·세무사·관리자마다 다른 화면을 보여 주지만, 실제 권한 검사는 서버가 합니다.',
+            'For payments (Toss Payments), the server re-checks that the person paying owns the request, the amount, and whether it has already been paid. Users, tax accountants and admins see different screens, but the real permission checks happen on the server.',
+          ],
+          [
+            '같은 백엔드에서 실거래가 데이터는 Celery Beat로 매주 월요일 조정대상지역 전체를 동기화하고, 실패하면 시간을 두고 다시 시도합니다. 보안 테스트는 GitHub Actions에서 push마다 실행됩니다.',
+            'In the same backend, Celery Beat syncs real-transaction prices for every regulated area each Monday and retries after a delay on failure. The security tests run in GitHub Actions on every push.',
           ],
           [
             '같은 앱에서 세무사 목록 → 의뢰 → 서류 업로드 → 채팅(5초 간격 갱신) → 결제로 이어지는 세무사 상담 연결을 실제 백엔드 API로 만들었습니다.',
@@ -370,7 +378,7 @@ export const projects: Project[] = [
       ),
       section(
         'implementation',
-        ['회사의 다른 작업 · 세무사용 FINZ (협력 개발사와 함께, 출시 전)', 'Also at Finz Labs · FINZ for tax accountants (with a partner company, not yet launched)'],
+        ['같은 회사의 다른 작업 · 세무사용 FINZ (협력 개발사와 함께, 출시 전)', 'Also at Finz Labs · FINZ for tax accountants (with a partner company, not yet launched)'],
         [
           [
             '세무사용 FINZ는 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖춘 세무사용 SaaS로, 협력 개발사와 함께 개발했습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다.',
