@@ -119,7 +119,7 @@ describe('/archive', () => {
   it('opens with the record in four numbers and links to each part', () => {
     renderWithProviders(<ArchivePage />)
     const stats = document.querySelector('.stat-tiles') as HTMLElement
-    expect([...stats.querySelectorAll('.stat-value')].map((v) => v.textContent)).toEqual(['19', '7', '13', '17'])
+    expect([...stats.querySelectorAll('.stat-value')].map((v) => v.textContent)).toEqual(['18', '7', '13', '17'])
     const jump = screen.getByRole('navigation', { name: '기록 바로가기' })
     expect(within(jump).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#projects', '#papers', '#awards', '#background', '#activities'])
   })
@@ -128,7 +128,7 @@ describe('/archive', () => {
     renderWithProviders(<ArchivePage />)
     const list = document.getElementById('projects') as HTMLElement
     expect(within(list).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['2026', '2025', '2024', '2023'])
-    expect(within(list).getAllByRole('listitem')).toHaveLength(19)
+    expect(within(list).getAllByRole('listitem')).toHaveLength(18)
     const closetmate = within(list).getByText('ClosetMate').closest('li') as HTMLElement
     expect(within(closetmate).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/closetmate')
   })

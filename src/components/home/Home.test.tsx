@@ -89,7 +89,7 @@ describe('home page (real content)', () => {
     const experience = sectionOf('경험')
     const stats = within(experience).getByLabelText('기록 요약')
     expect([...stats.querySelectorAll('.stat')].map((s) => [s.querySelector('dt')?.textContent, s.querySelector('.stat-value')?.textContent])).toEqual([
-      ['프로젝트', '19'],
+      ['프로젝트', '18'],
       ['학술대회 논문', '7'],
       ['수상', '13'],
     ])

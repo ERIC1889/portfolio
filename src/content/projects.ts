@@ -663,9 +663,9 @@ export const projects: Project[] = [
       'A mobile app that classifies a photo of a garment into your wardrobe and recommends outfits only from clothes you own',
     ),
     period: '2026.03–2026.06',
-    team: k('개인 프로젝트 · 딥러닝 기초 수업', 'Solo project · intro to deep learning course'),
+    team: k('개인 프로젝트', 'Solo project'),
     role: k('기획 · 모델 학습 · 모바일·API 개발', 'Planning · model training · mobile and API development'),
-    status: k('수업 프로젝트, 미출시', 'Course project, not released'),
+    status: k('미출시', 'Not released'),
     statusCheckedAt: '2026-10-29',
     stack: ['Expo', 'Next.js', 'PostgreSQL', 'Drizzle', 'ONNX Runtime', 'PyTorch', 'OpenAI API', 'Whisper'],
     summary: k(
@@ -1200,17 +1200,5 @@ export const projects: Project[] = [
     ),
     image: '/images/projects/unifit.png',
     imageCaption: k('진로 로드맵 화면 · 실제 화면', "Career roadmap screen · real screen"),
-  },
-  {
-    slug: 'formcoach',
-    name: 'FormCoach',
-    years: [2026],
-    tier: 'line',
-    period: '2026.08–',
-    stack: ['React Native', 'MediaPipe', 'NestJS'],
-    summary: k(
-      '졸업 논문으로 설계 중인 홈트레이닝 자세 코칭 앱. 영상은 폰에 두고 관절 좌표만 서버로 보냅니다(진행 중).',
-      'A home-workout form-coaching app I am designing for my graduation thesis. The video stays on the phone and only joint coordinates go to the server (in progress).',
-    ),
   },
 ]

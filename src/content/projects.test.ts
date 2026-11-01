@@ -39,7 +39,6 @@ const PLACEMENT = [
   ['dreamtrack', 'line', undefined, [2025]],
   ['teamflow', 'line', undefined, [2026]],
   ['unifit', 'line', undefined, [2026]],
-  ['formcoach', 'line', undefined, [2026]],
 ] as const
 
 const FEATURED = ['finz', 'skillpilot', 'closetmate', 'pitches']
@@ -56,7 +55,7 @@ const BANNED: Record<string, (string | RegExp)[]> = {
   patentry: ['특허 데이터', 'patent data'],
   pitches: ['Canvas', '200ms', '프론트엔드 주도', 'frontend lead', '이중 시간축', 'dual time', '150ms 미만', 'under 150', 'A10G', 'T4', '진행 중'],
   finz: ['21개 테이블', '24개 API', '120개 테스트', '86.6', 'API 키 노출', 'API key exposure', '해결한', 'resolved', '래미안', '아크로', '외주 개발', '외주사'],
-  closetmate: ['온디바이스', 'on-device', '97.49', '86.68', '67.29'],
+  closetmate: ['온디바이스', 'on-device', '97.49', '86.68', '67.29', '딥러닝 기초', '수업', 'deep learning course', 'course project'],
   skillpilot: ['대신 관리자', '테스트를 대신', 'instead of tests', 'substitute for tests', '적중률', 'hit rate', '비용 절감', 'cost saving'],
   wildfire: ['0.909', '0.77', '정확도', 'accuracy'],
   jarvis: ['1초', '1 second'],
@@ -224,7 +223,7 @@ describe('supporting: SkillPilot', () => {
 describe('supporting: ClosetMate', () => {
   const closetmate = bySlug('closetmate')
 
-  it('dates the course project and links no repository', () => {
+  it('dates the project and links no repository', () => {
     expect(closetmate.period).toBe('2026.03–2026.06')
     expect(closetmate.links).toBeUndefined()
   })
