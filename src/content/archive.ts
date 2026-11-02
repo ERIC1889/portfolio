@@ -279,9 +279,9 @@ export const archive: Archive = {
   experience: [
     {
       org: k('주식회사 Finz Labs (finz.kr)', 'Finz Labs (finz.kr)'),
-      title: k('CTO · 개발 담당', 'CTO · sole developer'),
+      title: k('CTO · 개발 담당', 'CTO · in charge of development'),
       period: '2026.01–',
-      context: k('직원 5명 스타트업의 유일한 개발자, 인력 관리는 맡지 않음', 'The only developer at a five-person startup; no people management'),
+      context: k('직원 5명 스타트업, 인력 관리는 맡지 않음', 'A five-person startup; no people management'),
       responsibilities: [
         k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
         k('Finz 모바일 앱: 청년 세금 환급 MVP, 세무사 상담 연결, 생애주기 금융 시연 화면 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, tax-accountant connection, life-stage finance demo screens (Expo · FastAPI, not released)'),

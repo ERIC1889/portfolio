@@ -72,7 +72,7 @@ export const projects: Project[] = [
     ),
     audience: k('집·가상자산·해외주식을 가진 개인', 'Individuals with homes, crypto or foreign stocks'),
     period: '2026.04–',
-    team: k('주식회사 Finz Labs (직원 5명) · 유일한 개발자', 'Finz Labs (five people) · the only developer'),
+    team: k('주식회사 Finz Labs (직원 5명)', 'Finz Labs (five people)'),
     role: k('설계·개발·운영 (직함 CTO)', 'Design, build and operation (title: CTO)'),
     status: k('운영 중 (finz.kr)', 'Live (finz.kr)'),
     statusCheckedAt: '2026-10-29',

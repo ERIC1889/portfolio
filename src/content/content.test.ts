@@ -146,7 +146,7 @@ describe('archive', () => {
 
   it('lists work with its context: Finz Labs only', () => {
     expect(archive.experience.map((w) => w.org.ko)).toEqual(['주식회사 Finz Labs (finz.kr)'])
-    expect(archive.experience[0].context.ko).toContain('유일한 개발자')
+    expect(archive.experience[0].context.ko).toContain('직원 5명 스타트업')
   })
 
   it('counts the record from the data: projects, conference papers, awards, activities', () => {
