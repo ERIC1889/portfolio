@@ -54,13 +54,12 @@ describe('home page (real content)', () => {
     expect(within(table).queryAllByRole('link')).toHaveLength(0)
   })
 
-  it('follows the flagship with SkillPilot, Pitches and ClosetMate, the mockup labelled', () => {
+  it('follows the flagship with SkillPilot, Pitches and ClosetMate', () => {
     renderWithProviders(<Home />)
     const main = screen.getAllByRole('region', { name: '대표 프로젝트' })[1]
     expect(within(main).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['SkillPilot 자격증·커리어 플랫폼', 'Pitches 발표 코칭', 'ClosetMate 옷장·코디 추천 앱'])
     expect(main).toHaveTextContent('Express 5')
     expect(within(main).getByRole('link', { name: /API 클라이언트/ })).toHaveAttribute('href', expect.stringContaining('client.js'))
-    expect(within(main).getByText('목업')).toBeInTheDocument()
   })
 
   it('lists the supporting projects with a way to all projects, leaving the rest off the home page', () => {

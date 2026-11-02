@@ -248,10 +248,12 @@ describe('other work: Pitches', () => {
     for (const needle of ['APIC-IST 2025', '125ms', '20세션', '논문']) expect(text).toContain(needle)
   })
 
-  it('marks 70ms as a public benchmark and the 2024 picture as a mockup', () => {
-    const text = koText(pitches)
-    expect(text).toContain('공개 벤치마크')
-    expect(pitches.media?.map((m) => m.kind)).toEqual(['mockup'])
+  it('marks 70ms as a public benchmark and labels the demo as the iOS simulator', () => {
+    expect(koText(pitches)).toContain('공개 벤치마크')
+    const media = pitches.media ?? []
+    expect(media[0].kind).toBe('video')
+    for (const m of media) expect(m.caption.ko).toContain('iOS 시뮬레이터')
+    expect(koText(pitches.contribution?.notYet)).toContain('실제 휴대폰')
   })
 
   it('separates the three versions in one table', () => {

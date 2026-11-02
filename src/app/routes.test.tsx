@@ -137,14 +137,14 @@ describe('/archive', () => {
     expect(within(closetmate).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/closetmate')
   })
 
-  it('shows a captioned picture for every project that has one, labelling the mockup', () => {
+  it('shows a captioned picture for every project that has one, labelling where a demo ran', () => {
     renderWithProviders(<ArchivePage />)
     const list = document.getElementById('projects') as HTMLElement
     const figures = [...list.querySelectorAll('figure')]
     expect(figures).toHaveLength(13)
     for (const figure of figures) expect(figure.querySelector('figcaption')?.textContent?.trim()).toBeTruthy()
     const pitches = within(list).getByText('Pitches').closest('li') as HTMLElement
-    expect(pitches.querySelector('figcaption')).toHaveTextContent('목업')
+    expect(pitches.querySelector('figcaption')).toHaveTextContent('iOS 시뮬레이터')
   })
 
   it('groups papers by kind, marking author order where it is known', () => {
