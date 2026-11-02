@@ -65,7 +65,6 @@ export const METRIC_HEADINGS = {
   target: { ko: '무엇을 쟀나', en: 'What was measured' },
   condition: { ko: '조건', en: 'Conditions' },
   source: { ko: '출처', en: 'Source' },
-  checkedAt: { ko: '확인일', en: 'Checked' },
 } satisfies Record<string, L>
 
 export const METRIC_SOURCES: Record<Metric['source'], L> = {
@@ -86,10 +85,6 @@ const ORDINALS = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
 
 export function authorOrderLabel(order: number): L {
   return { ko: `${order}저자`, en: `${ORDINALS[order - 1] ?? `${order}th`} author` }
-}
-
-export function checkedOn(date: string): L {
-  return { ko: `${date} 확인`, en: `checked ${date}` }
 }
 
 export const ARCHIVE_HEADINGS = {

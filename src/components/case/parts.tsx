@@ -38,9 +38,7 @@ export function MetricsTable({ metrics }: { metrics: Metric[] }) {
           <th scope="col">{t(METRIC_HEADINGS.value)}</th>
           <th scope="col">{t(METRIC_HEADINGS.target)}</th>
           <th scope="col">{t(METRIC_HEADINGS.condition)}</th>
-          <th scope="col">
-            {t(METRIC_HEADINGS.source)} · {t(METRIC_HEADINGS.checkedAt)}
-          </th>
+          <th scope="col">{t(METRIC_HEADINGS.source)}</th>
         </tr>
       </thead>
       <tbody>
@@ -52,9 +50,7 @@ export function MetricsTable({ metrics }: { metrics: Metric[] }) {
             </td>
             <td data-label={t(METRIC_HEADINGS.target)}>{t(metric.target)}</td>
             <td data-label={t(METRIC_HEADINGS.condition)}>{t(metric.condition)}</td>
-            <td data-label={`${t(METRIC_HEADINGS.source)} · ${t(METRIC_HEADINGS.checkedAt)}`}>
-              {t(METRIC_SOURCES[metric.source])} · <span className="mono">{metric.checkedAt}</span>
-            </td>
+            <td data-label={t(METRIC_HEADINGS.source)}>{t(METRIC_SOURCES[metric.source])}</td>
           </tr>
         ))}
       </tbody>

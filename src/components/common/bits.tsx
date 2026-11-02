@@ -4,7 +4,6 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { useLang } from '@/components/providers/LanguageProvider'
 import type { L, LinkItem, Project } from '@/content/types'
-import { checkedOn } from '@/content/ui'
 
 export const isExternal = (href: string) => /^(https?:|mailto:)/.test(href)
 
@@ -39,18 +38,15 @@ export function StackList({ items, label }: { items: string[]; label?: L }) {
   )
 }
 
-/** "Live (finz.kr) · checked 2026-10-29", with a green dot when there is a live link. */
-export function StatusBadge({ project }: { project: Pick<Project, 'status' | 'statusCheckedAt' | 'links'> }) {
+/** The project status, with a green dot when there is a live link. */
+export function StatusBadge({ project }: { project: Pick<Project, 'status' | 'links'> }) {
   const { t } = useLang()
   if (!project.status) return null
   const live = project.links?.some((link) => link.kind === 'live')
   return (
     <span className={`status${live ? ' is-live' : ''}`}>
       <span className="status-dot" aria-hidden="true" />
-      <span>
-        {t(project.status)}
-        {project.statusCheckedAt && <span className="status-date"> · {t(checkedOn(project.statusCheckedAt))}</span>}
-      </span>
+      <span>{t(project.status)}</span>
     </span>
   )
 }

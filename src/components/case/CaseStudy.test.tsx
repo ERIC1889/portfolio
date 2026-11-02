@@ -50,7 +50,7 @@ describe('CaseStudy header', () => {
     expect(screen.getByText('SkillPilot는 이런 서비스')).toBeInTheDocument()
     const facts = document.querySelector('dl.facts') as HTMLElement
     expect(within(facts).getAllByRole('term').map((dt) => dt.textContent)).toEqual(['대상', '기간', '팀', '역할', '상태', '기술'])
-    expect(facts).toHaveTextContent('미출시 · 2026-10-29 확인')
+    expect(facts).toHaveTextContent('미출시')
   })
 
   it('puts the first two links and jumps to the checks and to all material at the top', () => {
@@ -115,9 +115,10 @@ describe('CaseStudy body', () => {
     renderWithProviders(<CaseStudy project={project} />)
     const validation = sectionNamed('검증')
     const table = within(validation).getByRole('table')
-    expect(within(table).getAllByRole('columnheader').map((th) => th.textContent)).toEqual(['항목', '값', '무엇을 쟀나', '조건', '출처 · 확인일'])
+    expect(within(table).getAllByRole('columnheader').map((th) => th.textContent)).toEqual(['항목', '값', '무엇을 쟀나', '조건', '출처'])
     expect(table).toHaveTextContent('21/21')
-    expect(table).toHaveTextContent('직접 측정 · 2026-10-29')
+    expect(table).toHaveTextContent('직접 측정')
+    expect(table).not.toHaveTextContent('2026-10-29')
   })
 
   it('lists every link in the evidence section', () => {

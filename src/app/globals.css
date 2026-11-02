@@ -261,11 +261,6 @@ a:hover {
 .status.is-live {
   color: var(--text);
 }
-.status-date {
-  color: var(--text-2);
-  font-weight: 400;
-}
-
 /* ===== header & footer ===== */
 .site-header {
   position: sticky;
