@@ -2,7 +2,6 @@ import type { Archive } from './types'
 
 const k = (ko: string, en: string) => ({ ko, en })
 
-// Awards and activities: the user's latest list (2026-10-25, spec appendix A), official names, no medals.
 export const archive: Archive = {
   papers: [
     {
@@ -160,7 +159,6 @@ export const archive: Archive = {
       org: k('한국 디지털 콘텐츠 학회', 'Korea Digital Contents Society'),
     },
   ],
-  // Claude's pick until the owner chooses (required-inputs §21).
   topAwards: [
     '캡스톤 디자인 및 AI 해커톤 대상(1등)',
     'SW 중심 대학 AI 창업 아이디어 경진대회 특별상',
@@ -289,7 +287,6 @@ export const archive: Archive = {
       ],
     },
   ],
-  // Only skills with a project behind them.
   skills: [
     {
       area: k('웹·API', 'Web · API'),

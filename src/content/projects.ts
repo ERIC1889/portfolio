@@ -1,7 +1,5 @@
 import type { CaseSection, Flow, FlowStep, Media, Metric, Project } from './types'
 
-// Every claim here is backed by code, a run, a document or the owner's own answer (see docs/superpowers/specs).
-// Each text is a [Korean, English] pair; the English says the same thing, no more.
 type Pair = [ko: string, en: string]
 
 const k = (ko: string, en: string) => ({ ko, en })
@@ -58,7 +56,6 @@ const MEMORABLE: Pair = ['인상적인 문제', 'A memorable problem']
 const SKILLPILOT_REPO = 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot'
 
 export const projects: Project[] = [
-  // ── flagship ──────────────────────────────────────────────────────────────
   {
     slug: 'finz',
     name: 'Finz',
@@ -473,7 +470,6 @@ export const projects: Project[] = [
     ],
   },
 
-  // ── supporting ────────────────────────────────────────────────────────────
   {
     slug: 'skillpilot',
     name: 'SkillPilot',
@@ -948,7 +944,6 @@ export const projects: Project[] = [
     ],
   },
 
-  // ── other featured work ───────────────────────────────────────────────────
   {
     slug: 'pitches',
     name: 'Pitches',
@@ -1199,7 +1194,6 @@ export const projects: Project[] = [
     ],
   },
 
-  // ── cards ─────────────────────────────────────────────────────────────────
   {
     slug: 'media-pulse',
     name: 'Media Pulse',
@@ -1615,7 +1609,6 @@ export const projects: Project[] = [
     links: [{ kind: 'site', label: k('junyoung-dev-notes.vercel.app', 'junyoung-dev-notes.vercel.app'), href: 'https://junyoung-dev-notes.vercel.app' }],
   },
 
-  // ── one-liners ────────────────────────────────────────────────────────────
   {
     slug: 'llm-dolbom',
     name: 'LLM 디지털 돌봄',

@@ -92,7 +92,6 @@ export function SectionTable({ table }: { table: NonNullable<CaseSection['table'
   )
 }
 
-/** The request flow as a top-to-bottom chain of boxes; my parts are solid, outside services dashed. */
 export function FlowDiagram({ flow }: { flow: Flow }) {
   const { t } = useLang()
   return (

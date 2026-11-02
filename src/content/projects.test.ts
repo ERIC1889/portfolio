@@ -20,7 +20,6 @@ const koText = (value: unknown) =>
     .map((s) => s.value)
     .join(' ')
 
-// Plan §3.2–3.3 and decisions D2/D3: one flagship, two supporting projects, Pitches as other work.
 const PLACEMENT = [
   ['finz', 'featured', 'flagship', [2026]],
   ['skillpilot', 'featured', 'main', [2025]],
@@ -45,7 +44,6 @@ const PLACEMENT = [
 const FEATURED = ['finz', 'skillpilot', 'pitches', 'closetmate']
 const SUPPORTING = ['edumatrix', 'innoview', 'label-light']
 
-// Claims the code or the owner's answers do not support.
 const BANNED: Record<string, (string | RegExp)[]> = {
   'label-light': ['80%', '진단', 'diagnos'],
   'llm-dolbom': ['심리 상태 분석', 'psychological state'],
@@ -191,7 +189,6 @@ describe('flagship: Finz personal tax calculators', () => {
     const saas = koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))
     for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(saas).toContain(fact)
     expect(saas).not.toMatch(/\d+건 해결|해결률/)
-    // the owner's account of his part (2026-10-30): decided together with the vendor and took part in development
     expect(saas).toContain('개발사와 함께 정하며 개발에 참여')
   })
 })
@@ -265,7 +262,6 @@ describe('other work: Pitches', () => {
 describe('the agreed page shape', () => {
   const titles = (slug: string) => (bySlug(slug).sections ?? []).map((s) => s.title.ko)
 
-  // Finz keeps its earlier page until it is rewritten.
   it.each(FEATURED.filter((slug) => slug !== 'finz'))('%s has every part of a main project', (slug) => {
     const sections = bySlug(slug).sections ?? []
     expect(sections.filter((s) => s.lead).map((s) => s.title.ko)).toEqual(['핵심 성과', '문제 정의'])
@@ -283,7 +279,7 @@ describe('the agreed page shape', () => {
   })
 })
 
-describe('claims the code does not support', () => {
+describe('wording the site avoids', () => {
   it.each(Object.entries(BANNED))('%s avoids them in both languages', (slug, rules) => {
     expect(checkBanned(bySlug(slug), rules)).toEqual([])
   })

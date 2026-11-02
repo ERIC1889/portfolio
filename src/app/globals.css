@@ -1,5 +1,3 @@
-/* Document-first: type, spacing, 1px lines and real product screens carry the page. */
-
 :root {
   --bg: #ffffff;
   --bg-subtle: #f9fafb;
@@ -49,7 +47,6 @@
   color-scheme: dark;
 }
 
-/* ===== base ===== */
 *,
 *::before,
 *::after {
@@ -171,7 +168,6 @@ a:hover {
   white-space: nowrap;
 }
 
-/* ===== buttons, chips, badges ===== */
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -261,7 +257,6 @@ a:hover {
 .status.is-live {
   color: var(--text);
 }
-/* ===== header & footer ===== */
 .site-header {
   position: sticky;
   top: 0;
@@ -341,14 +336,12 @@ a:hover {
   color: var(--text-2);
 }
 
-/* ===== home ===== */
 .intro {
   position: relative;
   isolation: isolate;
   padding: 72px 0 64px;
   border-bottom: 1px solid var(--border);
 }
-/* faint graph-paper dots, fading out downward */
 .intro::before {
   content: '';
   position: absolute;
@@ -586,7 +579,6 @@ a:hover {
   font-size: 15px;
 }
 
-/* the record in big numbers */
 .stat-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -681,7 +673,6 @@ a:hover {
   gap: 10px;
 }
 
-/* ===== media ===== */
 .media {
   position: relative;
 }
@@ -703,7 +694,6 @@ a:hover {
 .media-open {
   display: block;
 }
-/* a browser bar marks a web screen */
 .media-browser .media-frame {
   padding-top: 26px;
 }
@@ -719,7 +709,6 @@ a:hover {
     radial-gradient(circle at 40px 13px, var(--border-strong) 3.5px, transparent 4px),
     var(--bg-muted);
 }
-/* a bezel marks a phone screen */
 .media-phone .media-frame {
   max-width: 300px;
   margin: 0 auto;
@@ -727,7 +716,6 @@ a:hover {
   border-radius: 22px;
   background: #000;
 }
-/* a simulator capture already shows its device */
 .media-device .media-frame {
   max-width: 300px;
   margin: 0 auto;
@@ -768,7 +756,6 @@ a:hover {
   align-items: start;
 }
 
-/* ===== tables ===== */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -812,7 +799,6 @@ a:hover {
   white-space: nowrap;
 }
 
-/* ===== case page ===== */
 .case {
   padding: 28px 0 72px;
 }
@@ -936,7 +922,6 @@ a:hover {
   color: var(--text-2);
 }
 
-/* request flow */
 .flow figcaption {
   margin-top: 16px;
   font-size: 14px;
@@ -1039,7 +1024,6 @@ a:hover {
   text-align: right;
 }
 
-/* ===== story, archive, 404 ===== */
 .page {
   padding: 48px 0 72px;
 }
@@ -1345,7 +1329,6 @@ a:hover {
   margin-top: 24px;
 }
 
-/* ===== résumé ===== */
 .resume-actions {
   margin-bottom: 24px;
 }
@@ -1406,7 +1389,6 @@ a:hover {
   color: var(--text-2);
 }
 
-/* ===== responsive ===== */
 @media (max-width: 1040px) {
   .case-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -1488,7 +1470,6 @@ a:hover {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px 14px;
   }
-  /* tables become one card per row, each cell with its column name */
   .table.skills-table,
   .table.metrics-table,
   .table.version-table {
@@ -1699,7 +1680,6 @@ a:hover {
   }
 }
 
-/* ===== print (résumé PDF) ===== */
 @media print {
   :root,
   [data-theme='dark'] {

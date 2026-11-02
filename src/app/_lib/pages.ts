@@ -5,7 +5,6 @@ import { projectName } from '@/content/select'
 export const SITE_NAME = '허준영 포트폴리오'
 export const OG_IMAGE = { url: '/og.png', width: 1200, height: 630, alt: '허준영 · 백엔드 중심 풀스택 개발자' }
 
-/** Title, description, canonical URL and share card for a page; every page shares the same card image. */
 export function pageMetadata({ title, description, path }: { title: string; description: string; path: string }): Metadata {
   return {
     title,
@@ -16,7 +15,6 @@ export function pageMetadata({ title, description, path }: { title: string; desc
   }
 }
 
-/** A case with its previous and next case in CASE_ORDER, or nothing for an unknown slug. */
 export function getCasePage(slug: string) {
   const project = getProject(slug)
   if (!project) return undefined
@@ -26,7 +24,6 @@ export function getCasePage(slug: string) {
   return { project, prev: pick(order[index - 1]), next: pick(order[index + 1]) }
 }
 
-/** Every chapter with the projects of its year, for the story page. */
 export function getStoryYears() {
   return YEARS.flatMap((year) => {
     const chapter = getChapter(year)

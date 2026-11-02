@@ -8,7 +8,6 @@ import { casePictures, projectTitle } from '@/content/select'
 import type { Project } from '@/content/types'
 import { UI } from '@/content/ui'
 
-/** A project on the home page: one picture beside what it is, my part and its stack. */
 export function ProjectRow({ project }: { project: Project }) {
   const { t } = useLang()
   const picture = casePictures(project).find((m) => m.kind !== 'video')

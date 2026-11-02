@@ -12,7 +12,6 @@ import { ARCHIVE_HEADINGS, PAPER_KINDS, SHOWCASE_LABELS, UI, authorOrderLabel } 
 
 const PAPER_ORDER: PaperKind[] = ['international', 'domestic', 'contest', 'campus']
 
-/** Awards are written YY.MM.DD, so newest first is a reverse string sort. */
 const newestFirst = <T extends { date: string }>(items: T[]) => [...items].sort((a, b) => b.date.localeCompare(a.date))
 
 function Block({ id, title, count, children }: { id: string; title: L; count?: number; children: ReactNode }) {
@@ -27,7 +26,6 @@ function Block({ id, title, count, children }: { id: string; title: L; count?: n
   )
 }
 
-/** A case's first picture, or a card's thumbnail with its caption; nothing when a picture can't say what it shows. */
 export function cardPicture(project: Project): { src: string; alt: L; caption: L } | undefined {
   const media = project.media?.find((m) => m.kind !== 'video')
   if (media) return { src: media.src, alt: media.alt, caption: media.caption }
@@ -77,7 +75,6 @@ function ProjectCard({ project }: { project: Project }) {
 
 type Props = { archive: Archive; projects: Project[]; stats: Stat[]; caseNames: Record<string, L> }
 
-/** Everything on one page: the numbers first, then each record laid out to scan. */
 export function ArchiveView({ archive, projects, stats, caseNames }: Props) {
   const { t } = useLang()
   const years = [...new Set(projects.map((p) => p.years[0]))].sort((a, b) => b - a)

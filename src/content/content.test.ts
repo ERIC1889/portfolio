@@ -157,7 +157,6 @@ describe('archive', () => {
       ['대외 활동', archive.activities.length],
     ])
     expect(getRecordStats()[1].note?.ko).toBe('국제 1 · 1저자 3')
-    // the awards note claims a first-place grand prize; keep it true
     expect(archive.awards.some((a) => a.name.ko.includes('대상(1등)'))).toBe(true)
   })
 

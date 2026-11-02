@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { afterEach, beforeEach, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
-// jsdom lacks these browser APIs. Defaults: a desktop viewport and nothing scrolled into view.
 class NoopIntersectionObserver {
   readonly root = null
   readonly rootMargin = ''

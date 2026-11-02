@@ -21,7 +21,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(THEME_KEY, next)
     } catch {
-      // storage can be unavailable (private mode); the theme still applies for this visit
     }
     setTheme(next)
   }, [theme])

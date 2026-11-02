@@ -7,7 +7,6 @@ import { UI } from '@/content/ui'
 import { ProjectRow } from './ProjectRow'
 import { SectionHead } from './SectionHead'
 
-/** A group of projects on the home page; `more` points on to the list of all projects. */
 export function Showcase({ id, title, projects, more = false, hideHeading = false }: { id: string; title: L; projects: Project[]; more?: boolean; hideHeading?: boolean }) {
   const { t } = useLang()
   if (projects.length === 0) return null

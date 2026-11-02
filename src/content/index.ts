@@ -31,10 +31,8 @@ export const getChapter = (year: Year) => selectChapter(chapters, year)
 export const getPaperCounts = () => selectPaperCounts(archive.papers)
 export const getTopAwards = () => selectTopAwards(archive)
 
-/** slug → display name for the projects that have their own page. */
 export const getCaseNames = (): Record<string, L> => Object.fromEntries(getCases().map((p) => [p.slug, projectName(p)]))
 
-/** The record in four counts, taken from the data so they never drift. */
 export function getRecordStats(): Stat[] {
   const papers = getPaperCounts()
   return [

@@ -76,7 +76,7 @@ describe('checkLinks', () => {
   })
 
   it.each([
-    'https://github.com/ERIC1889/InnoView', // private repositories behind the public profile
+    'https://github.com/ERIC1889/InnoView',
     'https://finz.kr.evil.example',
     '//evil.example/path',
     'mailto:someone@else.example',
@@ -96,7 +96,6 @@ describe('checkNoLocalPaths', () => {
 })
 
 describe('checkNoPhoneNumbers', () => {
-  // Built at run time so this file never contains a phone number itself.
   const mobile = ['010', '1234', '5678'].join('-')
   const international = ['+82', '10', '1234', '5678'].join(' ')
 

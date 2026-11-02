@@ -9,7 +9,6 @@ export const metadata = pageMetadata({
 })
 
 export default function ArchivePage() {
-  // Featured projects first in page order, then the rest as written.
   const featured = getCases()
   const rest = projects.filter((project) => !featured.includes(project))
   return <ArchiveView archive={archive} projects={[...featured, ...rest]} stats={getRecordStats()} caseNames={getCaseNames()} />

@@ -3,7 +3,6 @@
 import { useLang } from '@/components/providers/LanguageProvider'
 import type { L, Stat } from '@/content/types'
 
-/** Big numbers first, then what they count. */
 export function StatTiles({ stats, label }: { stats: Stat[]; label: L }) {
   const { t } = useLang()
   return (

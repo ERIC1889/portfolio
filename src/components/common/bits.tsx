@@ -7,7 +7,6 @@ import type { L, LinkItem, Project } from '@/content/types'
 
 export const isExternal = (href: string) => /^(https?:|mailto:)/.test(href)
 
-/** An internal link stays in the tab; an outside link opens a new one and says so with ↗. */
 export function SmartLink({ href, className, children }: { href: string; className?: string; children: ReactNode }) {
   if (isExternal(href)) {
     const newTab = href.startsWith('http')
@@ -38,7 +37,6 @@ export function StackList({ items, label }: { items: string[]; label?: L }) {
   )
 }
 
-/** The project status, with a green dot when there is a live link. */
 export function StatusBadge({ project }: { project: Pick<Project, 'status' | 'links'> }) {
   const { t } = useLang()
   if (!project.status) return null

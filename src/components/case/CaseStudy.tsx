@@ -14,7 +14,6 @@ import { ContributionTable, FlowDiagram } from './parts'
 
 type Neighbour = { slug: string; name: L }
 
-/** Section anchors: the section's own anchor, or its id (numbered when an id repeats). */
 export function sectionAnchors(project: Project): string[] {
   const seen = new Map<string, number>()
   return (project.sections ?? []).map((section) => {

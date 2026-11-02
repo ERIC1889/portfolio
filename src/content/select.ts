@@ -4,17 +4,14 @@ export function projectName(project: Pick<Project, 'name' | 'nameEn'>): L {
   return { ko: project.name, en: project.nameEn ?? project.name }
 }
 
-/** The product title for headings, falling back to the project name. */
 export function projectTitle(project: Pick<Project, 'name' | 'nameEn' | 'title'>): L {
   return project.title ?? projectName(project)
 }
 
 export const YEARS: Year[] = [2023, 2024, 2025, 2026]
 
-/** Projects with their own page, in page order: main, then supporting, then other. */
 export const CASE_ORDER = ['finz', 'skillpilot', 'pitches', 'closetmate', 'edumatrix', 'innoview', 'label-light', 'media-pulse'] as const
 
-/** The projects the résumé lists. */
 export const RESUME_ORDER = ['finz', 'skillpilot', 'pitches', 'closetmate'] as const
 
 const hasPage = (project: Project) => project.showcase !== undefined
@@ -34,7 +31,6 @@ export function selectProject(projects: Project[], slug: string): Project | unde
   return selectCases(projects).find((p) => p.slug === slug)
 }
 
-/** The pictures for a project page: its media, or its thumbnail when that is all it has. */
 export function casePictures(project: Project): Media[] {
   if (project.media?.length) return project.media
   if (!project.image || !project.imageCaption || !project.imageSize) return []
@@ -55,7 +51,6 @@ export function selectChapter(chapters: Chapter[], year: Year): Chapter | undefi
   return chapters.find((c) => c.year === year)
 }
 
-/** Conference papers only (international and domestic); contest and campus entries are listed but not counted. */
 export function selectPaperCounts(papers: Archive['papers']) {
   const conference = papers.filter((p) => p.kind === 'international' || p.kind === 'domestic')
   return {
@@ -65,7 +60,6 @@ export function selectPaperCounts(papers: Archive['papers']) {
   }
 }
 
-/** The awards named in `topAwards`, in that order. */
 export function selectTopAwards(archive: Pick<Archive, 'awards' | 'topAwards'>): Award[] {
   return archive.topAwards.map((name) => archive.awards.find((a) => a.name.ko === name)).filter((a): a is Award => a !== undefined)
 }

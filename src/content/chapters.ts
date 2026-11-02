@@ -1,8 +1,5 @@
 import type { Chapter } from './types'
 
-// Source: the four-year reflection (ex.md), condensed to what matters for a developer's story.
-// Left out on purpose: military-service and job-hunting plans, present-tense distress,
-// private details (people, places, social life) and the specifics of internal disagreements at Finz Labs.
 export const chapters: Chapter[] = [
   {
     year: 2023,

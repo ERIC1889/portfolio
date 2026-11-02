@@ -42,7 +42,6 @@ describe('home page (real content)', () => {
     expect(within(flagship).queryByText('검증')).toBeNull()
     expect(within(flagship).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/finz')
     expect(within(flagship).getByRole('link', { name: /개인 세금 계산기 열기/ })).toHaveAttribute('href', 'https://www.finz.kr/personal')
-    // the demo video carries the visuals here; the screens live on the case page
     expect(within(flagship).queryAllByRole('img')).toHaveLength(0)
   })
 

@@ -18,7 +18,6 @@ function Part({ title, children }: { title: L; children: ReactNode }) {
   )
 }
 
-/** The résumé, built from the same content as the site; public/resume.pdf is printed from this page. */
 export function Resume({ profile, archive, projects, topAwards, siteUrl }: Props) {
   const { t } = useLang()
   const conference = archive.papers.filter((paper) => paper.kind === 'international' || paper.kind === 'domestic')
@@ -96,7 +95,6 @@ export function Resume({ profile, archive, projects, topAwards, siteUrl }: Props
                 {(project.resumeItems ?? project.features ?? [project.summary]).map((item) => (
                   <li key={item.ko}>{t(item)}</li>
                 ))}
-                {/* Only the flagship's check fits on one line; other numbers need the context on their case page. */}
                 {project.showcase === 'flagship' &&
                   project.metrics?.slice(0, 1).map((metric) => (
                     <li key={metric.label.ko}>

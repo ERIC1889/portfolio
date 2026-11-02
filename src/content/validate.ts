@@ -15,7 +15,6 @@ function join(path: string, key: string | number) {
   return path ? `${path}.${key}` : key
 }
 
-/** Every bilingual `{ ko, en }` string inside `value`, with its path. */
 export function collectStrings(value: unknown, path = ''): Found[] {
   if (isBilingual(value)) {
     return [
@@ -28,7 +27,6 @@ export function collectStrings(value: unknown, path = ''): Found[] {
   return []
 }
 
-/** Every plain string (including both sides of bilingual pairs and object keys' values such as `href`). */
 function collectAllStrings(value: unknown, path = ''): { path: string; key: string; value: string }[] {
   if (typeof value === 'string') return [{ path, key: path.split('.').pop() ?? '', value }]
   if (Array.isArray(value)) return value.flatMap((item, i) => collectAllStrings(item, join(path, i)))
@@ -78,7 +76,6 @@ export function checkNoLocalPaths(content: unknown): string[] {
     .map((found) => `${found.path}: local path exposed`)
 }
 
-// Korean mobile and landline numbers, with or without the +82 prefix.
 const PHONE = /(?:\+82[\s-]?|\b0)(?:1[016789]|2|[3-6][1-5])[\s.-]?\d{3,4}[\s.-]?\d{4}\b/
 
 export function checkNoPhoneNumbers(content: unknown): string[] {
@@ -103,7 +100,6 @@ const DATE = /^\d{4}-\d{2}-\d{2}$/
 const SECTION_ORDER: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'paper', 'retro', 'evidence']
 const REQUIRED_SECTIONS: SectionId[] = ['problem', 'implementation', 'result', 'retro', 'evidence']
 
-/** A featured project answers what it is, who did what and how it was checked, in the agreed section order. */
 export function checkFeaturedShape(project: Project): string[] {
   const errors: string[] = []
   for (const field of ['title', 'product', 'status', 'role', 'team'] as const) {
@@ -125,7 +121,6 @@ export function checkFeaturedShape(project: Project): string[] {
   return errors
 }
 
-/** Every picture or video says what it is and when it was captured; a mockup says so in its caption. */
 export function checkMedia(project: Project): string[] {
   const all = [...(project.media ?? []), ...(project.sections ?? []).flatMap((section) => section.media ?? [])]
   const errors: string[] = []
@@ -144,7 +139,6 @@ export function checkMedia(project: Project): string[] {
   return errors
 }
 
-/** A number always carries what was measured, the conditions, its source and the date it was checked. */
 export function checkMetrics(project: Project): string[] {
   return (project.metrics ?? []).flatMap((metric) => {
     const errors: string[] = []

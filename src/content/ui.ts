@@ -1,6 +1,5 @@
 import type { Contribution, FlowStep, L, Metric, PaperKind, Showcase } from './types'
 
-/** Home section ids, used as anchors by the top menu. */
 export const HOME_IDS = {
   flagship: 'projects',
   main: 'main-projects',

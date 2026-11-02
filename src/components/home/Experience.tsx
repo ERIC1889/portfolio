@@ -7,10 +7,8 @@ import type { Archive, Award, L, Stat } from '@/content/types'
 import { HOME_IDS, SECTION_TITLES, UI } from '@/content/ui'
 import { SectionHead } from './SectionHead'
 
-/** "24.10.24 ~ 24.10.27" → "2024.10" */
 export const awardMonth = (date: string) => `20${date.slice(0, 5)}`
 
-/** One column of dated rows (work, then school), the record in numbers, and the three awards that matter most. */
 export function Experience({ archive, topAwards, stats, caseNames }: { archive: Archive; topAwards: Award[]; stats: Stat[]; caseNames: Record<string, L> }) {
   const { t } = useLang()
   const { education } = archive

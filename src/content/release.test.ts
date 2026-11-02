@@ -55,8 +55,6 @@ describe('runReleaseCheck', () => {
 })
 
 describe('build script', () => {
-  // Part of `build` itself, not a `prebuild` hook, so a build-command override or a
-  // package manager that skips pre-hooks cannot ship a held section silently.
   it('runs the release check before next build', () => {
     expect(pkg.scripts.build).toBe('tsx scripts/check-release.ts && next build')
     expect(pkg.scripts).not.toHaveProperty('prebuild')

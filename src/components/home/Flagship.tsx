@@ -9,7 +9,6 @@ import type { Project } from '@/content/types'
 import { HOME_IDS, SECTION_TITLES, UI } from '@/content/ui'
 import { SectionHead } from './SectionHead'
 
-/** The demo video beside what it is and where to go, then what I built across the full width so neither column runs long. */
 export function Flagship({ project }: { project: Project }) {
   const { t } = useLang()
   const video = project.media?.find((m) => m.kind === 'video')

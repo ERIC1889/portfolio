@@ -30,7 +30,6 @@ function MoonIcon() {
   )
 }
 
-/** One row of plain links; on a phone the links drop to a second row instead of hiding behind a menu button. */
 export function Nav() {
   const { lang, setLang, t } = useLang()
   const { theme, toggleTheme } = useTheme()

@@ -2,8 +2,6 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-// Personal details the owner removed from the site. Written as escapes so this file
-// does not publish them; the scan covers everything that goes to GitHub.
 const REMOVED = ['\uC7AC\uC218', '\uC548\uC0C1\uD604']
 
 const ROOT = join(__dirname, '..')

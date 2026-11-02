@@ -7,10 +7,8 @@ import { UI } from '@/content/ui'
 
 const isPortrait = (media: Media) => media.height > media.width
 
-/** A screenshot, mockup or video with its caption. Pictures open at full size in a new tab instead of a popup. */
 export function MediaFigure({ media, sizes, priority = false }: { media: Media; sizes: string; priority?: boolean }) {
   const { t } = useLang()
-  // A web screenshot gets a browser bar, a phone screen a bezel; videos and document pages stay plain.
   const frame =
     media.shape === 'phone' || media.shape === 'device'
       ? media.shape
@@ -40,10 +38,6 @@ export function MediaFigure({ media, sizes, priority = false }: { media: Media; 
   )
 }
 
-/**
- * A landscape first item is shown large, then the rest in two grids by shape.
- * When the first item is portrait (a phone app), everything goes into the portrait grid.
- */
 export function Gallery({ media }: { media: Media[] }) {
   if (media.length === 0) return null
   const [first, ...rest] = media

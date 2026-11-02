@@ -7,7 +7,6 @@ import { UI } from '@/content/ui'
 
 type Step = { href: string; label: L }
 
-/** Bottom navigation: ← previous · center (home or list) · next →, in the same place on every page. */
 export function PageNav({ prev, center, next }: { prev?: Step; center?: Step; next?: Step }) {
   const { t } = useLang()
   return (

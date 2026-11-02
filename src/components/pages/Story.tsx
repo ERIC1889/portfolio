@@ -8,7 +8,6 @@ import { UI } from '@/content/ui'
 
 export type StoryYear = { chapter: Chapter; featured: Project[]; cards: Project[]; lines: Project[] }
 
-/** The four years on one page; /journey/{year} redirects to #y{year}. */
 export function Story({ years }: { years: StoryYear[] }) {
   const { t } = useLang()
   return (

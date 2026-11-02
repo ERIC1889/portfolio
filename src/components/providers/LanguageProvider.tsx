@@ -18,13 +18,11 @@ function detectLang(): Lang {
     const stored = localStorage.getItem(LANG_KEY)
     if (isLang(stored)) return stored
   } catch {
-    // storage unavailable; fall through to the browser language
   }
   return (navigator.language || '').toLowerCase().startsWith('ko') ? 'ko' : 'en'
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // The server always renders Korean; the visitor's language is applied after mount.
   const [lang, setLangState] = useState<Lang>('ko')
 
   useEffect(() => {
@@ -38,7 +36,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(LANG_KEY, next)
     } catch {
-      // storage unavailable; the choice still applies for this visit
     }
     setLangState(next)
   }, [])
