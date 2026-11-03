@@ -187,9 +187,22 @@ describe('flagship: Finz personal tax calculators', () => {
     expect(anchors).toContain('refund-app')
     expect(anchors).toContain('finz-saas')
     const saas = koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))
-    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(saas).toContain(fact)
-    expect(saas).not.toMatch(/\d+건 해결|해결률/)
     expect(saas).toContain('개발사와 함께 정하며 개발에 참여')
+    const solved = koText(finz.sections?.find((s) => s.anchor === 'solved-saas'))
+    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(solved).toContain(fact)
+    expect(koText(finz.sections)).not.toMatch(/\d+건 해결|해결률/)
+  })
+
+  it('groups problem solving by product, right after each product', () => {
+    const anchors = finz.sections?.filter((s) => !s.lead).map((s) => s.anchor)
+    expect(anchors).toEqual(['decisions', 'solved', 'refund-app', 'solved-app', 'finz-saas', 'solved-saas', undefined, undefined])
+  })
+
+  it('tells the CODEF session story with the five-year check against Hometax records', () => {
+    const solved = koText(finz.sections?.find((s) => s.anchor === 'solved-app'))
+    for (const fact of ['첫 연도만 조회되고', 'commSession', '간편인증 한 번에 5개 연도', '홈택스에서 받은 자료와 대조', '인증 단계와 조회 단계'])
+      expect(solved).toContain(fact)
+    expect(koText(finz.contribution?.verified)).toContain('5개 연도')
   })
 })
 
@@ -262,10 +275,12 @@ describe('other work: Pitches', () => {
 describe('the agreed page shape', () => {
   const titles = (slug: string) => (bySlug(slug).sections ?? []).map((s) => s.title.ko)
 
-  it.each(FEATURED.filter((slug) => slug !== 'finz'))('%s has every part of a main project', (slug) => {
+  it.each(FEATURED)('%s has every part of a main project', (slug) => {
     const sections = bySlug(slug).sections ?? []
     expect(sections.filter((s) => s.lead).map((s) => s.title.ko)).toEqual(['핵심 성과', '문제 정의'])
-    expect(titles(slug)).toEqual(expect.arrayContaining(['주요 의사 결정', '핵심 기술 문제 해결', '회고 및 개선 방향', '관련 자료']))
+    for (const part of ['주요 의사 결정', '핵심 기술 문제 해결', '회고 및 개선 방향', '관련 자료']) {
+      expect(titles(slug).some((title) => title === part || title.startsWith(`${part} · `)), `${slug}: ${part}`).toBe(true)
+    }
     expect(bySlug(slug).contribution).toBeDefined()
   })
 

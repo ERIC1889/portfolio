@@ -36,17 +36,14 @@ function flow(title: Pair, caption: Pair, steps: FlowStep[]): Flow {
 }
 
 
-const PROBLEM: Pair = ['문제와 선택', 'Problem and choices']
-const IMPLEMENTATION: Pair = ['구현', 'Implementation']
-const VALIDATION: Pair = ['검증', 'Verification']
-const RESULT: Pair = ['결과', 'Result']
-const RETRO: Pair = ['남은 한계와 다음', 'Limits and next steps']
-const EVIDENCE: Pair = ['코드·자료', 'Code and material']
 const OUTCOMES: Pair = ['핵심 성과', 'Key results']
 const PROBLEM_DEFINITION: Pair = ['문제 정의', 'Problem']
 const ARCHITECTURE: Pair = ['시스템 구조', 'System structure']
 const DECISIONS: Pair = ['주요 의사 결정', 'Key decisions']
 const SOLVED: Pair = ['핵심 기술 문제 해결', 'Technical problems solved']
+const SOLVED_WEB: Pair = ['핵심 기술 문제 해결 · 개인 세금 계산기', 'Technical problems solved · personal tax calculators']
+const SOLVED_APP: Pair = ['핵심 기술 문제 해결 · Finz 모바일 앱', 'Technical problems solved · Finz mobile app']
+const SOLVED_SAAS: Pair = ['핵심 기술 문제 해결 · 세무사용 FINZ', 'Technical problems solved · FINZ for tax accountants']
 const REFLECTION: Pair = ['회고 및 개선 방향', 'Reflection and next steps']
 const MATERIAL: Pair = ['관련 자료', 'Related material']
 
@@ -132,6 +129,10 @@ export const projects: Project[] = [
           '운영 중인 웹 저장소 테스트 184개 통과: 계산 엔진 53개(가상자산 25·해외주식 28), 시세·환율 데이터 소스 31개 포함',
           'All 184 tests in the live website’s repository pass, including 53 calculation-engine tests (crypto 25, foreign stocks 28) and 31 market-data tests',
         ],
+        [
+          '간편인증 한 번으로 5개 연도 조회: 서비스와 분리한 스크립트로 CODEF 개발 환경에서 확인하고 홈택스에서 받은 자료와 대조',
+          'Five years fetched with one simple authentication: checked with a script kept apart from the service in the CODEF development environment, and compared with records downloaded from Hometax',
+        ],
       ]),
       notYet: pairs([
         ['사용자 수 같은 운영 지표는 집계하지 않음', 'No usage metrics such as user counts are collected'],
@@ -185,7 +186,7 @@ export const projects: Project[] = [
       ),
     ],
     flow: flow(
-      ['입력부터 결과까지', 'From input to result'],
+      ARCHITECTURE,
       [
         '운영 중인 finz.kr 코드 기준. 검증 스크립트는 6Way 계산 API에 기준 사례를 넣어 워크북 기대값과 비교합니다.',
         'Drawn from the code running on finz.kr. The verification script sends the reference case to the 6Way calculation API and compares it with the workbook’s expected values.',
@@ -256,57 +257,97 @@ export const projects: Project[] = [
       { kind: 'site', label: k('회사 웹 finz.kr', 'Company website finz.kr'), href: 'https://www.finz.kr' },
     ],
     sections: [
-      section('problem', PROBLEM, [
+      section(
+        'result',
+        OUTCOMES,
         [
-          '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 화면이 뜨는 것보다 숫자가 맞는 것과, 그 숫자가 어느 조문에서 나왔는지 보여 주는 것이 먼저였습니다.',
-          'People who know little about tax use these calculators, so one number can change a big decision. Getting the numbers right, and showing which statute each one comes from, came before getting the screens up.',
+          [
+            '부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기를 finz.kr에서 운영하고 있습니다. 사용자 수 같은 운영 지표는 집계하지 않아 적지 않습니다.',
+            'The property 6Way, digital-asset and foreign-stock capital gains and gift-valuation calculators are live at finz.kr. No usage metrics such as user counts are collected, so none are given.',
+          ],
+          [
+            '세무사와 함께 만든 6Way 계산 로직을 웹으로 옮긴 뒤 기준 워크북 21개 항목과 대조해, 모두 ±10원 안(최대 차이 1원)에 들어오는 것을 확인했습니다.',
+            'After the 6Way logic built with a tax accountant was ported to the web, all 21 items checked against the reference workbook landed within ±10 won (largest gap 1 won).',
+          ],
+          [
+            'Finz 앱에서는 간편인증 한 번으로 여러 연도의 근로소득 지급명세서를 조회하도록 바꿨고, CODEF 개발 환경에서 5개 연도를 조회해 홈택스에서 받은 자료와 대조했습니다.',
+            'In the Finz app, a single simple authentication now fetches several years of employment-income statements; five years were fetched in the CODEF development environment and checked against records downloaded from Hometax.',
+          ],
+          [
+            'Finz 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
+            'The Finz app (youth tax refund and property 6Way) won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).',
+          ],
         ],
+        { lead: true },
+      ),
+      section(
+        'problem',
+        PROBLEM_DEFINITION,
         [
-          '세금은 날짜에 따라 달라집니다. 가상자산은 2027년부터 과세되고 2026-12-31 시가가 취득가액이 될 수 있으며, 해외주식은 결제일 환율로 원화 환산합니다. 그런데 그날의 시세·환율을 주는 외부 API는 느리거나 실패하고, 아직 오지 않은 날짜에는 값이 없습니다.',
-          'Tax depends on dates. Crypto is taxed from 2027 and the 2026-12-31 price can become the cost basis; foreign stocks convert at settlement-date exchange rates. But the APIs that supply those prices and rates are slow or fail, and a date that hasn’t come yet has no value at all.',
+          [
+            '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 화면이 뜨는 것보다 숫자가 맞는 것과, 그 숫자가 어느 조문에서 나왔는지 보여 주는 것이 먼저였습니다.',
+            'People who know little about tax use these calculators, so one number can change a big decision. Getting the numbers right, and showing which statute each one comes from, came before getting the screens up.',
+          ],
+          [
+            '세금은 날짜에 따라 달라집니다. 가상자산은 2027년부터 과세되고 2026-12-31 시가가 취득가액이 될 수 있으며, 해외주식은 결제일 환율로 원화 환산합니다. 그런데 그날의 시세·환율을 주는 외부 API는 느리거나 실패하고, 아직 오지 않은 날짜에는 값이 없습니다.',
+            'Tax depends on dates. Crypto is taxed from 2027 and the 2026-12-31 price can become the cost basis; foreign stocks convert at settlement-date exchange rates. But the APIs that supply those prices and rates are slow or fail, and a date that hasn’t come yet has no value at all.',
+          ],
         ],
+        { lead: true },
+      ),
+      section(
+        'implementation',
+        DECISIONS,
         [
-          '6Way 계산 로직은 세무사와 함께 Python으로 작성해 두었고, 웹에서 바로 쓰려고 TypeScript로 옮긴 뒤 원본과 같은 결과를 내는지 기준 사례로 확인하기로 했습니다.',
-          'The 6Way logic had been written in Python together with a tax accountant; I ported it to TypeScript for the website and decided to prove with a reference case that it gives the same results.',
+          [
+            '계산 엔진을 웹 안으로: 세무사와 Python으로 작성한 6Way 계산 로직을 서버로 따로 띄우지 않고 TypeScript로 옮겨 Next.js 안에서 계산했습니다. 저장할 상태가 없고 혼자 운영하는 단계라 배포 단위를 하나로 두는 편이 낫다고 봤습니다. 대신 엔진이 두 벌이 되어, 옮긴 뒤 같은 값을 내는지 기준 사례로 확인하는 것을 결정의 일부로 묶었습니다.',
+            'Moving the engine into the web app: rather than running the 6Way logic, written in Python with a tax accountant, as a separate server, I ported it to TypeScript and calculate inside Next.js. With no state to store and one person running it, a single deployment was the better trade. The cost is two copies of the engine, so checking the port against a reference case was part of the decision.',
+          ],
+          [
+            '저장하지 않는 계산기: 회원가입 없이 쓰고, 입력한 세금 정보는 서버에 저장하지 않습니다. 민감한 정보를 맡지 않는 대신 사용 지표가 없어 어떤 계산기를 많이 쓰는지 모릅니다.',
+            'A calculator that keeps nothing: it needs no sign-up, and the tax details people enter are not stored on the server. That avoids holding sensitive data, at the price of having no usage figures, so I do not know which calculator is used most.',
+          ],
         ],
-      ]),
-      section('implementation', IMPLEMENTATION, [
+        { anchor: 'decisions' },
+      ),
+      section(
+        'implementation',
+        SOLVED_WEB,
         [
-          '해외주식 양도세는 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
-          'Foreign-stock gains convert each buy and sell at its own settlement-date rate, truncated to the won, and show the gain split into a stock-price part and an exchange-rate part. The filing deadline is worked out as 31 May of the next year, moved past weekends and holidays.',
+          [
+            '날짜마다 다른 시세와 환율. 문제: 해외주식은 결제일 환율, 가상자산은 2026-12-31 시가가 필요한데, 외부 API는 느리거나 실패하고 아직 오지 않은 날짜에는 값이 없습니다. 해결: 시세는 Upbit 1분봉 다음 CoinGecko, 환율은 한국은행 ECOS 다음 ECB 기준환율로 대체하고, 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 둡니다. 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시하고, 오지 않은 날짜는 외부를 부르지 않고 바로 거절합니다.',
+            'Prices and rates that change by date. Problem: foreign stocks need settlement-date exchange rates and crypto needs the 2026-12-31 price, but the APIs are slow or fail, and a date that hasn’t come yet has no value. Fix: prices fall back from Upbit 1-minute candles to CoinGecko and rates from the Bank of Korea ECOS to the ECB reference rate; fallback values are marked and cached briefly or not at all. Foreign-stock closes are cached only once the range is closed and complete, and a future date is refused without calling out.',
+          ],
+          [
+            '결제일 환율과 이익 나누기. 문제: 매수와 매도의 환율이 달라, 이익이 주가에서 왔는지 환율에서 왔는지 보이지 않습니다. 해결: 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
+            'Settlement-date rates and splitting the gain. Problem: buys and sells convert at different rates, so a gain does not show whether it came from the stock price or the currency. Fix: each buy and sell is converted at its own settlement-date rate, truncated to the won, and the gain is shown split into a stock-price part and an exchange-rate part. The filing deadline is 31 May of the next year, moved past weekends and holidays.',
+          ],
+          [
+            '증여 평가에 필요한 넉 달치 종가. 문제: 해외주식 증여는 증여일 앞뒤 2개월 종가 평균을 증여일 환율로 환산해 평가해야 합니다. 해결: 종가는 자동 조회, 시세표 붙여넣기, 평균 직접 입력 중에서 고를 수 있게 하고, 받는 사람별 공제·10년 합산·신고세액공제로 증여세를 추정합니다.',
+            'Four months of closes for a gift valuation. Problem: a gifted foreign stock is valued at the average close over the two months either side of the gift date, converted at the gift-date rate. Fix: the closes can be looked up, pasted from a price table or entered as an average, and the gift tax is estimated with relationship-based deductions, 10-year aggregation and the filing credit.',
+          ],
+          [
+            '아직 시가가 없는 가상자산. 문제: 2026-12-31 시가가 취득가액이 될 수 있지만 그날 전에는 조회할 수 없습니다. 해결: 회사 세무 SaaS의 가상자산 계산 엔진을 개인용으로 옮기면서, 판 날짜로 과세연도를 정하고, 시가가 없으면 실제 산 가격을 쓰는 보수적인 쪽(세금이 더 나올 수는 있어도 적게 안내하지는 않음)을 택해 화면에 알리며, 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
+            'Crypto with no price yet. Problem: the 2026-12-31 price can become the cost basis, but it cannot be looked up before that day. Fix: in adapting the company SaaS’s crypto tax engine for individuals, the tax year comes from the sale date, a missing price falls back to the actual cost (the cautious choice: the estimate may come out higher, but this never understates it) with a note on screen, and engine errors are rewritten in plain language.',
+          ],
+          [
+            '여섯 가지 경우와 실거래가. 문제: 주택 두 채를 각각 양도·증여·부담부증여하는 여섯 가지 경우를 중과 유예 전과 후 규칙으로 모두 계산해야 하고, 실거래가 API는 이미 인코딩된 인증키를 다시 인코딩하면 인증이 실패합니다. 해결: 경우마다 전후 규칙으로 따로 계산하고, 실거래가는 월별로 동시에 불러 12시간 단위로 다시 확인하며, URL을 직접 조립합니다. PDF는 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
+            'Six options and real-transaction prices. Problem: selling, gifting or gifting-with-debt each of two homes makes six options, each computed under the rules before and after the grace period, and the transaction-price API fails authentication if an already encoded key is encoded again. Fix: each option is computed separately under both rules; prices load month by month in parallel and are re-checked every 12 hours, with the URL assembled by hand. The PDF is a report drawn in a hidden iframe and saved through the print dialog.',
+          ],
+          [
+            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 ±10원 안(최대 차이 1원)인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. 웹 저장소 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 돌고, 기준 사례의 단지 이름과 금액은 고객 정보일 수 있어 공개하지 않습니다.',
+            'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items land within ±10 won (largest gap 1 won); the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 184 tests mock external APIs so they run offline, and the reference case’s apartment names and amounts are not shown because they may be client data.',
+          ],
         ],
-        [
-          '증여는 증여일 앞뒤 2개월 종가 평균을 증여일 환율로 환산해 평가하고(자동 조회·시세표 붙여넣기·평균 직접 입력), 받는 사람별 공제·10년 합산·신고세액공제로 증여세를 추정합니다.',
-          'A gift is valued at the average close over the two months either side of the gift date, converted at the gift-date rate (looked up, pasted from a price table or typed in), and the gift tax is estimated with relationship-based deductions, 10-year aggregation and the filing credit.',
-        ],
-        [
-          '디지털 자산은 회사 세무 SaaS의 가상자산 계산 엔진을 개인용으로 옮겼습니다. 판 날짜로 과세연도를 정하고, 2026-12-31 시가를 아직 조회할 수 없으면 실제 산 가격을 쓰는 보수적인 쪽을 택해 화면에 알리며, 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
-          'For digital assets I adapted the company SaaS’s crypto tax engine for individuals: the tax year comes from the sale date, a missing 2026-12-31 price falls back to the actual cost (the cautious choice) with a note on screen, and engine errors are rewritten in plain language.',
-        ],
-        [
-          '시세는 Upbit 1분봉을 먼저 쓰고 실패하면 CoinGecko로, 환율은 한국은행 ECOS를 먼저 쓰고 실패하면 ECB 기준환율로 대체합니다. 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 두고, 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시합니다. 아직 오지 않은 날짜는 외부를 부르지 않고 바로 거절합니다.',
-          'Prices come from Upbit 1-minute candles, falling back to CoinGecko; rates from the Bank of Korea ECOS, falling back to the ECB reference rate. Fallback values are marked and cached briefly or not at all, foreign-stock closes are cached only when the range is closed and complete, and a date that hasn’t come yet is refused without calling out.',
-        ],
-        [
-          '부동산 6Way는 A·B 주택마다 양도·증여·부담부증여를 계산해 여섯 가지 경우를 만들고, 각 경우를 중과 유예 전과 후 규칙으로 따로 계산합니다. 실거래가는 12시간 단위로 다시 확인하고 월별로 동시에 불러오며, 인증키가 인코딩되면 실패해 URL을 직접 조립했습니다. PDF는 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
-          'Property 6Way builds six options (sale, gift, gift with debt for homes A and B) and computes each under the rules before and after the grace period. Real-transaction prices are re-checked every 12 hours and loaded month by month in parallel, with the URL assembled by hand because an encoded key failed. The PDF is a report drawn in a hidden iframe and saved through the print dialog.',
-        ],
-      ]),
+        { anchor: 'solved' },
+      ),
       section(
         'implementation',
         ['같은 회사의 다른 작업 · Finz 모바일 앱 (청년 세금 환급 MVP, 미출시)', 'Also at Finz Labs · Finz mobile app (tax refund MVP, not released)'],
         [
           [
-            'Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다.',
-            'With Expo and FastAPI, I built the flow from simple authentication → fetching payment statements → calculating the refund → payment.',
-          ],
-          [
-            'CODEF 간편인증은 3초 간격으로 상태를 확인하고 270초가 지나면 만료로 처리합니다. 인증 상태는 대기·요청·확인 중·완료·실패·만료 여섯 가지를 하나의 타입으로 관리하고, 실패와 만료에는 다시 시도할 수 있게 했습니다.',
-            'CODEF simple authentication checks the status every 3 seconds and treats it as expired after 270 seconds. Its six states (idle, requested, checking, done, failed, expired) are managed as a single type, and a failed or expired attempt can be retried.',
-          ],
-          [
-            '인증 한 번으로 얻은 세션을 연도별 조회에 다시 쓰고, 조회는 3초 간격으로 하나씩 보냅니다. 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다. 기다리는 동안에는 진행 화면을 보여 줍니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
-            'The session from a single authentication is reused for every yearly query, and the queries go out one at a time, 3 seconds apart. If an error says identical requests overlapped, it waits 5 seconds, then 10, and tries again. Meanwhile a progress screen is shown. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
+            'Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
+            'With Expo and FastAPI, I built the flow from simple authentication → fetching payment statements → calculating the refund → payment. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
           ],
           [
             '결제(토스페이먼츠)를 요청한 사람이 실제 의뢰의 주인인지, 금액과 이미 결제됐는지를 서버에서 다시 확인합니다. 사용자·세무사·관리자마다 다른 화면을 보여 주지만, 실제 권한 검사는 서버가 합니다.',
@@ -345,11 +386,26 @@ export const projects: Project[] = [
       ),
       section(
         'implementation',
+        SOLVED_APP,
+        [
+          [
+            '연도마다 다시 걸리던 간편인증. 문제: 처음 구현은 연도마다 간편인증을 새로 요청해, 첫 연도만 조회되고 그 뒤에서 멈췄습니다. 사용자가 연도 수만큼 휴대폰 인증을 해야 하는 구조였습니다. 해결: CODEF 문서와 인증 흐름을 다시 확인해, 제출내역 조회에 세션 데이터를 요청하면 인증 세션(commSession)을 받고 이 세션으로 지급명세서를 연도만 바꿔 조회할 수 있다는 것을 찾았습니다. 서비스 코드와 분리한 Node.js 스크립트로 CODEF 개발 환경에서 간편인증 한 번에 5개 연도를 조회해 홈택스에서 받은 자료와 대조한 뒤, 백엔드를 인증 단계와 조회 단계로 나눠 옮겼습니다. 조회는 3초 간격으로 하나씩 보내고, 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다.',
+            'simple authentication repeated for every year. Problem: the first implementation asked for a new simple authentication for every year, so the first year came back and then it stalled; users would have had to approve on their phone once per year. Fix: going back through the CODEF documentation and the authentication flow showed that asking the submission-list lookup for session data returns an authenticated session (commSession), and that the payment-statement lookup can reuse it with only the year changed. A Node.js script kept apart from the service fetched five years with one authentication in the CODEF development environment, the results were checked against records downloaded from Hometax, and the backend was then rebuilt with authentication and lookup as separate steps. Lookups go out one at a time, 3 seconds apart, and an error saying identical requests overlapped is retried after 5 seconds, then 10.',
+          ],
+          [
+            '간편인증 대기와 만료. 문제: 간편인증은 사용자가 휴대폰에서 승인할 때까지 결과를 알 수 없습니다. 해결: 3초 간격으로 상태를 확인하고 270초가 지나면 만료로 처리합니다. 인증 상태는 대기·요청·확인 중·완료·실패·만료 여섯 가지를 하나의 타입으로 관리하고, 실패와 만료에는 다시 시도할 수 있게 했습니다.',
+            'waiting for and expiring authentication. Problem: simple authentication gives no result until the user approves it on their phone. Fix: the status is checked every 3 seconds and treated as expired after 270 seconds; the six states (idle, requested, checking, done, failed, expired) are managed as one type, and a failed or expired attempt can be retried.',
+          ],
+        ],
+        { anchor: 'solved-app' },
+      ),
+      section(
+        'implementation',
         ['같은 회사의 다른 작업 · 세무사용 FINZ (협력 개발사와 함께, 출시 전)', 'Also at Finz Labs · FINZ for tax accountants (with a partner company, not yet launched)'],
         [
           [
-            '세무사용 FINZ는 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖춘 세무사용 SaaS로, 협력 개발사와 함께 개발했습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다.',
-            'FINZ for tax accountants is a SaaS that calculates capital gains, gift, inheritance and comprehensive property tax, produces Hometax filing files and has an AI tax assistant, developed together with a partner development company. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures.',
+            '세무사용 FINZ는 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖춘 세무사용 SaaS로, 협력 개발사와 함께 개발했습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다. 제가 쓴 가격 정책·기능 잠금 범위 사양은 그대로 구현되어 코드에 출처로 남았습니다.',
+            'FINZ for tax accountants is a SaaS that calculates capital gains, gift, inheritance and comprehensive property tax, produces Hometax filing files and has an AI tax assistant, developed together with a partner development company. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures. My pricing and feature-lock spec was implemented as written and is cited as the source in the code.',
           ],
           [
             '세무사는 고객과 신고건을 만든 뒤 자료를 모읍니다. 시세는 국토교통부 실거래가로 채우고, 등기부·건축물대장은 공공조회로, 감정평가서·매매계약서 같은 서류는 스캔본 OCR로 불러오며(추출값은 검수한 뒤에만 계산기에 들어감), 세대 구성과 과거 양도 이력은 고객 간편인증으로 조회합니다.',
@@ -358,18 +414,6 @@ export const projects: Project[] = [
           [
             '신고는 양도소득세 4단계 위저드(양도인 → 자산 → 양수인 → 세액·전자신고)와 주식 양도·증여·상속·종합부동산세·주식평가 화면에서 만들고, 홈택스 전자신고 파일로 내보냅니다. AI 세무 어시스턴트는 문장 하나로 조회와 계산을 이어 주지만 세무사가 검토·확정해야 문서가 만들어지고, 법령 개정 모니터는 엔진이 참조하는 17개 법령·시행령의 시행일을 법제처와 대조해 바뀐 것을 보정 대상으로 표시합니다.',
             'Filings are built in a four-step capital gains wizard (seller → assets → buyer → tax and e-filing) and in the stock-sale, gift, inheritance, comprehensive property tax and share-valuation screens, then exported as Hometax e-filing files. The AI tax assistant chains lookups and calculations from a single sentence, but a document is produced only after the accountant reviews and confirms it; a law-change monitor compares the effective dates of the 17 statutes and decrees the engine relies on with the Ministry of Government Legislation and flags anything that changed.',
-          ],
-          [
-            '배포가 9번 잇달아 실패했을 때, 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 1,083MB에서 1,472MB로 36% 늘어난 것(검사 대상 파일 2,619 → 3,619개)을 확인했습니다. 서버와 같은 메모리 상한(973MB)에서 오류를 재현해 코드 결함이 아니라 서버 메모리 부족이 원인임을 밝혔고, 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했습니다. 개발사는 진단이 맞다고 확인하고, 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
-            'When nine deployments failed in a row, I measured before and after the blockchain library arrived and found type-check memory up 36%, from 1,083 MB to 1,472 MB (files checked: 2,619 → 3,619). Reproducing the crash under the server’s 973 MB heap cap showed the cause was server memory, not a code defect; I tested two fixes and recommended an 8 GB server or building images in CI. The vendor confirmed the diagnosis and changed deployment so a failed build no longer takes the service down.',
-          ],
-          [
-            '개발사가 완료했다고 한 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며(PR 참조 317개 대조), 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었고, 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 약 973만 원 적게 나오는 High 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
-            'I re-checked, one by one against code, tests and screens, the 269 items the vendor reported as done: 233 confirmed and 36 left open (317 PR references cross-checked), plus 45 new defects. Two had to be fixed before launch (payment and plan locking); for a High defect, where a parcel with no standard price was silently dropped from the tax and understated it by about ₩9.73 million, I traced the exact code and sent it as the top fix request.',
-          ],
-          [
-            '문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 인식이 끊기는 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사는 상한을 8,000으로 올리며 코드 주석에 그 진단을 남겼습니다. CI가 실제로 계산 오류를 잡는지 한 줄짜리 버그 7개를 심어 7개 모두 걸리는 것을 확인했고, 제가 쓴 가격 정책·기능 잠금 범위 사양은 그대로 구현되어 코드에 출처로 남았습니다.',
-            'In an OCR field test (11 document types, 17 files) I traced incomplete recognition to the output-token cap (1,200); the vendor raised it to 8,000 and credited the diagnosis in a code comment. I planted seven one-line bugs to see whether CI really catches calculation errors, and it caught all seven; my pricing and feature-lock spec was implemented as written and is cited as the source in the code.',
           ],
         ],
         {
@@ -419,35 +463,25 @@ export const projects: Project[] = [
         },
       ),
       section(
-        'validation',
-        VALIDATION,
+        'implementation',
+        SOLVED_SAAS,
         [
           [
-            '계산 검증은 화면 테스트와 나눴습니다. 기준 워크북(실제 2주택 사례)의 기대값과 비교하는 스크립트를 회사 웹 API에 돌리면 21개 항목이 모두 ±10원 안에 들어오고(최대 차이 1원), Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다.',
-            'Checking the numbers is kept apart from UI tests. A script compares the company web API against the expected values in a reference workbook (a real two-home case): all 21 items land within ±10 won (largest gap 1 won), and the Python engine has tests that match the same case to the won.',
+            '배포 9번 연속 실패. 문제: 배포가 아홉 번 잇달아 실패했는데 코드 결함인지 서버 문제인지 불분명했습니다. 해결: 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 1,083MB에서 1,472MB로 36% 늘어난 것(검사 대상 파일 2,619 → 3,619개)을 확인했고, 서버와 같은 메모리 상한(973MB)에서 오류를 재현해 서버 메모리 부족이 원인임을 밝혔습니다. 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했고, 개발사는 진단이 맞다고 확인한 뒤 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
+            'nine failed deployments in a row. Problem: deployments failed nine times running, and it was unclear whether the code or the server was at fault. Fix: measuring before and after the blockchain library arrived showed type-check memory up 36%, from 1,083 MB to 1,472 MB (files checked: 2,619 → 3,619), and reproducing the crash under the server’s 973 MB heap cap showed the cause was server memory. After two fixes were tested, an 8 GB server or building images in CI was recommended; the vendor confirmed the diagnosis and changed deployment so a failed build no longer takes the service down.',
           ],
           [
-            '워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에, ±10원을 허용 범위로 정했습니다. 기준 사례의 단지 이름과 금액은 고객 정보일 수 있어 공개하지 않습니다.',
-            "The workbook keeps fractions while the engine drops fractions of a won at each step, so ±10 won is the agreed tolerance. The reference case's apartment names and amounts may be client data, so they are not shown.",
+            '완료 보고 269건. 문제: 개발사가 완료했다고 보고한 작업이 실제로 끝났는지 알 수 없었습니다. 해결: 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며(PR 참조 317개 대조), 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었고, 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 약 973만 원 적게 나오는 High 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
+            '269 items reported done. Problem: there was no way to tell whether the work the vendor reported as done was really finished. Fix: each of the 269 items was re-checked against code, tests and screens: 233 confirmed and 36 left open (317 PR references cross-checked), plus 45 new defects. Two had to be fixed before launch (payment and plan locking); for a High defect, where a parcel with no standard price was silently dropped from the tax and understated it by about ₩9.73 million, the exact code was traced and sent as the top fix request.',
           ],
           [
-            '운영 중인 웹 저장소의 테스트 184개가 모두 통과합니다. 가상자산 엔진 25개, 해외주식 엔진 28개(익명화한 실제 증여 사례를 원 단위로 맞추는 검사 포함), 시세·환율 데이터 소스 31개가 들어 있고, 외부 API는 모의 응답으로 대신해 네트워크 없이 돕니다.',
-            'All 184 tests in the live website’s repository pass: 25 for the crypto engine, 28 for the foreign-stock engines (including checks that match an anonymised real gift case to the won) and 31 for the market-data sources, with external APIs mocked so they run offline.',
+            '끊기는 문서 인식과 CI 점검. 문제: 문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 인식 결과가 끝까지 나오지 않고 끊겼고, CI가 계산 오류를 실제로 잡는지도 확인된 적이 없었습니다. 해결: 끊김의 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사는 상한을 8,000으로 올리며 코드 주석에 그 진단을 남겼습니다. CI에는 한 줄짜리 버그 7개를 심어 7개 모두 걸리는 것을 확인했습니다.',
+            'cut-off OCR and checking CI. Problem: in an OCR field test (11 document types, 17 files) recognition stopped before the end of the document, and no one had checked whether CI really catches calculation errors. Fix: the cut-off was traced to the output-token cap (1,200); the vendor raised it to 8,000 and credited the diagnosis in a code comment. Seven one-line bugs were planted, and CI caught all seven.',
           ],
         ],
-        { anchor: 'validation' },
+        { anchor: 'solved-saas' },
       ),
-      section('result', RESULT, [
-        [
-          '부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기가 finz.kr에서 운영 중입니다. 사용자 수 같은 운영 지표는 집계하지 않아 적지 않습니다.',
-          'The property 6Way, digital-asset and foreign-stock gains and gift-valuation calculators are live at finz.kr. No usage metrics such as user counts are collected, so none are given.',
-        ],
-        [
-          'Finz 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
-          'The Finz app (youth tax refund and property 6Way) won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).',
-        ],
-      ]),
-      section('retro', RETRO, [
+      section('retro', REFLECTION, [
         [
           '기준 사례가 하나뿐입니다. 경계값·반올림·잘못된 입력 사례를 늘리고, 워크북 자체가 틀렸을 때 알아챌 방법도 정하겠습니다.',
           'There is only one reference case. I would add boundary, rounding and invalid-input cases, and decide how we would notice if the workbook itself were wrong.',
@@ -457,11 +491,15 @@ export const projects: Project[] = [
           'The crypto engine and the gift-valuation module were adapted from the company SaaS, so fixes made in the SaaS since then (rounding down below 10 won, a corrected statute reference) are not in the public calculators yet. I would move the engine into a shared package both use.',
         ],
         [
-          '결제 승인 뒤 저장이 실패하거나 같은 요청이 두 번 오는 것처럼 외부 시스템과 상태가 어긋나는 상황을, 실패를 일부러 일으켜 확인해 두겠습니다.',
-          'I would deliberately cause failures to check the cases where our state drifts from an external system, such as saving failing after a payment is approved, or the same request arriving twice.',
+          '앱의 연도별 조회는 요청 하나 안에서 3초 간격으로 순서대로 돌아, 연도가 많으면 몇 분이 걸립니다. 조회를 작업으로 넘기고 앱이 진행 상태를 확인하게 바꾸겠습니다. 세션이 만료되면 검증 스크립트처럼 다시 인증받지 않고 멈추는 점과, 일부 연도만 실패해도 완료로 끝나는 점도 실패한 연도를 알려 주도록 고치겠습니다.',
+          'In the app, the yearly lookups run one after another, 3 seconds apart, inside a single request, so many years can take minutes. I would hand the lookups to a background job and let the app poll its progress. When the session expires the backend stops instead of re-authenticating as the verification script does, and a run where only some years fail still ends as done; both should tell the user which years failed.',
+        ],
+        [
+          '앱에서 결제 승인 뒤 저장이 실패하거나 같은 요청이 두 번 오는 것처럼 외부 시스템과 상태가 어긋나는 상황을, 실패를 일부러 일으켜 확인해 두겠습니다.',
+          'I would deliberately cause failures to check the cases where the app’s state drifts from an external system, such as saving failing after a payment is approved, or the same request arriving twice.',
         ],
       ]),
-      section('evidence', EVIDENCE, [
+      section('evidence', MATERIAL, [
         [
           '코드는 회사 비공개 저장소에 있어 링크하지 않습니다. 대신 운영 화면, 시연 영상, 검증 실행 결과를 이 페이지에 둡니다.',
           "The code is in the company's private repositories, so it is not linked. The live screens, demo videos and verification results are on this page instead.",
