@@ -1685,9 +1685,9 @@ export const projects: Project[] = [
   {
     slug: 'teamflow',
     name: 'TeamFlow',
-    years: [2026],
+    years: [2025, 2026],
     tier: 'line',
-    period: '2026.03–2026.04',
+    period: '2025.09–2026.04',
     stack: ['React', 'Gemini API'],
     summary: k(
       '회의 발언을 받아 적어 문장별 감정과 회의 요약을 보여 주는 브라우저 프로토타입(3인). 한국디지털콘텐츠학회 2026 하계 논문(1저자).',

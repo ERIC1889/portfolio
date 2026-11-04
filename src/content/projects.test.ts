@@ -37,7 +37,7 @@ const PLACEMENT = [
   ['llm-dolbom', 'line', undefined, [2024]],
   ['patentry', 'line', undefined, [2024]],
   ['dreamtrack', 'line', undefined, [2025]],
-  ['teamflow', 'line', undefined, [2026]],
+  ['teamflow', 'line', undefined, [2025, 2026]],
   ['unifit', 'line', undefined, [2026]],
 ] as const
 
