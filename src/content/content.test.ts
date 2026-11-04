@@ -51,7 +51,7 @@ describe('profile', () => {
     expect(profile.role.ko).toBe('백엔드 중심 풀스택 개발자 · 2027년 2월 졸업 예정')
     expect(profile.quote.ko).toBe('익숙한 기술에 머물기보다,\n필요한 것을 직접 만들어 왔습니다.')
     expect(profile.quote.en).toBe("Beyond the tools I knew,\nI've built what was needed.")
-    expect(profile.intro.ko).toBe('TypeScript와 Python으로 웹과 API를 만들고, 외부 데이터 연동과 계산 결과 검증을 맡아 왔습니다.')
+    expect(profile.intro.ko).toBe('TypeScript와 Python으로 웹과 API를 만들고, 외부 데이터 연동과 계산 결과 검증을 맡았습니다.')
   })
 
   it('lists email and professional profiles only — no phone, no address', () => {
@@ -122,7 +122,7 @@ describe('archive', () => {
   it('credits the 2025 summer conference awards to the Korea Digital Contents Society', () => {
     const summer2025 = archive.awards.filter((a) => a.date.startsWith('25.07'))
     expect(summer2025).toHaveLength(2)
-    for (const award of summer2025) expect(award.org.ko).toBe('한국 디지털 콘텐츠 학회')
+    for (const award of summer2025) expect(award.org.ko).toBe('한국디지털콘텐츠학회')
   })
 
   it('sorts every paper by kind and counts only conference papers on the home page', () => {
@@ -154,7 +154,7 @@ describe('archive', () => {
       ['프로젝트', projects.length],
       ['학술대회 논문', 7],
       ['수상', archive.awards.length],
-      ['대외 활동', archive.activities.length],
+      ['활동', archive.activities.length],
     ])
     expect(getRecordStats()[1].note?.ko).toBe('국제 1 · 1저자 3')
     expect(archive.awards.some((a) => a.name.ko.includes('대상(1등)'))).toBe(true)

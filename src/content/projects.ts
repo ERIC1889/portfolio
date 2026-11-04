@@ -67,7 +67,7 @@ export const projects: Project[] = [
     audience: k('집·가상자산·해외주식을 가진 개인', 'Individuals with homes, crypto or foreign stocks'),
     period: '2026.04–',
     team: k('주식회사 Finz Labs (직원 5명)', 'Finz Labs (five people)'),
-    role: k('설계·개발·운영 (직함 CTO)', 'Design, build and operation (title: CTO)'),
+    role: k('개발 총괄 · 설계·개발·운영', 'Head of development · design, build and operation'),
     status: k('운영 중 (finz.kr)', 'Live (finz.kr)'),
     statusCheckedAt: '2026-10-29',
     stack: ['Next.js', 'TypeScript', 'React', 'Vitest'],
@@ -77,20 +77,20 @@ export const projects: Project[] = [
     ),
     features: pairs([
       [
-        '해외주식 양도세 엔진: 매수·매도를 각자의 결제일 환율로 원화 환산하고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눔. 증여 평가(전후 2개월 평균 종가)와 증여세 추정까지',
-        'Foreign-stock capital gains engine: each buy and sell converted at its own settlement-date rate, with the gain split into a stock-price part and an exchange-rate part; plus gift valuation (two-month average close) and a gift-tax estimate',
+        '해외주식 양도세·증여세: 매수·매도를 각자의 결제일 환율로 환산하고 이익을 주가 몫·환율 몫으로 나눠 표시, 증여 평가(전후 2개월 평균 종가)와 증여세 추정',
+        'Foreign-stock capital gains and gift tax: each buy and sell converted at its own settlement-date rate, the gain shown split into a price part and a currency part, plus gift valuation (two-month average close) and a gift-tax estimate',
       ],
       [
-        '시세·환율 데이터 계층: Upbit→CoinGecko, 한국은행 ECOS→ECB로 대체 조회하고, 확정된 값만 오래 캐시하며 사용자별·전체 요청을 제한',
-        'Market-data layer: Upbit→CoinGecko and Bank of Korea ECOS→ECB fallbacks, long caching only for settled values, and per-user plus global rate limits',
+        '시세·환율 데이터 계층: Upbit→CoinGecko, 한국은행 ECOS→ECB 대체 조회, 확정된 값만 오래 캐시, 사용자별·전체 요청 제한',
+        'Market-data layer: Upbit→CoinGecko and Bank of Korea ECOS→ECB fallbacks, long caching only for settled values, per-user and global rate limits',
       ],
       [
-        '부동산 6Way: 세무사와 함께 Python으로 작성한 계산 로직을 TypeScript로 옮기고, 국토교통부 실거래가 조회와 PDF 리포트를 붙임',
-        'Property 6Way: the tax logic written in Python with a tax accountant, ported to TypeScript, with real-transaction price lookup and a PDF report',
+        '부동산 6Way: 세무사와 Python으로 만든 계산 로직을 TypeScript로 이식, 국토교통부 실거래가 조회와 PDF 리포트 연동',
+        'Property 6Way: the tax logic written in Python with a tax accountant ported to TypeScript, with land-ministry transaction prices and a PDF report',
       ],
       [
-        '디지털 자산: 회사 세무 SaaS의 가상자산 계산 엔진을 개인용으로 옮겨 과세연도 판정, 시가가 없을 때의 보수적 대체값, 쉬운 오류 문구를 붙임',
-        'Digital assets: the company SaaS’s crypto tax engine adapted for individuals, with tax-year filtering, a cautious fallback when a price is missing and plain-language errors',
+        '디지털 자산: 세무사용 FINZ(회사 세무 SaaS)의 가상자산 엔진을 개인용으로 이식, 과세연도 판정·시가 없을 때의 보수적 대체값·쉬운 오류 문구 추가',
+        'Digital assets: the crypto engine of FINZ for tax accountants (the company SaaS) adapted for individuals, adding tax-year filtering, a cautious fallback when a price is missing and plain-language errors',
       ],
     ]),
     contribution: {
@@ -104,19 +104,19 @@ export const projects: Project[] = [
           'The foreign-stock capital gains engine and gift-tax estimate, the market-data layer, the property 6Way engine and its PDF report',
         ],
         [
-          '디지털 자산 엔진·증여 평가 모듈: 회사 세무 SaaS의 코드를 개인용으로 옮기고 연도 판정·대체값·오류 문구를 더함',
-          'Digital-asset engine and gift valuation module: company SaaS code adapted for individuals, adding tax-year filtering, fallbacks and plain-language errors',
+          '디지털 자산 엔진·증여 평가 모듈: 세무사용 FINZ, 즉 회사 세무 SaaS의 코드를 개인용으로 옮기고 연도 판정·대체값·오류 문구를 더함',
+          'Digital-asset engine and gift valuation module: code from FINZ for tax accountants (the company SaaS) adapted for individuals, adding tax-year filtering, fallbacks and plain-language errors',
         ],
         ['Finz 모바일 앱과 백엔드 (Expo · FastAPI, 미출시)', 'The Finz mobile app and its backend (Expo · FastAPI, not released)'],
         [
-          '세무사용 FINZ: 가격 정책·기능 잠금 범위 사양, 개발사 작업 269건 재검증, 배포 장애 원인 분석',
-          'FINZ for tax accountants: the pricing and feature-lock spec, re-verifying 269 vendor items, the deployment-failure root cause',
+          '세무사용 FINZ 가격 정책·기능 잠금 범위 사양 작성 (구현에 그대로 반영)',
+          'The pricing and feature-lock spec for FINZ for tax accountants (implemented as written)',
         ],
       ]),
       joint: pairs([
-        ['세금 계산 로직 정리 (세무사와 함께)', 'Working out the tax logic (with a tax accountant)'],
+        ['세금 계산 로직 정리 (세무사)', 'Working out the tax logic (with a tax accountant)'],
         [
-          '세무사용 FINZ의 세금 계산 엔진 초안, 외부 API 연동, 배포·운영 방식, 개발 도구 (협력 개발사와 함께)',
+          '세무사용 FINZ의 세금 계산 엔진 초안, 외부 API 연동, 배포·운영 방식, 개발 도구 (협력 개발사)',
           'For FINZ for tax accountants: the tax-engine draft, external API integrations, the deployment and operations approach and the development tools (with the partner developer)',
         ],
       ]),
@@ -132,6 +132,10 @@ export const projects: Project[] = [
         [
           '간편인증 한 번으로 5개 연도 조회: 서비스와 분리한 스크립트로 CODEF 개발 환경에서 확인하고 홈택스에서 받은 자료와 대조',
           'Five years fetched with one simple authentication: checked with a script kept apart from the service in the CODEF development environment, and compared with records downloaded from Hometax',
+        ],
+        [
+          '세무사용 FINZ: 개발사 작업 269건 재검증(233 확인 · 36 미완료 · 새 결함 45), 배포 9번 연속 실패 원인 재현',
+          'FINZ for tax accountants: re-verified 269 vendor items (233 confirmed · 36 open · 45 new defects), reproduced the cause of nine failed deployments in a row',
         ],
       ]),
       notYet: pairs([
@@ -188,8 +192,8 @@ export const projects: Project[] = [
     flow: flow(
       ARCHITECTURE,
       [
-        '운영 중인 finz.kr 코드 기준. 검증 스크립트는 6Way 계산 API에 기준 사례를 넣어 워크북 기대값과 비교합니다.',
-        'Drawn from the code running on finz.kr. The verification script sends the reference case to the 6Way calculation API and compares it with the workbook’s expected values.',
+        '운영 중인 finz.kr 코드를 기준으로 그린 흐름입니다.',
+        'The flow as it runs in the finz.kr code.',
       ],
       [
         step(
@@ -221,7 +225,7 @@ export const projects: Project[] = [
         '2026-10-29',
       ),
       metric(
-        ['운영 웹 저장소 테스트', 'Live website repository tests'],
+        ['finz.kr 저장소 테스트', 'finz.kr repository tests'],
         '184 통과',
         [
           '계산 엔진 53개(가상자산 25 · 해외주식 28, 익명화한 실제 증여 사례 포함), 시세·환율 데이터 소스 31개, 화면·입력 변환 등',
@@ -240,7 +244,7 @@ export const projects: Project[] = [
         '2026-10-29',
       ),
       metric(
-        ['보안 테스트 (환급 앱 백엔드)', 'Security tests (refund app backend)'],
+        ['보안 테스트 (Finz 앱 백엔드)', 'Security tests (Finz app backend)'],
         '57 통과',
         ['설정, 암호화, JWT, 미들웨어, 모델 제약, 비밀번호 규칙', 'Configuration, encryption, JWT, middleware, model constraints, password rules'],
         ['pytest, 로컬 실행 · 웹 계산 기능과는 별개', 'pytest, run locally · separate from the web calculator'],
@@ -250,10 +254,10 @@ export const projects: Project[] = [
     ],
     links: [
       { kind: 'live', label: k('개인 세금 계산기 열기', 'Open the calculators'), href: 'https://www.finz.kr/personal' },
+      { kind: 'live', label: k('부동산 6Way', 'Property 6Way'), href: 'https://www.finz.kr/personal/property' },
       { kind: 'live', label: k('디지털 자산 계산기', 'Digital-asset calculator'), href: 'https://www.finz.kr/personal/digital-asset/calculator' },
       { kind: 'live', label: k('해외주식 양도세 계산기', 'Foreign-stock gains calculator'), href: 'https://www.finz.kr/personal/foreign-stock/capital-gains' },
       { kind: 'live', label: k('해외주식 증여 평가 계산기', 'Foreign-stock gift valuation'), href: 'https://www.finz.kr/personal/foreign-stock/valuation' },
-      { kind: 'live', label: k('부동산 6Way', 'Property 6Way'), href: 'https://www.finz.kr/personal/property' },
       { kind: 'site', label: k('회사 웹 finz.kr', 'Company website finz.kr'), href: 'https://www.finz.kr' },
     ],
     sections: [
@@ -262,20 +266,20 @@ export const projects: Project[] = [
         OUTCOMES,
         [
           [
-            '부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기를 finz.kr에서 운영하고 있습니다. 사용자 수 같은 운영 지표는 집계하지 않아 적지 않습니다.',
-            'The property 6Way, digital-asset and foreign-stock capital gains and gift-valuation calculators are live at finz.kr. No usage metrics such as user counts are collected, so none are given.',
+            '부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기를 finz.kr에서 운영하고 있습니다.',
+            'The property 6Way, digital-asset and foreign-stock capital gains and gift-valuation calculators are live at finz.kr.',
           ],
           [
-            '세무사와 함께 만든 6Way 계산 로직을 웹으로 옮긴 뒤 기준 워크북 21개 항목과 대조해, 모두 ±10원 안(최대 차이 1원)에 들어오는 것을 확인했습니다.',
-            'After the 6Way logic built with a tax accountant was ported to the web, all 21 items checked against the reference workbook landed within ±10 won (largest gap 1 won).',
+            '세무사와 함께 만든 6Way 계산 로직을 웹으로 옮긴 뒤 기준 워크북의 결과 항목 21개와 대조해, 모두 ±10원 안(최대 차이 1원)에 들어오는 것을 확인했습니다.',
+            'After the 6Way logic built with a tax accountant was ported to the web, all 21 result items checked against the reference workbook landed within ±10 won (largest gap 1 won).',
           ],
           [
-            'Finz 앱에서는 간편인증 한 번으로 여러 연도의 근로소득 지급명세서를 조회하도록 바꿨고, CODEF 개발 환경에서 5개 연도를 조회해 홈택스에서 받은 자료와 대조했습니다.',
-            'In the Finz app, a single simple authentication now fetches several years of employment-income statements; five years were fetched in the CODEF development environment and checked against records downloaded from Hometax.',
+            'Finz 모바일 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
+            'The Finz mobile app (youth tax refund and property 6Way) won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).',
           ],
           [
-            'Finz 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
-            'The Finz app (youth tax refund and property 6Way) won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).',
+            'Finz 모바일 앱에서는 간편인증 한 번으로 여러 연도의 근로소득 지급명세서를 조회하도록 바꿨고, CODEF 개발 환경에서 5개 연도를 조회해 홈택스에서 받은 자료와 대조했습니다.',
+            'In the Finz mobile app, a single simple authentication now fetches several years of employment-income statements; five years were fetched in the CODEF development environment and checked against records downloaded from Hometax.',
           ],
         ],
         { lead: true },
@@ -285,12 +289,12 @@ export const projects: Project[] = [
         PROBLEM_DEFINITION,
         [
           [
-            '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 화면이 뜨는 것보다 숫자가 맞는 것과, 그 숫자가 어느 조문에서 나왔는지 보여 주는 것이 먼저였습니다.',
-            'People who know little about tax use these calculators, so one number can change a big decision. Getting the numbers right, and showing which statute each one comes from, came before getting the screens up.',
+            '세무를 잘 모르는 사람이 쓰는 계산기라 결과 숫자 하나가 큰 결정을 바꿉니다. 화면을 빨리 만드는 것보다 숫자가 맞는 것과, 그 숫자가 어느 조문에서 나왔는지 보여 주는 것이 먼저였습니다.',
+            'People who know little about tax use these calculators, so one number can change a big decision. Getting the numbers right, and showing which statute each one comes from, came before getting screens out quickly.',
           ],
           [
-            '세금은 날짜에 따라 달라집니다. 가상자산은 2027년부터 과세되고 2026-12-31 시가가 취득가액이 될 수 있으며, 해외주식은 결제일 환율로 원화 환산합니다. 그런데 그날의 시세·환율을 주는 외부 API는 느리거나 실패하고, 아직 오지 않은 날짜에는 값이 없습니다.',
-            'Tax depends on dates. Crypto is taxed from 2027 and the 2026-12-31 price can become the cost basis; foreign stocks convert at settlement-date exchange rates. But the APIs that supply those prices and rates are slow or fail, and a date that hasn’t come yet has no value at all.',
+            '세금은 날짜에 따라 달라집니다. 가상자산은 2027년부터 과세되고 2026-12-31 시가가 취득가액이 될 수 있으며, 해외주식은 결제일 환율로 원화 환산합니다.',
+            'Tax depends on dates. Crypto is taxed from 2027 and the 2026-12-31 price can become the cost basis; foreign stocks convert at settlement-date exchange rates.',
           ],
         ],
         { lead: true },
@@ -304,8 +308,12 @@ export const projects: Project[] = [
             'Moving the engine into the web app: rather than running the 6Way logic, written in Python with a tax accountant, as a separate server, I ported it to TypeScript and calculate inside Next.js. With no state to store and one person running it, a single deployment was the better trade. The cost is two copies of the engine, so checking the port against a reference case was part of the decision.',
           ],
           [
-            '저장하지 않는 계산기: 회원가입 없이 쓰고, 입력한 세금 정보는 서버에 저장하지 않습니다. 민감한 정보를 맡지 않는 대신 사용 지표가 없어 어떤 계산기를 많이 쓰는지 모릅니다.',
-            'A calculator that keeps nothing: it needs no sign-up, and the tax details people enter are not stored on the server. That avoids holding sensitive data, at the price of having no usage figures, so I do not know which calculator is used most.',
+            '저장하지 않는 계산기: 회원가입 없이 쓰고, 입력한 세금 정보는 서버에 저장하지 않습니다. 민감한 정보를 맡지 않는 쪽을 택했습니다.',
+            'A calculator that keeps nothing: it needs no sign-up, and the tax details people enter are not stored on the server. The choice was not to hold sensitive data.',
+          ],
+          [
+            'PDF 리포트: 별도 PDF 라이브러리 없이, 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
+            'The PDF report: instead of a PDF library, the report is drawn in a hidden iframe and saved through the browser’s print dialog.',
           ],
         ],
         { anchor: 'decisions' },
@@ -315,8 +323,8 @@ export const projects: Project[] = [
         SOLVED_WEB,
         [
           [
-            '날짜마다 다른 시세와 환율. 문제: 해외주식은 결제일 환율, 가상자산은 2026-12-31 시가가 필요한데, 외부 API는 느리거나 실패하고 아직 오지 않은 날짜에는 값이 없습니다. 해결: 시세는 Upbit 1분봉 다음 CoinGecko, 환율은 한국은행 ECOS 다음 ECB 기준환율로 대체하고, 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 둡니다. 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시하고, 오지 않은 날짜는 외부를 부르지 않고 바로 거절합니다.',
-            'Prices and rates that change by date. Problem: foreign stocks need settlement-date exchange rates and crypto needs the 2026-12-31 price, but the APIs are slow or fail, and a date that hasn’t come yet has no value. Fix: prices fall back from Upbit 1-minute candles to CoinGecko and rates from the Bank of Korea ECOS to the ECB reference rate; fallback values are marked and cached briefly or not at all. Foreign-stock closes are cached only once the range is closed and complete, and a future date is refused without calling out.',
+            '날짜마다 다른 시세와 환율. 문제: 해외주식은 결제일 환율, 가상자산은 2026-12-31 시가가 필요한데, 외부 API는 느리거나 실패하고 아직 오지 않은 날짜에는 값이 없습니다. 해결: 시세는 Upbit 1분봉 다음 CoinGecko, 환율은 한국은행 ECOS 다음 ECB 기준환율로 대체하고, 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 둡니다. 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시하고, 아직 오지 않은 날짜는 외부 API를 호출하지 않습니다.',
+            'Prices and rates that change by date. Problem: foreign stocks need settlement-date exchange rates and crypto needs the 2026-12-31 price, but the APIs are slow or fail, and a date that hasn’t come yet has no value. Fix: prices fall back from Upbit 1-minute candles to CoinGecko and rates from the Bank of Korea ECOS to the ECB reference rate; fallback values are marked and cached briefly or not at all. Foreign-stock closes are cached only once the range is closed and complete, and a date that has not come yet never triggers an external call.',
           ],
           [
             '결제일 환율과 이익 나누기. 문제: 매수와 매도의 환율이 달라, 이익이 주가에서 왔는지 환율에서 왔는지 보이지 않습니다. 해결: 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
@@ -327,39 +335,43 @@ export const projects: Project[] = [
             'Four months of closes for a gift valuation. Problem: a gifted foreign stock is valued at the average close over the two months either side of the gift date, converted at the gift-date rate. Fix: the closes can be looked up, pasted from a price table or entered as an average, and the gift tax is estimated with relationship-based deductions, 10-year aggregation and the filing credit.',
           ],
           [
-            '아직 시가가 없는 가상자산. 문제: 2026-12-31 시가가 취득가액이 될 수 있지만 그날 전에는 조회할 수 없습니다. 해결: 회사 세무 SaaS의 가상자산 계산 엔진을 개인용으로 옮기면서, 판 날짜로 과세연도를 정하고, 시가가 없으면 실제 산 가격을 쓰는 보수적인 쪽(세금이 더 나올 수는 있어도 적게 안내하지는 않음)을 택해 화면에 알리며, 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
-            'Crypto with no price yet. Problem: the 2026-12-31 price can become the cost basis, but it cannot be looked up before that day. Fix: in adapting the company SaaS’s crypto tax engine for individuals, the tax year comes from the sale date, a missing price falls back to the actual cost (the cautious choice: the estimate may come out higher, but this never understates it) with a note on screen, and engine errors are rewritten in plain language.',
+            '아직 시가가 없는 가상자산. 문제: 2026-12-31 시가가 취득가액이 될 수 있지만 그날 전에는 조회할 수 없습니다. 해결: 세무사용 FINZ의 가상자산 계산 엔진을 개인용으로 옮기면서 판 날짜로 과세연도를 정하고, 시가가 없으면 실제 산 가격을 쓰는 보수적인 쪽을 택해 화면에 알립니다. 세금이 더 나올 수는 있어도 적게 안내하지는 않는 방향입니다. 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
+            'Crypto with no price yet. Problem: the 2026-12-31 price can become the cost basis, but it cannot be looked up before that day. Fix: in adapting the crypto tax engine of FINZ for tax accountants for individuals, the tax year comes from the sale date, and a missing price falls back to the actual cost with a note on screen. The estimate may come out higher that way, but it never understates the tax. Engine errors are rewritten in plain language.',
           ],
           [
-            '여섯 가지 경우와 실거래가. 문제: 주택 두 채를 각각 양도·증여·부담부증여하는 여섯 가지 경우를 중과 유예 전과 후 규칙으로 모두 계산해야 하고, 실거래가 API는 이미 인코딩된 인증키를 다시 인코딩하면 인증이 실패합니다. 해결: 경우마다 전후 규칙으로 따로 계산하고, 실거래가는 월별로 동시에 불러 12시간 단위로 다시 확인하며, URL을 직접 조립합니다. PDF는 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
-            'Six options and real-transaction prices. Problem: selling, gifting or gifting-with-debt each of two homes makes six options, each computed under the rules before and after the grace period, and the transaction-price API fails authentication if an already encoded key is encoded again. Fix: each option is computed separately under both rules; prices load month by month in parallel and are re-checked every 12 hours, with the URL assembled by hand. The PDF is a report drawn in a hidden iframe and saved through the print dialog.',
+            '여섯 가지 경우. 문제: 주택 두 채를 각각 양도·증여·부담부증여하는 여섯 경우를 중과 유예 전·후 규칙으로 모두 계산해야 합니다. 해결: 경우마다 전후 규칙으로 따로 계산하고, 결과를 한 화면에서 비교합니다.',
+            'Six options. Problem: selling, gifting or gifting-with-debt each of two homes makes six options, each to be computed under the rules before and after the surcharge grace period. Fix: each option is computed separately under both rules, and the results are compared on one screen.',
           ],
           [
-            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 ±10원 안(최대 차이 1원)인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. 웹 저장소 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 돌고, 기준 사례의 단지 이름과 금액은 고객 정보일 수 있어 공개하지 않습니다.',
-            'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items land within ±10 won (largest gap 1 won); the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 184 tests mock external APIs so they run offline, and the reference case’s apartment names and amounts are not shown because they may be client data.',
+            '실거래가 API. 문제: 이미 인코딩된 인증키를 다시 인코딩하면 인증이 실패하고, 조회가 월 단위라 느립니다. 해결: URL을 직접 조립하고, 월별로 동시에 불러 12시간 단위로 다시 확인합니다.',
+            'The transaction-price API. Problem: encoding an already encoded key fails authentication, and month-by-month lookups are slow. Fix: the URL is assembled by hand, and the months load in parallel and are re-checked every 12 hours.',
+          ],
+          [
+            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 ±10원 안(최대 차이 1원)인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. 웹 저장소 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 돕니다.',
+            'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items land within ±10 won (largest gap 1 won); the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 184 tests mock external APIs so they run offline.',
           ],
         ],
         { anchor: 'solved' },
       ),
       section(
         'implementation',
-        ['같은 회사의 다른 작업 · Finz 모바일 앱 (청년 세금 환급 MVP, 미출시)', 'Also at Finz Labs · Finz mobile app (tax refund MVP, not released)'],
+        ['Finz 모바일 앱 (미출시)', 'Finz mobile app (not released)'],
         [
           [
-            'Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
-            'With Expo and FastAPI, I built the flow from simple authentication → fetching payment statements → calculating the refund → payment. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
+            '같은 회사에서 만든 청년 세금 환급 MVP입니다. Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
+            'A youth tax-refund MVP built at the same company. With Expo and FastAPI, I built the flow from simple authentication → fetching payment statements → calculating the refund → payment. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
           ],
           [
-            '결제(토스페이먼츠)를 요청한 사람이 실제 의뢰의 주인인지, 금액과 이미 결제됐는지를 서버에서 다시 확인합니다. 사용자·세무사·관리자마다 다른 화면을 보여 주지만, 실제 권한 검사는 서버가 합니다.',
+            '결제(토스페이먼츠)를 요청한 사람이 실제 의뢰의 주인인지, 금액이 맞는지, 이미 결제된 건은 아닌지를 서버에서 다시 확인합니다. 사용자·세무사·관리자마다 다른 화면을 보여 주지만, 실제 권한 검사는 서버가 합니다.',
             'For payments (Toss Payments), the server re-checks that the person paying owns the request, the amount, and whether it has already been paid. Users, tax accountants and admins see different screens, but the real permission checks happen on the server.',
           ],
           [
-            '같은 백엔드에서 실거래가 데이터는 Celery Beat로 매주 월요일 조정대상지역 전체를 동기화하고, 실패하면 시간을 두고 다시 시도합니다. 보안 테스트는 GitHub Actions에서 push마다 실행됩니다.',
-            'In the same backend, Celery Beat syncs real-transaction prices for every regulated area each Monday and retries after a delay on failure. The security tests run in GitHub Actions on every push.',
+            '실거래가 데이터는 같은 백엔드의 Celery Beat가 매주 월요일 조정대상지역 전체를 동기화하고, 실패하면 시간을 두고 다시 시도합니다. 보안 테스트는 GitHub Actions에서 push마다 실행됩니다.',
+            'Real-transaction prices are synced for every regulated area each Monday by Celery Beat in the same backend, with a delayed retry on failure. The security tests run in GitHub Actions on every push.',
           ],
           [
-            '같은 앱에서 세무사 목록 → 의뢰 → 서류 업로드 → 채팅(5초 간격 갱신) → 결제로 이어지는 세무사 상담 연결을 실제 백엔드 API로 만들었습니다.',
-            'In the same app I built the tax-accountant connection on the real backend API: accountant list → request → document upload → chat (refreshed every 5 s) → payment.',
+            '세무사 상담 연결(세무사 목록 → 의뢰 → 서류 업로드 → 채팅(5초 간격 갱신) → 결제)도 실제 백엔드 API로 만들었습니다.',
+            'The tax-accountant connection (accountant list → request → document upload → chat refreshed every 5 s → payment) is also built on the real backend API.',
           ],
           [
             '생애주기 금융 기능(금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교)은 예시 데이터로 동작하는 시연 화면입니다. 상품 비교의 검색은 입력한 문장에서 상품 종류·기간·정렬 조건을 뽑아내는 규칙 기반 파서로 만들었습니다.',
@@ -374,10 +386,10 @@ export const projects: Project[] = [
               '/media/finz/app-demo-poster.webp',
               1280,
               720,
-              ['청년 소득세 환급 앱 시연 영상', 'Tax refund app demo video'],
+              ['청년 세금 환급 앱 시연 영상', 'Youth tax refund app demo video'],
               [
-                '청년 소득세 환급 · 앱 실제 화면을 단계별 설명과 함께 편집한 영상',
-                'Tax refund for young people · real app screens edited with step captions',
+                '청년 세금 환급 · 실제 앱 화면을 단계별 설명과 함께 편집한 영상',
+                'Youth tax refund · real app screens edited with step captions',
               ],
               '2026-09-10',
             ),
@@ -389,23 +401,23 @@ export const projects: Project[] = [
         SOLVED_APP,
         [
           [
-            '연도마다 다시 걸리던 간편인증. 문제: 처음 구현은 연도마다 간편인증을 새로 요청해, 첫 연도만 조회되고 그 뒤에서 멈췄습니다. 사용자가 연도 수만큼 휴대폰 인증을 해야 하는 구조였습니다. 해결: CODEF 문서와 인증 흐름을 다시 확인해, 제출내역 조회에 세션 데이터를 요청하면 인증 세션(commSession)을 받고 이 세션으로 지급명세서를 연도만 바꿔 조회할 수 있다는 것을 찾았습니다. 서비스 코드와 분리한 Node.js 스크립트로 CODEF 개발 환경에서 간편인증 한 번에 5개 연도를 조회해 홈택스에서 받은 자료와 대조한 뒤, 백엔드를 인증 단계와 조회 단계로 나눠 옮겼습니다. 조회는 3초 간격으로 하나씩 보내고, 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다.',
-            'simple authentication repeated for every year. Problem: the first implementation asked for a new simple authentication for every year, so the first year came back and then it stalled; users would have had to approve on their phone once per year. Fix: going back through the CODEF documentation and the authentication flow showed that asking the submission-list lookup for session data returns an authenticated session (commSession), and that the payment-statement lookup can reuse it with only the year changed. A Node.js script kept apart from the service fetched five years with one authentication in the CODEF development environment, the results were checked against records downloaded from Hometax, and the backend was then rebuilt with authentication and lookup as separate steps. Lookups go out one at a time, 3 seconds apart, and an error saying identical requests overlapped is retried after 5 seconds, then 10.',
+            '연도마다 다시 걸리던 간편인증. 문제: 처음 구현은 연도마다 간편인증을 새로 요청해, 첫 연도만 조회되고 그 뒤에서 멈췄습니다. 사용자가 연도 수만큼 휴대폰 인증을 해야 하는 구조였습니다. 해결: CODEF 문서와 인증 흐름을 다시 확인해, 제출내역 조회에 세션 데이터를 요청하면 인증 세션(commSession)을 받고 이 세션으로 지급명세서를 연도만 바꿔 조회할 수 있다는 것을 찾았습니다. 서비스 코드와 분리한 Node.js 스크립트로 CODEF 개발 환경에서 간편인증 한 번에 5개 연도를 조회해 홈택스에서 받은 자료와 대조한 뒤, 백엔드를 인증 단계와 조회 단계로 나눠 다시 구현했습니다. 조회는 3초 간격으로 하나씩 보내고, 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다.',
+            'Simple authentication repeated for every year. Problem: the first implementation asked for a new simple authentication for every year, so the first year came back and then it stalled; users would have had to approve on their phone once per year. Fix: going back through the CODEF documentation and the authentication flow showed that asking the submission-list lookup for session data returns an authenticated session (commSession), and that the payment-statement lookup can reuse it with only the year changed. A Node.js script kept apart from the service fetched five years with one authentication in the CODEF development environment, the results were checked against records downloaded from Hometax, and the backend was then rebuilt with authentication and lookup as separate steps. Lookups go out one at a time, 3 seconds apart, and an error saying identical requests overlapped is retried after 5 seconds, then 10.',
           ],
           [
             '간편인증 대기와 만료. 문제: 간편인증은 사용자가 휴대폰에서 승인할 때까지 결과를 알 수 없습니다. 해결: 3초 간격으로 상태를 확인하고 270초가 지나면 만료로 처리합니다. 인증 상태는 대기·요청·확인 중·완료·실패·만료 여섯 가지를 하나의 타입으로 관리하고, 실패와 만료에는 다시 시도할 수 있게 했습니다.',
-            'waiting for and expiring authentication. Problem: simple authentication gives no result until the user approves it on their phone. Fix: the status is checked every 3 seconds and treated as expired after 270 seconds; the six states (idle, requested, checking, done, failed, expired) are managed as one type, and a failed or expired attempt can be retried.',
+            'Waiting for and expiring authentication. Problem: simple authentication gives no result until the user approves it on their phone. Fix: the status is checked every 3 seconds and treated as expired after 270 seconds; the six states (idle, requested, checking, done, failed, expired) are managed as one type, and a failed or expired attempt can be retried.',
           ],
         ],
         { anchor: 'solved-app' },
       ),
       section(
         'implementation',
-        ['같은 회사의 다른 작업 · 세무사용 FINZ (협력 개발사와 함께, 출시 전)', 'Also at Finz Labs · FINZ for tax accountants (with a partner company, not yet launched)'],
+        ['세무사용 FINZ · 협력 개발사와 공동 개발 (출시 전)', 'FINZ for tax accountants · co-developed with a partner company (not yet launched)'],
         [
           [
-            '세무사용 FINZ는 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖춘 세무사용 SaaS로, 협력 개발사와 함께 개발했습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다. 제가 쓴 가격 정책·기능 잠금 범위 사양은 그대로 구현되어 코드에 출처로 남았습니다.',
-            'FINZ for tax accountants is a SaaS that calculates capital gains, gift, inheritance and comprehensive property tax, produces Hometax filing files and has an AI tax assistant, developed together with a partner development company. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures. My pricing and feature-lock spec was implemented as written and is cited as the source in the code.',
+            '세무사용 FINZ는 같은 회사에서 협력 개발사와 함께 개발한 세무사용 SaaS로, 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖췄습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다. 제가 쓴 가격 정책·기능 잠금 범위 사양은 그대로 구현되었습니다.',
+            'FINZ for tax accountants is a SaaS developed at the same company together with a partner development company: capital gains, gift, inheritance and comprehensive property tax calculations, Hometax filing files and an AI tax assistant. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures. My pricing and feature-lock spec was implemented as written.',
           ],
           [
             '세무사는 고객과 신고건을 만든 뒤 자료를 모읍니다. 시세는 국토교통부 실거래가로 채우고, 등기부·건축물대장은 공공조회로, 감정평가서·매매계약서 같은 서류는 스캔본 OCR로 불러오며(추출값은 검수한 뒤에만 계산기에 들어감), 세대 구성과 과거 양도 이력은 고객 간편인증으로 조회합니다.',
@@ -467,16 +479,16 @@ export const projects: Project[] = [
         SOLVED_SAAS,
         [
           [
-            '배포 9번 연속 실패. 문제: 배포가 아홉 번 잇달아 실패했는데 코드 결함인지 서버 문제인지 불분명했습니다. 해결: 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 1,083MB에서 1,472MB로 36% 늘어난 것(검사 대상 파일 2,619 → 3,619개)을 확인했고, 서버와 같은 메모리 상한(973MB)에서 오류를 재현해 서버 메모리 부족이 원인임을 밝혔습니다. 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했고, 개발사는 진단이 맞다고 확인한 뒤 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
-            'nine failed deployments in a row. Problem: deployments failed nine times running, and it was unclear whether the code or the server was at fault. Fix: measuring before and after the blockchain library arrived showed type-check memory up 36%, from 1,083 MB to 1,472 MB (files checked: 2,619 → 3,619), and reproducing the crash under the server’s 973 MB heap cap showed the cause was server memory. After two fixes were tested, an 8 GB server or building images in CI was recommended; the vendor confirmed the diagnosis and changed deployment so a failed build no longer takes the service down.',
+            '배포 9번 연속 실패. 문제: 배포가 9번 잇달아 실패했는데 코드 결함인지 서버 문제인지 불분명했습니다. 해결: 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 1,083MB에서 1,472MB로 36% 늘어난 것(검사 대상 파일 2,619 → 3,619개)을 확인했고, 서버와 같은 메모리 상한(973MB)에서 오류를 재현해 서버 메모리 부족이 원인임을 밝혔습니다. 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했고, 개발사는 진단이 맞다고 확인한 뒤 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
+            'Nine failed deployments in a row. Problem: deployments failed nine times running, and it was unclear whether the code or the server was at fault. Fix: measuring before and after the blockchain library arrived showed type-check memory up 36%, from 1,083 MB to 1,472 MB (files checked: 2,619 → 3,619), and reproducing the crash under the server’s 973 MB heap cap showed the cause was server memory. After two fixes were tested, an 8 GB server or building images in CI was recommended; the vendor confirmed the diagnosis and changed deployment so a failed build no longer takes the service down.',
           ],
           [
-            '완료 보고 269건. 문제: 개발사가 완료했다고 보고한 작업이 실제로 끝났는지 알 수 없었습니다. 해결: 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며(PR 참조 317개 대조), 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었고, 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 약 973만 원 적게 나오는 High 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
-            '269 items reported done. Problem: there was no way to tell whether the work the vendor reported as done was really finished. Fix: each of the 269 items was re-checked against code, tests and screens: 233 confirmed and 36 left open (317 PR references cross-checked), plus 45 new defects. Two had to be fixed before launch (payment and plan locking); for a High defect, where a parcel with no standard price was silently dropped from the tax and understated it by about ₩9.73 million, the exact code was traced and sent as the top fix request.',
+            '완료 보고 269건. 문제: 개발사가 완료했다고 보고한 작업이 실제로 끝났는지 알 수 없었습니다. 해결: 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며(PR 참조 317개 대조), 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었습니다. 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 약 973만 원 적게 나오는 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
+            '269 items reported done. Problem: there was no way to tell whether the work the vendor reported as done was really finished. Fix: each of the 269 items was re-checked against code, tests and screens: 233 confirmed and 36 left open (317 PR references cross-checked), plus 45 new defects. Two had to be fixed before launch (payment and plan locking). For a defect where a parcel with no standard price was silently dropped from the tax and understated it by about ₩9.73 million, the exact code was traced and sent as the top fix request.',
           ],
           [
-            '끊기는 문서 인식과 CI 점검. 문제: 문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 인식 결과가 끝까지 나오지 않고 끊겼고, CI가 계산 오류를 실제로 잡는지도 확인된 적이 없었습니다. 해결: 끊김의 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사는 상한을 8,000으로 올리며 코드 주석에 그 진단을 남겼습니다. CI에는 한 줄짜리 버그 7개를 심어 7개 모두 걸리는 것을 확인했습니다.',
-            'cut-off OCR and checking CI. Problem: in an OCR field test (11 document types, 17 files) recognition stopped before the end of the document, and no one had checked whether CI really catches calculation errors. Fix: the cut-off was traced to the output-token cap (1,200); the vendor raised it to 8,000 and credited the diagnosis in a code comment. Seven one-line bugs were planted, and CI caught all seven.',
+            '끊기는 문서 인식과 CI 점검. 문제: 문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 인식 결과가 끝까지 나오지 않고 끊겼고, CI가 계산 오류를 실제로 잡는지도 확인된 적이 없었습니다. 해결: 끊김의 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사는 상한을 8,000으로 올리며 코드 주석에 그 진단을 남겼습니다. CI에는 한 줄짜리 버그 7개를 심어 7개 모두 잡아내는 것을 확인했습니다.',
+            'Cut-off OCR and checking CI. Problem: in an OCR field test (11 document types, 17 files) recognition stopped before the end of the document, and no one had checked whether CI really catches calculation errors. Fix: the cut-off was traced to the output-token cap (1,200); the vendor raised it to 8,000 and credited the diagnosis in a code comment. Seven one-line bugs were planted, and CI caught all seven.',
           ],
         ],
         { anchor: 'solved-saas' },
@@ -487,12 +499,12 @@ export const projects: Project[] = [
           'There is only one reference case. I would add boundary, rounding and invalid-input cases, and decide how we would notice if the workbook itself were wrong.',
         ],
         [
-          '디지털 자산 엔진과 증여 평가 모듈은 회사 세무 SaaS의 코드를 옮긴 것이라, 그 뒤 SaaS에 들어간 수정(10원 미만 절사, 공제 근거 조문 정정 등)이 개인 계산기에는 아직 없습니다. 두 곳이 같은 엔진을 쓰도록 공용 패키지로 묶겠습니다.',
-          'The crypto engine and the gift-valuation module were adapted from the company SaaS, so fixes made in the SaaS since then (rounding down below 10 won, a corrected statute reference) are not in the public calculators yet. I would move the engine into a shared package both use.',
+          '디지털 자산 엔진과 증여 평가 모듈은 세무사용 FINZ의 코드를 옮긴 것이라, 그 뒤 세무사용 FINZ에 들어간 수정(10원 미만 절사, 공제 근거 조문 정정 등)이 개인 계산기에는 아직 없습니다. 두 곳이 같은 엔진을 쓰도록 공용 패키지로 묶겠습니다.',
+          'The crypto engine and the gift-valuation module were adapted from FINZ for tax accountants, so fixes made there since then (rounding down below 10 won, a corrected statute reference) are not in the public calculators yet. I would move the engine into a shared package both use.',
         ],
         [
-          '앱의 연도별 조회는 요청 하나 안에서 3초 간격으로 순서대로 돌아, 연도가 많으면 몇 분이 걸립니다. 조회를 작업으로 넘기고 앱이 진행 상태를 확인하게 바꾸겠습니다. 세션이 만료되면 검증 스크립트처럼 다시 인증받지 않고 멈추는 점과, 일부 연도만 실패해도 완료로 끝나는 점도 실패한 연도를 알려 주도록 고치겠습니다.',
-          'In the app, the yearly lookups run one after another, 3 seconds apart, inside a single request, so many years can take minutes. I would hand the lookups to a background job and let the app poll its progress. When the session expires the backend stops instead of re-authenticating as the verification script does, and a run where only some years fail still ends as done; both should tell the user which years failed.',
+          '앱의 연도별 조회는 요청 하나 안에서 3초 간격으로 순서대로 돌아, 연도가 많으면 몇 분이 걸립니다. 조회를 작업으로 넘기고 앱이 진행 상태를 확인하게 바꾸겠습니다. 세션이 만료되면 다시 인증받지 않고 멈추는 점은 재인증을 요청하도록, 일부 연도만 실패해도 완료로 끝나는 점은 실패한 연도를 알려 주도록 고치겠습니다.',
+          'In the app, the yearly lookups run one after another, 3 seconds apart, inside a single request, so many years can take minutes. I would hand the lookups to a background job and let the app poll its progress. When the session expires the backend stops instead of asking for re-authentication, and a run where only some years fail still ends as done; I would fix the first to request re-authentication and the second to report which years failed.',
         ],
         [
           '앱에서 결제 승인 뒤 저장이 실패하거나 같은 요청이 두 번 오는 것처럼 외부 시스템과 상태가 어긋나는 상황을, 실패를 일부러 일으켜 확인해 두겠습니다.',
@@ -501,8 +513,8 @@ export const projects: Project[] = [
       ]),
       section('evidence', MATERIAL, [
         [
-          '코드는 회사 비공개 저장소에 있어 링크하지 않습니다. 대신 운영 화면, 시연 영상, 검증 실행 결과를 이 페이지에 둡니다.',
-          "The code is in the company's private repositories, so it is not linked. The live screens, demo videos and verification results are on this page instead.",
+          '코드는 회사 비공개 저장소에 있어 링크하지 않습니다. 대신 운영 화면과 시연 영상, 검증 조건과 수치를 이 페이지에 적었습니다. 기준 사례의 단지 이름과 금액은 고객 정보일 수 있어 공개하지 않습니다.',
+          "The code is in the company's private repositories, so it is not linked. The live screens, demo videos and the verification conditions and figures are on this page instead. The reference case's apartment names and amounts are not shown because they may be client data.",
         ],
       ]),
     ],
@@ -533,7 +545,7 @@ export const projects: Project[] = [
     features: pairs([
       ['프로필 기반 자격증 추천, 주차별 학습 로드맵 생성·편집', 'Certification recommendations from your profile, and generating and editing a weekly study roadmap'],
       ['자격증·시험 일정 자동 갱신', 'Automatic updates of certifications and exam schedules'],
-      ['CBT 모의고사와 오답 해설, 대화형 모의 면접', 'CBT mock exams with explanations of wrong answers, and conversational mock interviews'],
+      ['CBT 모의고사와 AI 오답 해설, 대화형 모의 면접', 'CBT mock exams with AI explanations of wrong answers, and conversational mock interviews'],
       ['스킬갭 분석, 채용 매칭, 포트폴리오, 학습 대시보드', 'Skill-gap analysis, job matching, a portfolio and a study dashboard'],
     ]),
     resumeItems: pairs([
@@ -546,19 +558,20 @@ export const projects: Project[] = [
         'Periodic syncing with node-cron plus a manual admin run, and reuse of AI results for the same user and request (MongoDB)',
       ],
       [
-        '프론트엔드 개편: 디자인 토큰, 공통 컴포넌트 6종, 13개 페이지 이전, 대시보드 위젯 5종, 학습 메이트',
-        'Frontend overhaul: design tokens, 6 shared components, 13 pages migrated, 5 dashboard widgets, a study companion',
+        '프론트엔드 개편: 디자인 토큰, 공통 컴포넌트 6종, 13개 페이지 이전, 대시보드 위젯 5종, 학습메이트(학습동반 챗봇)',
+        'Frontend overhaul: design tokens, 6 shared components, 13 pages migrated, 5 dashboard widgets, a study-companion chatbot',
       ],
     ]),
     contribution: {
       direct: pairs([
         ['백엔드 전체: API, DB 설계, 공공 API 연동과 동기화, OpenAI 연동', 'The entire backend: API, database design, public API integration and syncing, OpenAI integration'],
         [
-          '프론트엔드 개편: UI 코드 리팩터링, 페이지 이전, 공통 컴포넌트, 대시보드 위젯, 학습 메이트, 모의면접 설정 화면, 챗봇 오프라인 대체 응답',
+          '프론트엔드 개편: UI 코드 리팩터링, 페이지 이전, 공통 컴포넌트, 대시보드 위젯, 학습메이트, 모의 면접 설정 화면, 챗봇 오프라인 대체 응답',
           'Frontend overhaul: UI refactoring, page migration, shared components, dashboard widgets, the study companion, the mock-interview setup screen and an offline fallback for the chatbot',
         ],
-        ['팀장과 최종 발표', 'Team lead and the final presentation'],
+        ['팀 운영(일정·역할 조율)과 최종 발표', 'Running the team (schedule and role coordination) and the final presentation'],
       ]),
+      others: pairs([['프론트엔드 초기 화면(팀원 2), AI 프롬프트·추천 로직(팀원 1)', 'The initial frontend screens (two teammates) and the AI prompts and recommendation logic (one teammate)']]),
       notYet: pairs([['자동 테스트 없음', 'No automated tests']]),
     },
     media: [
@@ -577,7 +590,7 @@ export const projects: Project[] = [
         710,
         ['SkillPilot 시연 영상', 'SkillPilot demo video'],
         [
-          '시연: 대시보드 → 학습 기록 → AI 모의면접 → CBT 모의고사 → AI 오답 해설 → 학습 메이트',
+          '시연: 대시보드 → 학습 기록 → AI 모의 면접 → CBT 모의고사 → AI 오답 해설 → 학습메이트',
           'Demo: dashboard → study log → AI mock interview → CBT mock exam → AI answer review → study companion',
         ],
         '2026-05-04',
@@ -594,16 +607,16 @@ export const projects: Project[] = [
         '/media/skillpilot/wrong-answer.webp',
         1600,
         885,
-        ['AI 오답 분석 화면', 'AI wrong-answer analysis'],
-        ['AI 오답 분석 · 실제 화면', 'AI wrong-answer analysis · real screen'],
+        ['AI 오답 해설 화면', 'AI wrong-answer explanation'],
+        ['AI 오답 해설 · 실제 화면', 'AI wrong-answer explanation · real screen'],
         '2026-05-04',
       ),
       shot(
         '/media/skillpilot/interview.webp',
         1600,
         885,
-        ['AI 모의면접 설정 화면', 'AI mock interview setup'],
-        ['AI 모의면접 설정 · 실제 화면', 'AI mock interview setup · real screen'],
+        ['AI 모의 면접 설정 화면', 'AI mock interview setup'],
+        ['AI 모의 면접 설정 · 실제 화면', 'AI mock interview setup · real screen'],
         '2026-05-04',
       ),
     ],
@@ -636,8 +649,8 @@ export const projects: Project[] = [
       ],
     ),
     links: [
-      { kind: 'code', label: k('API 클라이언트 (정규화·재시도)', 'API client (normalizing, retries)'), href: `${SKILLPILOT_REPO}/blob/main/SkillPilot-backend/src/integrations/dataGoKr/client.js` },
       { kind: 'code', label: k('공개 저장소', 'Public repository'), href: SKILLPILOT_REPO },
+      { kind: 'code', label: k('API 클라이언트 (정규화·재시도)', 'API client (normalizing, retries)'), href: `${SKILLPILOT_REPO}/blob/main/SkillPilot-backend/src/integrations/dataGoKr/client.js` },
       { kind: 'code', label: k('동기화 서비스', 'Sync service'), href: `${SKILLPILOT_REPO}/blob/main/SkillPilot-backend/src/services/certificationSync.service.js` },
       { kind: 'code', label: k('AI 결과 재사용', 'AI result reuse'), href: `${SKILLPILOT_REPO}/blob/main/SkillPilot-backend/src/services/ai.service.js` },
       {
@@ -651,8 +664,8 @@ export const projects: Project[] = [
         'result',
         OUTCOMES,
         [
-          ['공공데이터 API 7종을 연동해 자격증과 시험 일정을 자동으로 동기화했습니다.', 'Integrated 7 public data APIs so certifications and exam schedules sync automatically.'],
-          ['13개 화면과 16개 백엔드 기능 모듈을 구현해 캡스톤을 마쳤습니다.', 'Finished the capstone with 13 screens and 16 backend feature modules.'],
+          ['공공데이터 API 7종을 하나의 자격증 데이터로 정규화해 자격증과 시험 일정이 자동으로 갱신됩니다.', 'Normalized 7 public data APIs into one set of certification data, so certifications and exam schedules update automatically.'],
+          ['13개 화면과 16개 백엔드 라우트 모듈(인증·자격증·로드맵·모의고사·면접·대시보드 등)로 캡스톤을 마쳤습니다.', 'Finished the capstone with 13 screens and 16 backend route modules (auth, certifications, roadmap, mock exams, interviews, dashboard and more).'],
         ],
         { lead: true },
       ),
@@ -707,16 +720,16 @@ export const projects: Project[] = [
             'Model parameter compatibility. Problem: depending on the model, only max_completion_tokens or max_tokens is accepted, so chatbot calls fail with a 400. Fix: on that error the call is retried at once with the other parameter.',
           ],
           [
-            '프론트엔드 개편. 디자인 토큰과 공통 컴포넌트 6종으로 13개 페이지를 옮기고, 챗봇은 호출이 실패해도 시연이 멈추지 않도록 오프라인 대체 응답을 두었습니다.',
-            'Frontend overhaul. Design tokens and 6 shared components carried 13 pages across, and the chatbot has an offline fallback so a failed call never stops a demo.',
+            '제각각이던 화면. 문제: 팀원 둘이 만든 13개 페이지의 스타일과 컴포넌트가 달라 수정이 두 배로 들었습니다. 해결: 디자인 토큰과 공통 컴포넌트 6종으로 옮기고, 챗봇은 호출이 실패해도 시연이 멈추지 않도록 오프라인 대체 응답을 두었습니다.',
+            'Screens that did not match. Problem: the 13 pages built by two teammates differed in styling and components, so every change cost twice. Fix: they were moved onto design tokens and 6 shared components, and the chatbot got an offline fallback so a failed call never stops a demo.',
           ],
         ],
         { anchor: 'solved' },
       ),
       section('retro', REFLECTION, [
         [
-          '자동화 테스트가 없고, 동기화 중복을 막는 unique 제약과 두 DB의 일관성 처리가 부족합니다. 다시 한다면 동기화 정규화 테스트, unique 제약, 실행 이력 기록부터 넣겠습니다.',
-          'There are no automated tests, and the unique constraints against duplicate syncs and the consistency handling across the two databases fall short. Next time I would start with sync and normalization tests, unique constraints and a record of each run.',
+          '자동 테스트가 없습니다. 관리자 수동 실행은 실제 응답을 다시 받아 눈으로 확인하는 용도이지 테스트가 아닙니다. 동기화 중복을 막는 unique 제약과 두 DB의 일관성 처리도 부족합니다. 다시 한다면 동기화 정규화 테스트, unique 제약, 실행 이력 기록부터 넣겠습니다.',
+          'There are no automated tests; the manual admin run is for fetching real responses again and checking them by eye, not a test. The unique constraints against duplicate syncs and the consistency handling across the two databases also fall short. Next time I would start with sync and normalization tests, unique constraints and a record of each run.',
         ],
         [
           '오류 문구, XML과 JSON 응답, 결과가 하나일 때와 여럿일 때, 빈 결과·시간 초과·재시도 초과, 같은 자격증 코드 중복 실행을 자동 테스트로 확인하겠습니다.',
@@ -725,10 +738,6 @@ export const projects: Project[] = [
         [
           '저장된 AI 결과는 입력 JSON 문자열을 그대로 키로 써서 필드 순서만 달라도 놓칩니다. 키를 정규화하고 모델·프롬프트 버전과 만료 시간을 넣겠습니다.',
           'Stored AI results are keyed by the raw input JSON string, so a different field order alone causes a miss. I would normalize the key and add the model and prompt version and an expiry time.',
-        ],
-        [
-          '저장소에 자동 테스트는 없습니다. 관리자 수동 실행은 실제 응답을 다시 받아 눈으로 확인하는 용도입니다.',
-          'The repository has no automated tests. The manual admin run is for fetching real responses again and checking them by eye.',
         ],
       ]),
       section('evidence', MATERIAL, [
@@ -763,7 +772,7 @@ export const projects: Project[] = [
     features: pairs([
       ['사진 기반 옷 등록과 자동 분류, 카테고리별 옷장', 'Adding clothes by photo with automatic labels, and a wardrobe by category'],
       ['글·음성 코디 요청, 날씨와 상황을 반영한 추천', 'Outfit requests by text or voice, with suggestions that reflect the weather and occasion'],
-      ['착용 기록, 옷장 통계, 선택형 Vision 상세 분석', 'Wear history, wardrobe stats and optional detailed Vision analysis'],
+      ['착용 기록, 옷장 통계, 선택형 OpenAI Vision 상세 분석', 'Wear history, wardrobe stats and optional detailed OpenAI Vision analysis'],
     ]),
     resumeItems: pairs([
       [
@@ -790,8 +799,8 @@ export const projects: Project[] = [
         893,
         ['상황을 입력해 받은 코디 추천 결과', 'Outfit suggestions for a described occasion'],
         [
-          '추천 결과 · 실제 앱 화면 · gpt-5.4-nano, 후보 10개, 응답 4,804ms',
-          'Suggestions · real app screen · gpt-5.4-nano, 10 candidates, 4,804 ms',
+          '추천 결과 · 실제 앱 화면 · gpt-5.4-nano, 후보 10개',
+          'Suggestions · real app screen · gpt-5.4-nano, 10 candidates',
         ],
         '2026-05-25',
         'device',
@@ -801,7 +810,7 @@ export const projects: Project[] = [
         560,
         974,
         ['사진을 분류한 결과를 확인하고 고치는 화면', 'Checking and correcting the classification of a photo'],
-        ['옷 추가 · 실제 앱 화면 · MobileNetV3 분류, 신뢰도 43%', 'Adding a garment · real app screen · MobileNetV3 label, 43% confidence'],
+        ['옷 추가 · 실제 앱 화면 · MobileNetV3 분류', 'Adding a garment · real app screen · MobileNetV3 label'],
         '2026-05-25',
         'device',
       ),
@@ -931,11 +940,11 @@ export const projects: Project[] = [
             'An LLM that only picks from candidates: instead of writing an answer from scratch, it chooses from rule-based candidates that reflect color, style, weather and recent wear.',
           ],
           [
-            '가벼운 모델 우선: 백본을 고정한 전이학습에서 두 모델을 비교해 MobileNetV3-Small을 골랐습니다. Fashion Product Images Small 유효 샘플 약 3만 5천 장을 8:2로 나눠 10 epoch 학습했고, 학습 시간은 약 23분과 53분이었습니다. CPU 추론에서는 MobileNetV3가 오히려 느렸고, 이 결과를 그대로 기록했습니다.',
-            'The lighter model first: with a frozen backbone I compared the two models and chose MobileNetV3-Small. About 35,000 valid samples from Fashion Product Images Small were split 8:2 and trained for 10 epochs, taking about 23 and 53 minutes. On CPU, MobileNetV3 was actually slower, and I recorded that as it was.',
+            '가벼운 모델 우선: 백본을 고정한 전이학습에서 두 모델을 비교해 MobileNetV3-Small을 골랐습니다. Fashion Product Images Small 유효 샘플 약 3만 5천 장을 8:2로 나눠 10 epoch 학습했고, 학습 시간은 약 23분과 53분이었습니다. 기기 안 추론을 염두에 두고 속도보다 크기(약 15분의 1)를 우선했습니다.',
+            'The lighter model first: with a frozen backbone I compared the two models and chose MobileNetV3-Small. About 35,000 valid samples from Fashion Product Images Small were split 8:2 and trained for 10 epochs, taking about 23 and 53 minutes. With on-phone inference in mind, size (about one fifteenth) came before speed.',
           ],
           [
-            '서버 추론: Expo Go에서는 기기 안에서 모델을 불러올 수 없어 서버에서 ONNX로 추론했습니다. 돈이 드는 Vision 분석은 사용자가 직접 누를 때만 호출합니다.',
+            '서버 추론: Expo Go에서는 기기 안에서 모델을 불러올 수 없어 서버에서 ONNX로 추론했습니다. 비용이 드는 Vision 분석은 사용자가 직접 누를 때만 호출합니다.',
             'Server inference: Expo Go could not load the model on the phone, so inference runs on the server with ONNX. The paid Vision analysis is called only when the user taps for it.',
           ],
         ],
@@ -950,28 +959,20 @@ export const projects: Project[] = [
             'Suggesting clothes that are not in the wardrobe. Problem: left alone, an LLM invents clothing IDs or picks impossible combinations. Fix: rule-based scored candidates come first (no outerwear at 28°C and above, lower scores for recently worn clothes) and the LLM chooses only among them; the response is forced to a strict JSON Schema, and the server checks clothing IDs and the candidate outfit again.',
           ],
           [
-            '실패했을 때의 처리. 형식, 옷 ID, 후보 조합, 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거치고, 그래도 실패하면 오류로 끝냅니다. 사용 모델과 대체 이유를 기록합니다.',
-            'Handling failures. If the format, clothing IDs, candidate outfit or confidence fall short, a backup model answers and goes through the same checks, and a second failure ends in an error. The model used and the reason for falling back are recorded.',
+            '실패했을 때의 처리. 문제: 검증에 한 번 실패하면 끝이었습니다. 해결: 형식, 옷 ID, 후보 조합, 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거치고, 그래도 실패하면 오류로 끝냅니다. 사용 모델과 대체 이유를 기록합니다(검증 실패에만 해당하며, API 호출 자체가 실패한 경우는 아직 대체하지 않습니다).',
+            'Handling failures. Problem: one failed check used to be the end. Fix: if the format, clothing IDs, candidate outfit or confidence fall short, a backup model answers and goes through the same checks, and a second failure ends in an error. The model used and the reason for falling back are recorded (this covers failed checks only; a failed API call does not fall back yet).',
           ],
           [
-            '하나의 모델로 세 분류. 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다(MobileNetV3-Small 기준 약 2만 3천 개).',
-            'Three labels from one model. Heads for 7 categories, 11 colors and 5 styles sit on a frozen backbone, and only the heads are trained (about 23,000 parameters with MobileNetV3-Small).',
-          ],
-          [
-            '확인 방법. 사진 43장으로 전체 흐름을 손으로 돌려 봤습니다. 동작 확인이며 정확도 측정이 아닙니다.',
-            'How it was checked. I ran the whole flow by hand with 43 images. This checks that it works; it does not measure accuracy.',
+            '하나의 모델로 세 분류. 문제: 카테고리, 색상, 스타일을 따로 분류하면 모델이 세 개가 됩니다. 해결: 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다(학습 파라미터는 MobileNetV3-Small 기준 약 2만 3천 개).',
+            'Three labels from one model. Problem: classifying category, color and style separately would mean three models. Fix: heads for 7 categories, 11 colors and 5 styles sit on a frozen backbone, and only the heads are trained (about 23,000 trainable parameters with MobileNetV3-Small).',
           ],
         ],
         { anchor: 'solved' },
       ),
       section('retro', REFLECTION, [
         [
-          '학습 코드에서 검증용 변환이 적용되지 않아, 평가를 분리하고 고정된 테스트 세트로 다시 재기 전까지는 분류 정확도 숫자를 쓰지 않습니다.',
-          'The training code never applied the validation transforms, so I do not report classification accuracy until evaluation is separated and re-measured on a fixed test set.',
-        ],
-        [
-          '정확도를 고정 테스트 세트로 다시 재고, 조명과 그림자에 약한 색상 분류를 개선하겠습니다.',
-          'I would re-measure accuracy on a fixed test set and improve color labeling, which is weak under changing light and shadows.',
+          '학습 코드에서 검증용 변환이 적용되지 않아, 평가를 분리하고 고정된 테스트 세트로 다시 재기 전까지는 분류 정확도를 쓰지 않습니다. 다시 잴 때 조명과 그림자에 약한 색상 분류도 함께 개선하겠습니다.',
+          'The training code never applied the validation transforms, so I do not report classification accuracy until evaluation is separated and re-measured on a fixed test set. When I re-measure, I would also improve color labeling, which is weak under changing light and shadows.',
         ],
         [
           'API 호출 자체가 실패하면 보조 모델로 넘어가지 않는 부분과 모델이 스스로 매긴 확신도로 결과를 거르는 부분을 고치겠습니다. 서버가 받은 URL을 그대로 불러오는 부분과 x-user-id 헤더만으로 사용자를 구분하는 부분은 공개 서비스라면 가장 먼저 막아야 할 곳입니다.',
@@ -985,7 +986,7 @@ export const projects: Project[] = [
   {
     slug: 'pitches',
     name: 'Pitches',
-    years: [2024, 2026],
+    years: [2024, 2025, 2026],
     tier: 'featured',
     showcase: 'main',
     title: k('Pitches 발표 코칭', 'Pitches presentation coaching'),
@@ -994,9 +995,9 @@ export const projects: Project[] = [
       'A mobile service that analyzes speaking pace, emotion and volume during a talk, shows them right away as colors and writes an AI coaching report at the end',
     ),
     period: '2024.10–2026.10',
-    team: k('2024 해커톤 5인(백엔드 2, 프론트엔드 2, 디자인 1) → 2025 2인 → 2026 혼자 리뉴얼', '2024 hackathon team of 5 (backend 2, frontend 2, design 1) → 2 in 2025 → renewed alone in 2026'),
-    role: k('팀장 · 백엔드·AI 모델 적용 · 연구·발표 (앱 UI는 팀원) · 2026 리뉴얼은 전체', 'Team lead · backend and applying the AI models · research and presenting (app UI by a teammate) · all of the 2026 renewal'),
-    status: k('2026 리뉴얼: 실시간 피드백·발표 후 분석·보고서 화면 구현, 실기기 확인 전', '2026 renewal: live feedback, post-talk analysis and report screens built; not yet checked on a real phone'),
+    team: k('2024 해커톤 5인 → 2025 논문 2인 → 2026 개인 리뉴얼', '2024 hackathon team of 5 → paper by 2 in 2025 → solo renewal in 2026'),
+    role: k('팀장 · 백엔드·AI (2024–25) · 전체 (2026)', 'Team lead · backend and AI (2024–25) · everything (2026)'),
+    status: k('2026 리뉴얼 구현', '2026 renewal built'),
     statusCheckedAt: '2026-10-29',
     stack: ['SenseVoice-Small', 'FunASR', 'WebSocket', 'asyncio', 'GPT-4o-mini', 'AWS', 'Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'Expo'],
     summary: k(
@@ -1004,15 +1005,23 @@ export const projects: Project[] = [
       'A coaching service that analyzes speaking pace and emotion during a talk. It won a hackathon grand prize and a startup competition award, became an international conference paper, and I redesigned it alone in 2026.',
     ),
     features: pairs([
-      ['발표 중 5초마다 말 속도, 음량, 간투사, 감정을 판정해 초록·노랑·빨강 원과 개선 Tip으로 표시', 'Every 5 s during a talk, pace, volume, filler words and emotion are judged and shown as a green, yellow or red circle with a tip'],
-      ['발표 후 종합 점수, 지난 발표 대비 변화, 달라진 점, 점수 그래프를 보여 주는 결과 화면', 'After the talk, a results screen with the overall score, the change from the last talk, what changed and a score graph'],
+      ['발표 중 5초마다 말 속도, 음량, 간투사, 감정을 판정해 초록·노랑·빨강 원과 개선 팁으로 표시', 'Every 5 s during a talk, pace, volume, filler words and emotion are judged and shown as a green, yellow or red circle with a tip'],
+      ['발표 후 종합 점수, 지난 발표와 달라진 점, 점수 그래프를 보여 주는 결과 화면', 'After the talk, a results screen with the overall score, what changed since the last talk and a score graph'],
       ['발표 요약, 음성·내용 분석, 강점, 개선점, 개선 로드맵, 발표 스크립트로 구성된 AI 코칭 보고서와 PDF 저장', 'An AI coaching report with a summary, voice and content analysis, strengths, improvements, a roadmap and a talk script, saved as a PDF'],
       ['발표 기록과 점수 추이', 'A history of talks and the score trend'],
     ]),
     resumeItems: pairs([
       [
-        '발표 중 말 속도와 감정을 분석해 알려 주는 코칭 서비스. 해커톤 대상과 창업 경진대회 특별상, 국제학술대회 논문으로 이어졌고 2026년에 혼자 다시 설계했습니다.',
-        'A coaching service that analyzes speaking pace and emotion during a talk. It won a hackathon grand prize and a startup competition award, became an international conference paper, and I redesigned it alone in 2026.',
+        'SenseVoice-Small 실시간 분석 백엔드, asyncio로 여러 세션 프레임 병렬 처리 (논문 보고 지연 평균 125ms)',
+        'Live-analysis backend on SenseVoice-Small, with frames from many sessions processed in parallel on asyncio (125 ms average latency as reported in the paper)',
+      ],
+      [
+        '2026 리뉴얼: Socket.IO 0.25초 음성 스트리밍, 5초 단위 음량·말 속도·간투사 판정, BullMQ 발표 후 분석 큐',
+        '2026 renewal: Socket.IO audio streaming in 0.25 s chunks, volume, pace and filler-word judgments every 5 s, a BullMQ post-talk analysis queue',
+      ],
+      [
+        '해커톤 대상(1등) · 창업 경진대회 특별상 · APIC-IST 2025 논문 2저자',
+        'Hackathon grand prize (1st) · startup competition special award · second author of the APIC-IST 2025 paper',
       ],
     ]),
     contribution: {
@@ -1049,8 +1058,8 @@ export const projects: Project[] = [
         '/media/pitches/live-red.webp',
         720,
         1566,
-        ['빨간 원과 음량 안내, 개선 Tip이 나온 실시간 분석 화면', 'Live analysis screen with a red circle, a volume prompt and a tip'],
-        ['판정에 따라 바뀌는 색과 Tip · iOS 시뮬레이터 실제 앱 화면', 'The color and tip change with each judgment · real app in the iOS simulator'],
+        ['빨간 원과 음량 안내, 개선 팁이 나온 실시간 분석 화면', 'Live analysis screen with a red circle, a volume prompt and a tip'],
+        ['판정에 따라 바뀌는 색과 팁 · iOS 시뮬레이터 실제 앱 화면', 'The color and tip change with each judgment · real app in the iOS simulator'],
         '2026-11-02',
         'phone',
       ),
@@ -1087,12 +1096,10 @@ export const projects: Project[] = [
         'result',
         OUTCOMES,
         [
-          ['캡스톤 디자인 및 AI 해커톤 대상(1등, 2024.10), SW중심대학 AI 창업 아이디어 경진대회 특별상(2025.05).', 'Grand prize (1st place) at the Capstone Design & AI Hackathon (Oct 2024); special award at the SW-Centered University AI Startup Idea Competition (May 2025).'],
-          ['APIC-IST 2025 국제학술대회 논문(2저자).', 'A paper at the APIC-IST 2025 international conference (second author).'],
-          ['논문 측정 기준 음성-지표 지연 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms(추론, 네트워크, 화면 표시 포함).', 'As measured in the paper: 125 ms on average from speech to indicator (σ = 18 ms) and 170 ms at worst with 20 concurrent sessions (inference, network and rendering included).'],
-          ['소규모 사용자 조사(5명)에서 5명 모두 실시간 표시가 말 속도 교정에 도움이 된다고 응답했습니다.', 'In a small user survey (5 people), all five said the live indicators helped them correct their pace.'],
-          ['모델 선택 근거(공개 벤치마크 인용, 10초 음성): Whisper-Small 518ms, Whisper-Large-V3 1,281ms, SenseVoice-Small 70ms.', 'Basis for the model choice (public benchmark cited, 10 s of audio): Whisper-Small 518 ms, Whisper-Large-V3 1,281 ms, SenseVoice-Small 70 ms.'],
-          ['다국어 시험은 5명의 3분 발표(영어 3, 한국어 2)로 진행했고, 환경은 NVIDIA A10G GPU 1개입니다.', 'The multilingual test used 3-minute talks by 5 people (3 English, 2 Korean), on one NVIDIA A10G GPU.'],
+          ['캡스톤 디자인 및 AI 해커톤 대상(1등, 2024.10)과 SW중심대학 AI 창업 아이디어 경진대회 특별상(2025.05)을 받았습니다.', 'Won the grand prize (1st place) at the Capstone Design & AI Hackathon (Oct 2024) and a special award at the SW-Centered University AI Startup Idea Competition (May 2025).'],
+          ['APIC-IST 2025 국제학술대회에 논문을 발표했습니다.', 'Presented a paper at the APIC-IST 2025 international conference.'],
+          ['논문에서 보고한 음성→지표 지연은 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms입니다(추론·네트워크·화면 표시 포함, NVIDIA A10G 1개, 5명의 3분 발표 · 영어 3·한국어 2).', 'The speech-to-indicator latency reported in the paper is 125 ms on average (σ = 18 ms) and 170 ms at worst with 20 concurrent sessions (inference, network and rendering included; one NVIDIA A10G; 3-minute talks by 5 people, 3 in English and 2 in Korean).'],
+          ['소규모 사용자 조사(5명)에서 5명 모두 실시간 표시가 말 속도 교정에 도움이 된다고 답했습니다.', 'In a small user survey (5 people), all five said the live indicators helped them correct their pace.'],
         ],
         { lead: true },
       ),
@@ -1140,7 +1147,7 @@ export const projects: Project[] = [
               [
                 k('2024–25 팀 버전', '2024–25 team version'),
                 k('Flask가 녹음을 받아 백그라운드 스레드가 5초씩 SenseVoice로 분석, 앱은 결과를 다시 조회', 'Flask receives the recording; a background thread analyzes 5 s chunks with SenseVoice; the app polls for results'),
-                k('백엔드·AI (앱 UI는 팀원 Flutter)', 'Backend and AI (app UI by a teammate in Flutter)'),
+                k('백엔드·AI (5인 팀: 백엔드 2, 프론트엔드 2, 디자인 1 · 앱 UI는 팀원 Flutter)', 'Backend and AI (team of 5: backend 2, frontend 2, design 1 · app UI by a teammate in Flutter)'),
                 k('해커톤·창업 경진대회에서 시연', 'Demonstrated at the hackathon and the startup competition'),
               ],
               [
@@ -1151,7 +1158,7 @@ export const projects: Project[] = [
               ],
               [
                 k('2026 개인 리뉴얼', '2026 solo renewal'),
-                k('Socket.IO로 0.25초 조각 전송, 서버가 5초씩 모아 음량·말 속도·간투사(·감정) 분석, 발표 후 분석은 BullMQ', 'Socket.IO sends 0.25 s chunks; the server analyzes volume, pace, filler words (and emotion) every 5 s; post-talk analysis runs on BullMQ'),
+                k('Socket.IO로 0.25초 조각 전송, 서버가 5초씩 모아 음량·속도·간투사·감정 분석, 발표 후 분석은 BullMQ', 'Socket.IO sends 0.25 s chunks; the server analyzes volume, pace, filler words and emotion every 5 s; post-talk analysis runs on BullMQ'),
                 k('전체', 'All of it'),
                 k('보고서 화면까지 구현, 단위 테스트 30개 통과, iOS 시뮬레이터 시연, 실기기 확인 전', 'Built through the report screen; 30 unit tests pass; demonstrated in the iOS simulator; not yet checked on a real phone'),
               ],
@@ -1187,16 +1194,16 @@ export const projects: Project[] = [
             'Slow external calls (2026). Problem: waiting for partial transcription and emotion analysis delays the next call. Fix: the server gathers audio into 5 s windows and computes volume first, then calls transcription and emotion in parallel with 4 s and 3 s limits. Volume feedback keeps going even when they fail.',
           ],
           [
-            '무음 구간(2026). 문제: 조용한 구간까지 Whisper에 보내면 비용이 들고, 없는 말을 만들어 내기도 합니다. 해결: 음량이 기준보다 낮으면 받아쓰기를 건너뛰고, 자주 나오는 문구는 목록으로 걸러 말 속도 계산에서 뺍니다.',
-            'Silent stretches (2026). Problem: sending silence to Whisper costs money and can produce phrases nobody said. Fix: below a volume threshold transcription is skipped, and common false phrases are filtered out of the pace calculation.',
+            '무음 구간(2026). 문제: 조용한 구간까지 Whisper에 보내면 비용이 들고, 없는 말을 만들어 내기도 합니다. 해결: 음량이 기준보다 낮으면 받아쓰기를 건너뛰고, 무음에서 자주 생기는 가짜 문구는 목록으로 걸러 말 속도 계산에서 뺍니다.',
+            'Silent stretches (2026). Problem: sending silence to Whisper costs money and can produce phrases nobody said. Fix: below a volume threshold transcription is skipped, and the false phrases that silence tends to produce are filtered out of the pace calculation by a list.',
           ],
           [
             '무거운 분석 분리(2026). 문제: 발표 후 Whisper, LLM, PDF를 요청 안에서 처리하면 실시간 서버를 막습니다. 해결: BullMQ 작업으로 넘겨 별도 워커가 처리합니다. 실패하면 5초 뒤 한 번 더 시도하고, 결과는 세션 기준 upsert로 저장해 중복되지 않습니다.',
             'Moving heavy analysis out (2026). Problem: running Whisper, the LLM and the PDF inside a request blocks the live server. Fix: they go to BullMQ jobs on a separate worker. A failure retries once after 5 s, and results are upserted per session so nothing is duplicated.',
           ],
           [
-            '녹음 처리(2026). Whisper가 날것의 음성을 받지 않아 WAV 헤더를 직접 붙였고, iOS 녹음 문제는 새 아키텍처를 지원하는 라이브러리로 바꾸고 최소 버전을 16.4로 올려 해결했습니다.',
-            'Recording (2026). Whisper would not take raw audio, so I add the WAV header myself; recording on iOS was fixed by switching to a library that supports the new architecture and raising the minimum version to 16.4.',
+            '녹음 처리(2026). Whisper가 헤더 없는 PCM 음성을 받지 않아 WAV 헤더를 직접 붙였고, iOS 녹음 문제는 React Native 새 아키텍처를 지원하는 라이브러리로 바꾸고 최소 iOS 버전을 16.4로 올려 해결했습니다.',
+            'Recording (2026). Whisper would not take headerless PCM audio, so I add the WAV header myself; recording on iOS was fixed by switching to a library that supports the React Native new architecture and raising the minimum iOS version to 16.4.',
           ],
           [
             '확인 방법(2026). 단위 테스트 30개가 통과하고 전체 흐름을 재현 스크립트로 확인했으며, iOS 시뮬레이터에서 로그인부터 보고서 PDF 저장까지 시연했습니다. 실제 휴대폰에서는 아직 확인하지 않았습니다.',
@@ -1207,7 +1214,7 @@ export const projects: Project[] = [
       ),
       section('retro', REFLECTION, [
         [
-          '사용자 조사가 5명으로 적었습니다. 지연 수치는 논문 시점 구조의 값이고 2026 버전에서 다시 재지 않았으며, 2026 버전은 실제 휴대폰 확인 전입니다. 다음은 재측정, 큐 재시도 처리 보완, 장기 추적 대시보드입니다.',
+          '사용자 조사가 5명으로 적었습니다. 지연 수치는 논문 시점 구조의 값이고 2026 버전에서 다시 재지 않았으며, 2026 버전은 실제 휴대폰 확인 전입니다. 다음 할 일은 재측정, 큐 재시도 처리 보완, 장기 추적 대시보드입니다.',
           'The user survey had only 5 people. The latency figures belong to the structure at the time of the paper and were not re-measured on the 2026 version, which has not been checked on a real phone yet. Next come re-measuring, better queue retries and a long-term tracking dashboard.',
         ],
         [
@@ -1225,8 +1232,8 @@ export const projects: Project[] = [
       ]),
       section('evidence', MATERIAL, [
         [
-          '2024·2026 코드는 공개하지 않았습니다. 2026 앱의 시연 영상과 화면은 이 페이지에 있고, 논문은 APIC-IST 2025 발표 논문입니다.',
-          'The 2024 and 2026 code are not public. A demo video and screens of the 2026 app are on this page, and the paper was presented at APIC-IST 2025.',
+          '2024·2026 코드는 공개하지 않았습니다. 2026 앱의 시연 영상과 화면은 이 페이지에 있고, 수치는 APIC-IST 2025 발표 논문을 기준으로 적었습니다.',
+          'The 2024 and 2026 code are not public. A demo video and screens of the 2026 app are on this page, and the figures follow the paper presented at APIC-IST 2025.',
         ],
       ]),
     ],
@@ -1251,7 +1258,7 @@ export const projects: Project[] = [
       'My first web service, which estimates monthly Naver search volume for celebrity keywords and charts it by device',
     ),
     sections: [
-      section('implementation', ROLE, [['팀장으로서 백엔드, DB, API 연동을 맡고, 프론트엔드는 화면 구조와 피드백으로 참여했습니다.', 'As team lead I handled the backend, database and API integration, and helped the frontend with its structure and feedback.']], { lead: true, anchor: 'role' }),
+      section('implementation', ROLE, [['팀장으로서 백엔드·DB·네이버 API 연동을 맡았고, 프론트엔드는 화면 구조를 잡고 피드백으로 참여했습니다.', 'As team lead I handled the backend, database and Naver API integration, and on the frontend I set the screen structure and gave feedback.']], { lead: true, anchor: 'role' }),
       section('implementation', MEMORABLE, [[
         '트렌드 API가 실제 횟수 없이 상대값만 주어 세 API를 비교 검증하고, 네이버 검색광고 API의 월간 검색 수를 기준값으로 삼아 검색량을 추정했습니다. 값은 추정치입니다.',
         'The trend API gives only relative values, so I compared and checked three APIs and used the monthly search counts from the Naver search ad API as the baseline. The figures are estimates.',
@@ -1272,8 +1279,8 @@ export const projects: Project[] = [
     role: k('기획 · 백엔드 · AI 챗봇 설계', 'Planning · backend · AI chatbot design'),
     stack: ['Express', 'MySQL', 'OpenAI Assistants', 'GPT-4o-mini', 'Whisper', 'Google TTS'],
     summary: k(
-      '시니어가 일상 대화를 나누는 동안 우울 척도(GDS) 문항을 대화 속에서 끌어내는 음성 챗봇. 직접 설문과 일상 대화 방식을 비교해 거부감이 적은 대화 방식으로 구성하고, 모델 3종을 비교해 고른 GPT-4o-mini에 파인튜닝, RAG, 프롬프트를 결합했습니다. 2024 한신 AISW 페스티벌 일반부 특별상, 2025 한국디지털콘텐츠학회 하계 1저자 논문.',
-      'A voice chatbot that draws Geriatric Depression Scale questions out of everyday conversation with seniors. After comparing a direct questionnaire with everyday conversation, it uses conversation, which people resist less. GPT-4o-mini, chosen from three compared models, combines fine-tuning, RAG and prompts. Special Award at the 2024 Hanshin AISW Festival; first-author paper at the 2025 Korea Digital Contents Society summer conference.',
+      '시니어가 일상 대화를 나누는 동안 노인 우울 척도(GDS) 문항을 대화 속에서 끌어내는 음성 챗봇. 직접 설문과 일상 대화 방식을 비교해 거부감이 적은 대화 방식으로 구성하고, 모델 3종을 비교해 고른 GPT-4o-mini에 파인튜닝, RAG, 프롬프트를 결합했습니다. 2024 한신 AISW 페스티벌 일반 부문 특별상 · 2025 한국디지털콘텐츠학회 하계 논문(1저자 · 동상).',
+      'A voice chatbot that draws Geriatric Depression Scale questions out of everyday conversation with seniors. After comparing a direct questionnaire with everyday conversation, it uses conversation, which people resist less. GPT-4o-mini, chosen from three compared models, combines fine-tuning, RAG and prompts. Special Award (General) at the 2024 Hanshin AISW Festival · first-author paper (Bronze Award) at the 2025 Korea Digital Contents Society summer conference.',
     ),
     product: k(
       '시니어가 일상 대화를 나누는 동안 노인 우울 척도(GDS) 문항을 대화 속에서 끌어내는 음성 서비스',
@@ -1286,16 +1293,16 @@ export const projects: Project[] = [
     ]),
     sections: [
       section('result', OUTCOMES, [
-        ['2024 한신 AISW 페스티벌 일반부 특별상을 받았습니다.', 'Special Award (General) at the 2024 Hanshin AISW Festival.'],
-        ['2025 한국디지털콘텐츠학회 하계종합학술대회에 1저자로 논문을 발표했습니다.', 'First-author paper at the 2025 Korea Digital Contents Society summer conference.'],
+        ['2024 한신 AISW 페스티벌 일반 부문 특별상을 받았습니다.', 'Won the Special Award (General) at the 2024 Hanshin AISW Festival.'],
+        ['2025 한국디지털콘텐츠학회 하계종합학술대회에 1저자로 논문을 발표해 대학생 논문경진대회 동상을 받았습니다.', 'Presented a first-author paper at the 2025 Korea Digital Contents Society summer conference and won a Bronze Award in the student paper competition.'],
       ], { lead: true }),
       section(
         'problem',
         PROBLEM_DEFINITION,
         [
           [
-            '노인을 위한 자가 점검 서비스는 부족하고, 정신건강 검사라는 말 자체에 거부감이 있습니다. 글을 읽고 입력하는 것이 불편한 사용자도 많습니다.',
-            'Self-check services for seniors are scarce, many resist the idea of a mental health test, and many find reading and typing difficult.',
+            '시니어를 위한 정신건강 자가 점검 서비스는 부족하고, 정신건강 검사라는 말 자체에 거부감이 있습니다. 글을 읽고 입력하는 것이 불편한 사용자도 많습니다.',
+            'Mental-health self-check services for seniors are scarce, many resist the idea of a mental health test, and many find reading and typing difficult.',
           ],
         ],
         { lead: true },
@@ -1319,10 +1326,6 @@ export const projects: Project[] = [
             'Express 서버와 MySQL을 쓰고, OpenAI Assistants API가 대화를 맡습니다. 음성 대화는 브라우저 녹음(WebM) → ffmpeg로 WAV 변환 → Whisper 받아쓰기 → Assistant 응답 → Google TTS 재생 순서로 이어집니다.',
             'It uses an Express server and MySQL, with the OpenAI Assistants API handling conversation. A voice exchange runs from a browser recording (WebM) → conversion to WAV with ffmpeg → Whisper transcription → the Assistant’s response → Google TTS playback.',
           ],
-          [
-            '대화가 끝나면 GDS 점수, 감정 상태, 개선 방안을 담은 보고서를 만듭니다.',
-            'After the conversation, a report gives the GDS score, emotional state and suggestions.',
-          ],
         ],
         { anchor: 'architecture' },
       ),
@@ -1332,7 +1335,7 @@ export const projects: Project[] = [
         [
           [
             '검사 방식: 직접 설문은 명확하지만 거부감을 일으킬 수 있고, 일상 대화는 다소 부정확해도 거부감이 적습니다. 두 방식을 시험해 보고 일상 대화 방식으로 구성했습니다.',
-            'How to assess: a direct questionnaire is clear but can provoke resistance, while everyday conversation can be less exact but meets less. After testing both, I built the service around conversation.',
+            'How to assess: a direct questionnaire is clear but can provoke resistance, while everyday conversation can be less exact but meets less resistance. After testing both, I built the service around conversation.',
           ],
           [
             '모델 선정: GPT-4o, GPT-4o-mini, Llama 3.1 8B를 가격, 응답 속도, 대화 자연스러움 등으로 비교해 GPT-4o-mini를 골랐습니다.',
@@ -1350,8 +1353,8 @@ export const projects: Project[] = [
             'Consistent assessment in natural conversation. Problem: the assessment must be consistent, but the conversation must not sound like a questionnaire. Fix: psychiatric conversation data was preprocessed for fine-tuning, RAG supplies GDS material and the report template, and prompts ask the 30 questions like everyday conversation.',
           ],
           [
-            '글을 쓰기 어려운 사용자. Whisper와 Google TTS로 음성으로만 대화하게 하고, 큰 글씨와 간결한 버튼을 썼습니다.',
-            'Users who find typing hard. Whisper and Google TTS allow a voice-only conversation, with large text and simple buttons.',
+            '글을 쓰기 어려운 사용자. 문제: 글을 읽고 입력하는 것이 불편한 사용자가 많습니다. 해결: Whisper와 Google TTS로 음성으로만 대화하게 하고, 큰 글씨와 간결한 버튼을 썼습니다.',
+            'Users who find typing hard. Problem: many users find reading and typing difficult. Fix: Whisper and Google TTS allow a voice-only conversation, with large text and simple buttons.',
           ],
         ],
         { anchor: 'solved' },
@@ -1389,26 +1392,20 @@ export const projects: Project[] = [
     showcase: 'supporting',
     period: '2025.03–2025.12',
     team: k('4인 · 캡스톤', 'Team of 4 · capstone'),
-    role: k('프론트엔드·백엔드 구성 · AI 구조와 DB 설계', 'Frontend and backend structure · AI and database design'),
+    role: k('프론트엔드·백엔드 구조 설계 및 개발 · AI 에이전트 구조 · DB 설계', 'Frontend and backend structure and development · AI agent structure · database design'),
     stack: ['React', 'Express', 'MySQL', 'MongoDB', 'OpenAI Assistants'],
     summary: k(
-      '목표 설정, 노트 작성, 퀴즈 풀이, 피드백, 학습 계획 조정으로 이어지는 흐름을 구상하고 설계한 AI 통합 학습 지원 시스템. 요청 의도에 맞는 모델과 도구로 보내는 AI Agent·MCP 구조와 MySQL·MongoDB 저장 구조를 설계했습니다. 한국디지털콘텐츠학회 논문 2편.',
-      'An AI learning-support system conceived and designed around a flow from setting goals to notes, quizzes, feedback and adjusting the plan. The design covers an AI Agent and MCP structure that sends each request to a suitable model or tool, and storage split across MySQL and MongoDB. Two Korea Digital Contents Society papers.',
+      '목표 설정, 노트 작성, 퀴즈 풀이, 피드백, 학습 계획 조정으로 이어지는 흐름을 구상하고 설계한 AI 통합 학습 지원 시스템. 요청 의도에 맞는 모델과 도구로 보내는 AI Agent·MCP 구조와 MySQL·MongoDB 저장 구조를 설계했습니다. 한국디지털콘텐츠학회 논문 2편(은상 2회).',
+      'An AI learning-support system conceived and designed around a flow from setting goals to notes, quizzes, feedback and adjusting the plan. The design covers an AI Agent and MCP structure that sends each request to a suitable model or tool, and storage split across MySQL and MongoDB. Two Korea Digital Contents Society papers (two Silver Awards).',
     ),
     product: k(
       '목표 설정, 노트 작성, 퀴즈 풀이, 피드백, 학습 계획 조정으로 이어지는 흐름을 구상하고 설계한 AI 통합 학습 지원 시스템',
       'An AI learning-support system conceived and designed around a flow from setting goals to notes, quizzes, feedback and adjusting the plan',
     ),
-    featuresHeading: k('구상한 기능', 'Planned features'),
-    features: pairs([
-      ['학습 이력과 목표 기반 추천과 자동 일정', 'Recommendations and automatic schedules from study history and goals'],
-      ['노트와 질문에 대한 AI 피드백, 자유 편집 노트', 'AI feedback on notes and questions, and freely editable notes'],
-      ['퀴즈 자동 생성·채점과 성취도 리포트, 학습 현황 대시보드', 'Automatic quizzes, grading and progress reports, and a study dashboard'],
-    ]),
     sections: [
       section('result', OUTCOMES, [
         ['2025 한신 AISW 페스티벌 캡스톤 디자인 부문 특별상을 받았습니다.', 'Special Award (Capstone Design) at the 2025 Hanshin AISW Festival.'],
-        ['한국디지털콘텐츠학회 2025 하계·추계 학술대회 논문으로 발표해 논문 경진대회 은상을 받았습니다.', 'Papers at the 2025 summer and fall Korea Digital Contents Society conferences won Silver Awards at the student paper competitions.'],
+        ['한국디지털콘텐츠학회 2025 하계·추계 학술대회에서 논문 두 편을 발표해 각각 대학생 논문경진대회 은상을 받았습니다.', 'Presented two papers at the 2025 summer and fall Korea Digital Contents Society conferences, each winning a Silver Award in the student paper competition.'],
       ], { lead: true }),
       section(
         'problem',
@@ -1426,8 +1423,8 @@ export const projects: Project[] = [
         ROLE,
         [
           [
-            '프론트엔드와 백엔드의 전체 구성, AI 에이전트 구성, 데이터베이스 선정·설계를 맡았습니다. 팀장은 다른 팀원이 맡았습니다.',
-            'I handled the overall frontend and backend structure, the AI agents, and choosing and designing the databases. Another member led the team.',
+            '프론트엔드와 백엔드의 전체 구조, AI 에이전트의 요청 처리 흐름, 데이터베이스 선정과 스키마 설계를 맡았습니다.',
+            'I handled the overall frontend and backend structure, the AI agent’s request-handling flow, and choosing the databases and designing their schema.',
           ],
         ],
         { lead: true, anchor: 'role' },
@@ -1468,8 +1465,8 @@ export const projects: Project[] = [
       ),
       section('retro', REFLECTION, [
         [
-          '설계한 구조를 실제 사용자 데이터로 검증하지 못했습니다. 다음에는 구상한 AI Agent 구조를 적용해 시험해 보고 싶습니다.',
-          'I did not validate the design with real user data. Next I would like to apply the planned AI Agent structure and try it out.',
+          '설계한 구조를 실제 사용자 데이터로 검증하지 못했습니다.',
+          'I did not validate the design with real user data.',
         ],
       ]),
     ],
@@ -1484,8 +1481,8 @@ export const projects: Project[] = [
     tier: 'supporting',
     showcase: 'supporting',
     period: '2025.05–2025.12',
-    team: k('초안은 팀 · 오픈소스 개발자 대회', 'Team draft · Open Source Developer Competition'),
-    role: k('초안 백엔드·프론트엔드·AI 모델 · 이후 리뉴얼과 직무별 면접 추가는 혼자 진행', 'Backend, frontend and AI models in the draft · later renewal and role-based interviews on my own'),
+    team: k('팀 초안(2025.05–08) · 오픈소스 개발자대회 출품 → 개인 리뉴얼(2025.10–12)', 'Team draft (May–Aug 2025) · entered in the Open Source Developer Competition → solo renewal (Oct–Dec 2025)'),
+    role: k('백엔드·프론트엔드·AI 모델(초안) · 리뉴얼과 직무별 면접 전체(개인)', 'Backend, frontend and AI models (draft) · all of the renewal and role-based interviews (solo)'),
     stack: ['React', 'Express', 'MySQL', 'Whisper', 'Google TTS', 'OpenAI Assistants', 'AssemblyAI', 'TensorFlow.js'],
     summary: k(
       '이력서와 직무에 맞는 면접 질문을 만들고, 답변을 음성, 텍스트, 영상으로 분석해 꼬리 질문을 이어 가는 모의 면접 서비스. 표정, 시선, 자세와 발음, 말 속도를 함께 살펴보고, 꼬리 질문이 끝없이 이어지지 않도록 면접을 서버에서 15문항으로 제한했습니다.',
@@ -1498,13 +1495,13 @@ export const projects: Project[] = [
     features: pairs([
       ['이력서·자기소개서 관리와 직무별·기업별 AI 면접', 'Résumé and cover-letter management, and AI interviews by role and company'],
       ['음성 답변 받아쓰기와 AI 면접관 음성', 'Transcribed spoken answers and a spoken AI interviewer'],
-      ['표정·시선·자세, 발음·감정·말 속도·필러 단어 분석', 'Analysis of expression, eye contact, posture, pronunciation, emotion, pace and filler words'],
+      ['표정·시선·자세, 발음·감정·말 속도·간투사 분석', 'Analysis of expression, eye contact, posture, pronunciation, emotion, pace and filler words'],
       ['세션 피드백과 PDF 리포트', 'Session feedback and a PDF report'],
     ]),
     sections: [
       section('result', OUTCOMES, [
         ['2025 한신 AISW 페스티벌 창업 아이디어 부문 장려상을 받았습니다.', 'Honorable Mention (Startup Idea) at the 2025 Hanshin AISW Festival.'],
-        ['오픈소스 개발자대회에 참가했고, 한신대 AI 면접 특강에서 학생들이 직접 시연했습니다.', 'Entered the Open Source Developer Competition, and students tried it themselves at AI interview workshops at Hanshin University.'],
+        ['오픈소스 개발자대회 출품작이며, 한신대 AI 면접 특강 2회(2025.10)와 쏘랩 시연(2025.11)에서 학생들이 직접 써 봤습니다.', 'Entered in the Open Source Developer Competition; students tried it themselves at two AI interview workshops at Hanshin University (Oct 2025) and a SoLab demo (Nov 2025).'],
       ], { lead: true }),
       section(
         'problem',
@@ -1537,7 +1534,7 @@ export const projects: Project[] = [
             'An interview runs from a self-introduction request → the first question → follow-ups → the next question → the close. An OpenAI Assistant matched to the company and role writes the questions, Google TTS reads them aloud, and Whisper transcribes the answers.',
           ],
           [
-            '표정, 시선, 자세는 브라우저에서, 발음, 감정, 말 속도, 필러 단어는 서버에서 분석해 세션 피드백과 PDF 리포트로 보여 줍니다. 데이터는 MySQL 14개 테이블에 저장합니다.',
+            '표정, 시선, 자세는 브라우저에서, 발음, 감정, 말 속도, 간투사는 서버에서 분석해 세션 피드백과 PDF 리포트로 보여 줍니다. 데이터는 MySQL 14개 테이블에 저장합니다.',
             'Expression, eye contact and posture are analyzed in the browser, and pronunciation, emotion, pace and filler words on the server, feeding session feedback and a PDF report. Data lives in 14 MySQL tables.',
           ],
         ],
@@ -1567,12 +1564,12 @@ export const projects: Project[] = [
             'Interviews that never ended. Problem: the AI interviewer kept generating follow-ups. Fix: prompt changes plus server rules. There are 15 questions, the 15th a fixed closing question, and a follow-up comes only after a short answer, at most once.',
           ],
           [
-            '직무에 맞는 질문. 문제: RAG가 자료를 제대로 가져오지 못하는 경우가 있었습니다. 해결: 직무별·기업별 질문 데이터와 검색 자료를 따로 준비해 파인튜닝과 프롬프트를 다르게 구성했습니다.',
-            'Questions that fit the role. Problem: RAG sometimes failed to retrieve the right material. Fix: question data and search material were prepared separately by role and company, with different fine-tuning and prompts.',
+            '직무에 맞는 질문. 문제: 직무와 무관한 자료가 검색되어 질문이 일반적으로 나왔습니다. 해결: 질문 데이터와 검색 자료를 직무·기업별로 나눠 두고, Assistant도 직무·기업마다 따로 만들었습니다.',
+            'Questions that fit the role. Problem: unrelated material was retrieved, so the questions came out generic. Fix: question data and search material are kept separately by role and company, and each role and company has its own Assistant.',
           ],
           [
-            '음성 처리. 브라우저 녹음(WebM)을 ffmpeg로 WAV로 바꿔 Whisper에 넘기고, 연결 오류가 나면 다시 말해 달라고 안내합니다.',
-            'Audio handling. Browser recordings (WebM) convert to WAV with ffmpeg before Whisper, and a connection error prompts the user to try again.',
+            '음성 처리. Label Light에서 쓴 음성 파이프라인(WebM → ffmpeg → WAV → Whisper)을 가져오고, 연결 오류가 나면 다시 말해 달라고 안내합니다.',
+            'Audio handling. The voice pipeline from Label Light (WebM → ffmpeg → WAV → Whisper) is reused, and a connection error prompts the user to try again.',
           ],
         ],
         { anchor: 'solved' },
@@ -1597,15 +1594,15 @@ export const projects: Project[] = [
     team: k('개인 · 논문', 'Solo · paper'),
     stack: ['Express', 'React', 'OpenAI API', 'Google Calendar API'],
     summary: k(
-      'LLM이 일정을 제안하면 다른 LLM 역할이 휴식과 과부하 기준으로 검토하고(최대 2번), 사용자가 승인해야 Google 캘린더에 기록하는 일정 관리 서비스.',
-      'A scheduling service where one LLM proposes a schedule, another LLM role reviews it against rest and overload criteria (up to twice), and nothing goes into Google Calendar until the user approves.',
+      'LLM이 일정을 제안하면 다른 LLM 역할이 휴식과 과부하 기준으로 검토하고(최대 2번), 사용자가 승인해야 Google 캘린더에 기록하는 일정 관리 서비스. 한국정보통신학회 2026 춘계 논문 「A2A 협업 기반 웰니스 일정 관리 시스템」(1저자).',
+      'A scheduling service where one LLM proposes a schedule, another LLM role reviews it against rest and overload criteria (up to twice), and nothing goes into Google Calendar until the user approves. First-author paper at the 2026 KIICE spring conference: “A Wellness Scheduling System Based on A2A Collaboration”.',
     ),
     image: '/images/projects/restplanner.png',
     imageCaption: k('일정 요청 입력 화면 · 실제 화면', "Schedule request screen · real screen"),
   },
   {
     slug: 'ai-hiring-textmining',
-    name: '텍스트마이닝 연구',
+    name: 'AI 채용 담론 텍스트마이닝',
     nameEn: 'AI-era Hiring Text Mining',
     years: [2026],
     tier: 'card',
@@ -1627,8 +1624,8 @@ export const projects: Project[] = [
     team: k('개인 · 취미', 'Solo · hobby'),
     stack: ['Electron', 'React', 'Three.js', 'MediaPipe Hands', 'Ollama', 'faster-whisper', 'Kokoro TTS'],
     summary: k(
-      'Mac 안에서만 도는 홀로그램 비서 실험. 손동작으로 화면을 다루고, 말로 묻고 답을 듣습니다. 로컬 LLM 답을 문장 단위로 끊어 나오는 대로 읽게 했습니다.',
-      'A holographic assistant experiment that runs entirely on a Mac: hand gestures to work the screen, questions asked out loud. The local LLM’s answer is read aloud sentence by sentence as it arrives.',
+      'Mac 안에서만 도는 홀로그램 비서 실험. 손동작으로 화면을 다루고, 말로 물으면 답을 읽어 줍니다. 로컬 LLM 답을 문장 단위로 끊어 나오는 대로 읽게 했습니다.',
+      'A holographic assistant experiment that runs entirely on a Mac: hand gestures to work the screen, and spoken questions answered aloud. The local LLM’s answer is read aloud sentence by sentence as it arrives.',
     ),
   },
   {
@@ -1693,8 +1690,8 @@ export const projects: Project[] = [
     period: '2026.03–2026.04',
     stack: ['React', 'Gemini API'],
     summary: k(
-      '회의 발언을 받아 적어 문장별 감정과 회의 요약을 보여 주는 브라우저 프로토타입(3인).',
-      'A browser prototype that transcribes what is said in a meeting and shows the emotion of each sentence and a summary of the meeting (team of 3).',
+      '회의 발언을 받아 적어 문장별 감정과 회의 요약을 보여 주는 브라우저 프로토타입(3인). 한국디지털콘텐츠학회 2026 하계 논문(1저자).',
+      'A browser prototype that transcribes what is said in a meeting and shows the emotion of each sentence and a summary of the meeting (team of 3). First-author paper at the 2026 Korea Digital Contents Society summer conference.',
     ),
     image: '/images/projects/teamflow.png',
     imageCaption: k('회의 화면과 AI 퍼실리테이터 패널 · 실제 화면', "Meeting screen with the AI facilitator panel · real screen"),

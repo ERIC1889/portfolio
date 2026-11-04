@@ -24,7 +24,7 @@ const PLACEMENT = [
   ['finz', 'featured', 'flagship', [2026]],
   ['skillpilot', 'featured', 'main', [2025]],
   ['closetmate', 'featured', 'main', [2026]],
-  ['pitches', 'featured', 'main', [2024, 2026]],
+  ['pitches', 'featured', 'main', [2024, 2025, 2026]],
   ['media-pulse', 'card', 'other', [2023]],
   ['label-light', 'supporting', 'supporting', [2024]],
   ['wildfire', 'card', undefined, [2025]],
@@ -49,7 +49,7 @@ const BANNED: Record<string, (string | RegExp)[]> = {
   'llm-dolbom': ['심리 상태 분석', 'psychological state'],
   edumatrix: ['집중도', '성과 예측', 'performance prediction', '상태 머신', 'state machine', 'TypeScript', '실시간 모니터링', 'real-time monitoring', 'implemented', '구현'],
   innoview: ['1인 개발', 'solo developer'],
-  restplanner: ['강화학습', 'reinforcement', 'Agent-to-Agent', 'A2A'],
+  restplanner: ['강화학습', 'reinforcement', 'Agent-to-Agent'],
   teamflow: ['SaaS'],
   unifit: ['AI'],
   patentry: ['특허 데이터', 'patent data'],
@@ -165,14 +165,14 @@ describe('flagship: Finz personal tax calculators', () => {
     ])
   })
 
-  it('links to the live calculators: the hub first, then each one', () => {
+  it('links to the live calculators: the hub first, then 6Way (the one in the demo), then the rest', () => {
     const live = finz.links?.filter((l) => l.kind === 'live').map((l) => l.href)
     expect(live).toEqual([
       'https://www.finz.kr/personal',
+      'https://www.finz.kr/personal/property',
       'https://www.finz.kr/personal/digital-asset/calculator',
       'https://www.finz.kr/personal/foreign-stock/capital-gains',
       'https://www.finz.kr/personal/foreign-stock/valuation',
-      'https://www.finz.kr/personal/property',
     ])
   })
 
@@ -219,9 +219,10 @@ describe('supporting: SkillPilot', () => {
     expect(text).toContain('XML과 JSON 응답을 모두 해석')
   })
 
-  it('links the client, sync and AI-reuse code and the final presentation directly', () => {
+  it('links the repository first, then the client, sync and AI-reuse code and the final presentation directly', () => {
     const hrefs = skillpilot.links?.map((l) => l.href) ?? []
-    expect(hrefs[0]).toMatch(/integrations\/dataGoKr\/client\.js$/)
+    expect(hrefs[0]).toBe('https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot')
+    expect(hrefs[1]).toMatch(/integrations\/dataGoKr\/client\.js$/)
     expect(hrefs.some((h) => h.endsWith('certificationSync.service.js'))).toBe(true)
     expect(hrefs.some((h) => h.endsWith('ai.service.js'))).toBe(true)
     expect(hrefs.some((h) => h.endsWith('.pdf'))).toBe(true)

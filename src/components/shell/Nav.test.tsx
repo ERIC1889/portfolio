@@ -20,7 +20,7 @@ describe('Nav', () => {
     expect(menuLinks()).toEqual([
       ['프로젝트', '/#projects'],
       ['기술', '/#skills'],
-      ['경험', '/#experience'],
+      ['경력', '/#experience'],
       ['이력서', '/resume'],
     ])
     expect(screen.queryByRole('button', { expanded: false })).toBeNull()

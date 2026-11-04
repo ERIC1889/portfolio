@@ -12,7 +12,7 @@ export const HOME_IDS = {
 export const NAV_LABELS = {
   projects: { ko: '프로젝트', en: 'Projects' },
   skills: { ko: '기술', en: 'Skills' },
-  experience: { ko: '경험', en: 'Experience' },
+  experience: { ko: '경력', en: 'Experience' },
   resume: { ko: '이력서', en: 'Résumé' },
 } satisfies Record<string, L>
 
@@ -21,7 +21,7 @@ export const SECTION_TITLES = {
   main: { ko: '대표 프로젝트', en: 'Main projects' },
   skills: { ko: '기술', en: 'Skills' },
   supporting: { ko: '보조 프로젝트', en: 'Supporting projects' },
-  experience: { ko: '경험', en: 'Experience' },
+  experience: { ko: '경력과 기록', en: 'Experience' },
   contact: { ko: '연락', en: 'Contact' },
 } satisfies Record<string, L>
 
@@ -47,14 +47,14 @@ export const SKILL_HEADINGS = {
 
 export const CONTRIBUTION_LABELS: Record<keyof Contribution, L> = {
   direct: { ko: '직접 구현', en: 'Built myself' },
-  joint: { ko: '함께 결정', en: 'Decided together' },
+  joint: { ko: '함께 진행', en: 'Done together' },
   others: { ko: '다른 사람 구현', en: 'Built by others' },
   verified: { ko: '직접 검증', en: 'Verified myself' },
   notYet: { ko: '아직 안 한 일', en: 'Not done yet' },
 }
 
 export const FLOW_OWNER: Record<FlowStep['owner'], L> = {
-  mine: { ko: '직접 구현', en: 'Built by me' },
+  mine: { ko: '직접 구현', en: 'Built myself' },
   external: { ko: '외부', en: 'External' },
 }
 
@@ -74,8 +74,8 @@ export const METRIC_SOURCES: Record<Metric['source'], L> = {
 }
 
 export const PAPER_KINDS: Record<PaperKind, L> = {
-  international: { ko: '국제 학술대회', en: 'International conference' },
-  domestic: { ko: '국내 학술대회', en: 'Domestic conference' },
+  international: { ko: '국제학술대회', en: 'International conference' },
+  domestic: { ko: '국내학술대회', en: 'Domestic conference' },
   contest: { ko: '논문 공모전', en: 'Paper contest' },
   campus: { ko: '교내 발표', en: 'Campus presentation' },
 }
@@ -83,7 +83,7 @@ export const PAPER_KINDS: Record<PaperKind, L> = {
 const ORDINALS = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
 
 export function authorOrderLabel(order: number): L {
-  return { ko: `${order}저자`, en: `${ORDINALS[order - 1] ?? `${order}th`} author` }
+  return { ko: `제${order}저자`, en: `${ORDINALS[order - 1] ?? `${order}th`} author` }
 }
 
 export const ARCHIVE_HEADINGS = {
@@ -101,7 +101,7 @@ export const STAT_LABELS = {
   projects: { ko: '프로젝트', en: 'Projects' },
   papers: { ko: '학술대회 논문', en: 'Conference papers' },
   awards: { ko: '수상', en: 'Awards' },
-  activities: { ko: '대외 활동', en: 'Activities' },
+  activities: { ko: '활동', en: 'Activities' },
 } satisfies Record<string, L>
 
 export const STAT_NOTES = {
@@ -125,7 +125,7 @@ export const UI = {
   footer: { ko: '© 2026 허준영', en: '© 2026 Heo Jun Young' },
   footerSource: { ko: '이 사이트의 코드', en: "This site's code" },
   photoAlt: { ko: '허준영 프로필 사진', en: 'Portrait of Heo Jun Young' },
-  ctaProjects: { ko: '대표 프로젝트 보기', en: 'See the main project' },
+  ctaProjects: { ko: '대표 프로젝트 보기', en: 'See the main projects' },
   ctaResume: { ko: '이력서', en: 'Résumé' },
   blog: { ko: '기술 블로그', en: 'Tech blog' },
   details: { ko: '자세히 보기', en: 'Read the case study' },
@@ -141,7 +141,7 @@ export const UI = {
   recordStats: { ko: '기록 요약', en: 'At a glance' },
   team: { ko: '팀', en: 'Team' },
   gpa: { ko: '학점', en: 'GPA' },
-  backToProjects: { ko: '프로젝트 목록', en: 'All projects' },
+  backToProjects: { ko: '프로젝트 목록으로', en: 'Back to projects' },
   onThisPage: { ko: '이 페이지', en: 'On this page' },
   mediaHeading: { ko: '화면과 시연', en: 'Screens and demo' },
   contributionHeading: { ko: '담당 역할 및 기여', en: 'My role and contribution' },

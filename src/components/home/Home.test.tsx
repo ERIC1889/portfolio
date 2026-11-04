@@ -28,7 +28,7 @@ describe('home page (real content)', () => {
       '대표 프로젝트',
       '기술',
       '보조 프로젝트',
-      '경험',
+      '경력과 기록',
       '연락',
     ])
   })
@@ -58,7 +58,7 @@ describe('home page (real content)', () => {
     const main = screen.getAllByRole('region', { name: '대표 프로젝트' })[1]
     expect(within(main).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['SkillPilot 자격증·커리어 플랫폼', 'Pitches 발표 코칭', 'ClosetMate 옷장·코디 추천 앱'])
     expect(main).toHaveTextContent('Express 5')
-    expect(within(main).getByRole('link', { name: /API 클라이언트/ })).toHaveAttribute('href', expect.stringContaining('client.js'))
+    expect(within(main).getByRole('link', { name: /공개 저장소/ })).toHaveAttribute('href', 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot')
   })
 
   it('lists the supporting projects with a way to all projects, leaving the rest off the home page', () => {
@@ -72,7 +72,7 @@ describe('home page (real content)', () => {
 
   it('lists work then school as dated rows, without the coding-instructor job', () => {
     renderWithProviders(<Home />)
-    const experience = sectionOf('경험')
+    const experience = sectionOf('경력과 기록')
     const rows = [...experience.querySelectorAll('.exp-row')]
     expect(rows.map((row) => row.querySelector('.exp-when')?.textContent)).toEqual(['2026.01–', '2023.03–2027.02'])
     expect(rows[0]).toHaveTextContent('주식회사 Finz Labs (finz.kr)')
@@ -82,7 +82,7 @@ describe('home page (real content)', () => {
 
   it('shows the record as three big numbers and the three top awards', () => {
     renderWithProviders(<Home />)
-    const experience = sectionOf('경험')
+    const experience = sectionOf('경력과 기록')
     const stats = within(experience).getByLabelText('기록 요약')
     expect([...stats.querySelectorAll('.stat')].map((s) => [s.querySelector('dt')?.textContent, s.querySelector('.stat-value')?.textContent])).toEqual([
       ['프로젝트', '18'],

@@ -24,7 +24,7 @@ function pageNavHrefs() {
 describe('site metadata', () => {
   it('describes the site, sets its address and shares one card image', () => {
     expect(rootMetadata.metadataBase?.toString()).toBe('https://junyoung-portfolio.vercel.app/')
-    expect(rootMetadata.description).toBe('허준영 · 백엔드 중심 풀스택 개발자. Finz 개인 세금 계산기, SkillPilot, ClosetMate.')
+    expect(rootMetadata.description).toBe('허준영 · 백엔드 중심 풀스택 개발자.')
     expect(rootMetadata.alternates?.canonical).toBe('/')
     expect(rootMetadata.openGraph).toMatchObject({ images: [expect.objectContaining({ url: '/og.png', width: 1200, height: 630 })] })
   })
@@ -151,13 +151,13 @@ describe('/archive', () => {
     renderWithProviders(<ArchivePage />)
     const papers = document.getElementById('papers') as HTMLElement
     expect(within(papers).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual([
-      '국제 학술대회 1',
-      '국내 학술대회 6',
+      '국제학술대회 1',
+      '국내학술대회 6',
       '논문 공모전 1',
       '교내 발표 2',
     ])
-    expect(within(papers).getAllByText('1저자')).toHaveLength(3)
-    expect(within(papers).getAllByText('2저자')).toHaveLength(1)
+    expect(within(papers).getAllByText('제1저자')).toHaveLength(3)
+    expect(within(papers).getAllByText('제2저자')).toHaveLength(1)
   })
 
   it('lists awards newest first, marking the three selected ones and team awards', () => {
