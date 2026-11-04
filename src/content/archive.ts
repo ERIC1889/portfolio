@@ -22,7 +22,7 @@ export const archive: Archive = {
     },
     {
       title: 'Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI',
-      venue: k('APIC-IST 2025', 'APIC-IST 2025'),
+      venue: k('APIC-IST', 'APIC-IST'),
       year: 2025,
       kind: 'international',
       authorOrder: 2,
