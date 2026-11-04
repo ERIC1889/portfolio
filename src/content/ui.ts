@@ -109,6 +109,10 @@ export const STAT_NOTES = {
   grandPrize: { ko: '해커톤 대상(1등) 포함', en: 'Including a hackathon grand prize (1st)' },
 } satisfies Record<string, L>
 
+export function seeAllProjectsLabel(count: number): L {
+  return { ko: `프로젝트 ${count}개 모두 보기`, en: `See all ${count} projects` }
+}
+
 export function paperNote(counts: { international: number; firstAuthor: number }): L {
   return {
     ko: `국제 ${counts.international} · 1저자 ${counts.firstAuthor}`,

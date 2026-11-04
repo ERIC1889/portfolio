@@ -30,12 +30,15 @@ export function ProjectRow({ project }: { project: Project }) {
             {project.role && t(project.role)}
           </p>
         )}
-        {project.features && (
-          <ul className="feature-list is-plain">
-            {project.features.map((feature) => (
-              <li key={feature.ko}>{t(feature)}</li>
-            ))}
-          </ul>
+        {project.features && project.features.length > 0 && (
+          <>
+            <h4 className="label">{t(project.featuresHeading ?? UI.featuresHeading)}</h4>
+            <ul className="feature-list is-plain">
+              {project.features.map((feature) => (
+                <li key={feature.ko}>{t(feature)}</li>
+              ))}
+            </ul>
+          </>
         )}
         <StackList items={project.stack} label={UI.stack} />
         <div className="actions">

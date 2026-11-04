@@ -98,7 +98,7 @@ export function Resume({ profile, archive, projects, topAwards, siteUrl }: Props
                 {project.showcase === 'flagship' &&
                   project.metrics?.slice(0, 1).map((metric) => (
                     <li key={metric.label.ko}>
-                      {t(metric.label)}: <span className="mono">{metric.value}</span> ({t(metric.condition)})
+                      {t(metric.label)}: <span className="mono">{metric.value}</span> — {t(metric.target)} ({t(metric.condition)})
                     </li>
                   ))}
               </ul>

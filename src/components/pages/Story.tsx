@@ -43,12 +43,12 @@ export function Story({ years }: { years: StoryYear[] }) {
                           <Link href={`/projects/${project.slug}`}>
                             <strong>{t(projectName(project))}</strong>
                           </Link>{' '}
-                          — {t(project.summary)}
+                          — {t(project.product ?? project.summary)}
                         </li>
                       ))}
                       {[...cards, ...lines].map((project) => (
                         <li key={project.slug}>
-                          <strong>{t(projectName(project))}</strong> — {t(project.summary)}
+                          <strong>{t(projectName(project))}</strong> — {t(project.product ?? project.summary)}
                         </li>
                       ))}
                     </ul>

@@ -121,6 +121,22 @@ describe('CaseStudy body', () => {
     expect(table).not.toHaveTextContent('2026-10-29')
   })
 
+  it('breaks a "title. 문제: … 해결: …" paragraph into a bold title and two lines, and leaves other paragraphs alone', () => {
+    const solved: Project = {
+      ...project,
+      sections: [
+        { id: 'implementation', title: l('핵심 기술 문제 해결'), body: [l('HTTP 200 속의 실패. 문제: 상태 코드만 보면 틀립니다. 해결: 본문도 검사합니다.', 'Failures inside a 200. Problem: status alone misleads. Fix: check the body too.'), l('녹음 처리. 헤더를 직접 붙였습니다.')] },
+      ],
+    }
+    renderWithProviders(<CaseStudy project={solved} />)
+    const section = sectionNamed('핵심 기술 문제 해결')
+    const [first, second] = [...section.querySelectorAll(':scope > p')]
+    expect(first.querySelector('strong')).toHaveTextContent('HTTP 200 속의 실패')
+    expect([...first.querySelectorAll('.case-step-line')].map((el) => el.textContent)).toEqual(['문제: 상태 코드만 보면 틀립니다.', '해결: 본문도 검사합니다.'])
+    expect(second.querySelector('strong')).toBeNull()
+    expect(second).toHaveTextContent('녹음 처리. 헤더를 직접 붙였습니다.')
+  })
+
   it('lists every link in the evidence section', () => {
     renderWithProviders(<CaseStudy project={project} />)
     const evidence = sectionNamed('코드·자료')

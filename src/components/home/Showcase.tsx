@@ -3,11 +3,13 @@
 import Link from 'next/link'
 import { useLang } from '@/components/providers/LanguageProvider'
 import type { L, Project } from '@/content/types'
-import { UI } from '@/content/ui'
+import { UI, seeAllProjectsLabel } from '@/content/ui'
 import { ProjectRow } from './ProjectRow'
 import { SectionHead } from './SectionHead'
 
-export function Showcase({ id, title, projects, more = false, hideHeading = false }: { id: string; title: L; projects: Project[]; more?: boolean; hideHeading?: boolean }) {
+type Props = { id: string; title: L; projects: Project[]; more?: boolean; total?: number; hideHeading?: boolean }
+
+export function Showcase({ id, title, projects, more = false, total, hideHeading = false }: Props) {
   const { t } = useLang()
   if (projects.length === 0) return null
   return (
@@ -22,7 +24,7 @@ export function Showcase({ id, title, projects, more = false, hideHeading = fals
         {more && (
           <p className="more-link">
             <Link href="/archive#projects">
-              {t(UI.seeAllProjects)} <span aria-hidden="true">→</span>
+              {t(total ? seeAllProjectsLabel(total) : UI.seeAllProjects)} <span aria-hidden="true">→</span>
             </Link>
           </p>
         )}

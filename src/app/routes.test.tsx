@@ -110,6 +110,15 @@ describe('/story', () => {
     expect(within(year2025).getByRole('link', { name: 'SkillPilot' })).toHaveAttribute('href', '/projects/skillpilot')
   })
 
+  it('describes each project of a year in one line, not with its full summary', () => {
+    renderWithProviders(<StoryPage />)
+    for (const year of ['y2024', 'y2026']) {
+      const pitches = within(document.getElementById(year) as HTMLElement).getByRole('link', { name: 'Pitches' }).closest('li') as HTMLElement
+      expect(pitches).toHaveTextContent('발표하는 동안 말 속도, 감정, 음량을 분석해')
+      expect(pitches).not.toHaveTextContent('해커톤 대상과 창업 경진대회 특별상')
+    }
+  })
+
   it('redirects the old year pages to the matching year, and the old flagship address to the new one', async () => {
     const redirects = await nextConfig.redirects!()
     expect(redirects).toEqual([
@@ -177,6 +186,7 @@ describe('/resume', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('허준영')
     expect(screen.getByRole('link', { name: 'PDF 내려받기' })).toHaveAttribute('href', '/resume.pdf')
     expect(container).toHaveTextContent('Finz 개인 세금 계산기')
+    expect(container).toHaveTextContent('기준 워크북 대조 (6Way 웹 API): 21/21 — 실제 2주택 사례 1건')
     expect(container).toHaveTextContent('주식회사 Finz Labs')
     expect(container).not.toHaveTextContent('컴세바')
     expect(container).toHaveTextContent('eric1889@naver.com')

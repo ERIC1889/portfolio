@@ -61,11 +61,21 @@ describe('home page (real content)', () => {
     expect(within(main).getByRole('link', { name: /공개 저장소/ })).toHaveAttribute('href', 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot')
   })
 
+  it('heads each project row’s feature list the same way the case page does', () => {
+    renderWithProviders(<Home />)
+    const main = screen.getAllByRole('region', { name: '대표 프로젝트' })[1]
+    expect([...main.querySelectorAll('.project-row h4.label')].map((h) => h.textContent)).toEqual(['주요 기능', '주요 기능', '주요 기능'])
+    const supporting = sectionOf('보조 프로젝트')
+    const edumatrix = within(supporting).getByRole('heading', { level: 3, name: 'EduMatrix' }).closest('.project-row') as HTMLElement
+    expect(edumatrix.querySelector('h4.label')).toBeNull()
+    expect(edumatrix.querySelector('.feature-list')).toBeNull()
+  })
+
   it('lists the supporting projects with a way to all projects, leaving the rest off the home page', () => {
     renderWithProviders(<Home />)
     const supporting = sectionOf('보조 프로젝트')
     expect(within(supporting).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['EduMatrix', 'InnoView', 'Label Light'])
-    expect(within(supporting).getByRole('link', { name: /전체 프로젝트 보기/ })).toHaveAttribute('href', '/archive#projects')
+    expect(within(supporting).getByRole('link', { name: /프로젝트 18개 모두 보기/ })).toHaveAttribute('href', '/archive#projects')
     expect(screen.queryByRole('heading', { name: '그 밖의 프로젝트' })).toBeNull()
     expect(screen.queryByText('Media Pulse')).toBeNull()
   })

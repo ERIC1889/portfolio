@@ -501,6 +501,9 @@ a:hover {
   margin-top: 12px;
   gap: 6px;
 }
+.project-row-body .label + .feature-list.is-plain {
+  margin-top: 0;
+}
 .feature-list.is-plain > li {
   grid-template-columns: 14px 1fr;
   font-size: 15px;
@@ -900,6 +903,23 @@ a:hover {
 }
 .case-block > p + p {
   margin-top: 12px;
+}
+.case-block > .case-step + .case-step {
+  margin-top: 18px;
+}
+.case-step-title,
+.case-step-line {
+  display: block;
+}
+.case-step-title {
+  margin-bottom: 4px;
+}
+.case-step-line + .case-step-line {
+  margin-top: 6px;
+}
+.case-step-label {
+  font-weight: 600;
+  color: var(--text-2);
 }
 .case-block > .gallery,
 .case-block > .table,
