@@ -184,7 +184,7 @@ export const archive: Archive = {
       period: '24.01.04 ~ 25.06.17',
       name: k('AID 랩실 학부 연구생', 'Undergraduate researcher, AID Lab'),
       org: k('한신대학교 AID 랩실', 'AID Lab, Hanshin University'),
-      desc: k('대학원 연구실(AID 랩)의 학부 연구생으로 LLM 서비스와 Label Light 연구에 참여', 'Undergraduate researcher in the AID Lab, a graduate research lab, working on LLM services and the Label Light research'),
+      desc: k('대학원 연구실(AID 랩실)의 학부 연구생으로 LLM 서비스와 Label Light 연구에 참여', 'Undergraduate researcher in the AID Lab, a graduate research lab, working on LLM services and the Label Light research'),
     },
     {
       period: '24.07.01 ~ 24.08.06',
@@ -202,7 +202,7 @@ export const archive: Archive = {
       period: '24.09.09 ~ 24.10.07',
       name: k('SW중심대학 우수 작품 경진대회', 'SW-Centered University Outstanding Project Competition'),
       org: k('SW중심대학', 'SW-Centered University Program'),
-      desc: k('메타버스와 LLM을 활용한 디지털 돌봄 서비스 출품·발표', 'Entered and presented the digital care service using the metaverse and LLMs'),
+      desc: k('메타버스와 LLM을 활용한 디지털 돌봄 서비스 개발', 'Developed a digital care service using the metaverse and LLMs'),
     },
     {
       period: '24.11.01 ~ 24.12.31',
@@ -238,7 +238,7 @@ export const archive: Archive = {
       period: '25.01.01 ~ 26.07.01',
       name: k('WebDB 랩장', 'Lab lead, WebDB Lab'),
       org: k('한신대학교', 'Hanshin University'),
-      desc: k('학부 연구실 WebDB 랩 운영 총괄, 프로젝트 기획·관리', 'Ran the WebDB undergraduate lab and planned and managed its projects'),
+      desc: k('WebDB 연구실(학부 연구실) 운영 총괄, 프로젝트 기획·관리', 'Ran the WebDB lab, an undergraduate lab, and planned and managed its projects'),
     },
     {
       period: '25.04.15 ~ 25.09.17',

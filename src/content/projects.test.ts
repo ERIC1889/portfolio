@@ -49,7 +49,7 @@ const BANNED: Record<string, (string | RegExp)[]> = {
   'llm-dolbom': ['심리 상태 분석', 'psychological state'],
   edumatrix: ['집중도', '성과 예측', 'performance prediction', '상태 머신', 'state machine', 'TypeScript', '실시간 모니터링', 'real-time monitoring', 'implemented', '구현'],
   innoview: ['1인 개발', 'solo developer'],
-  restplanner: ['강화학습', 'reinforcement', 'Agent-to-Agent'],
+  restplanner: ['강화학습', 'reinforcement', 'Agent-to-Agent', /A2A(?! 협업 기반 웰니스 일정 관리 시스템| Collaboration)/],
   teamflow: ['SaaS'],
   unifit: ['AI'],
   patentry: ['특허 데이터', 'patent data'],

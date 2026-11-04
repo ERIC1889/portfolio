@@ -22,7 +22,7 @@ export const chapters: Chapter[] = [
     lesson: { ko: '처음으로 팀과 대회를 경험한 해', en: 'The year I first experienced teams and competitions' },
     essay: [
       {
-        ko: '대학원 연구실(AID 랩)의 학부 연구생이 되어 팀 프로젝트와 대회를 본격적으로 경험했습니다. 해커톤에서는 발표 코칭 서비스 Pitches의 백엔드와 AI를 맡아 대상을, 교내 페스티벌에서는 시니어 정신건강 챗봇 Label Light로 특별상을 받았습니다.',
+        ko: '대학원 연구실(AID 랩실)의 학부 연구생이 되어 팀 프로젝트와 대회를 본격적으로 경험했습니다. 해커톤에서는 발표 코칭 서비스 Pitches의 백엔드와 AI를 맡아 대상을, 교내 페스티벌에서는 시니어 정신건강 챗봇 Label Light로 특별상을 받았습니다.',
         en: 'As an undergraduate researcher in a graduate lab (the AID Lab), I took on team projects and competitions in earnest. I built the backend and AI for Pitches, a presentation-coaching service that won the grand prize at a hackathon, and Label Light, a mental-health chatbot for seniors, won a special award at the campus festival.',
       },
       {

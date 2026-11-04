@@ -67,7 +67,7 @@ export const projects: Project[] = [
     audience: k('집·가상자산·해외주식을 가진 개인', 'Individuals with homes, crypto or foreign stocks'),
     period: '2026.04–',
     team: k('주식회사 Finz Labs (직원 5명)', 'Finz Labs (five people)'),
-    role: k('개발 총괄 · 설계·개발·운영', 'Head of development · design, build and operation'),
+    role: k('개발 총괄 (설계·개발·운영)', 'Head of development (design, build, operation)'),
     status: k('운영 중 (finz.kr)', 'Live (finz.kr)'),
     statusCheckedAt: '2026-10-29',
     stack: ['Next.js', 'TypeScript', 'React', 'Vitest'],
@@ -347,7 +347,7 @@ export const projects: Project[] = [
             'The transaction-price API. Problem: encoding an already encoded key fails authentication, and month-by-month lookups are slow. Fix: the URL is assembled by hand, and the months load in parallel and are re-checked every 12 hours.',
           ],
           [
-            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 ±10원 안(최대 차이 1원)인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. 웹 저장소 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 돕니다.',
+            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 ±10원 안(최대 차이 1원)인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. finz.kr 저장소의 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 실행됩니다.',
             'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items land within ±10 won (largest gap 1 won); the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 184 tests mock external APIs so they run offline.',
           ],
         ],
@@ -358,8 +358,8 @@ export const projects: Project[] = [
         ['Finz 모바일 앱 (미출시)', 'Finz mobile app (not released)'],
         [
           [
-            '같은 회사에서 만든 청년 세금 환급 MVP입니다. Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
-            'A youth tax-refund MVP built at the same company. With Expo and FastAPI, I built the flow from simple authentication → fetching payment statements → calculating the refund → payment. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
+            'Finz 모바일 앱은 같은 회사에서 진행한 청년 세금 환급 MVP입니다. Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
+            'The Finz mobile app is a youth tax-refund MVP built at the same company. With Expo and FastAPI, I built the flow from simple authentication → fetching payment statements → calculating the refund → payment. Income records fetched through CODEF are not stored in the server database and are used only for the calculation.',
           ],
           [
             '결제(토스페이먼츠)를 요청한 사람이 실제 의뢰의 주인인지, 금액이 맞는지, 이미 결제된 건은 아닌지를 서버에서 다시 확인합니다. 사용자·세무사·관리자마다 다른 화면을 보여 주지만, 실제 권한 검사는 서버가 합니다.',
@@ -940,8 +940,8 @@ export const projects: Project[] = [
             'An LLM that only picks from candidates: instead of writing an answer from scratch, it chooses from rule-based candidates that reflect color, style, weather and recent wear.',
           ],
           [
-            '가벼운 모델 우선: 백본을 고정한 전이학습에서 두 모델을 비교해 MobileNetV3-Small을 골랐습니다. Fashion Product Images Small 유효 샘플 약 3만 5천 장을 8:2로 나눠 10 epoch 학습했고, 학습 시간은 약 23분과 53분이었습니다. 기기 안 추론을 염두에 두고 속도보다 크기(약 15분의 1)를 우선했습니다.',
-            'The lighter model first: with a frozen backbone I compared the two models and chose MobileNetV3-Small. About 35,000 valid samples from Fashion Product Images Small were split 8:2 and trained for 10 epochs, taking about 23 and 53 minutes. With on-phone inference in mind, size (about one fifteenth) came before speed.',
+            '가벼운 모델 우선: 백본을 고정한 전이학습에서 두 모델을 비교해 MobileNetV3-Small을 골랐습니다. Fashion Product Images Small 유효 샘플 약 3만 5천 장을 8:2로 나눠 10 epoch 학습했고, 학습 시간은 약 23분과 53분이었습니다. CPU 추론에서는 MobileNetV3가 오히려 느렸지만, 기기 안 추론을 염두에 두고 속도보다 크기(약 15분의 1)를 우선했습니다.',
+            'The lighter model first: with a frozen backbone I compared the two models and chose MobileNetV3-Small. About 35,000 valid samples from Fashion Product Images Small were split 8:2 and trained for 10 epochs, taking about 23 and 53 minutes. On CPU, MobileNetV3 was actually slower, but with on-phone inference in mind, size (about one fifteenth) came before speed.',
           ],
           [
             '서버 추론: Expo Go에서는 기기 안에서 모델을 불러올 수 없어 서버에서 ONNX로 추론했습니다. 비용이 드는 Vision 분석은 사용자가 직접 누를 때만 호출합니다.',
@@ -959,8 +959,8 @@ export const projects: Project[] = [
             'Suggesting clothes that are not in the wardrobe. Problem: left alone, an LLM invents clothing IDs or picks impossible combinations. Fix: rule-based scored candidates come first (no outerwear at 28°C and above, lower scores for recently worn clothes) and the LLM chooses only among them; the response is forced to a strict JSON Schema, and the server checks clothing IDs and the candidate outfit again.',
           ],
           [
-            '실패했을 때의 처리. 문제: 검증에 한 번 실패하면 끝이었습니다. 해결: 형식, 옷 ID, 후보 조합, 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거치고, 그래도 실패하면 오류로 끝냅니다. 사용 모델과 대체 이유를 기록합니다(검증 실패에만 해당하며, API 호출 자체가 실패한 경우는 아직 대체하지 않습니다).',
-            'Handling failures. Problem: one failed check used to be the end. Fix: if the format, clothing IDs, candidate outfit or confidence fall short, a backup model answers and goes through the same checks, and a second failure ends in an error. The model used and the reason for falling back are recorded (this covers failed checks only; a failed API call does not fall back yet).',
+            '실패했을 때의 처리. 문제: 검증에 한 번 실패하면 끝이었습니다. 해결: 형식, 옷 ID, 후보 조합, 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거치고, 그래도 실패하면 오류로 끝냅니다(검증 실패에만 해당하며, API 호출 자체가 실패한 경우는 아직 대체하지 않습니다). 사용 모델과 대체 이유를 기록합니다.',
+            'Handling failures. Problem: one failed check used to be the end. Fix: if the format, clothing IDs, candidate outfit or confidence fall short, a backup model answers and goes through the same checks, and a second failure ends in an error (this covers failed checks only; a failed API call does not fall back yet). The model used and the reason for falling back are recorded.',
           ],
           [
             '하나의 모델로 세 분류. 문제: 카테고리, 색상, 스타일을 따로 분류하면 모델이 세 개가 됩니다. 해결: 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다(학습 파라미터는 MobileNetV3-Small 기준 약 2만 3천 개).',
