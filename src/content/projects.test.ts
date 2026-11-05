@@ -126,11 +126,11 @@ describe('flagship: Finz personal tax calculators', () => {
     expect(media[0].kind).toBe('video')
   })
 
-  it('says what I built, what I decided with others and what is not done, without a "built by others" row', () => {
+  it('says what I built and what I did with others, without "built by others" or "not done yet" rows', () => {
     expect(finz.contribution?.direct.length).toBeGreaterThan(0)
     expect(finz.contribution?.others).toBeUndefined()
     expect(koText(finz.contribution?.joint)).toContain('세무사')
-    expect(koText(finz.contribution?.notYet)).toContain('운영 지표')
+    expect(finz.contribution?.notYet).toBeUndefined()
   })
 
   it('backs the calculation with measured checks against the reference workbook', () => {
@@ -142,10 +142,9 @@ describe('flagship: Finz personal tax calculators', () => {
     expect(koText(security.condition)).toContain('웹 계산 기능과는 별개')
   })
 
-  it('mentions the app’s other screens in words, as demo screens on example data, with no phone screenshots', () => {
+  it('keeps the app section to the refund flow and its demo video, with no phone screenshots and no demo-screen claims', () => {
     const app = finz.sections?.find((s) => s.anchor === 'refund-app')
-    expect(koText(app?.body)).toContain('금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교')
-    expect(koText(app?.body)).toContain('예시 데이터로 동작하는 시연 화면')
+    expect(koText(app?.body)).not.toContain('금융 교육 퀴즈')
     expect(app?.media?.map((m) => m.kind)).toEqual(['video'])
   })
 
@@ -189,7 +188,7 @@ describe('flagship: Finz personal tax calculators', () => {
     const saas = koText(finz.sections?.find((s) => s.anchor === 'finz-saas'))
     expect(saas).toContain('개발사와 함께 정하며 개발에 참여')
     const solved = koText(finz.sections?.find((s) => s.anchor === 'solved-saas'))
-    for (const fact of ['269건', '233건', '36건', '1,083MB', '1,472MB', '7개 모두']) expect(solved).toContain(fact)
+    for (const fact of ['269건', '233건', '36건', '45건', '7개 모두']) expect(solved).toContain(fact)
     expect(koText(finz.sections)).not.toMatch(/\d+건 해결|해결률/)
   })
 
@@ -200,7 +199,7 @@ describe('flagship: Finz personal tax calculators', () => {
 
   it('tells the CODEF session story with the five-year check against Hometax records', () => {
     const solved = koText(finz.sections?.find((s) => s.anchor === 'solved-app'))
-    for (const fact of ['첫 연도만 조회되고', 'commSession', '간편인증 한 번에 5개 연도', '홈택스에서 받은 자료와 대조', '인증 단계와 조회 단계'])
+    for (const fact of ['첫 연도만 조회되고', '인증 세션', '간편인증 한 번에 5개 연도', '홈택스에서 받은 자료와 대조', '인증 단계와 조회 단계'])
       expect(solved).toContain(fact)
     expect(koText(finz.contribution?.verified)).toContain('5개 연도')
   })
@@ -264,7 +263,7 @@ describe('other work: Pitches', () => {
     const media = pitches.media ?? []
     expect(media[0].kind).toBe('video')
     for (const m of media) expect(m.caption.ko).toContain('iOS 시뮬레이터')
-    expect(koText(pitches.contribution?.notYet)).toContain('실제 휴대폰')
+    expect(pitches.contribution?.notYet).toBeUndefined()
   })
 
   it('separates the three versions in one table', () => {

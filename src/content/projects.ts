@@ -109,8 +109,8 @@ export const projects: Project[] = [
         ],
         ['Finz 모바일 앱과 백엔드 (Expo · FastAPI, 미출시)', 'The Finz mobile app and its backend (Expo · FastAPI, not released)'],
         [
-          '세무사용 FINZ 가격 정책·기능 잠금 범위 사양 작성 (구현에 그대로 반영)',
-          'The pricing and feature-lock spec for FINZ for tax accountants (implemented as written)',
+          '세무사용 FINZ 가격 정책·기능 잠금 범위 사양 작성',
+          'The pricing and feature-lock spec for FINZ for tax accountants',
         ],
       ]),
       joint: pairs([
@@ -137,10 +137,6 @@ export const projects: Project[] = [
           '세무사용 FINZ: 개발사 작업 269건 재검증(233 확인 · 36 미완료 · 새 결함 45), 배포 9번 연속 실패 원인 재현',
           'FINZ for tax accountants: re-verified 269 vendor items (233 confirmed · 36 open · 45 new defects), reproduced the cause of nine failed deployments in a row',
         ],
-      ]),
-      notYet: pairs([
-        ['사용자 수 같은 운영 지표는 집계하지 않음', 'No usage metrics such as user counts are collected'],
-        ['디지털 자산·해외주식 결과는 PDF로 내보내지 않음', 'Digital-asset and foreign-stock results are not exported to PDF'],
       ]),
     },
     media: [
@@ -304,12 +300,8 @@ export const projects: Project[] = [
         DECISIONS,
         [
           [
-            '계산 엔진을 웹 안으로: 세무사와 Python으로 작성한 6Way 계산 로직을 서버로 따로 띄우지 않고 TypeScript로 옮겨 Next.js 안에서 계산했습니다. 저장할 상태가 없고 혼자 운영하는 단계라 배포 단위를 하나로 두는 편이 낫다고 봤습니다. 대신 엔진이 두 벌이 되어, 옮긴 뒤 같은 값을 내는지 기준 사례로 확인하는 것을 결정의 일부로 묶었습니다.',
-            'Moving the engine into the web app: rather than running the 6Way logic, written in Python with a tax accountant, as a separate server, I ported it to TypeScript and calculate inside Next.js. With no state to store and one person running it, a single deployment was the better trade. The cost is two copies of the engine, so checking the port against a reference case was part of the decision.',
-          ],
-          [
-            '저장하지 않는 계산기: 회원가입 없이 쓰고, 입력한 세금 정보는 서버에 저장하지 않습니다. 민감한 정보를 맡지 않는 쪽을 택했습니다.',
-            'A calculator that keeps nothing: it needs no sign-up, and the tax details people enter are not stored on the server. The choice was not to hold sensitive data.',
+            '계산 엔진을 웹 안으로: 세무사와 Python으로 작성한 6Way 계산 로직을 서버로 따로 띄우지 않고 TypeScript로 옮겨 Next.js 안에서 계산했습니다. 저장할 상태가 없고 혼자 운영하는 단계라 배포 단위를 하나로 두는 편이 낫다고 봤습니다.',
+            'Moving the engine into the web app: rather than running the 6Way logic, written in Python with a tax accountant, as a separate server, I ported it to TypeScript and calculate inside Next.js. With no state to store and one person running it, a single deployment was the better trade.',
           ],
           [
             'PDF 리포트: 별도 PDF 라이브러리 없이, 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
@@ -323,8 +315,8 @@ export const projects: Project[] = [
         SOLVED_WEB,
         [
           [
-            '날짜마다 다른 시세와 환율. 문제: 해외주식은 결제일 환율, 가상자산은 2026-12-31 시가가 필요한데, 외부 API는 느리거나 실패하고 아직 오지 않은 날짜에는 값이 없습니다. 해결: 시세는 Upbit 1분봉 다음 CoinGecko, 환율은 한국은행 ECOS 다음 ECB 기준환율로 대체하고, 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 둡니다. 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시하고, 아직 오지 않은 날짜는 외부 API를 호출하지 않습니다.',
-            'Prices and rates that change by date. Problem: foreign stocks need settlement-date exchange rates and crypto needs the 2026-12-31 price, but the APIs are slow or fail, and a date that hasn’t come yet has no value. Fix: prices fall back from Upbit 1-minute candles to CoinGecko and rates from the Bank of Korea ECOS to the ECB reference rate; fallback values are marked and cached briefly or not at all. Foreign-stock closes are cached only once the range is closed and complete, and a date that has not come yet never triggers an external call.',
+            '날짜마다 다른 시세와 환율. 문제: 해외주식은 결제일 환율이 필요한데, 외부 API는 느리거나 실패하고 아직 오지 않은 날짜에는 값이 없습니다. 해결: 환율은 한국은행 ECOS 다음 ECB 기준환율로 대체하고, 대체한 값에는 표시를 남겨 캐시하지 않거나 짧게만 둡니다. 해외주식 종가는 기간이 모두 끝나고 거래일이 충분할 때만 캐시하고, 아직 오지 않은 날짜는 외부 API를 호출하지 않습니다.',
+            'Prices and rates that change by date. Problem: foreign stocks need settlement-date exchange rates, but the APIs are slow or fail, and a date that hasn’t come yet has no value. Fix: rates fall back from the Bank of Korea ECOS to the ECB reference rate; fallback values are marked and cached briefly or not at all. Foreign-stock closes are cached only once the range is closed and complete, and a date that has not come yet never triggers an external call.',
           ],
           [
             '결제일 환율과 이익 나누기. 문제: 매수와 매도의 환율이 달라, 이익이 주가에서 왔는지 환율에서 왔는지 보이지 않습니다. 해결: 매수·매도를 각자의 결제일 환율로 원화 환산해 원 미만을 버리고, 이익을 주가로 생긴 몫과 환율로 생긴 몫으로 나눠 보여 줍니다. 신고 기한은 다음 해 5월 31일(주말·공휴일이면 그다음 평일)로 계산합니다.',
@@ -335,10 +327,6 @@ export const projects: Project[] = [
             'Four months of closes for a gift valuation. Problem: a gifted foreign stock is valued at the average close over the two months either side of the gift date, converted at the gift-date rate. Fix: the closes can be looked up, pasted from a price table or entered as an average, and the gift tax is estimated with relationship-based deductions, 10-year aggregation and the filing credit.',
           ],
           [
-            '아직 시가가 없는 가상자산. 문제: 2026-12-31 시가가 취득가액이 될 수 있지만 그날 전에는 조회할 수 없습니다. 해결: 세무사용 FINZ의 가상자산 계산 엔진을 개인용으로 옮기면서 판 날짜로 과세연도를 정하고, 시가가 없으면 실제 산 가격을 쓰는 보수적인 쪽을 택해 화면에 알립니다. 세금이 더 나올 수는 있어도 적게 안내하지는 않는 방향입니다. 엔진 오류는 쉬운 문장으로 바꿔 보여 줍니다.',
-            'Crypto with no price yet. Problem: the 2026-12-31 price can become the cost basis, but it cannot be looked up before that day. Fix: in adapting the crypto tax engine of FINZ for tax accountants for individuals, the tax year comes from the sale date, and a missing price falls back to the actual cost with a note on screen. The estimate may come out higher that way, but it never understates the tax. Engine errors are rewritten in plain language.',
-          ],
-          [
             '여섯 가지 경우. 문제: 주택 두 채를 각각 양도·증여·부담부증여하는 여섯 경우를 중과 유예 전·후 규칙으로 모두 계산해야 합니다. 해결: 경우마다 전후 규칙으로 따로 계산하고, 결과를 한 화면에서 비교합니다.',
             'Six options. Problem: selling, gifting or gifting-with-debt each of two homes makes six options, each to be computed under the rules before and after the surcharge grace period. Fix: each option is computed separately under both rules, and the results are compared on one screen.',
           ],
@@ -347,8 +335,8 @@ export const projects: Project[] = [
             'The transaction-price API. Problem: encoding an already encoded key fails authentication, and month-by-month lookups are slow. Fix: the URL is assembled by hand, and the months load in parallel and are re-checked every 12 hours.',
           ],
           [
-            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 ±10원 안(최대 차이 1원)인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. finz.kr 저장소의 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 실행됩니다.',
-            'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items land within ±10 won (largest gap 1 won); the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 184 tests mock external APIs so they run offline.',
+            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 최대 차이 1원인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. finz.kr 저장소의 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 실행됩니다.',
+            'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items match with a largest gap of 1 won; the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 184 tests mock external APIs so they run offline.',
           ],
         ],
         { anchor: 'solved' },
@@ -372,10 +360,6 @@ export const projects: Project[] = [
           [
             '세무사 상담 연결(세무사 목록 → 의뢰 → 서류 업로드 → 채팅(5초 간격 갱신) → 결제)도 실제 백엔드 API로 만들었습니다.',
             'The tax-accountant connection (accountant list → request → document upload → chat refreshed every 5 s → payment) is also built on the real backend API.',
-          ],
-          [
-            '생애주기 금융 기능(금융 교육 퀴즈, 모의투자, 소비·자산 대시보드, 금융 상품 비교)은 예시 데이터로 동작하는 시연 화면입니다. 상품 비교의 검색은 입력한 문장에서 상품 종류·기간·정렬 조건을 뽑아내는 규칙 기반 파서로 만들었습니다.',
-            'The life-stage finance features (a financial-literacy quiz, mock investing, a spending and assets dashboard, financial product comparison) are demo screens running on example data; the product search is a rule-based parser that pulls the product type, term and sort order out of a typed sentence.',
           ],
         ],
         {
@@ -401,8 +385,8 @@ export const projects: Project[] = [
         SOLVED_APP,
         [
           [
-            '연도마다 다시 걸리던 간편인증. 문제: 처음 구현은 연도마다 간편인증을 새로 요청해, 첫 연도만 조회되고 그 뒤에서 멈췄습니다. 사용자가 연도 수만큼 휴대폰 인증을 해야 하는 구조였습니다. 해결: CODEF 문서와 인증 흐름을 다시 확인해, 제출내역 조회에 세션 데이터를 요청하면 인증 세션(commSession)을 받고 이 세션으로 지급명세서를 연도만 바꿔 조회할 수 있다는 것을 찾았습니다. 서비스 코드와 분리한 Node.js 스크립트로 CODEF 개발 환경에서 간편인증 한 번에 5개 연도를 조회해 홈택스에서 받은 자료와 대조한 뒤, 백엔드를 인증 단계와 조회 단계로 나눠 다시 구현했습니다. 조회는 3초 간격으로 하나씩 보내고, 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다.',
-            'Simple authentication repeated for every year. Problem: the first implementation asked for a new simple authentication for every year, so the first year came back and then it stalled; users would have had to approve on their phone once per year. Fix: going back through the CODEF documentation and the authentication flow showed that asking the submission-list lookup for session data returns an authenticated session (commSession), and that the payment-statement lookup can reuse it with only the year changed. A Node.js script kept apart from the service fetched five years with one authentication in the CODEF development environment, the results were checked against records downloaded from Hometax, and the backend was then rebuilt with authentication and lookup as separate steps. Lookups go out one at a time, 3 seconds apart, and an error saying identical requests overlapped is retried after 5 seconds, then 10.',
+            '연도마다 다시 걸리던 간편인증. 문제: 처음 구현은 연도마다 간편인증을 새로 요청해, 첫 연도만 조회되고 그 뒤에서 멈췄습니다. 사용자가 연도 수만큼 휴대폰 인증을 해야 하는 구조였습니다. 해결: CODEF 문서와 인증 흐름을 다시 확인해, 제출내역 조회에 세션 데이터를 요청하면 인증 세션을 받고 이 세션으로 지급명세서를 연도만 바꿔 조회할 수 있다는 것을 찾았습니다. 서비스 코드와 분리한 Node.js 스크립트로 CODEF 개발 환경에서 간편인증 한 번에 5개 연도를 조회해 홈택스에서 받은 자료와 대조한 뒤, 백엔드를 인증 단계와 조회 단계로 나눠 다시 구현했습니다. 조회는 3초 간격으로 하나씩 보내고, 같은 요청이 겹쳤다는 오류가 오면 5초, 10초를 기다렸다 다시 시도합니다.',
+            'Simple authentication repeated for every year. Problem: the first implementation asked for a new simple authentication for every year, so the first year came back and then it stalled; users would have had to approve on their phone once per year. Fix: going back through the CODEF documentation and the authentication flow showed that asking the submission-list lookup for session data returns an authenticated session, and that the payment-statement lookup can reuse it with only the year changed. A Node.js script kept apart from the service fetched five years with one authentication in the CODEF development environment, the results were checked against records downloaded from Hometax, and the backend was then rebuilt with authentication and lookup as separate steps. Lookups go out one at a time, 3 seconds apart, and an error saying identical requests overlapped is retried after 5 seconds, then 10.',
           ],
           [
             '간편인증 대기와 만료. 문제: 간편인증은 사용자가 휴대폰에서 승인할 때까지 결과를 알 수 없습니다. 해결: 3초 간격으로 상태를 확인하고 270초가 지나면 만료로 처리합니다. 인증 상태는 대기·요청·확인 중·완료·실패·만료 여섯 가지를 하나의 타입으로 관리하고, 실패와 만료에는 다시 시도할 수 있게 했습니다.',
@@ -416,8 +400,8 @@ export const projects: Project[] = [
         ['세무사용 FINZ · 협력 개발사와 공동 개발 (출시 전)', 'FINZ for tax accountants · co-developed with a partner company (not yet launched)'],
         [
           [
-            '세무사용 FINZ는 같은 회사에서 협력 개발사와 함께 개발한 세무사용 SaaS로, 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖췄습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다. 제가 쓴 가격 정책·기능 잠금 범위 사양은 그대로 구현되었습니다.',
-            'FINZ for tax accountants is a SaaS developed at the same company together with a partner development company: capital gains, gift, inheritance and comprehensive property tax calculations, Hometax filing files and an AI tax assistant. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures. My pricing and feature-lock spec was implemented as written.',
+            '세무사용 FINZ는 같은 회사에서 협력 개발사와 함께 개발한 세무사용 SaaS로, 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖췄습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다.',
+            'FINZ for tax accountants is a SaaS developed at the same company together with a partner development company: capital gains, gift, inheritance and comprehensive property tax calculations, Hometax filing files and an AI tax assistant. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures.',
           ],
           [
             '세무사는 고객과 신고건을 만든 뒤 자료를 모읍니다. 시세는 국토교통부 실거래가로 채우고, 등기부·건축물대장은 공공조회로, 감정평가서·매매계약서 같은 서류는 스캔본 OCR로 불러오며(추출값은 검수한 뒤에만 계산기에 들어감), 세대 구성과 과거 양도 이력은 고객 간편인증으로 조회합니다.',
@@ -479,29 +463,21 @@ export const projects: Project[] = [
         SOLVED_SAAS,
         [
           [
-            '배포 9번 연속 실패. 문제: 배포가 9번 잇달아 실패했는데 코드 결함인지 서버 문제인지 불분명했습니다. 해결: 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 1,083MB에서 1,472MB로 36% 늘어난 것(검사 대상 파일 2,619 → 3,619개)을 확인했고, 서버와 같은 메모리 상한(973MB)에서 오류를 재현해 서버 메모리 부족이 원인임을 밝혔습니다. 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했고, 개발사는 진단이 맞다고 확인한 뒤 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
-            'Nine failed deployments in a row. Problem: deployments failed nine times running, and it was unclear whether the code or the server was at fault. Fix: measuring before and after the blockchain library arrived showed type-check memory up 36%, from 1,083 MB to 1,472 MB (files checked: 2,619 → 3,619), and reproducing the crash under the server’s 973 MB heap cap showed the cause was server memory. After two fixes were tested, an 8 GB server or building images in CI was recommended; the vendor confirmed the diagnosis and changed deployment so a failed build no longer takes the service down.',
+            '배포 9번 연속 실패. 문제: 배포가 9번 잇달아 실패했는데 코드 결함인지 서버 문제인지 불분명했습니다. 해결: 블록체인 라이브러리 도입 전후를 같은 방법으로 재어 타입 검사 메모리가 36% 늘어난 것을 확인했고, 서버와 같은 메모리 상한에서 오류를 재현해 서버 메모리 부족이 원인임을 밝혔습니다. 두 가지 해결책을 시험해 8GB 서버나 CI에서 이미지를 빌드하는 방식을 권했고, 개발사는 진단이 맞다고 확인한 뒤 실패한 배포가 서비스를 멈추지 않도록 바꿨습니다.',
+            'Nine failed deployments in a row. Problem: deployments failed nine times running, and it was unclear whether the code or the server was at fault. Fix: measuring before and after the blockchain library arrived showed type-check memory up 36%, and reproducing the crash under the server’s heap cap showed the cause was server memory. After two fixes were tested, an 8 GB server or building images in CI was recommended; the vendor confirmed the diagnosis and changed deployment so a failed build no longer takes the service down.',
           ],
           [
-            '완료 보고 269건. 문제: 개발사가 완료했다고 보고한 작업이 실제로 끝났는지 알 수 없었습니다. 해결: 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며(PR 참조 317개 대조), 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었습니다. 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 약 973만 원 적게 나오는 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
-            '269 items reported done. Problem: there was no way to tell whether the work the vendor reported as done was really finished. Fix: each of the 269 items was re-checked against code, tests and screens: 233 confirmed and 36 left open (317 PR references cross-checked), plus 45 new defects. Two had to be fixed before launch (payment and plan locking). For a defect where a parcel with no standard price was silently dropped from the tax and understated it by about ₩9.73 million, the exact code was traced and sent as the top fix request.',
+            '완료 보고 269건. 문제: 개발사가 완료했다고 보고한 작업이 실제로 끝났는지 알 수 없었습니다. 해결: 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며, 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었습니다. 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 적게 나오는 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
+            '269 items reported done. Problem: there was no way to tell whether the work the vendor reported as done was really finished. Fix: each of the 269 items was re-checked against code, tests and screens: 233 confirmed and 36 left open, plus 45 new defects. Two had to be fixed before launch (payment and plan locking). For a defect where a parcel with no standard price was silently dropped from the tax and understated it, the exact code was traced and sent as the top fix request.',
           ],
           [
-            '끊기는 문서 인식과 CI 점검. 문제: 문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 인식 결과가 끝까지 나오지 않고 끊겼고, CI가 계산 오류를 실제로 잡는지도 확인된 적이 없었습니다. 해결: 끊김의 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사는 상한을 8,000으로 올리며 코드 주석에 그 진단을 남겼습니다. CI에는 한 줄짜리 버그 7개를 심어 7개 모두 잡아내는 것을 확인했습니다.',
-            'Cut-off OCR and checking CI. Problem: in an OCR field test (11 document types, 17 files) recognition stopped before the end of the document, and no one had checked whether CI really catches calculation errors. Fix: the cut-off was traced to the output-token cap (1,200); the vendor raised it to 8,000 and credited the diagnosis in a code comment. Seven one-line bugs were planted, and CI caught all seven.',
+            '끊기는 문서 인식과 CI 점검. 문제: 문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 인식 결과가 끝까지 나오지 않고 끊겼고, CI가 계산 오류를 실제로 잡는지도 확인된 적이 없었습니다. 해결: 끊김의 원인을 출력 토큰 상한(1,200)으로 짚었고, 상한을 8,000으로 올려 해결했습니다. CI에는 한 줄짜리 버그 7개를 심어 7개 모두 잡아내는 것을 확인했습니다.',
+            'Cut-off OCR and checking CI. Problem: in an OCR field test (11 document types, 17 files) recognition stopped before the end of the document, and no one had checked whether CI really catches calculation errors. Fix: the cut-off was traced to the output-token cap (1,200), and raising it to 8,000 fixed it. Seven one-line bugs were planted, and CI caught all seven.',
           ],
         ],
         { anchor: 'solved-saas' },
       ),
       section('retro', REFLECTION, [
-        [
-          '기준 사례가 하나뿐입니다. 경계값·반올림·잘못된 입력 사례를 늘리고, 워크북 자체가 틀렸을 때 알아챌 방법도 정하겠습니다.',
-          'There is only one reference case. I would add boundary, rounding and invalid-input cases, and decide how we would notice if the workbook itself were wrong.',
-        ],
-        [
-          '디지털 자산 엔진과 증여 평가 모듈은 세무사용 FINZ의 코드를 옮긴 것이라, 그 뒤 세무사용 FINZ에 들어간 수정(10원 미만 절사, 공제 근거 조문 정정 등)이 개인 계산기에는 아직 없습니다. 두 곳이 같은 엔진을 쓰도록 공용 패키지로 묶겠습니다.',
-          'The crypto engine and the gift-valuation module were adapted from FINZ for tax accountants, so fixes made there since then (rounding down below 10 won, a corrected statute reference) are not in the public calculators yet. I would move the engine into a shared package both use.',
-        ],
         [
           '앱의 연도별 조회는 요청 하나 안에서 3초 간격으로 순서대로 돌아, 연도가 많으면 몇 분이 걸립니다. 조회를 작업으로 넘기고 앱이 진행 상태를 확인하게 바꾸겠습니다. 세션이 만료되면 다시 인증받지 않고 멈추는 점은 재인증을 요청하도록, 일부 연도만 실패해도 완료로 끝나는 점은 실패한 연도를 알려 주도록 고치겠습니다.',
           'In the app, the yearly lookups run one after another, 3 seconds apart, inside a single request, so many years can take minutes. I would hand the lookups to a background job and let the app poll its progress. When the session expires the backend stops instead of asking for re-authentication, and a run where only some years fail still ends as done; I would fix the first to request re-authentication and the second to report which years failed.',
@@ -572,7 +548,6 @@ export const projects: Project[] = [
         ['팀 운영(일정·역할 조율)과 최종 발표', 'Running the team (schedule and role coordination) and the final presentation'],
       ]),
       others: pairs([['프론트엔드 초기 화면(팀원 2), AI 프롬프트·추천 로직(팀원 1)', 'The initial frontend screens (two teammates) and the AI prompts and recommendation logic (one teammate)']]),
-      notYet: pairs([['자동 테스트 없음', 'No automated tests']]),
     },
     media: [
       shot(
@@ -700,8 +675,8 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            'HTTP 200 속의 실패. 문제: 공공 API는 실패해도 HTTP 200으로 "SERVICE ERROR" 같은 문구를 보내는 경우가 있어, 상태 코드만 보면 틀린 데이터가 저장될 수 있습니다. 해결: 본문의 오류 문구까지 검사해 실패로 판정하고, 0.5초, 1초 간격으로 최대 2번 다시 시도합니다.',
-            'Failures inside an HTTP 200. Problem: public APIs sometimes answer a failure with HTTP 200 and text such as "SERVICE ERROR", so judging by status code alone could store wrong data. Fix: the body is checked for error text too, counted as a failure and retried up to twice, 0.5 s and 1 s apart.',
+            'HTTP 상태 코드와 실제 API 응답의 불일치. 문제: 공공 API는 실패해도 HTTP 200으로 "SERVICE ERROR" 같은 문구를 보내는 경우가 있어, 상태 코드만 보면 틀린 데이터가 저장될 수 있습니다. 해결: 본문의 오류 문구까지 검사해 실패로 판정하고, 0.5초, 1초 간격으로 최대 2번 다시 시도합니다.',
+            'Mismatch between the HTTP status code and the actual API response. Problem: public APIs sometimes answer a failure with HTTP 200 and text such as "SERVICE ERROR", so judging by status code alone could store wrong data. Fix: the body is checked for error text too, counted as a failure and retried up to twice, 0.5 s and 1 s apart.',
           ],
           [
             '제각각인 응답 구조. 문제: 응답은 대부분 XML이고 목록 위치가 API마다 다르며, 결과가 하나면 객체로 옵니다. 해결: XML과 JSON 응답을 모두 해석하고, 목록을 항상 배열로 돌려준 뒤 7개 엔드포인트별 정규화 함수로 내부 구조에 맞춥니다.',
@@ -712,16 +687,16 @@ export const projects: Project[] = [
             'Service keys. Problem: encoding an already encoded service key can break authentication. Fix: the key is appended as a string and only the other parameters are encoded. An API without a key is skipped and the rest of the sync continues.',
           ],
           [
-            '자격증과 시험 일정 결합. 문제: 국가전문자격 일정에는 자격증 코드가 없고, 같은 일정이 중복될 수 있습니다. 해결: 코드가 없으면 종목명으로 매칭하고, 자격증과 시험일로 찾아 있으면 접수 기간만 갱신합니다. 다만 unique 제약이 없어 동시 실행까지 막지는 못합니다.',
-            'Joining certifications and exam schedules. Problem: professional certification schedules have no certification code, and a schedule could be duplicated. Fix: without a code, matching uses the name, and a schedule found by certification and exam date only has its registration period updated. With no unique constraint, concurrent runs are not prevented.',
+            '자격증과 시험 일정 결합. 문제: 국가전문자격 일정에는 자격증 코드가 없고, 같은 일정이 중복될 수 있습니다. 해결: 코드가 없으면 종목명으로 매칭하고, 자격증과 시험일로 찾아 있으면 접수 기간만 갱신합니다.',
+            'Joining certifications and exam schedules. Problem: professional certification schedules have no certification code, and a schedule could be duplicated. Fix: without a code, matching uses the name, and a schedule found by certification and exam date only has its registration period updated.',
           ],
           [
             '모델 파라미터 호환. 문제: 모델에 따라 max_completion_tokens나 max_tokens만 받아 챗봇 호출이 400으로 실패합니다. 해결: 이 오류가 오면 다른 파라미터로 바로 다시 호출합니다.',
             'Model parameter compatibility. Problem: depending on the model, only max_completion_tokens or max_tokens is accepted, so chatbot calls fail with a 400. Fix: on that error the call is retried at once with the other parameter.',
           ],
           [
-            '제각각이던 화면. 문제: 팀원 둘이 만든 13개 페이지의 스타일과 컴포넌트가 달라 수정이 두 배로 들었습니다. 해결: 디자인 토큰과 공통 컴포넌트 6종으로 옮기고, 챗봇은 호출이 실패해도 시연이 멈추지 않도록 오프라인 대체 응답을 두었습니다.',
-            'Screens that did not match. Problem: the 13 pages built by two teammates differed in styling and components, so every change cost twice. Fix: they were moved onto design tokens and 6 shared components, and the chatbot got an offline fallback so a failed call never stops a demo.',
+            '제각각이던 화면. 문제: 두 팀원이 각각 개발한 13개 페이지에서 스타일과 컴포넌트 구조가 일관되지 않아, 동일한 기능이나 디자인을 수정할 때 중복 작업이 발생하고 유지보수 효율이 저하되었습니다. 해결: 디자인 토큰과 공통 컴포넌트 6종으로 옮겼습니다.',
+            'Screens that did not match. Problem: the 13 pages built separately by two teammates had inconsistent styling and component structure, so changing one feature or design meant duplicate work and slower maintenance. Fix: they were moved onto design tokens and 6 shared components.',
           ],
         ],
         { anchor: 'solved' },
@@ -787,10 +762,6 @@ export const projects: Project[] = [
     ]),
     contribution: {
       direct: pairs([['기획, 모델 학습·비교, 서버 API, 모바일 앱 전부', 'Everything: planning, model training and comparison, the server API and the mobile app']]),
-      notYet: pairs([
-        ['기기 안 추론(TFLite)은 완성하지 않음', 'On-phone inference (TFLite) was not finished'],
-        ['공개 서비스용 인증과 URL 처리는 보완 전', 'Authentication and URL handling are not yet fit for a public service'],
-      ]),
     },
     media: [
       shot(
@@ -959,12 +930,12 @@ export const projects: Project[] = [
             'Suggesting clothes that are not in the wardrobe. Problem: left alone, an LLM invents clothing IDs or picks impossible combinations. Fix: rule-based scored candidates come first (no outerwear at 28°C and above, lower scores for recently worn clothes) and the LLM chooses only among them; the response is forced to a strict JSON Schema, and the server checks clothing IDs and the candidate outfit again.',
           ],
           [
-            '실패했을 때의 처리. 문제: 검증에 한 번 실패하면 끝이었습니다. 해결: 형식, 옷 ID, 후보 조합, 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거치고, 그래도 실패하면 오류로 끝냅니다(검증 실패에만 해당하며, API 호출 자체가 실패한 경우는 아직 대체하지 않습니다). 사용 모델과 대체 이유를 기록합니다.',
-            'Handling failures. Problem: one failed check used to be the end. Fix: if the format, clothing IDs, candidate outfit or confidence fall short, a backup model answers and goes through the same checks, and a second failure ends in an error (this covers failed checks only; a failed API call does not fall back yet). The model used and the reason for falling back are recorded.',
+            '실패했을 때의 처리. 문제: 검증에 한 번 실패하면 끝이었습니다. 해결: 형식, 옷 ID, 후보 조합, 확신도 중 하나라도 기준에 못 미치면 보조 모델로 다시 받아 같은 검사를 거치고, 그래도 실패하면 오류로 끝냅니다. 사용 모델과 대체 이유를 기록합니다.',
+            'Handling failures. Problem: one failed check used to be the end. Fix: if the format, clothing IDs, candidate outfit or confidence fall short, a backup model answers and goes through the same checks, and a second failure ends in an error. The model used and the reason for falling back are recorded.',
           ],
           [
-            '하나의 모델로 세 분류. 문제: 카테고리, 색상, 스타일을 따로 분류하면 모델이 세 개가 됩니다. 해결: 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다(학습 파라미터는 MobileNetV3-Small 기준 약 2만 3천 개).',
-            'Three labels from one model. Problem: classifying category, color and style separately would mean three models. Fix: heads for 7 categories, 11 colors and 5 styles sit on a frozen backbone, and only the heads are trained (about 23,000 trainable parameters with MobileNetV3-Small).',
+            '하나의 모델로 세 분류. 문제: 카테고리, 색상, 스타일을 따로 분류하면 모델이 세 개가 됩니다. 해결: 고정 백본 위에 카테고리 7종, 색상 11종, 스타일 5종 헤드를 얹어 헤드만 학습했습니다.',
+            'Three labels from one model. Problem: classifying category, color and style separately would mean three models. Fix: heads for 7 categories, 11 colors and 5 styles sit on a frozen backbone, and only the heads are trained.',
           ],
         ],
         { anchor: 'solved' },
@@ -975,8 +946,8 @@ export const projects: Project[] = [
           'The training code never applied the validation transforms, so I do not report classification accuracy until evaluation is separated and re-measured on a fixed test set. When I re-measure, I would also improve color labeling, which is weak under changing light and shadows.',
         ],
         [
-          'API 호출 자체가 실패하면 보조 모델로 넘어가지 않는 부분과 모델이 스스로 매긴 확신도로 결과를 거르는 부분을 고치겠습니다. 서버가 받은 URL을 그대로 불러오는 부분과 x-user-id 헤더만으로 사용자를 구분하는 부분은 공개 서비스라면 가장 먼저 막아야 할 곳입니다.',
-          "I would fix the case where a failed API call doesn't fall back to the backup model, and filtering by the model's own self-rated confidence. Fetching whatever URL the server receives and telling users apart by the x-user-id header alone are the first things to close off for a public service.",
+          'API 호출 자체가 실패하면 보조 모델로 넘어가지 않는 부분과 모델이 스스로 매긴 확신도로 결과를 거르는 부분을 고치겠습니다.',
+          "I would fix the case where a failed API call doesn't fall back to the backup model, and filtering by the model's own self-rated confidence.",
         ],
       ]),
       section('evidence', MATERIAL, [['코드는 비공개 저장소에 있습니다. 화면과 시연 영상, 측정 조건을 이 페이지에 둡니다.', 'The code is in a private repository. Screens, a demo video and the measurement conditions are on this page.']]),
@@ -1030,7 +1001,6 @@ export const projects: Project[] = [
         ['2026 리뉴얼: 전체', '2026 renewal: all of it'],
       ]),
       others: pairs([['팀 버전의 앱 UI', 'The app UI of the team version']]),
-      notYet: pairs([['2026 버전은 실제 휴대폰 확인 전', 'The 2026 version has not been checked on a real phone yet']]),
     },
     media: [
       video(
@@ -1098,7 +1068,7 @@ export const projects: Project[] = [
         [
           ['캡스톤 디자인 및 AI 해커톤 대상(1등, 2024.10)과 SW중심대학 AI 창업 아이디어 경진대회 특별상(2025.05)을 받았습니다.', 'Won the grand prize (1st place) at the Capstone Design & AI Hackathon (Oct 2024) and a special award at the SW-Centered University AI Startup Idea Competition (May 2025).'],
           ['APIC-IST 2025 국제학술대회에 논문을 발표했습니다.', 'Presented a paper at the APIC-IST 2025 international conference.'],
-          ['논문에서 보고한 음성→지표 지연은 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms입니다(추론·네트워크·화면 표시 포함, NVIDIA A10G 1개, 5명의 3분 발표 · 영어 3·한국어 2).', 'The speech-to-indicator latency reported in the paper is 125 ms on average (σ = 18 ms) and 170 ms at worst with 20 concurrent sessions (inference, network and rendering included; one NVIDIA A10G; 3-minute talks by 5 people, 3 in English and 2 in Korean).'],
+          ['음성→지표 지연은 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms입니다(추론·네트워크·화면 표시 포함, NVIDIA A10G 1개, 5명의 3분 발표 · 영어 3·한국어 2).', 'The speech-to-indicator latency is 125 ms on average (σ = 18 ms) and 170 ms at worst with 20 concurrent sessions (inference, network and rendering included; one NVIDIA A10G; 3-minute talks by 5 people, 3 in English and 2 in Korean).'],
           ['소규모 사용자 조사(5명)에서 5명 모두 실시간 표시가 말 속도 교정에 도움이 된다고 답했습니다.', 'In a small user survey (5 people), all five said the live indicators helped them correct their pace.'],
         ],
         { lead: true },
@@ -1108,8 +1078,8 @@ export const projects: Project[] = [
         PROBLEM_DEFINITION,
         [
           [
-            '논문이 인용한 조사에서 대학생의 61%가 발표 불안을 겪지만, 오프라인 코칭은 비용과 지역 제약이 큽니다. 기존 서비스는 녹음 후 분석이 많거나, 영어 중심이거나, 맞춤형 설명이 부족합니다. 발표 도중 바로 고칠 수 있는 낮은 지연의 피드백이 필요했습니다.',
-            "In a survey the paper cites, 61% of undergraduates report presentation anxiety, while in-person coaching is limited by cost and region. Existing services often analyze after recording, focus on English or lack tailored explanations. Talks needed low-latency feedback you can act on while speaking.",
+            '한 조사에서 대학생의 61%가 발표 불안을 겪지만, 오프라인 코칭은 비용과 지역 제약이 큽니다. 기존 서비스는 녹음 후 분석이 많거나, 영어 중심이거나, 맞춤형 설명이 부족합니다. 발표 도중 바로 고칠 수 있는 낮은 지연의 피드백이 필요했습니다.',
+            "In one survey, 61% of undergraduates report presentation anxiety, while in-person coaching is limited by cost and region. Existing services often analyze after recording, focus on English or lack tailored explanations. Talks needed low-latency feedback you can act on while speaking.",
           ],
           [
             '발표 중 피드백은 바로 와야 하는데, 음성을 글로 바꾸고 감정을 분석하고 LLM으로 조언을 만드는 일은 모두 무겁습니다. 한 요청 안에서 처리하면 화면이 멈춥니다.',
@@ -1171,8 +1141,8 @@ export const projects: Project[] = [
         DECISIONS,
         [
           [
-            '실시간 모델: 논문이 인용한 공개 벤치마크에서 SenseVoice-Small은 10초 오디오를 약 70ms에 처리해 Whisper-Large-V3(1,281ms)보다 15배 이상 빠릅니다. 다국어와 감정 인식도 지원해 선택했습니다.',
-            'The live model: in the public benchmark the paper cites, SenseVoice-Small handles 10 s of audio in about 70 ms, over 15 times faster than Whisper-Large-V3 (1,281 ms). It also supports multiple languages and emotion recognition, so I chose it.',
+            '실시간 모델: 공개 벤치마크에서 SenseVoice-Small은 10초 오디오를 약 70ms에 처리해 Whisper-Large-V3(1,281ms)보다 15배 이상 빠릅니다. 다국어와 감정 인식도 지원해 선택했습니다.',
+            'The live model: in a public benchmark, SenseVoice-Small handles 10 s of audio in about 70 ms, over 15 times faster than Whisper-Large-V3 (1,281 ms). It also supports multiple languages and emotion recognition, so I chose it.',
           ],
           [
             '역할 분리: 빠른 판정은 음성 모델이, 설명형 보고서는 GPT-4o-mini가 맡게 나눴습니다.',
@@ -1186,36 +1156,36 @@ export const projects: Project[] = [
         SOLVED,
         [
           [
-            '낮은 지연 유지(논문). 문제: 큰 음성 모델은 10초 오디오에 1초 이상 걸려 발표 중 피드백에 쓰기 어렵습니다. 해결: SenseVoice-Small을 쓰고 여러 세션의 프레임을 asyncio로 묶어 병렬 처리했습니다. 20세션에서 GPU 사용률은 약 70%였고, 지연은 평균 125ms, 최악 170ms로 보고했습니다.',
-            'Keeping latency low (paper). Problem: large speech models take over a second for 10 s of audio, too slow for feedback during a talk. Fix: SenseVoice-Small, with frames from many sessions batched in parallel on asyncio. With 20 sessions GPU use was about 70%, and latency was reported at 125 ms on average and 170 ms at worst.',
+            '낮은 지연 유지. 문제: 큰 음성 모델은 10초 오디오에 1초 이상 걸려 발표 중 피드백에 쓰기 어렵습니다. 해결: SenseVoice-Small을 쓰고 여러 세션의 프레임을 asyncio로 묶어 병렬 처리했습니다. 20세션에서 GPU 사용률은 약 70%였고, 지연은 평균 125ms, 최악 170ms로 보고했습니다.',
+            'Keeping latency low. Problem: large speech models take over a second for 10 s of audio, too slow for feedback during a talk. Fix: SenseVoice-Small, with frames from many sessions batched in parallel on asyncio. With 20 sessions GPU use was about 70%, and latency was reported at 125 ms on average and 170 ms at worst.',
           ],
           [
-            '느린 외부 호출(2026). 문제: 부분 받아쓰기와 감정 분석을 기다리면 다음 판정이 밀립니다. 해결: 서버가 음성을 5초씩 모아 음량을 먼저 계산하고, 받아쓰기와 감정 분석은 병렬로 부르며 각각 4초와 3초 제한을 둡니다. 실패해도 음량 피드백은 계속 나갑니다.',
-            'Slow external calls (2026). Problem: waiting for partial transcription and emotion analysis delays the next call. Fix: the server gathers audio into 5 s windows and computes volume first, then calls transcription and emotion in parallel with 4 s and 3 s limits. Volume feedback keeps going even when they fail.',
+            '느린 외부 호출. 문제: 부분 받아쓰기와 감정 분석을 기다리면 다음 판정이 밀립니다. 해결: 서버가 음성을 5초씩 모아 음량을 먼저 계산하고, 받아쓰기와 감정 분석은 병렬로 부르며 각각 4초와 3초 제한을 둡니다. 실패해도 음량 피드백은 계속 나갑니다.',
+            'Slow external calls. Problem: waiting for partial transcription and emotion analysis delays the next call. Fix: the server gathers audio into 5 s windows and computes volume first, then calls transcription and emotion in parallel with 4 s and 3 s limits. Volume feedback keeps going even when they fail.',
           ],
           [
-            '무음 구간(2026). 문제: 조용한 구간까지 Whisper에 보내면 비용이 들고, 없는 말을 만들어 내기도 합니다. 해결: 음량이 기준보다 낮으면 받아쓰기를 건너뛰고, 무음에서 자주 생기는 가짜 문구는 목록으로 걸러 말 속도 계산에서 뺍니다.',
-            'Silent stretches (2026). Problem: sending silence to Whisper costs money and can produce phrases nobody said. Fix: below a volume threshold transcription is skipped, and the false phrases that silence tends to produce are filtered out of the pace calculation by a list.',
+            '무음 구간. 문제: 조용한 구간까지 Whisper에 보내면 비용이 들고, 없는 말을 만들어 내기도 합니다. 해결: 음량이 기준보다 낮으면 받아쓰기를 건너뛰고, 무음에서 자주 생기는 가짜 문구는 목록으로 걸러 말 속도 계산에서 뺍니다.',
+            'Silent stretches. Problem: sending silence to Whisper costs money and can produce phrases nobody said. Fix: below a volume threshold transcription is skipped, and the false phrases that silence tends to produce are filtered out of the pace calculation by a list.',
           ],
           [
-            '무거운 분석 분리(2026). 문제: 발표 후 Whisper, LLM, PDF를 요청 안에서 처리하면 실시간 서버를 막습니다. 해결: BullMQ 작업으로 넘겨 별도 워커가 처리합니다. 실패하면 5초 뒤 한 번 더 시도하고, 결과는 세션 기준 upsert로 저장해 중복되지 않습니다.',
-            'Moving heavy analysis out (2026). Problem: running Whisper, the LLM and the PDF inside a request blocks the live server. Fix: they go to BullMQ jobs on a separate worker. A failure retries once after 5 s, and results are upserted per session so nothing is duplicated.',
+            '무거운 분석 분리. 문제: 발표 후 Whisper, LLM, PDF를 요청 안에서 처리하면 실시간 서버를 막습니다. 해결: BullMQ 작업으로 넘겨 별도 워커가 처리합니다. 실패하면 5초 뒤 한 번 더 시도하고, 결과는 세션 기준 upsert로 저장해 중복되지 않습니다.',
+            'Moving heavy analysis out. Problem: running Whisper, the LLM and the PDF inside a request blocks the live server. Fix: they go to BullMQ jobs on a separate worker. A failure retries once after 5 s, and results are upserted per session so nothing is duplicated.',
           ],
           [
-            '녹음 처리(2026). Whisper가 헤더 없는 PCM 음성을 받지 않아 WAV 헤더를 직접 붙였고, iOS 녹음 문제는 React Native 새 아키텍처를 지원하는 라이브러리로 바꾸고 최소 iOS 버전을 16.4로 올려 해결했습니다.',
-            'Recording (2026). Whisper would not take headerless PCM audio, so I add the WAV header myself; recording on iOS was fixed by switching to a library that supports the React Native new architecture and raising the minimum iOS version to 16.4.',
+            '녹음 처리. Whisper가 헤더 없는 PCM 음성을 받지 않아 WAV 헤더를 직접 붙였고, iOS 녹음 문제는 React Native 새 아키텍처를 지원하는 라이브러리로 바꾸고 최소 iOS 버전을 16.4로 올려 해결했습니다.',
+            'Recording. Whisper would not take headerless PCM audio, so I add the WAV header myself; recording on iOS was fixed by switching to a library that supports the React Native new architecture and raising the minimum iOS version to 16.4.',
           ],
           [
-            '확인 방법(2026). 단위 테스트 30개가 통과하고 전체 흐름을 재현 스크립트로 확인했으며, iOS 시뮬레이터에서 로그인부터 보고서 PDF 저장까지 시연했습니다. 실제 휴대폰에서는 아직 확인하지 않았습니다.',
-            'How it was checked (2026). 30 unit tests pass, a script replays the whole flow, and it was demonstrated in the iOS simulator from login to saving the report PDF. It has not been checked on a real phone yet.',
+            '확인 방법. 단위 테스트 30개가 통과하고 전체 흐름을 재현 스크립트로 확인했으며, iOS 시뮬레이터에서 로그인부터 보고서 PDF 저장까지 시연했습니다.',
+            'How it was checked. 30 unit tests pass, a script replays the whole flow, and it was demonstrated in the iOS simulator from login to saving the report PDF.',
           ],
         ],
         { anchor: 'solved' },
       ),
       section('retro', REFLECTION, [
         [
-          '사용자 조사가 5명으로 적었습니다. 지연 수치는 논문 시점 구조의 값이고 2026 버전에서 다시 재지 않았으며, 2026 버전은 실제 휴대폰 확인 전입니다. 다음 할 일은 재측정, 큐 재시도 처리 보완, 장기 추적 대시보드입니다.',
-          'The user survey had only 5 people. The latency figures belong to the structure at the time of the paper and were not re-measured on the 2026 version, which has not been checked on a real phone yet. Next come re-measuring, better queue retries and a long-term tracking dashboard.',
+          '사용자 조사가 5명으로 적었습니다. 다음 할 일은 재측정, 큐 재시도 처리 보완, 장기 추적 대시보드입니다.',
+          'The user survey had only 5 people. Next come re-measuring, better queue retries and a long-term tracking dashboard.',
         ],
         [
           '첫 시도가 실패하면 재시도가 남아 있어도 세션을 "실패"로 바꿔, 재시도가 성공해도 앱에는 실패로 보입니다. 마지막 시도가 실패했을 때만 상태를 바꾸도록 고치겠습니다.',
@@ -1224,10 +1194,6 @@ export const projects: Project[] = [
         [
           '재시도하면 받아쓰기와 LLM을 처음부터 다시 부르므로 비용이 겹칠 수 있습니다. 단계마다 결과를 남겨 끝난 단계는 건너뛰게 하겠습니다.',
           'A retry calls transcription and the LLM again from the start, so costs can double. I would keep each step’s result so finished steps are skipped.',
-        ],
-        [
-          '2024 버전의 말 속도는 띄어쓰기 단위로 세어 한국어에서는 정확하지 않습니다.',
-          "The 2024 version counts speaking rate by spaces between words, so it isn't exact for Korean.",
         ],
       ]),
       section('evidence', MATERIAL, [
