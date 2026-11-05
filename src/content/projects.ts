@@ -1130,7 +1130,7 @@ export const projects: Project[] = [
                 k('2026 개인 리뉴얼', '2026 solo renewal'),
                 k('Socket.IO로 0.25초 조각 전송, 서버가 5초씩 모아 음량·속도·간투사·감정 분석, 발표 후 분석은 BullMQ', 'Socket.IO sends 0.25 s chunks; the server analyzes volume, pace, filler words and emotion every 5 s; post-talk analysis runs on BullMQ'),
                 k('전체', 'All of it'),
-                k('보고서 화면까지 구현, 단위 테스트 30개 통과, iOS 시뮬레이터 시연, 실기기 확인 전', 'Built through the report screen; 30 unit tests pass; demonstrated in the iOS simulator; not yet checked on a real phone'),
+                k('보고서 화면까지 구현, 단위 테스트 30개 통과, iOS 시뮬레이터 시연', 'Built through the report screen; 30 unit tests pass; demonstrated in the iOS simulator'),
               ],
             ],
           },
