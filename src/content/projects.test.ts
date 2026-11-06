@@ -148,10 +148,11 @@ describe('flagship: Finz personal tax calculators', () => {
     expect(app?.media?.map((m) => m.kind)).toEqual(['video'])
   })
 
-  it('shows the SaaS through five captioned screens from the development server', () => {
+  it('keeps the SaaS section to my role: one paragraph, no screens and no feature descriptions', () => {
     const saas = finz.sections?.find((s) => s.anchor === 'finz-saas')
-    expect(saas?.media).toHaveLength(5)
-    for (const media of saas?.media ?? []) expect(media.caption.ko).toContain('개발 서버 실제 화면')
+    expect(saas?.media).toBeUndefined()
+    expect(saas?.body).toHaveLength(1)
+    expect(koText(saas?.body)).toContain('출시 전이라 기능 설명과 화면은 싣지 않습니다')
   })
 
   it('keeps the calculator gallery to the demo video and four calculator screens', () => {
@@ -278,7 +279,7 @@ describe('the agreed page shape', () => {
   it.each(FEATURED)('%s has every part of a main project', (slug) => {
     const sections = bySlug(slug).sections ?? []
     expect(sections.filter((s) => s.lead).map((s) => s.title.ko)).toEqual(['핵심 성과', '문제 정의'])
-    for (const part of ['주요 의사 결정', '핵심 기술 문제 해결', '회고 및 개선 방향', '관련 자료']) {
+    for (const part of ['주요 의사 결정', '핵심 기술 문제 해결', '회고', '관련 자료']) {
       expect(titles(slug).some((title) => title === part || title.startsWith(`${part} · `)), `${slug}: ${part}`).toBe(true)
     }
     expect(bySlug(slug).contribution).toBeDefined()
@@ -286,7 +287,7 @@ describe('the agreed page shape', () => {
 
   it.each(SUPPORTING)('%s explains results, the problem, my role, the structure, decisions and a reflection', (slug) => {
     expect(titles(slug).slice(0, 3)).toEqual(['핵심 성과', '문제 정의', '담당 역할 및 기여'])
-    expect(titles(slug)).toEqual(expect.arrayContaining(['시스템 구조', '주요 의사 결정', '회고 및 개선 방향']))
+    expect(titles(slug)).toEqual(expect.arrayContaining(['시스템 구조', '주요 의사 결정', '회고']))
   })
 
   it('keeps Media Pulse to a role and one problem', () => {

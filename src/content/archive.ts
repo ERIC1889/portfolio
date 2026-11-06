@@ -89,7 +89,7 @@ export const archive: Archive = {
     {
       date: '24.10.24 ~ 24.10.27',
       name: k('캡스톤 디자인 및 AI 해커톤 대상(1등)', 'Capstone Design & AI Hackathon, Grand Prize (1st place)'),
-      org: k('한국 컴퓨터 교육 학회', 'Korean Association of Computer Education'),
+      org: k('한국컴퓨터교육학회', 'Korean Association of Computer Education'),
       team: true,
       project: 'pitches',
     },
@@ -288,7 +288,7 @@ export const archive: Archive = {
       context: k('직원 5명 스타트업, 인력 관리는 맡지 않음', 'A five-person startup; no people management'),
       responsibilities: [
         k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and now run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
-        k('Finz 모바일 앱: 청년 세금 환급 MVP, 세무사 상담 연결, 생애주기 금융 시연 화면 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, tax-accountant connection, life-stage finance demo screens (Expo · FastAPI, not released)'),
+        k('Finz 모바일 앱: 청년 세금 환급 MVP, 세무사 상담 연결 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, tax-accountant connection (Expo · FastAPI, not released)'),
         k('세무사용 FINZ (협력 개발사와 공동 개발): 엔진 초안·외부 API·배포 방식 결정에 참여, 사양 작성, 개발사 작업 재검증, 배포 장애 원인 분석, 실배포 준비', 'FINZ for tax accountants (co-developed with a partner company): took part in deciding the engine draft, external APIs and deployment; wrote specs, re-verified the vendor’s work, found the cause of deployment failures, prepared the production launch'),
       ],
     },

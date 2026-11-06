@@ -44,7 +44,7 @@ const SOLVED: Pair = ['핵심 기술 문제 해결', 'Technical problems solved'
 const SOLVED_WEB: Pair = ['핵심 기술 문제 해결 · 개인 세금 계산기', 'Technical problems solved · personal tax calculators']
 const SOLVED_APP: Pair = ['핵심 기술 문제 해결 · Finz 모바일 앱', 'Technical problems solved · Finz mobile app']
 const SOLVED_SAAS: Pair = ['핵심 기술 문제 해결 · 세무사용 FINZ', 'Technical problems solved · FINZ for tax accountants']
-const REFLECTION: Pair = ['회고 및 개선 방향', 'Reflection and next steps']
+const REFLECTION: Pair = ['회고', 'Reflection']
 const MATERIAL: Pair = ['관련 자료', 'Related material']
 
 const ROLE: Pair = ['담당 역할 및 기여', 'My role and contribution']
@@ -126,8 +126,8 @@ export const projects: Project[] = [
           'Checked against a reference workbook case: 21 items through the 6Way web API, 43 tests on the Python engine',
         ],
         [
-          '운영 중인 웹 저장소 테스트 184개 통과: 계산 엔진 53개(가상자산 25·해외주식 28), 시세·환율 데이터 소스 31개 포함',
-          'All 184 tests in the live website’s repository pass, including 53 calculation-engine tests (crypto 25, foreign stocks 28) and 31 market-data tests',
+          'finz.kr 저장소 테스트 184개 통과: 계산 엔진 53개(가상자산 25·해외주식 28), 시세·환율 데이터 소스 31개 포함',
+          'All 184 tests in the finz.kr repository pass, including 53 calculation-engine tests (crypto 25, foreign stocks 28) and 31 market-data tests',
         ],
         [
           '간편인증 한 번으로 5개 연도 조회: 서비스와 분리한 스크립트로 CODEF 개발 환경에서 확인하고 홈택스에서 받은 자료와 대조',
@@ -266,8 +266,8 @@ export const projects: Project[] = [
             'The property 6Way, digital-asset and foreign-stock capital gains and gift-valuation calculators are live at finz.kr.',
           ],
           [
-            '세무사와 함께 만든 6Way 계산 로직을 웹으로 옮긴 뒤 기준 워크북의 결과 항목 21개와 대조해, 모두 ±10원 안(최대 차이 1원)에 들어오는 것을 확인했습니다.',
-            'After the 6Way logic built with a tax accountant was ported to the web, all 21 result items checked against the reference workbook landed within ±10 won (largest gap 1 won).',
+            '세무사와 함께 만든 6Way 계산 로직을 웹으로 옮긴 뒤 기준 워크북의 결과 항목 21개와 대조해 최대 차이가 1원인 것을 확인했습니다.',
+            'After the 6Way logic built with a tax accountant was ported to the web, all 21 result items checked against the reference workbook matched with a largest gap of 1 won.',
           ],
           [
             'Finz 모바일 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
@@ -289,8 +289,8 @@ export const projects: Project[] = [
             'People who know little about tax use these calculators, so one number can change a big decision. Getting the numbers right, and showing which statute each one comes from, came before getting screens out quickly.',
           ],
           [
-            '세금은 날짜에 따라 달라집니다. 가상자산은 2027년부터 과세되고 2026-12-31 시가가 취득가액이 될 수 있으며, 해외주식은 결제일 환율로 원화 환산합니다.',
-            'Tax depends on dates. Crypto is taxed from 2027 and the 2026-12-31 price can become the cost basis; foreign stocks convert at settlement-date exchange rates.',
+            '세금은 날짜에 따라 달라집니다. 해외주식은 결제일 환율로 원화 환산해야 하는데, 그날의 환율을 주는 외부 API는 느리거나 실패하고 아직 오지 않은 날짜에는 값이 없습니다.',
+            'Tax depends on dates. Foreign stocks have to be converted at the settlement-date exchange rate, but the APIs that supply that day’s rate are slow or fail, and a date that hasn’t come yet has no value at all.',
           ],
         ],
         { lead: true },
@@ -343,7 +343,7 @@ export const projects: Project[] = [
       ),
       section(
         'implementation',
-        ['Finz 모바일 앱 (미출시)', 'Finz mobile app (not released)'],
+        ['Finz 모바일 앱', 'Finz mobile app'],
         [
           [
             'Finz 모바일 앱은 같은 회사에서 진행한 청년 세금 환급 MVP입니다. Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
@@ -400,63 +400,11 @@ export const projects: Project[] = [
         ['세무사용 FINZ · 협력 개발사와 공동 개발 (출시 전)', 'FINZ for tax accountants · co-developed with a partner company (not yet launched)'],
         [
           [
-            '세무사용 FINZ는 같은 회사에서 협력 개발사와 함께 개발한 세무사용 SaaS로, 양도·증여·상속·종부세 계산, 홈택스 신고 파일 생성, AI 세무 어시스턴트를 갖췄습니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다.',
-            'FINZ for tax accountants is a SaaS developed at the same company together with a partner development company: capital gains, gift, inheritance and comprehensive property tax calculations, Hometax filing files and an AI tax assistant. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures.',
-          ],
-          [
-            '세무사는 고객과 신고건을 만든 뒤 자료를 모읍니다. 시세는 국토교통부 실거래가로 채우고, 등기부·건축물대장은 공공조회로, 감정평가서·매매계약서 같은 서류는 스캔본 OCR로 불러오며(추출값은 검수한 뒤에만 계산기에 들어감), 세대 구성과 과거 양도 이력은 고객 간편인증으로 조회합니다.',
-            'A tax accountant opens a client and a filing, then gathers the facts: market prices from the land ministry’s transaction data, the property register and building ledger through public lookups, appraisals and contracts through scanned-document OCR (extracted values reach the calculator only after review), and the household and past sales through the client’s simple authentication.',
-          ],
-          [
-            '신고는 양도소득세 4단계 위저드(양도인 → 자산 → 양수인 → 세액·전자신고)와 주식 양도·증여·상속·종합부동산세·주식평가 화면에서 만들고, 홈택스 전자신고 파일로 내보냅니다. AI 세무 어시스턴트는 문장 하나로 조회와 계산을 이어 주지만 세무사가 검토·확정해야 문서가 만들어지고, 법령 개정 모니터는 엔진이 참조하는 17개 법령·시행령의 시행일을 법제처와 대조해 바뀐 것을 보정 대상으로 표시합니다.',
-            'Filings are built in a four-step capital gains wizard (seller → assets → buyer → tax and e-filing) and in the stock-sale, gift, inheritance, comprehensive property tax and share-valuation screens, then exported as Hometax e-filing files. The AI tax assistant chains lookups and calculations from a single sentence, but a document is produced only after the accountant reviews and confirms it; a law-change monitor compares the effective dates of the 17 statutes and decrees the engine relies on with the Ministry of Government Legislation and flags anything that changed.',
+            '세무사용 FINZ는 같은 회사에서 협력 개발사와 함께 개발 중인 세무사용 SaaS입니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다. 출시 전이라 기능 설명과 화면은 싣지 않습니다.',
+            'FINZ for tax accountants is a SaaS for tax accountants being developed at the same company together with a partner development company. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures. It has not launched yet, so no feature descriptions or screens are shown.',
           ],
         ],
-        {
-          anchor: 'finz-saas',
-          media: [
-            shot(
-              '/media/finz/saas-assistant.webp',
-              1600,
-              836,
-              ['자연어로 케이스를 입력하면 오른쪽 작업 타임라인에 조회·계산 과정이 쌓이는 AI 세무 어시스턴트', 'AI tax assistant: a case typed in plain language, with lookups and calculations collecting in the task timeline'],
-              ['세무사용 FINZ · AI 세무 어시스턴트 · 개발 서버 실제 화면', 'FINZ for tax accountants · AI tax assistant · real screen on the development server'],
-              '2026-10-12',
-            ),
-            shot(
-              '/media/finz/saas-wizard.webp',
-              1600,
-              836,
-              ['양도인 → 자산 → 양수인 → 세액·전자신고로 이어지는 양도소득세 신고 위저드', 'Capital gains filing wizard: seller → assets → buyer → tax and e-filing'],
-              ['양도소득세 신고 4단계 위저드 · 개발 서버 실제 화면', 'Four-step capital gains filing wizard · real screen on the development server'],
-              '2026-10-12',
-            ),
-            shot(
-              '/media/finz/saas-documents.webp',
-              1600,
-              836,
-              ['등기부·건축물대장은 공공조회, 감정평가서·매매계약서는 스캔본 OCR로 불러오는 화면', 'Loading documents: public lookups for the register and building ledger, OCR for appraisals and contracts'],
-              ['서류 불러오기 · 개발 서버 실제 화면', 'Document loading · real screen on the development server'],
-              '2026-10-12',
-            ),
-            shot(
-              '/media/finz/saas-calculator.webp',
-              1600,
-              836,
-              ['단일자산·1세대1주택·지분양도·공동명의 등 경우별 탭이 있는 부동산 양도세 계산 화면', 'Property capital gains calculator with tabs for each case: single asset, one-home household, partial share, joint ownership'],
-              ['부동산 양도세 계산기 · 개발 서버 실제 화면', 'Property capital gains calculator · real screen on the development server'],
-              '2026-10-12',
-            ),
-            shot(
-              '/media/finz/saas-law-monitor.webp',
-              1600,
-              836,
-              ['엔진이 참조하는 17개 법령·시행령의 시행일을 법제처와 대조하는 화면', 'Checking the effective dates of the 17 statutes and decrees the engine relies on'],
-              ['법령 개정 모니터 · 개발 서버 실제 화면', 'Law-change monitor · real screen on the development server'],
-              '2026-10-12',
-            ),
-          ],
-        },
+        { anchor: 'finz-saas' },
       ),
       section(
         'implementation',
@@ -479,12 +427,12 @@ export const projects: Project[] = [
       ),
       section('retro', REFLECTION, [
         [
-          '앱의 연도별 조회는 요청 하나 안에서 3초 간격으로 순서대로 돌아, 연도가 많으면 몇 분이 걸립니다. 조회를 작업으로 넘기고 앱이 진행 상태를 확인하게 바꾸겠습니다. 세션이 만료되면 다시 인증받지 않고 멈추는 점은 재인증을 요청하도록, 일부 연도만 실패해도 완료로 끝나는 점은 실패한 연도를 알려 주도록 고치겠습니다.',
-          'In the app, the yearly lookups run one after another, 3 seconds apart, inside a single request, so many years can take minutes. I would hand the lookups to a background job and let the app poll its progress. When the session expires the backend stops instead of asking for re-authentication, and a run where only some years fail still ends as done; I would fix the first to request re-authentication and the second to report which years failed.',
+          '계산기를 만드는 시간보다 결과가 맞는지 확인하는 시간이 더 길었습니다. 세무사가 만든 기준 사례와 숫자를 하나씩 맞추면서, 기능을 끝냈다고 말하기 전에 무엇으로 확인했는지부터 설명하는 습관이 생겼습니다.',
+          'Checking that the results were right took longer than building the calculators. Matching the numbers one by one against the tax accountant’s reference case left me with a habit: before saying a feature is done, explain how it was checked.',
         ],
         [
-          '앱에서 결제 승인 뒤 저장이 실패하거나 같은 요청이 두 번 오는 것처럼 외부 시스템과 상태가 어긋나는 상황을, 실패를 일부러 일으켜 확인해 두겠습니다.',
-          'I would deliberately cause failures to check the cases where the app’s state drifts from an external system, such as saving failing after a payment is approved, or the same request arriving twice.',
+          '간편인증이나 결제처럼 외부 시스템과 이어지는 흐름에서는, 성공하는 길보다 중간에 끊기거나 같은 요청이 겹치는 경우를 먼저 그려 봐야 한다는 것을 배웠습니다.',
+          'In flows that depend on an outside system, such as simple authentication or payment, I learned to map out the interrupted and duplicated cases before the happy path.',
         ],
       ]),
       section('evidence', MATERIAL, [
@@ -703,16 +651,12 @@ export const projects: Project[] = [
       ),
       section('retro', REFLECTION, [
         [
-          '자동 테스트가 없습니다. 관리자 수동 실행은 실제 응답을 다시 받아 눈으로 확인하는 용도이지 테스트가 아닙니다. 동기화 중복을 막는 unique 제약과 두 DB의 일관성 처리도 부족합니다. 다시 한다면 동기화 정규화 테스트, unique 제약, 실행 이력 기록부터 넣겠습니다.',
-          'There are no automated tests; the manual admin run is for fetching real responses again and checking them by eye, not a test. The unique constraints against duplicate syncs and the consistency handling across the two databases also fall short. Next time I would start with sync and normalization tests, unique constraints and a record of each run.',
+          '공공 API는 문서와 실제 응답이 달라서, 연동 코드보다 응답을 확인하고 정규화하는 코드가 더 많아졌습니다. 외부 데이터는 받는 쪽에서 의심하고 검사해야 한다는 것을 배웠습니다.',
+          'Public APIs answered differently from their documentation, so the code that checks and normalizes responses outgrew the integration itself. External data has to be doubted and checked on the receiving side.',
         ],
         [
-          '오류 문구, XML과 JSON 응답, 결과가 하나일 때와 여럿일 때, 빈 결과·시간 초과·재시도 초과, 같은 자격증 코드 중복 실행을 자동 테스트로 확인하겠습니다.',
-          'I would cover error text, XML and JSON responses, single versus multiple items, empty results, timeouts, running out of retries and duplicate runs for the same certification code with automated tests.',
-        ],
-        [
-          '저장된 AI 결과는 입력 JSON 문자열을 그대로 키로 써서 필드 순서만 달라도 놓칩니다. 키를 정규화하고 모델·프롬프트 버전과 만료 시간을 넣겠습니다.',
-          'Stored AI results are keyed by the raw input JSON string, so a different field order alone causes a miss. I would normalize the key and add the model and prompt version and an expiry time.',
+          '팀장으로서는 네 명이 만든 화면을 하나의 체계로 맞추는 일이 기능을 더하는 일만큼 컸습니다. 공통 컴포넌트와 디자인 토큰을 처음에 정해 두었다면 뒤의 수정이 훨씬 적었을 것입니다.',
+          'As team lead, bringing four people’s screens into one system was as big a job as adding features. Shared components and design tokens agreed at the start would have saved most of the later rework.',
         ],
       ]),
       section('evidence', MATERIAL, [
@@ -942,12 +886,12 @@ export const projects: Project[] = [
       ),
       section('retro', REFLECTION, [
         [
-          '학습 코드에서 검증용 변환이 적용되지 않아, 평가를 분리하고 고정된 테스트 세트로 다시 재기 전까지는 분류 정확도를 쓰지 않습니다. 다시 잴 때 조명과 그림자에 약한 색상 분류도 함께 개선하겠습니다.',
-          'The training code never applied the validation transforms, so I do not report classification accuracy until evaluation is separated and re-measured on a fixed test set. When I re-measure, I would also improve color labeling, which is weak under changing light and shadows.',
+          '학습 코드의 검증 설정이 잘못되어 분류 정확도 숫자를 쓰지 않기로 했습니다. 측정 조건이 틀리면 숫자가 있어도 쓸 수 없다는 것을 직접 겪었고, 그 뒤로는 수치마다 조건을 함께 적습니다.',
+          'A mistake in the training code’s validation setup meant I chose not to report a classification accuracy. Having seen that a number is useless when its conditions are wrong, I now write the conditions next to every figure.',
         ],
         [
-          'API 호출 자체가 실패하면 보조 모델로 넘어가지 않는 부분과 모델이 스스로 매긴 확신도로 결과를 거르는 부분을 고치겠습니다.',
-          "I would fix the case where a failed API call doesn't fall back to the backup model, and filtering by the model's own self-rated confidence.",
+          'LLM의 답을 그대로 믿지 않고 후보를 정해 주고 서버에서 다시 검증하는 구조가, 어떤 모델을 쓰느냐보다 결과의 신뢰도에 더 큰 차이를 냈습니다.',
+          'Giving the LLM a fixed set of candidates and re-checking its answer on the server made more difference to the reliability of the results than which model was used.',
         ],
       ]),
       section('evidence', MATERIAL, [['코드는 비공개 저장소에 있습니다. 화면과 시연 영상, 측정 조건을 이 페이지에 둡니다.', 'The code is in a private repository. Screens, a demo video and the measurement conditions are on this page.']]),
@@ -1172,34 +1116,26 @@ export const projects: Project[] = [
             'Moving heavy analysis out. Problem: running Whisper, the LLM and the PDF inside a request blocks the live server. Fix: they go to BullMQ jobs on a separate worker. A failure retries once after 5 s, and results are upserted per session so nothing is duplicated.',
           ],
           [
-            '녹음 처리. Whisper가 헤더 없는 PCM 음성을 받지 않아 WAV 헤더를 직접 붙였고, iOS 녹음 문제는 React Native 새 아키텍처를 지원하는 라이브러리로 바꾸고 최소 iOS 버전을 16.4로 올려 해결했습니다.',
-            'Recording. Whisper would not take headerless PCM audio, so I add the WAV header myself; recording on iOS was fixed by switching to a library that supports the React Native new architecture and raising the minimum iOS version to 16.4.',
-          ],
-          [
-            '확인 방법. 단위 테스트 30개가 통과하고 전체 흐름을 재현 스크립트로 확인했으며, iOS 시뮬레이터에서 로그인부터 보고서 PDF 저장까지 시연했습니다.',
-            'How it was checked. 30 unit tests pass, a script replays the whole flow, and it was demonstrated in the iOS simulator from login to saving the report PDF.',
+            '녹음 처리. 문제: Whisper가 헤더 없는 PCM 음성을 받지 않고, iOS에서는 녹음이 되지 않았습니다. 해결: WAV 헤더를 직접 붙였고, React Native 새 아키텍처를 지원하는 라이브러리로 바꾸고 최소 iOS 버전을 16.4로 올렸습니다.',
+            'Recording. Problem: Whisper would not take headerless PCM audio, and recording did not work on iOS. Fix: I add the WAV header myself, switched to a library that supports the React Native new architecture and raised the minimum iOS version to 16.4.',
           ],
         ],
         { anchor: 'solved' },
       ),
       section('retro', REFLECTION, [
         [
-          '사용자 조사가 5명으로 적었습니다. 다음 할 일은 재측정, 큐 재시도 처리 보완, 장기 추적 대시보드입니다.',
-          'The user survey had only 5 people. Next come re-measuring, better queue retries and a long-term tracking dashboard.',
+          '실시간 피드백에서는 모델의 속도보다 무엇을 먼저 보내고 무엇을 기다리게 할지 정하는 설계가 더 중요했습니다. 바로 계산되는 음량을 먼저 보내고 무거운 분석을 뒤로 빼면서, 사용자가 느끼는 지연은 평균이 아니라 가장 느린 순간이라는 것을 배웠습니다.',
+          'For live feedback, deciding what to send first and what can wait mattered more than the speed of the model. Sending the volume reading right away and pushing the heavy analysis back taught me that the delay people feel is the slowest moment, not the average.',
         ],
         [
-          '첫 시도가 실패하면 재시도가 남아 있어도 세션을 "실패"로 바꿔, 재시도가 성공해도 앱에는 실패로 보입니다. 마지막 시도가 실패했을 때만 상태를 바꾸도록 고치겠습니다.',
-          'When the first attempt fails, the session is marked "failed" even though a retry is pending, so a successful retry still shows as a failure in the app. I would change the status only after the last attempt fails.',
-        ],
-        [
-          '재시도하면 받아쓰기와 LLM을 처음부터 다시 부르므로 비용이 겹칠 수 있습니다. 단계마다 결과를 남겨 끝난 단계는 건너뛰게 하겠습니다.',
-          'A retry calls transcription and the LLM again from the start, so costs can double. I would keep each step’s result so finished steps are skipped.',
+          '5명뿐인 사용자 조사였지만, 실제 발표자가 색 표시를 보며 말 속도를 고치는 모습이 어떤 수치보다 설계 판단에 큰 영향을 줬습니다.',
+          'The user survey had only five people, but watching real speakers correct their pace from the color cues shaped the design more than any number did.',
         ],
       ]),
       section('evidence', MATERIAL, [
         [
-          '2024·2026 코드는 공개하지 않았습니다. 2026 앱의 시연 영상과 화면은 이 페이지에 있고, 수치는 APIC-IST 2025 발표 논문을 기준으로 적었습니다.',
-          'The 2024 and 2026 code are not public. A demo video and screens of the 2026 app are on this page, and the figures follow the paper presented at APIC-IST 2025.',
+          '2024·2026 코드는 공개하지 않았습니다. 2026 앱은 단위 테스트 30개가 통과하고 전체 흐름을 재현 스크립트로 확인했으며, iOS 시뮬레이터에서 로그인부터 보고서 PDF 저장까지 시연했습니다. 시연 영상과 화면은 이 페이지에 있고, 수치는 APIC-IST 2025 발표 논문을 기준으로 적었습니다.',
+          'The 2024 and 2026 code are not public. For the 2026 app, 30 unit tests pass, a script replays the whole flow, and it was demonstrated in the iOS simulator from login to saving the report PDF. The demo video and screens are on this page, and the figures follow the paper presented at APIC-IST 2025.',
         ],
       ]),
     ],
@@ -1327,8 +1263,8 @@ export const projects: Project[] = [
       ),
       section('retro', REFLECTION, [
         [
-          '테스트 케이스가 적고 실제 사용자 검증을 하지 못했습니다. 다음에는 실제 사용 사례로 검증하고, 음성의 높낮이와 영상까지 활용해 보겠습니다.',
-          'There were few test cases and no checks with real users. Next I would validate with real use and try using pitch and video too.',
+          '설문을 대화로 바꾸는 일은 모델 선택보다 말투와 질문 순서를 정하는 프롬프트 설계가 거의 전부였습니다. 시니어 사용자를 직접 만나 확인하지 못한 점이 가장 아쉽습니다.',
+          'Turning a questionnaire into a conversation was almost entirely about prompt design, the tone and the order of the questions, rather than the choice of model. What I regret most is not having checked it with senior users in person.',
         ],
       ]),
     ],
@@ -1431,8 +1367,8 @@ export const projects: Project[] = [
       ),
       section('retro', REFLECTION, [
         [
-          '설계한 구조를 실제 사용자 데이터로 검증하지 못했습니다.',
-          'I did not validate the design with real user data.',
+          '구조를 설계하는 일과 그 구조가 실제 사용자 데이터에서 돌아가는지 확인하는 일은 다르다는 것을 느꼈고, 설계할 때 무엇으로 검증할지도 함께 정해야 한다는 것을 배웠습니다.',
+          'Designing a structure and confirming that it works on real user data turned out to be different jobs, and I learned to decide how a design will be verified while drawing it.',
         ],
       ]),
     ],
@@ -1534,16 +1470,16 @@ export const projects: Project[] = [
             'Questions that fit the role. Problem: unrelated material was retrieved, so the questions came out generic. Fix: question data and search material are kept separately by role and company, and each role and company has its own Assistant.',
           ],
           [
-            '음성 처리. Label Light에서 쓴 음성 파이프라인(WebM → ffmpeg → WAV → Whisper)을 가져오고, 연결 오류가 나면 다시 말해 달라고 안내합니다.',
-            'Audio handling. The voice pipeline from Label Light (WebM → ffmpeg → WAV → Whisper) is reused, and a connection error prompts the user to try again.',
+            '음성 처리. 문제: 브라우저 녹음(WebM)은 Whisper가 바로 받지 못합니다. 해결: Label Light에서 쓴 파이프라인(WebM → ffmpeg → WAV → Whisper)을 가져오고, 연결 오류가 나면 다시 말해 달라고 안내합니다.',
+            'Audio handling. Problem: Whisper cannot take a browser recording (WebM) as it is. Fix: the pipeline from Label Light (WebM → ffmpeg → WAV → Whisper) is reused, and a connection error prompts the user to try again.',
           ],
         ],
         { anchor: 'solved' },
       ),
       section('retro', REFLECTION, [
         [
-          '실제 기업 면접 질문 데이터 등으로 질문 품질을 높이고, 표정과 자세 인식을 개선하겠습니다.',
-          'I would raise question quality with data such as real company interview questions, and improve expression and posture recognition.',
+          '면접 질문의 품질은 모델보다 검색에 어떤 자료를 넣느냐에 더 좌우됐습니다. 직무·기업별로 자료를 나눈 뒤에야 질문이 구체적으로 나왔고, 끝없이 이어지던 꼬리 질문도 프롬프트가 아니라 서버 규칙으로 잡혔습니다.',
+          'The quality of the interview questions depended more on what went into retrieval than on the model. Questions became specific only after the material was split by role and company, and the endless follow-ups were stopped by a server rule, not by the prompt.',
         ],
       ]),
     ],
