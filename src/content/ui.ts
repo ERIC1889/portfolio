@@ -95,6 +95,7 @@ export const ARCHIVE_HEADINGS = {
   experience: { ko: '경력', en: 'Work' },
   education: { ko: '학력', en: 'Education' },
   certs: { ko: '자격', en: 'Certifications' },
+  educationAndCerts: { ko: '학력·자격', en: 'Education and certifications' },
 } satisfies Record<string, L>
 
 export const STAT_LABELS = {

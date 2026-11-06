@@ -23,7 +23,6 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
   const { t } = useLang()
   const conference = archive.papers.filter((paper) => paper.kind === 'international' || paper.kind === 'domestic')
   const otherAwards = archive.awards.length - topAwards.length
-  const otherActivities = archive.activities.length - topActivities.length
   return (
     <main id="main" className="page resume">
       <div className="wrap narrow">
@@ -109,12 +108,18 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
           ))}
         </Part>
 
-        <Part title={ARCHIVE_HEADINGS.education}>
+        <Part title={ARCHIVE_HEADINGS.educationAndCerts}>
           <p>
             <strong>{t(archive.education.school)}</strong> · {t(archive.education.major)} <span className="mono">{archive.education.period}</span>
           </p>
           <p className="muted">
             {t(archive.education.note)} · {t(UI.gpa)} {archive.education.gpa}
+            {archive.certs.map((cert) => (
+              <span key={cert.name.ko}>
+                {' · '}
+                {t(cert.name)} <span className="mono">{t(cert.detail)}</span>
+              </span>
+            ))}
           </p>
         </Part>
 
@@ -135,35 +140,24 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
           <ul>
             {topActivities.map((activity) => (
               <li key={activity.name.ko}>
-                {t(activity.name)} — {t(activity.desc)} <span className="mono">{activity.period}</span>
+                {t(activity.name)} — {t(activity.org)} <span className="mono">{activity.period}</span>
               </li>
             ))}
           </ul>
-          {otherActivities > 0 && (
-            <p className="muted">{t({ ko: `외 ${otherActivities}건 (전체 목록: 포트폴리오 /archive)`, en: `${otherActivities} more (full list: portfolio /archive)` })}</p>
-          )}
         </Part>
 
         <Part title={UI.papers}>
           <ul>
             {conference.map((paper) => (
               <li key={`${paper.year}-${paper.title}`}>
-                {t({ ko: paper.title, en: paper.titleEn ?? paper.title })} — {t(paper.venue)}, <span className="mono">{paper.year}</span> · {t(PAPER_KINDS[paper.kind])}
+                {t({ ko: paper.title, en: paper.titleEn ?? paper.title })} — {t(paper.venue)}, <span className="mono">{paper.year}</span>
+                {paper.kind === 'international' && ` · ${t(PAPER_KINDS[paper.kind])}`}
                 {paper.authorOrder && ` · ${t(authorOrderLabel(paper.authorOrder))}`}
               </li>
             ))}
           </ul>
         </Part>
 
-        <Part title={ARCHIVE_HEADINGS.certs}>
-          <ul>
-            {archive.certs.map((cert) => (
-              <li key={cert.name.ko}>
-                {t(cert.name)} <span className="mono">{t(cert.detail)}</span>
-              </li>
-            ))}
-          </ul>
-        </Part>
       </div>
     </main>
   )

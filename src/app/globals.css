@@ -634,6 +634,9 @@ a:hover {
   font-size: 15px;
   color: var(--text-2);
 }
+.activity-rows li {
+  grid-template-columns: 136px minmax(0, 1fr) auto;
+}
 .award-name {
   font-weight: 600;
 }
