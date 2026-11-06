@@ -126,8 +126,8 @@ export const projects: Project[] = [
           'Checked against a reference workbook case: 21 items through the 6Way web API, 43 tests on the Python engine',
         ],
         [
-          'finz.kr 저장소 테스트 184개 통과: 계산 엔진 53개(가상자산 25·해외주식 28), 시세·환율 데이터 소스 31개 포함',
-          'All 184 tests in the finz.kr repository pass, including 53 calculation-engine tests (crypto 25, foreign stocks 28) and 31 market-data tests',
+          'finz.kr 저장소 테스트 192개 통과: 계산 엔진 53개(가상자산 25·해외주식 28), 시세·환율 데이터 소스 31개 포함',
+          'All 192 tests in the finz.kr repository pass, including 53 calculation-engine tests (crypto 25, foreign stocks 28) and 31 market-data tests',
         ],
         [
           '간편인증 한 번으로 5개 연도 조회: 서비스와 분리한 스크립트로 CODEF 개발 환경에서 확인하고 홈택스에서 받은 자료와 대조',
@@ -222,14 +222,14 @@ export const projects: Project[] = [
       ),
       metric(
         ['finz.kr 저장소 테스트', 'finz.kr repository tests'],
-        '184 통과',
+        '192 통과',
         [
           '계산 엔진 53개(가상자산 25 · 해외주식 28, 익명화한 실제 증여 사례 포함), 시세·환율 데이터 소스 31개, 화면·입력 변환 등',
           'Calculation engines 53 (crypto 25 · foreign stocks 28, including an anonymised real gift case), market-data sources 31, plus screens and input mapping',
         ],
         ['Vitest, 외부 API는 모의 응답, 로컬 실행', 'Vitest with mocked external APIs, run locally'],
         'measured',
-        '2026-10-29',
+        '2026-11-06',
       ),
       metric(
         ['계산 엔진 테스트 (Python)', 'Calculation engine tests (Python)'],
@@ -335,8 +335,8 @@ export const projects: Project[] = [
             'The transaction-price API. Problem: encoding an already encoded key fails authentication, and month-by-month lookups are slow. Fix: the URL is assembled by hand, and the months load in parallel and are re-checked every 12 hours.',
           ],
           [
-            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 최대 차이 1원인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. finz.kr 저장소의 테스트 184개는 외부 API를 모의 응답으로 대신해 네트워크 없이 실행됩니다.',
-            'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items match with a largest gap of 1 won; the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 184 tests mock external APIs so they run offline.',
+            '옮긴 엔진이 같은 값을 내는지. 문제: Python 로직을 TypeScript로 옮기면 같은 결과를 낸다는 보장이 없습니다. 해결: 기준 워크북(실제 2주택 사례)의 기대값과 웹 계산 API 결과를 비교하는 스크립트로 21개 항목이 모두 최대 차이 1원인 것을 확인했고, Python 엔진에는 같은 사례를 원 단위까지 맞추는 테스트가 있습니다. 워크북은 소수점 이하를 그대로 두고 엔진은 단계마다 원 미만을 버리기 때문에 ±10원을 허용 범위로 정했습니다. finz.kr 저장소의 테스트 192개는 외부 API를 모의 응답으로 대신해 네트워크 없이 실행됩니다.',
+            'Does the port give the same numbers? Problem: porting Python logic to TypeScript does not guarantee the same results. Fix: a script compares the web calculation API with the expected values in a reference workbook (a real two-home case), and all 21 items match with a largest gap of 1 won; the Python engine has tests that match the same case to the won. The workbook keeps fractions while the engine drops fractions of a won at each step, hence the ±10 won tolerance. The website’s 192 tests mock external APIs so they run offline.',
           ],
         ],
         { anchor: 'solved' },

@@ -135,7 +135,7 @@ describe('flagship: Finz personal tax calculators', () => {
 
   it('backs the calculation with measured checks against the reference workbook', () => {
     const [workbook, webTests, engine, security] = finz.metrics ?? []
-    expect(webTests.value).toBe('184 통과')
+    expect(webTests.value).toBe('192 통과')
     expect(workbook).toMatchObject({ value: '21/21', source: 'measured' })
     expect(koText(workbook.condition)).toContain('±10원')
     expect(engine.value).toContain('58')
