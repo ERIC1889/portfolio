@@ -131,7 +131,7 @@ describe('archive', () => {
     expect(kinds.filter((k) => k === 'domestic')).toHaveLength(6)
     expect(kinds.filter((k) => k === 'contest')).toHaveLength(1)
     expect(kinds.filter((k) => k === 'campus')).toHaveLength(2)
-    expect(getPaperCounts()).toEqual({ conference: 7, international: 1, firstAuthor: 3 })
+    expect(getPaperCounts()).toEqual({ conference: 7, international: 1, firstAuthor: 6 })
   })
 
   it('marks the APIC-IST paper as international and second-author', () => {
@@ -156,7 +156,7 @@ describe('archive', () => {
       ['수상', archive.awards.length],
       ['활동', archive.activities.length],
     ])
-    expect(getRecordStats()[1].note?.ko).toBe('국제 1 · 1저자 3')
+    expect(getRecordStats()[1].note?.ko).toBe('국제 1 · 1저자 6')
     expect(archive.awards.some((a) => a.name.ko.includes('대상(1등)'))).toBe(true)
   })
 

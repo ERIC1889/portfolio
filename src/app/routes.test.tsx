@@ -165,7 +165,7 @@ describe('/archive', () => {
       '논문 공모전 1',
       '교내 발표 2',
     ])
-    expect(within(papers).getAllByText('제1저자')).toHaveLength(3)
+    expect(within(papers).getAllByText('제1저자')).toHaveLength(9)
     expect(within(papers).getAllByText('제2저자')).toHaveLength(1)
   })
 

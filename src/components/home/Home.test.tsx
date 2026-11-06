@@ -99,7 +99,7 @@ describe('home page (real content)', () => {
       ['학술대회 논문', '7'],
       ['수상', '13'],
     ])
-    expect(experience).toHaveTextContent('국제 1 · 1저자 3')
+    expect(experience).toHaveTextContent('국제 1 · 1저자 6')
     expect(experience.querySelectorAll('.award-rows > li')).toHaveLength(3)
     expect(experience.querySelector('.award-rows > li')).toHaveTextContent('2024.10캡스톤 디자인 및 AI 해커톤 대상(1등)')
     const awardLinks = [...experience.querySelectorAll('.award-rows a')].map((a) => a.getAttribute('href'))

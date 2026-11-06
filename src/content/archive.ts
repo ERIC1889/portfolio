@@ -33,6 +33,7 @@ export const archive: Archive = {
       venue: k('한국디지털콘텐츠학회 추계종합학술대회', 'Korea Digital Contents Society, Fall Conference'),
       year: 2025,
       kind: 'domestic',
+      authorOrder: 1,
     },
     {
       title: '개인 맞춤형 AI 학습 비서 시스템: EduMatrix 설계',
@@ -40,6 +41,7 @@ export const archive: Archive = {
       venue: k('한국디지털콘텐츠학회 하계종합학술대회', 'Korea Digital Contents Society, Summer Conference'),
       year: 2025,
       kind: 'domestic',
+      authorOrder: 1,
     },
     {
       title: 'LLM을 활용한 시니어 정신건강 검사 서비스 개발',
@@ -55,6 +57,7 @@ export const archive: Archive = {
       venue: k('한국인터넷정보통신학회', 'Korean Society of Internet Information and Communications'),
       year: 2025,
       kind: 'domestic',
+      authorOrder: 1,
     },
     {
       title: '인적, 사회적 요인을 고려한 다요인 산불 예측 모델 설계',
@@ -62,6 +65,7 @@ export const archive: Archive = {
       venue: k('제23회 통계청 논문 공모전', '23rd Statistics Korea Paper Contest'),
       year: 2025,
       kind: 'contest',
+      authorOrder: 1,
     },
     {
       title: '메타버스와 LLM을 활용한 디지털 돌봄 서비스 개발',
@@ -69,6 +73,7 @@ export const archive: Archive = {
       venue: k('한신 ABC 캠프 해커톤', 'Hanshin ABC Camp Hackathon'),
       year: 2024,
       kind: 'campus',
+      authorOrder: 1,
     },
     {
       title: 'LLM을 활용한 시니어 정신건강 검사 서비스 개발',
@@ -76,6 +81,7 @@ export const archive: Archive = {
       venue: k('한신 AISW 페스티벌', 'Hanshin AISW Festival'),
       year: 2024,
       kind: 'campus',
+      authorOrder: 1,
     },
   ],
   awards: [

@@ -1297,8 +1297,8 @@ export const projects: Project[] = [
     role: k('프론트엔드·백엔드 구조 설계 및 개발 · AI 에이전트 구조 · DB 설계', 'Frontend and backend structure and development · AI agent structure · database design'),
     stack: ['React', 'Express', 'MySQL', 'MongoDB', 'OpenAI Assistants'],
     summary: k(
-      '목표 설정, 노트 작성, 퀴즈 풀이, 피드백, 학습 계획 조정으로 이어지는 흐름을 구상하고 설계한 AI 통합 학습 지원 시스템. 요청 의도에 맞는 모델과 도구로 보내는 AI Agent·MCP 구조와 MySQL·MongoDB 저장 구조를 설계했습니다. 한국디지털콘텐츠학회 논문 2편(은상 2회).',
-      'An AI learning-support system conceived and designed around a flow from setting goals to notes, quizzes, feedback and adjusting the plan. The design covers an AI Agent and MCP structure that sends each request to a suitable model or tool, and storage split across MySQL and MongoDB. Two Korea Digital Contents Society papers (two Silver Awards).',
+      '목표 설정, 노트 작성, 퀴즈 풀이, 피드백, 학습 계획 조정으로 이어지는 흐름을 구상하고 설계한 AI 통합 학습 지원 시스템. 요청 의도에 맞는 모델과 도구로 보내는 AI Agent·MCP 구조와 MySQL·MongoDB 저장 구조를 설계했습니다. 한국디지털콘텐츠학회 1저자 논문 2편(은상 2회).',
+      'An AI learning-support system conceived and designed around a flow from setting goals to notes, quizzes, feedback and adjusting the plan. The design covers an AI Agent and MCP structure that sends each request to a suitable model or tool, and storage split across MySQL and MongoDB. Two first-author Korea Digital Contents Society papers (two Silver Awards).',
     ),
     product: k(
       '목표 설정, 노트 작성, 퀴즈 풀이, 피드백, 학습 계획 조정으로 이어지는 흐름을 구상하고 설계한 AI 통합 학습 지원 시스템',
@@ -1307,7 +1307,7 @@ export const projects: Project[] = [
     sections: [
       section('result', OUTCOMES, [
         ['2025 한신 AISW 페스티벌 캡스톤 디자인 부문 특별상을 받았습니다.', 'Special Award (Capstone Design) at the 2025 Hanshin AISW Festival.'],
-        ['한국디지털콘텐츠학회 2025 하계·추계 학술대회에서 논문 두 편을 발표해 각각 대학생 논문경진대회 은상을 받았습니다.', 'Presented two papers at the 2025 summer and fall Korea Digital Contents Society conferences, each winning a Silver Award in the student paper competition.'],
+        ['한국디지털콘텐츠학회 2025 하계·추계 학술대회에서 논문 두 편을 1저자로 발표해 각각 대학생 논문경진대회 은상을 받았습니다.', 'Presented two first-author papers at the 2025 summer and fall Korea Digital Contents Society conferences, each winning a Silver Award in the student paper competition.'],
       ], { lead: true }),
       section(
         'problem',
