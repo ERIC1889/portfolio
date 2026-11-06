@@ -176,6 +176,7 @@ export const archive: Archive = {
     'SW중심대학 AI 창업 아이디어 경진대회 특별상',
     '2026년 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회 우수상',
   ],
+  topActivities: ['WebDB 랩장', 'SW 인재 페스티벌', 'CES 2026 참관'],
   activities: [
     {
       period: '23.04 ~ 23.07 · 23.10 ~ 23.12 · 25.04 ~ 25.07',
@@ -196,7 +197,7 @@ export const archive: Archive = {
       period: '24.07.01 ~ 24.08.06',
       name: k('2024 SW중심대학 디지털 경진대회', '2024 SW-Centered University Digital Competition'),
       org: k('SW중심대학', 'SW-Centered University Program'),
-      desc: k('메타버스와 LLM을 활용한 디지털 돌봄 서비스 개발', 'Developed a digital care service using the metaverse and LLMs'),
+      desc: k('학교 대표로 출전 · 메타버스와 LLM을 활용한 디지털 돌봄 서비스 개발', 'Entered as a Hanshin University representative · developed a digital care service using the metaverse and LLMs'),
     },
     {
       period: '24.07.08 ~ 24.08.23',
@@ -208,7 +209,7 @@ export const archive: Archive = {
       period: '24.09.09 ~ 24.10.07',
       name: k('SW중심대학 우수 작품 경진대회', 'SW-Centered University Outstanding Project Competition'),
       org: k('SW중심대학', 'SW-Centered University Program'),
-      desc: k('메타버스와 LLM을 활용한 디지털 돌봄 서비스 개발', 'Developed a digital care service using the metaverse and LLMs'),
+      desc: k('학교 대표로 출전 · 메타버스와 LLM을 활용한 디지털 돌봄 서비스 개발', 'Entered as a Hanshin University representative · developed a digital care service using the metaverse and LLMs'),
     },
     {
       period: '24.11.01 ~ 24.12.31',
@@ -232,7 +233,7 @@ export const archive: Archive = {
       period: '24.12.05 ~ 24.12.06',
       name: k('SW 인재 페스티벌', 'SW Talent Festival'),
       org: k('SW중심대학', 'SW-Centered University Program'),
-      desc: k('부스 운영과 작품 출품, 타 대학 학생들과 교류', 'Ran a booth, exhibited a project and met students from other universities'),
+      desc: k('학교 대표로 부스 운영과 작품 출품, 타 대학 학생들과 교류', 'Ran a booth and exhibited a project as a Hanshin University representative, and met students from other universities'),
     },
     {
       period: '24.12.15 ~ 25.03.01',

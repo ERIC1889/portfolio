@@ -176,6 +176,8 @@ describe('/archive', () => {
     expect(items).toHaveLength(13)
     expect(items[0]).toHaveTextContent('26.07.22')
     expect(within(awards).getAllByText('대표')).toHaveLength(3)
+    const activities = document.getElementById('activities') as HTMLElement
+    expect(within(activities).getAllByText('대표')).toHaveLength(3)
     expect(within(awards).getAllByText('팀')).toHaveLength(5)
   })
 })
@@ -188,6 +190,7 @@ describe('/resume', () => {
     expect(container).toHaveTextContent('Finz 개인 세금 계산기')
     expect(container).toHaveTextContent('기준 워크북 대조 (6Way 웹 API): 21/21 — 실제 2주택 사례 1건')
     expect(container).toHaveTextContent('주식회사 Finz Labs')
+    expect(container).toHaveTextContent('WebDB 랩장 — WebDB 연구실(학부 연구실) 운영 총괄')
     expect(container).not.toHaveTextContent('컴세바')
     expect(container).toHaveTextContent('eric1889@naver.com')
     expect(container.textContent).not.toMatch(/010[\s-]?\d{4}|\+82/)

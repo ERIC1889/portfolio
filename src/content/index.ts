@@ -13,6 +13,7 @@ import {
   selectProject,
   selectShowcase,
   selectTopAwards,
+  selectTopActivities,
   projectName,
 } from './select'
 import type { L, Showcase, Stat, Year } from './types'
@@ -30,6 +31,7 @@ export const getByYear = (year: Year) => selectByYear(projects, year)
 export const getChapter = (year: Year) => selectChapter(chapters, year)
 export const getPaperCounts = () => selectPaperCounts(archive.papers)
 export const getTopAwards = () => selectTopAwards(archive)
+export const getTopActivities = () => selectTopActivities(archive)
 
 export const getCaseNames = (): Record<string, L> => Object.fromEntries(getCases().map((p) => [p.slug, projectName(p)]))
 

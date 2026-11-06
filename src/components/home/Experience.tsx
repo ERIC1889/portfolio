@@ -3,13 +3,24 @@
 import Link from 'next/link'
 import { useLang } from '@/components/providers/LanguageProvider'
 import { StatTiles } from '@/components/common/StatTiles'
+import type { Activity } from '@/content/select'
 import type { Archive, Award, L, Stat } from '@/content/types'
 import { HOME_IDS, SECTION_TITLES, UI } from '@/content/ui'
 import { SectionHead } from './SectionHead'
 
 export const awardMonth = (date: string) => `20${date.slice(0, 5)}`
 
-export function Experience({ archive, topAwards, stats, caseNames }: { archive: Archive; topAwards: Award[]; stats: Stat[]; caseNames: Record<string, L> }) {
+export function activityMonths(period: string): string {
+  const months = period.match(/\d{2}\.\d{2}/g) ?? []
+  const first = months[0]
+  const last = months[months.length - 1]
+  if (!first) return period
+  return first === last ? `20${first}` : `20${first}–20${last}`
+}
+
+type Props = { archive: Archive; topAwards: Award[]; topActivities: Activity[]; stats: Stat[]; caseNames: Record<string, L> }
+
+export function Experience({ archive, topAwards, topActivities, stats, caseNames }: Props) {
   const { t } = useLang()
   const { education } = archive
   return (
@@ -67,6 +78,17 @@ export function Experience({ archive, topAwards, stats, caseNames }: { archive: 
                 {t(award.org)}
                 {award.team && <span className="badge">{t(UI.team)}</span>}
               </span>
+            </li>
+          ))}
+        </ol>
+
+        <h3 className="label exp-awards-title">{t(UI.topActivities)}</h3>
+        <ol className="award-rows activity-rows">
+          {topActivities.map((activity) => (
+            <li key={activity.name.ko}>
+              <span className="mono award-date">{activityMonths(activity.period)}</span>
+              <span className="award-name">{t(activity.name)}</span>
+              <span className="award-org">{t(activity.org)}</span>
             </li>
           ))}
         </ol>

@@ -139,6 +139,8 @@ export const UI = {
   seeAllProjects: { ko: '전체 프로젝트 보기', en: 'See all projects' },
   story: { ko: '4년 이야기', en: 'The four-year story' },
   topAwards: { ko: '대표 수상', en: 'Selected awards' },
+  topActivities: { ko: '대표 활동', en: 'Selected activities' },
+  featuredActivity: { ko: '대표', en: 'Selected' },
   papers: { ko: '논문', en: 'Papers' },
   featuredAward: { ko: '대표', en: 'Selected' },
   archiveJump: { ko: '기록 바로가기', en: 'Jump to' },

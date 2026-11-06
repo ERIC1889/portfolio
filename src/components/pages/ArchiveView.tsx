@@ -79,6 +79,7 @@ export function ArchiveView({ archive, projects, stats, caseNames }: Props) {
   const { t } = useLang()
   const years = [...new Set(projects.map((p) => p.years[0]))].sort((a, b) => b - a)
   const top = new Set(archive.topAwards)
+  const topActivities = new Set(archive.topActivities)
   const jumps: { id: string; label: L }[] = [
     { id: 'projects', label: ARCHIVE_HEADINGS.projects },
     { id: 'papers', label: ARCHIVE_HEADINGS.papers },
@@ -218,8 +219,11 @@ export function ArchiveView({ archive, projects, stats, caseNames }: Props) {
         <Block id="activities" title={ARCHIVE_HEADINGS.activities} count={archive.activities.length}>
           <ul className="activity-grid">
             {archive.activities.map((activity) => (
-              <li key={`${activity.period}-${activity.name.ko}`}>
-                <p className="row-title">{t(activity.name)}</p>
+              <li key={`${activity.period}-${activity.name.ko}`} className={topActivities.has(activity.name.ko) ? 'is-top' : undefined}>
+                <p className="row-title">
+                  {t(activity.name)}
+                  {topActivities.has(activity.name.ko) && <span className="badge badge-accent">{t(UI.featuredActivity)}</span>}
+                </p>
                 <p className="muted">
                   {t(activity.org)} · <span className="mono">{activity.period}</span>
                 </p>

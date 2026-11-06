@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { archive, chapters, getPaperCounts, getRecordStats, getTopAwards, profile, projects } from './index'
+import { archive, chapters, getPaperCounts, getRecordStats, getTopActivities, getTopAwards, profile, projects } from './index'
 import * as ui from './ui'
 import { checkEn, checkKo, checkLinks, checkNoLocalPaths, checkNoPhoneNumbers, collectStrings } from './validate'
 
@@ -117,6 +117,11 @@ describe('archive', () => {
   it('picks three top awards that all exist in the list', () => {
     expect(archive.topAwards).toHaveLength(3)
     expect(getTopAwards().map((a) => a.name.ko)).toEqual(archive.topAwards)
+  })
+
+  it('picks three top activities that all exist in the list', () => {
+    expect(archive.topActivities).toEqual(['WebDB 랩장', 'SW 인재 페스티벌', 'CES 2026 참관'])
+    expect(getTopActivities().map((a) => a.name.ko)).toEqual(archive.topActivities)
   })
 
   it('credits the 2025 summer conference awards to the Korea Digital Contents Society', () => {

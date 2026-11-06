@@ -2,11 +2,12 @@
 
 import type { ReactNode } from 'react'
 import { useLang } from '@/components/providers/LanguageProvider'
+import type { Activity } from '@/content/select'
 import { projectTitle } from '@/content/select'
 import type { Archive, Award, L, Profile, Project } from '@/content/types'
 import { ARCHIVE_HEADINGS, PAPER_KINDS, SECTION_TITLES, UI, authorOrderLabel } from '@/content/ui'
 
-type Props = { profile: Profile; archive: Archive; projects: Project[]; topAwards: Award[]; siteUrl: string }
+type Props = { profile: Profile; archive: Archive; projects: Project[]; topAwards: Award[]; topActivities: Activity[]; siteUrl: string }
 
 function Part({ title, children }: { title: L; children: ReactNode }) {
   const { t } = useLang()
@@ -18,10 +19,11 @@ function Part({ title, children }: { title: L; children: ReactNode }) {
   )
 }
 
-export function Resume({ profile, archive, projects, topAwards, siteUrl }: Props) {
+export function Resume({ profile, archive, projects, topAwards, topActivities, siteUrl }: Props) {
   const { t } = useLang()
   const conference = archive.papers.filter((paper) => paper.kind === 'international' || paper.kind === 'domestic')
   const otherAwards = archive.awards.length - topAwards.length
+  const otherActivities = archive.activities.length - topActivities.length
   return (
     <main id="main" className="page resume">
       <div className="wrap narrow">
@@ -126,6 +128,19 @@ export function Resume({ profile, archive, projects, topAwards, siteUrl }: Props
           </ul>
           {otherAwards > 0 && (
             <p className="muted">{t({ ko: `외 ${otherAwards}건 (전체 목록: 포트폴리오 /archive)`, en: `${otherAwards} more (full list: portfolio /archive)` })}</p>
+          )}
+        </Part>
+
+        <Part title={UI.topActivities}>
+          <ul>
+            {topActivities.map((activity) => (
+              <li key={activity.name.ko}>
+                {t(activity.name)} — {t(activity.desc)} <span className="mono">{activity.period}</span>
+              </li>
+            ))}
+          </ul>
+          {otherActivities > 0 && (
+            <p className="muted">{t({ ko: `외 ${otherActivities}건 (전체 목록: 포트폴리오 /archive)`, en: `${otherActivities} more (full list: portfolio /archive)` })}</p>
           )}
         </Part>
 

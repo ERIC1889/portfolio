@@ -100,10 +100,12 @@ describe('home page (real content)', () => {
       ['수상', '13'],
     ])
     expect(experience).toHaveTextContent('국제 1 · 1저자 6')
-    expect(experience.querySelectorAll('.award-rows > li')).toHaveLength(3)
+    expect(experience.querySelectorAll('.award-rows:not(.activity-rows) > li')).toHaveLength(3)
     expect(experience.querySelector('.award-rows > li')).toHaveTextContent('2024.10캡스톤 디자인 및 AI 해커톤 대상(1등)')
     const awardLinks = [...experience.querySelectorAll('.award-rows a')].map((a) => a.getAttribute('href'))
     expect(awardLinks).toEqual(['/projects/pitches', '/projects/pitches', '/projects/finz'])
+    expect([...experience.querySelectorAll('.activity-rows > li .award-name')].map((el) => el.textContent)).toEqual(['WebDB 랩장', 'SW 인재 페스티벌', 'CES 2026 참관'])
+    expect([...experience.querySelectorAll('.activity-rows > li .award-date')].map((el) => el.textContent)).toEqual(['2025.01–2026.07', '2024.12', '2026.01'])
     expect(within(experience).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
     expect(within(experience).getByRole('link', { name: /4년 이야기/ })).toHaveAttribute('href', '/story')
   })

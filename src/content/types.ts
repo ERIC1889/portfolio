@@ -172,6 +172,7 @@ export interface Archive {
   papers: Paper[]
   awards: Award[]
   topAwards: string[]
+  topActivities: string[]
   activities: { period: string; name: L; org: L; desc: L }[]
   experience: Experience[]
   skills: SkillRow[]

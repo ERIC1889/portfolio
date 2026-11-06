@@ -63,3 +63,9 @@ export function selectPaperCounts(papers: Archive['papers']) {
 export function selectTopAwards(archive: Pick<Archive, 'awards' | 'topAwards'>): Award[] {
   return archive.topAwards.map((name) => archive.awards.find((a) => a.name.ko === name)).filter((a): a is Award => a !== undefined)
 }
+
+export type Activity = Archive['activities'][number]
+
+export function selectTopActivities(archive: Pick<Archive, 'activities' | 'topActivities'>): Activity[] {
+  return archive.topActivities.map((name) => archive.activities.find((a) => a.name.ko === name)).filter((a): a is Activity => a !== undefined)
+}
