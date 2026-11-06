@@ -152,7 +152,7 @@ describe('flagship: Finz personal tax calculators', () => {
     const saas = finz.sections?.find((s) => s.anchor === 'finz-saas')
     expect(saas?.media).toBeUndefined()
     expect(saas?.body).toHaveLength(1)
-    expect(koText(saas?.body)).toContain('출시 전이라 기능 설명과 화면은 싣지 않습니다')
+    expect(koText(saas?.body)).not.toContain('위저드')
   })
 
   it('keeps the calculator gallery to the demo video and four calculator screens', () => {

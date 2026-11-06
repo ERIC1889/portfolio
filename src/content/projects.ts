@@ -400,8 +400,8 @@ export const projects: Project[] = [
         ['세무사용 FINZ · 협력 개발사와 공동 개발 (출시 전)', 'FINZ for tax accountants · co-developed with a partner company (not yet launched)'],
         [
           [
-            '세무사용 FINZ는 같은 회사에서 협력 개발사와 함께 개발 중인 세무사용 SaaS입니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다. 출시 전이라 기능 설명과 화면은 싣지 않습니다.',
-            'FINZ for tax accountants is a SaaS for tax accountants being developed at the same company together with a partner development company. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures. It has not launched yet, so no feature descriptions or screens are shown.',
+            '세무사용 FINZ는 같은 회사에서 협력 개발사와 함께 개발 중인 세무사용 SaaS입니다. 저는 회사 쪽 기술 책임자로 세금 계산 엔진 초안과 외부 API 연동, 배포·운영 방식, 개발 도구를 개발사와 함께 정하며 개발에 참여했고, 사양 작성과 검증, 장애 원인 분석을 맡았습니다.',
+            'FINZ for tax accountants is a SaaS for tax accountants being developed at the same company together with a partner development company. As the company-side technical lead I took part in development, deciding the tax-engine draft, external API integrations, the deployment and operations approach and the development tools together with the vendor, and I wrote the specs, verified the work and found the causes of failures.',
           ],
         ],
         { anchor: 'finz-saas' },
