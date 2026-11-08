@@ -1,6 +1,6 @@
 # 허준영 | Portfolio
 
-> 익숙한 기술에 머물기보다, 필요한 것을 직접 만들어 왔습니다.
+> 문제를 이해하는 것에서 시작해, 신뢰할 수 있는 결과로 완성합니다.
 
 **Live:** https://junyoung-portfolio.vercel.app
 
