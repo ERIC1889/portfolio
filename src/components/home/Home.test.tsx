@@ -9,7 +9,7 @@ describe('home page (real content)', () => {
   it('leads with the name as the largest heading, then the role and the owner’s line', () => {
     renderWithProviders(<Home />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('허준영')
-    expect(screen.getByText('백엔드 중심 풀스택 개발자 · 2027년 2월 졸업 예정')).toBeInTheDocument()
+    expect(screen.getByText('백엔드 중심 풀스택 개발자')).toBeInTheDocument()
     expect(screen.getByText(/문제를 이해하는 것에서 시작해,/)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /대표 프로젝트 보기/ })).toHaveAttribute('href', '#projects')
     expect(screen.getByRole('link', { name: '이력서' })).toHaveAttribute('href', '/resume')
