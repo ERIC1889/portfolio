@@ -160,7 +160,7 @@ export const finz: Project = {
     'A web service that works out tax on disposing of two homes (6Way), on digital assets and on foreign stocks (capital gains and gift valuation) without sign-up, citing the statute behind each step',
   ),
   period: '2026.01–',
-  team: k('직원 5명, 인력 관리는 맡지 않음', 'Five people, no people management'),
+  team: k('직원 5명', 'Five people'),
   role: k('개발 총괄', 'Head of development'),
   status: k('운영 중 (finz.kr)', 'Live (finz.kr)'),
   statusCheckedAt: '2026-10-29',
@@ -301,7 +301,7 @@ export const finz: Project = {
   ]),
   duties: pairs([
     [
-      '초기 창업 멤버로 함께했고 회사 내의 유일한 개발자로 서비스를 개발하고 검증하는 역할을 맡았고 단순 개발뿐 아니라 기획, 투자 제안, 웹, 모바일 어플리케이션 개발, 협력 개발사와의 공동 개발 등 회사 내에서 개발 총괄을 맡아 일했습니다.',
+      '초기 창업 멤버로 함께했고 회사 내의 유일한 개발자로 서비스를 개발하고 검증하는 역할을 맡았고 단순 개발뿐 아니라 기획, 투자 제안, 웹, 모바일 어플리케이션 개발, 협력 개발사와의 공동 개발 등 회사 내에서 개발 총괄로 일했습니다.',
       'I joined as an early founding member and, as the only developer in the company, took on building and verifying the service. Beyond development itself I worked as head of development across planning, investor proposals, web and mobile app development and joint development with a partner company.',
     ],
   ]),

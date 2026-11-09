@@ -223,25 +223,25 @@ export const closetmate: Project = {
           '옷 사진을 종류, 색상, 스타일로 분류할 모델이 필요했습니다. 크기와 속도가 서로 달랐고 파라미터 수 모델 크기 등 모바일에 최적화되어 돌아가야 하는 상황이었습니다. 모든 요청을 별도의 서버에서 처리하게 되면 서버의 비용은 올라가고 지연시간도 생깁니다. 때문에 모바일 최적화되고 속도가 빠른 효율성 있는 모델을 찾는 것이 중요했습니다.',
           'I needed a model to classify clothing photos by type, color and style. The candidates differed in size and speed, and in parameter count and model size it had to run well on mobile. Handling every request on a separate server raises server cost and adds latency, so finding an efficient, fast model optimized for mobile mattered.',
         ],
-      ]),
+      ], ['모바일에서 빠르게 돌아갈 분류 모델이 필요', 'A classifier that has to run fast on mobile']),
       analysis: step([
         [
           '같은 조건으로 MobileNetV3-Small과 ResNet50을 비교했습니다. 백본을 고정해 전이학습 했고 3만 5천 장의 Fashion Product Images를 활용해 10 epoch 학습시켜 두 모델을 비교했습니다. 크기는 MobileNet이 6.0MB, ResNet은 90.2MB였고 CPU 추론은 ResNet이 더 빨랐습니다. 하지만 정확도의 경우 거의 동일했고 서버 리소스 사용 측면에서 MobileNet 모델이 더 좋은 성능을 냈습니다. 단순 추론 속도보다 모바일 최적화에 신경썼습니다.',
           'I compared MobileNetV3-small and ResNet50 under the same conditions: transfer learning with a frozen backbone, trained for 10 epochs on 35,000 Fashion Product Images. MobileNet was 6.0 MB and ResNet 90.2 MB, and ResNet was faster at CPU inference. Accuracy was nearly identical, though, and MobileNet used server resources better. I weighted mobile optimization over raw inference speed.',
         ],
-      ]),
+      ], ['MobileNetV3-Small과 ResNet50을 같은 조건으로 비교', 'MobileNetV3-Small against ResNet50 under the same conditions']),
       action: step([
         [
           'MobileNetV3 모델을 선택했고 고정 백본 위에 카테고리 7가지, 색상 11가지, 스타일 5가지의 헤드를 얹어 모델 하나로 세 가지의 분류를 했고 현재는 서버에서 ONNX로 추론합니다.',
           'I chose MobileNetV3 and put heads for 7 categories, 11 colors and 5 styles on the frozen backbone, so one model does all three classifications; it currently runs on the server with ONNX.',
         ],
-      ]),
+      ], ['헤드 3개를 얹은 MobileNetV3, 서버에서 ONNX 추론', 'MobileNetV3 with three heads, served with ONNX']),
       result: step([
         [
           '가중치는 ResNet 대비 15분의 1이었고 학습 시간은 절반 정도의 시간이었습니다. 하지만 추론 평균 시간이 조금 더 길었습니다. 그런데도 MobileNetV3 모델을 선택한 이유는 이후 온디바이스 추론으로의 확장성까지 고려한 선택이었습니다.',
           'The weights were one fifteenth of ResNet and training took about half the time, though average inference was a little slower. I still chose MobileNetV3 with later extension to on-device inference in mind.',
         ],
-      ]),
+      ], ['15분의 1 크기, 온디바이스 추론으로의 확장성까지 본 선택', 'One fifteenth the size, chosen with on-device inference in mind']),
     },
   ],
   results: pairs([

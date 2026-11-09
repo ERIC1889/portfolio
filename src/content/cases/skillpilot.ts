@@ -106,7 +106,7 @@ export const skillpilot: Project = {
   ],
   background: pairs([
     [
-      "IT 산업의 급격한 성장으로 인해 취업준비생, 경력 초년생들에게 요구되는 기술 스택과 자격증의 종류가 매우 방대해졌다. 하지만 정작 취업을 준비하는 개인에게는 교육, 자격증 정보, 프로젝트 준비, 채용 정보 등이 여러 플랫폼에 분산되어 있어 비효율적이다. 이러한 문제를 해결하기 위해 React와 Node.js 및 MySQL, MongoDB를 이용하여 모바일/웹 호환 IT 커리어 올인원 플랫폼 'SkillPilot'을 개발했다.",
+      "IT 산업의 급격한 성장으로 인해 취업준비생, 경력 초년생들에게 요구되는 기술 스택과 자격증의 종류가 매우 방대해졌습니다. 하지만 정작 취업을 준비하는 개인에게는 교육, 자격증 정보, 프로젝트 준비, 채용 정보 등이 여러 플랫폼에 분산되어 있어 비효율적입니다. 이러한 문제를 해결하기 위해 React와 Node.js 및 MySQL, MongoDB를 이용하여 모바일/웹 호환 IT 커리어 올인원 플랫폼 'SkillPilot'을 개발했습니다.",
       'With the rapid growth of the IT industry, the range of tech stacks and certifications expected of job seekers and early-career engineers has become vast. Yet for the individual preparing for a job, courses, certification information, project preparation and job postings are scattered across many platforms, which is inefficient. To solve this, we built SkillPilot, an all-in-one IT career platform for mobile and web, with React, Node.js, MySQL and MongoDB.',
     ],
   ]),

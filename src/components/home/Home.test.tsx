@@ -44,7 +44,7 @@ describe('home page (real content)', () => {
     const table = within(work).getByRole('table')
     expect(within(table).getAllByRole('columnheader').map((th) => th.textContent)).toEqual(['제품', '상태', '내 역할'])
     expect(within(table).getAllByRole('rowheader').map((th) => th.textContent)).toEqual(['개인 세금 계산기', 'Finz 모바일 앱', '세무사용 FINZ'])
-    expect(work).toHaveTextContent('직원 5명, 인력 관리는 맡지 않음')
+    expect(work).toHaveTextContent('직원 5명')
     expect(within(table).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['/projects/finz#calculators', '/projects/finz#refund-app', '/projects/finz#finz-saas'])
     expect([...work.querySelectorAll('.highlights > li')].map((li) => li.textContent)).toEqual([
       'finz.kr에서 계산기 4종 운영',

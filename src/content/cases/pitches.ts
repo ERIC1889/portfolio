@@ -17,7 +17,7 @@ export const pitches: Project = {
   role: k('팀장 · 백엔드·AI (2024–25) · 전체 (2026)', 'Team lead · backend and AI (2024–25) · everything (2026)'),
   status: k('2026 리뉴얼 구현', '2026 renewal built'),
   statusCheckedAt: '2026-10-29',
-  stack: ['SenseVoice-Small', 'FunASR', 'WebSocket', 'asyncio', 'GPT-4o-mini', 'AWS', 'Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'Expo'],
+  stack: ['SenseVoice-Small', 'FunASR', 'WebSocket', 'asyncio', 'GPT-5-nano', 'AWS', 'Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'Expo'],
   summary: k(
     '발표 중 말 속도와 감정을 분석해 알려 주는 코칭 서비스. 해커톤 대상과 창업 경진대회 특별상, 국제학술대회 논문으로 이어졌고 2026년에 혼자 다시 설계했습니다.',
     'A coaching service that analyzes speaking pace and emotion during a talk. It won a hackathon grand prize and a startup competition award, became an international conference paper, and I redesigned it alone in 2026.',

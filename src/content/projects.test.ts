@@ -157,7 +157,7 @@ describe('work: Finz Labs', () => {
     expect(finz.kind).toBe('work')
     expect(finz.workTitle?.ko).toBe('주식회사 Finz Labs · 개발 총괄')
     expect(finz.title?.ko).toBe('Finz 개인 세금 계산기')
-    expect(finz.team?.ko).toBe('직원 5명, 인력 관리는 맡지 않음')
+    expect(finz.team?.ko).toBe('직원 5명')
     expect(finz.period).toBe('2026.01–')
   })
 
