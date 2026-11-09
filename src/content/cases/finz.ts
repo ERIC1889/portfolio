@@ -243,6 +243,10 @@ export const finz: Project = {
       ['부동산 6Way · 운영 사이트 실제 화면 · 예시 입력 → 결과 → B주택을 조정대상지역으로 바꿔 재계산', 'Property 6Way · live site · sample input → results → recalculated with home B in a regulated area'],
       '2026-10-29',
     ),
+    shot('/media/finz/web-crypto.webp', 1600, 1449, ['가상자산 매수·매도 거래를 입력하고 2027년 예상 세금을 계산한 화면', 'Crypto buys and sells entered, with the 2027 tax estimate'], ['디지털 자산 세금 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Digital-asset tax calculator · live site · the site’s own sample input'], '2026-10-29'),
+    shot('/media/finz/web-stock.webp', 1600, 1409, ['결제일 환율로 해외주식 양도세를 계산하고 이익을 주가 몫과 환율 몫으로 나눈 화면', 'Foreign-stock gains converted at settlement-date rates and split into price and currency effects'], ['해외주식 양도세 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Foreign-stock capital gains calculator · live site · the site’s own sample input'], '2026-10-29'),
+    shot('/media/finz/web-stock-gift.webp', 1600, 1483, ['증여일 전후 2개월 평균 종가로 해외주식 증여 평가액과 증여세를 계산한 화면', 'Gift value of a foreign stock from the two-month average close, with the gift tax'], ['해외주식 증여 평가 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Foreign-stock gift valuation calculator · live site · the site’s own sample input'], '2026-10-29'),
+    shot('/media/finz/web-six-way.webp', 1600, 956, ['여섯 가지 처분 방법별 중과 유예 전후 세금 비교', 'Tax for the six options before and after the surcharge grace period'], ['여섯 가지 경우 비교 · 운영 사이트 실제 화면 · 예시 입력', 'Six-way comparison · live site · sample input'], '2026-10-29'),
   ],
   metrics: [
     metric(
@@ -335,12 +339,6 @@ export const finz: Project = {
           'Digital assets: the crypto engine of FINZ for tax accountants (the company SaaS) adapted for individuals, adding tax-year filtering, a cautious fallback when a price is missing and plain-language errors',
         ],
       ]),
-      media: [
-        shot('/media/finz/web-crypto.webp', 1600, 1449, ['가상자산 매수·매도 거래를 입력하고 2027년 예상 세금을 계산한 화면', 'Crypto buys and sells entered, with the 2027 tax estimate'], ['디지털 자산 세금 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Digital-asset tax calculator · live site · the site’s own sample input'], '2026-10-29'),
-        shot('/media/finz/web-stock.webp', 1600, 1409, ['결제일 환율로 해외주식 양도세를 계산하고 이익을 주가 몫과 환율 몫으로 나눈 화면', 'Foreign-stock gains converted at settlement-date rates and split into price and currency effects'], ['해외주식 양도세 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Foreign-stock capital gains calculator · live site · the site’s own sample input'], '2026-10-29'),
-        shot('/media/finz/web-stock-gift.webp', 1600, 1483, ['증여일 전후 2개월 평균 종가로 해외주식 증여 평가액과 증여세를 계산한 화면', 'Gift value of a foreign stock from the two-month average close, with the gift tax'], ['해외주식 증여 평가 계산기 · 운영 사이트 실제 화면 · 사이트 예시 입력', 'Foreign-stock gift valuation calculator · live site · the site’s own sample input'], '2026-10-29'),
-        shot('/media/finz/web-six-way.webp', 1600, 956, ['여섯 가지 처분 방법별 중과 유예 전후 세금 비교', 'Tax for the six options before and after the surcharge grace period'], ['여섯 가지 경우 비교 · 운영 사이트 실제 화면 · 예시 입력', 'Six-way comparison · live site · sample input'], '2026-10-29'),
-      ],
       architecture: {
         diagram: diagram(
           [

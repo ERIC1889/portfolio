@@ -1829,6 +1829,10 @@ a:hover {
   margin: 24px 0 10px;
 }
 
+.product-block > .gallery {
+  margin-top: 24px;
+}
+
 /* ---------- architecture diagram ---------- */
 .arch {
   --link-sync: #64748b;

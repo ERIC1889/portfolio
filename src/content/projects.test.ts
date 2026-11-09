@@ -172,10 +172,10 @@ describe('work: Finz Labs', () => {
     expect(finz.products?.map((p) => p.role.ko)).toEqual(['설계·개발·운영', '앱·백엔드', '사양·검증·장애 분석·실배포 준비'])
   })
 
-  it('puts the web demo at the top, the four calculator screens under the calculators and the app video under the app', () => {
-    expect(finz.media?.map((m) => m.src)).toEqual(['/media/finz/web-demo.mp4'])
+  it('puts the web demo and the four calculator screens at the top and keeps the app video under the app', () => {
+    expect(finz.media?.map((m) => m.src)).toEqual(['/media/finz/web-demo.mp4', '/media/finz/web-crypto.webp', '/media/finz/web-stock.webp', '/media/finz/web-stock-gift.webp', '/media/finz/web-six-way.webp'])
     const [calculators, app, saas] = finz.products ?? []
-    expect(calculators.media?.map((m) => m.src)).toEqual(['/media/finz/web-crypto.webp', '/media/finz/web-stock.webp', '/media/finz/web-stock-gift.webp', '/media/finz/web-six-way.webp'])
+    expect(calculators.media).toBeUndefined()
     expect(app.media?.map((m) => m.kind)).toEqual(['video'])
     expect(saas.media).toBeUndefined()
   })

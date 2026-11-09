@@ -111,6 +111,7 @@ function ProductBlock({ product, index, part }: { product: Product; index: numbe
           <Features items={product.features} />
         </>
       )}
+      {product.media && product.media.length > 0 && <Gallery media={product.media} />}
       {product.architecture && (
         <>
           <h4 className="label">{t(CASE_PARTS.architecture)}</h4>
@@ -130,8 +131,8 @@ function ProductBlock({ product, index, part }: { product: Product; index: numbe
 function useParts(project: Project): Part[] {
   const links = project.links ?? []
   const demo = caseDemo(project)
-  // Every page opens with its screens and the demo video together, as the site did before the restructure; a work page adds the screens of its products
-  const screens = [...(project.media ?? []), ...(project.kind === 'work' ? (project.products ?? []).flatMap((product) => product.media ?? []) : [])]
+  // Every page opens with its screens and the demo video together, as the site did before the restructure; a product's own media stays in its block
+  const screens = project.media ?? []
   const head: Part[] = screens.length > 0 ? [{ id: 'screens', title: demo ? UI.screens : UI.screensOnly, numbered: false, content: <Gallery media={screens} /> }] : []
   const tail: Part[] = [
     ...(project.results?.length || project.metrics?.length || project.contribution?.verified?.length
