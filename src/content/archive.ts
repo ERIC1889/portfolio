@@ -292,7 +292,12 @@ export const archive: Archive = {
       org: k('주식회사 Finz Labs (finz.kr)', 'Finz Labs (finz.kr)'),
       title: k('개발 총괄', 'Head of development'),
       period: '2026.01–',
-      context: k('직원 5명 스타트업, 인력 관리는 맡지 않음', 'A five-person startup; no people management'),
+      context: k('직원 5명 스타트업', 'A five-person startup'),
+      summary: k(
+        '초기 창업 멤버로 함께했고 회사 내의 유일한 개발자로 서비스를 개발하고 검증하는 역할을 맡았고 단순 개발뿐 아니라 기획, 투자 제안, 웹, 모바일 어플리케이션 개발, 협력 개발사와의 공동 개발 등 회사 내에서 개발 총괄로 일했습니다.',
+        'I joined as an early founding member and, as the only developer in the company, took on building and verifying the service. Beyond development itself I worked as head of development across planning, investor proposals, web and mobile app development and co-development with a partner company.',
+      ),
+      project: 'finz',
       responsibilities: [
         k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and now run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
         k('Finz 모바일 앱: 청년 세금 환급 MVP, 세무사 상담 연결 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, tax-accountant connection (Expo · FastAPI, not released)'),

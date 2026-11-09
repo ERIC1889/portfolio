@@ -41,46 +41,6 @@ const portedEngine: Case = {
   ),
 }
 
-const marketData: Case = {
-  title: k('날짜마다 다른 시세와 환율', 'Prices and exchange rates that differ by date'),
-  problem: step(
-    [
-      [
-        '해외주식 양도세는 매수·매도 각각의 결제일 환율로 원화 환산해야 합니다. 환율 API가 느리거나 실패하면 계산 전체가 멈추고, 아직 오지 않은 날짜에는 값 자체가 없습니다.',
-        'Foreign-stock capital gains must be converted to won at the exchange rate of each buy and sell settlement date. If the rate API is slow or fails the whole calculation stalls, and a date that has not arrived yet has no value at all.',
-      ],
-    ],
-    ['결제일 환율이 필요한데 외부 API는 느리거나 실패하고, 아직 오지 않은 날짜에는 값이 없습니다.', 'Settlement-date rates were needed, but external APIs are slow or fail, and a date that has not come yet has no value.'],
-  ),
-  analysis: step(
-    [
-      [
-        '선택지는 실패하면 오류를 보여 주기, 마지막으로 받은 값을 재사용하기, 다른 출처로 대체하기였습니다. 세금은 그날의 값으로 고정되는 계산이라 마지막 값 재사용은 틀린 날짜의 값을 쓸 위험이 있어 버렸고, 오류만 보여 주면 외부 API가 느린 날마다 계산기가 멈춥니다. 다른 출처로 대체하되, 대체값은 확정 값과 다르게 표시하고 오래 저장하지 않기로 했습니다.',
-        'The options were to show an error on failure, reuse the last value received, or fall back to another source. Tax is a calculation fixed to that day’s value, so reusing the last value risked using the wrong date’s rate and was dropped, and showing only an error would stall the calculator every time an external API was slow. I chose to fall back to another source, but to mark fallback values and never keep them long.',
-      ],
-    ],
-    ['세금은 날짜에 고정된 값이라 대체값을 확정 값과 다르게 다뤄야 한다고 봤습니다.', 'Tax is pinned to a date, so a fallback value has to be treated differently from a settled one.'],
-  ),
-  action: step(
-    [
-      [
-        '환율은 한국은행 ECOS가 실패하면 ECB 기준환율로, 가상자산 시세는 Upbit가 실패하면 CoinGecko로 대체하고 대체값에는 표시를 남깁니다. 확정된 과거 환율은 서버 메모리에 만료 없이, CDN에는 1일(재검증 7일) 두고, 확정 전 값은 6시간, 대체값은 2분만 두며 CDN에는 저장하지 않습니다. 값을 못 받은 날짜는 5분 동안 다시 조회하지 않고, 같은 날짜의 동시 요청은 외부 호출 하나로 합칩니다. 오늘 이후 날짜는 요청 단계에서 거부합니다.',
-        'Rates fall back from the Bank of Korea ECOS to the ECB reference rate, and crypto prices from Upbit to CoinGecko, with fallback values marked. Settled past rates stay in server memory without expiry and on the CDN for a day (revalidated for 7); unsettled values are kept for 6 hours and fallback values for only 2 minutes, never on the CDN. A date whose value could not be fetched is not retried for 5 minutes, concurrent requests for the same date collapse into one external call, and dates after today are rejected at the request stage.',
-      ],
-    ],
-    ['대체 출처, 값의 성격에 따른 캐시 시간, 미래 날짜 거부를 규칙으로 두었습니다.', 'Fallback sources, cache lifetimes by the nature of the value, and rejection of future dates became rules.'],
-  ),
-  result: step(
-    [
-      [
-        '대체 출처 전환과 캐시 시간, 미래 날짜 거부는 시세·환율 데이터 소스 테스트 31개로 확인합니다. 외부 API는 모의 응답으로 대신해 네트워크 없이 실행됩니다.',
-        'Source fallback, cache lifetimes and the rejection of future dates are covered by 31 market-data source tests, with external APIs mocked so they run offline.',
-      ],
-    ],
-    ['시세·환율 데이터 소스 테스트 31개로 대체와 캐시 규칙을 확인합니다.', '31 market-data tests check the fallback and cache rules.'],
-  ),
-}
-
 const simpleAuth: Case = {
   title: k('AI 초안이 첫 연도에서 멈춘 간편인증', 'The simple-authentication flow where the AI draft stalled after the first year'),
   problem: step(
@@ -404,7 +364,7 @@ export const finz: Project = {
           ],
         ]),
       },
-      cases: [portedEngine, marketData],
+      cases: [portedEngine],
     },
     {
       id: 'refund-app',

@@ -23,6 +23,9 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
   const { t } = useLang()
   const conference = archive.papers.filter((paper) => paper.kind === 'international' || paper.kind === 'domestic')
   const otherAwards = archive.awards.length - topAwards.length
+  // Work goes under 경력 with the details of its page; the project list keeps the owner's own projects
+  const work = projects.filter((project) => project.showcase === 'work')
+  const own = projects.filter((project) => project.showcase !== 'work')
   return (
     <main id="main" className="page resume">
       <div className="wrap narrow">
@@ -64,44 +67,46 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
         </Part>
 
         <Part title={ARCHIVE_HEADINGS.experience}>
-          {archive.experience.map((job) => (
-            <div key={job.org.ko} className="resume-item">
-              <p className="resume-item-head">
-                <strong>{t(job.org)}</strong> · {t(job.title)} <span className="mono">{job.period}</span>
-              </p>
-              <p className="muted">{t(job.context)}</p>
-              {job.responsibilities.length > 0 && (
-                <ul>
-                  {job.responsibilities.map((item) => (
-                    <li key={item.ko}>{t(item)}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
+          {archive.experience.map((job) => {
+            const linked = work.find((project) => project.slug === job.project)
+            const items = [...job.responsibilities, ...(linked?.resumeItems ?? [])]
+            const metric = linked?.metrics?.[0]
+            return (
+              <div key={job.org.ko} className="resume-item">
+                <p className="resume-item-head">
+                  <strong>{t(job.org)}</strong> · {t(job.title)} <span className="mono">{job.period}</span>
+                </p>
+                <p className="muted">{t(job.context)}</p>
+                {job.summary && <p className="resume-summary">{t(job.summary)}</p>}
+                {(items.length > 0 || metric) && (
+                  <ul>
+                    {items.map((item) => (
+                      <li key={item.ko}>{t(item)}</li>
+                    ))}
+                    {metric && (
+                      <li>
+                        {t(metric.label)}: <span className="mono">{metric.value}</span> — {t(metric.target)} ({t(metric.condition)})
+                      </li>
+                    )}
+                  </ul>
+                )}
+                {linked && <p className="mono resume-stack">{linked.stack.join(' · ')}</p>}
+              </div>
+            )
+          })}
         </Part>
 
         <Part title={{ ko: '프로젝트', en: 'Projects' }}>
-          {projects.map((project) => (
+          {own.map((project) => (
             <div key={project.slug} className="resume-item">
               <p className="resume-item-head">
                 <strong>{t(projectTitle(project))}</strong> <span className="mono">{project.period}</span>
               </p>
-              <p className="muted">
-                {[project.team, project.role, project.showcase === 'work' ? project.status : undefined]
-                  .flatMap((part) => (part ? [t(part)] : []))
-                  .join(' · ')}
-              </p>
+              <p className="muted">{[project.team, project.role].flatMap((part) => (part ? [t(part)] : [])).join(' · ')}</p>
               <ul>
                 {(project.resumeItems ?? project.features ?? [project.summary]).map((item) => (
                   <li key={item.ko}>{t(item)}</li>
                 ))}
-                {project.showcase === 'work' &&
-                  project.metrics?.slice(0, 1).map((metric) => (
-                    <li key={metric.label.ko}>
-                      {t(metric.label)}: <span className="mono">{metric.value}</span> — {t(metric.target)} ({t(metric.condition)})
-                    </li>
-                  ))}
               </ul>
               <p className="mono resume-stack">{project.stack.join(' · ')}</p>
             </div>

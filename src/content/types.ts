@@ -264,6 +264,10 @@ export interface Experience {
   title: L
   period: string
   context: L
+  /** The owner's own description of the role; shown on the résumé only */
+  summary?: L
+  /** Slug of the work page whose résumé items, first metric and stack the résumé lists under this job */
+  project?: string
   responsibilities: L[]
 }
 

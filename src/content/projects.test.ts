@@ -205,7 +205,7 @@ describe('work: Finz Labs', () => {
 
   it('writes every case in four PAAR steps, and draws the calculator architecture', () => {
     const cases = allCases(finz)
-    expect(cases.map((c) => c.title.ko)).toEqual(['옮긴 계산 엔진이 같은 값을 내는지', '날짜마다 다른 시세와 환율', 'AI 초안이 첫 연도에서 멈춘 간편인증', '배포 9번 연속 실패'])
+    expect(cases.map((c) => c.title.ko)).toEqual(['옮긴 계산 엔진이 같은 값을 내는지', 'AI 초안이 첫 연도에서 멈춘 간편인증', '배포 9번 연속 실패'])
     for (const item of cases) {
       expect(item.analysis?.body.length, item.title.ko).toBeGreaterThan(0)
       expect(item.result?.body.length, item.title.ko).toBeGreaterThan(0)

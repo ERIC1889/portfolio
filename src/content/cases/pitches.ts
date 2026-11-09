@@ -41,8 +41,8 @@ export const pitches: Project = {
       'Live-analysis backend on SenseVoice-Small, with frames from many sessions processed in parallel on asyncio (125 ms average latency as reported in the paper)',
     ],
     [
-      '2026 리뉴얼: Socket.IO 0.25초 음성 스트리밍, 5초 단위 음량·말 속도·간투사 판정, BullMQ 발표 후 분석 큐',
-      '2026 renewal: Socket.IO audio streaming in 0.25 s chunks, volume, pace and filler-word judgments every 5 s, a BullMQ post-talk analysis queue',
+      '2026 리뉴얼: Socket.IO 0.25초 음성 스트리밍, 5초 단위 음량·말 속도·간투사·감정 판정, BullMQ 발표 후 분석 큐',
+      '2026 renewal: Socket.IO audio streaming in 0.25 s chunks, volume, pace, filler-word and emotion judgments every 5 s, a BullMQ post-talk analysis queue',
     ],
     ['해커톤 대상(1등) · 창업 경진대회 특별상 · APIC-IST 2025 논문 2저자', 'Hackathon grand prize (1st) · startup competition special award · second author of the APIC-IST 2025 paper'],
   ]),

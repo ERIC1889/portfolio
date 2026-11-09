@@ -187,9 +187,18 @@ describe('/resume', () => {
     const { container } = renderWithProviders(<ResumePage />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('허준영')
     expect(screen.getByRole('link', { name: 'PDF 내려받기' })).toHaveAttribute('href', '/resume.pdf')
-    expect(container).toHaveTextContent('Finz 개인 세금 계산기')
-    expect(container).toHaveTextContent('기준 워크북 대조 (6Way 웹 API): 21/21 — 실제 2주택 사례 1건')
-    expect(container).toHaveTextContent('주식회사 Finz Labs')
+    const parts = [...container.querySelectorAll('.resume-part')]
+    const experience = parts.find((part) => part.querySelector('h2')?.textContent === '경력') as HTMLElement
+    expect(experience).toHaveTextContent('주식회사 Finz Labs (finz.kr) · 개발 총괄 2026.01–')
+    expect(experience).toHaveTextContent('직원 5명 스타트업')
+    expect(experience).not.toHaveTextContent('인력 관리')
+    expect(experience).toHaveTextContent('초기 창업 멤버로 함께했고 회사 내의 유일한 개발자로')
+    expect(experience.querySelectorAll('li')).toHaveLength(8)
+    expect(experience).toHaveTextContent('기준 워크북 대조 (6Way 웹 API): 21/21 — 실제 2주택 사례 1건')
+    expect(experience.querySelector('.resume-stack')).toHaveTextContent('Next.js · TypeScript')
+    const projectsPart = parts.find((part) => part.querySelector('h2')?.textContent === '프로젝트') as HTMLElement
+    expect([...projectsPart.querySelectorAll('.resume-item-head strong')].map((el) => el.textContent)).toEqual(['SkillPilot 자격증·커리어 플랫폼', 'Pitches 발표 코칭', 'ClosetMate 옷장·코디 추천 앱'])
+    expect(container).not.toHaveTextContent('Finz 개인 세금 계산기')
     expect(container).toHaveTextContent('WebDB 랩장 — 한신대학교')
     expect(container).not.toHaveTextContent('· 국내학술대회')
     expect(container).toHaveTextContent('APIC-IST, 2025 · 국제학술대회 · 제2저자')

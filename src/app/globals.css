@@ -1308,6 +1308,9 @@ a:hover {
 .resume-item ul {
   margin-top: 4px;
 }
+.resume-summary {
+  margin-top: 6px;
+}
 .resume-stack {
   margin-top: 4px;
   font-size: 14px;
