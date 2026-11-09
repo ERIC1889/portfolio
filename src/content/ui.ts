@@ -217,7 +217,6 @@ export const UI = {
   backToProjects: { ko: '프로젝트 목록으로', en: 'Back to projects' },
   backToWork: { ko: '실무 경험으로', en: 'Back to work experience' },
   onThisPage: { ko: '이 페이지', en: 'On this page' },
-  demo: { ko: '대표 시연', en: 'Demo' },
   screens: { ko: '화면과 시연', en: 'Screens and demo' },
   screensOnly: { ko: '화면', en: 'Screens' },
   metricsHeading: { ko: '확인한 수치', en: 'Numbers I checked' },

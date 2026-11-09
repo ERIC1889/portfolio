@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { useLang } from '@/components/providers/LanguageProvider'
-import { Gallery, MediaFigure } from '@/components/common/Media'
+import { Gallery } from '@/components/common/Media'
 import { Rich } from '@/components/common/Rich'
 import { LinkList } from '@/components/common/bits'
 import { PageNav } from '@/components/shell/PageNav'
@@ -111,7 +111,6 @@ function ProductBlock({ product, index, part }: { product: Product; index: numbe
           <Features items={product.features} />
         </>
       )}
-      {product.media && product.media.length > 0 && <Gallery media={product.media} />}
       {product.architecture && (
         <>
           <h4 className="label">{t(CASE_PARTS.architecture)}</h4>
@@ -131,16 +130,9 @@ function ProductBlock({ product, index, part }: { product: Product; index: numbe
 function useParts(project: Project): Part[] {
   const links = project.links ?? []
   const demo = caseDemo(project)
-  // Work pages open with the demo video alone; project pages open with every screen and the demo together, as the site did before the restructure
-  const screens = project.media ?? []
-  const head: Part[] =
-    project.kind === 'work'
-      ? demo
-        ? [{ id: 'demo', title: UI.demo, numbered: false, content: <MediaFigure media={demo} sizes="(max-width: 840px) 100vw, 760px" priority /> }]
-        : []
-      : screens.length > 0
-        ? [{ id: 'screens', title: demo ? UI.screens : UI.screensOnly, numbered: false, content: <Gallery media={screens} /> }]
-        : []
+  // Every page opens with its screens and the demo video together, as the site did before the restructure; a work page adds the screens of its products
+  const screens = [...(project.media ?? []), ...(project.kind === 'work' ? (project.products ?? []).flatMap((product) => product.media ?? []) : [])]
+  const head: Part[] = screens.length > 0 ? [{ id: 'screens', title: demo ? UI.screens : UI.screensOnly, numbered: false, content: <Gallery media={screens} /> }] : []
   const tail: Part[] = [
     ...(project.results?.length || project.metrics?.length || project.contribution?.verified?.length
       ? [{ id: 'results', title: CASE_PARTS.results, content: <Results project={project} /> }]

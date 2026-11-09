@@ -1674,14 +1674,6 @@ a:hover {
 .overview .product-table {
   margin-top: 20px;
 }
-.case-main > .case-block > .media {
-  margin-top: 4px;
-}
-.case-main > .case-block > .media.is-portrait .media-frame {
-  max-width: 320px;
-  margin-left: auto;
-  margin-right: auto;
-}
 .highlights {
   display: grid;
   gap: 6px;
@@ -1740,9 +1732,6 @@ a:hover {
 }
 .case-block > .feature-list {
   margin-top: 4px;
-}
-.case-block > .feature-list + .gallery {
-  margin-top: 28px;
 }
 .case-block > .arch + p {
   margin-top: 20px;
@@ -1838,9 +1827,6 @@ a:hover {
 .product-block > .label {
   display: block;
   margin: 24px 0 10px;
-}
-.product-block > .gallery {
-  margin-top: 24px;
 }
 
 /* ---------- architecture diagram ---------- */
