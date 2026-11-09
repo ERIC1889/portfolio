@@ -93,7 +93,7 @@ describe('overview card', () => {
     expect([...facts.querySelectorAll('.highlights > li')].map((li) => li.textContent)).toEqual(['SkillPilot 성과 하나', 'SkillPilot 성과 둘'])
   })
 
-  it('puts the first two links and a jump to the cases at the top, and the demo video in its own block right under the card', () => {
+  it('puts the first two links and a jump to the cases at the top, and every screen with the demo video in one block right under the card', () => {
     renderWithProviders(<CaseStudy project={project} />)
     const top = document.querySelector('.overview .actions') as HTMLElement
     expect(within(top).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual([
@@ -102,10 +102,13 @@ describe('overview card', () => {
       '#cases',
     ])
     expect(document.querySelector('.overview video')).toBeNull()
-    const demo = sectionNamed('대표 시연')
-    expect(demo.classList.contains('is-unnumbered')).toBe(true)
-    expect(demo.querySelector('video')).toHaveAttribute('poster', '/media/skillpilot/demo-poster.webp')
-    expect(demo.nextElementSibling?.id).toBe('background')
+    const screens = sectionNamed('화면과 시연')
+    expect(screens.classList.contains('is-unnumbered')).toBe(true)
+    expect(screens.querySelector('video')).toHaveAttribute('poster', '/media/skillpilot/demo-poster.webp')
+    const figures = within(screens).getAllByRole('figure')
+    expect(figures).toHaveLength(2)
+    expect(figures[0].querySelector('figcaption')).toHaveTextContent(/^SkillPilot 화면 · 실제 화면$/)
+    expect(screens.nextElementSibling?.id).toBe('background')
   })
 })
 
@@ -114,20 +117,18 @@ describe('numbered parts', () => {
     const { container } = renderWithProviders(<CaseStudy project={project} />)
     const toc = screen.getByRole('navigation', { name: '이 페이지' })
     const links = within(toc).getAllByRole('link')
-    expect(links.map((a) => a.getAttribute('href'))).toEqual(['#demo', '#background', '#features', '#architecture', '#cases', '#results', '#retro', '#material'])
-    expect(links.map((a) => a.textContent)).toEqual(['대표 시연', '1. 배경 및 목적', '2. 주요 기능', '3. 시스템 아키텍처', '4. 주요 문제 해결 사례', '5. 결과 및 성과', '6. 회고', '7. 관련 자료'])
+    expect(links.map((a) => a.getAttribute('href'))).toEqual(['#screens', '#background', '#features', '#architecture', '#cases', '#results', '#retro', '#material'])
+    expect(links.map((a) => a.textContent)).toEqual(['화면과 시연', '1. 배경 및 목적', '2. 주요 기능', '3. 시스템 아키텍처', '4. 주요 문제 해결 사례', '5. 결과 및 성과', '6. 회고', '7. 관련 자료'])
     for (const a of links) expect(container.querySelector(a.getAttribute('href') as string)).not.toBeNull()
     expect(screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)).toEqual(links.map((a) => a.textContent))
-    expect(container.querySelector('#screens')).toBeNull()
+    expect(container.querySelector('#demo')).toBeNull()
   })
 
-  it('puts the numbered feature list and the screen gallery (without the demo video) under 2. 주요 기능', () => {
+  it('keeps only the numbered feature list under 2. 주요 기능, with no pictures', () => {
     renderWithProviders(<CaseStudy project={project} />)
     const features = sectionNamed('2. 주요 기능')
     expect(features.querySelectorAll('ol.feature-list > li')).toHaveLength(2)
-    const figures = within(features).getAllByRole('figure')
-    expect(figures).toHaveLength(1)
-    expect(figures[0].querySelector('figcaption')).toHaveTextContent(/^SkillPilot 화면 · 실제 화면$/)
+    expect(within(features).queryAllByRole('figure')).toHaveLength(0)
     expect(features.querySelector('video')).toBeNull()
   })
 
@@ -236,14 +237,14 @@ describe('variants', () => {
     renderWithProviders(<CaseStudy project={noCases} />)
     expect(document.querySelector('.overview .actions')).toBeNull()
     const toc = screen.getByRole('navigation', { name: '이 페이지' })
-    expect(within(toc).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#demo', '#background', '#features', '#architecture', '#results', '#retro', '#material'])
+    expect(within(toc).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#screens', '#background', '#features', '#architecture', '#results', '#retro', '#material'])
   })
 
   it('renders every label in English for an English browser', async () => {
     renderWithProviders(<CaseStudy project={project} />, 'en-US')
     const toc = await screen.findByRole('navigation', { name: 'On this page' })
     expect(within(toc).getAllByRole('link').map((a) => a.textContent)).toEqual([
-      'Demo',
+      'Screens and demo',
       '1. Background and goals',
       '2. Key features',
       '3. System architecture',

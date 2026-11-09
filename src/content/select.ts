@@ -60,8 +60,6 @@ export function casePictures(project: Project): Media[] {
 
 export const caseDemo = (project: Project): Media | undefined => project.media?.find((m) => m.kind === 'video')
 
-export const caseGallery = (project: Project): Media[] => (project.media ?? []).filter((m) => m.kind !== 'video')
-
 export function selectByYear(projects: Project[], year: Year) {
   const inYear = projects.filter((p) => p.years.includes(year))
   return {

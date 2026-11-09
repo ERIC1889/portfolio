@@ -4,7 +4,6 @@ import type { Archive, Chapter, Media } from './types'
 import {
   allMedia,
   caseDemo,
-  caseGallery,
   casePictures,
   pageTitle,
   projectName,
@@ -88,9 +87,8 @@ describe('media selection', () => {
     expect(casePictures(project).map((m) => m.src)).toEqual(['/v.mp4', '/top.webp', '/case.webp', '/product.webp', '/product-case.webp'])
   })
 
-  it('separates the demo video from the gallery', () => {
+  it('finds the demo video', () => {
     expect(caseDemo(project)?.src).toBe('/v.mp4')
-    expect(caseGallery(project).map((m) => m.src)).toEqual(['/top.webp'])
     expect(caseDemo(FIXTURE_PROJECTS[4])).toBeUndefined()
   })
 

@@ -7,7 +7,7 @@ import { Gallery, MediaFigure } from '@/components/common/Media'
 import { Rich } from '@/components/common/Rich'
 import { LinkList } from '@/components/common/bits'
 import { PageNav } from '@/components/shell/PageNav'
-import { caseDemo, caseGallery, hasNewShape } from '@/content/select'
+import { caseDemo, hasNewShape } from '@/content/select'
 import type { Case, L, Product, Project } from '@/content/types'
 import { CASE_PARTS, UI, WORK_PARTS } from '@/content/ui'
 import { ArchitectureBlock } from './Architecture'
@@ -129,12 +129,18 @@ function ProductBlock({ product, index, part }: { product: Product; index: numbe
 }
 
 function useParts(project: Project): Part[] {
-  const gallery = caseGallery(project)
   const links = project.links ?? []
   const demo = caseDemo(project)
-  const head: Part[] = demo
-    ? [{ id: 'demo', title: UI.demo, numbered: false, content: <MediaFigure media={demo} sizes="(max-width: 840px) 100vw, 760px" priority /> }]
-    : []
+  // Work pages open with the demo video alone; project pages open with every screen and the demo together, as the site did before the restructure
+  const screens = project.media ?? []
+  const head: Part[] =
+    project.kind === 'work'
+      ? demo
+        ? [{ id: 'demo', title: UI.demo, numbered: false, content: <MediaFigure media={demo} sizes="(max-width: 840px) 100vw, 760px" priority /> }]
+        : []
+      : screens.length > 0
+        ? [{ id: 'screens', title: demo ? UI.screens : UI.screensOnly, numbered: false, content: <Gallery media={screens} /> }]
+        : []
   const tail: Part[] = [
     ...(project.results?.length || project.metrics?.length || project.contribution?.verified?.length
       ? [{ id: 'results', title: CASE_PARTS.results, content: <Results project={project} /> }]
@@ -195,20 +201,7 @@ function useParts(project: Project): Part[] {
   return [
     ...head,
     ...(project.background?.length ? [{ id: 'background', title: CASE_PARTS.background, content: <Paragraphs items={project.background} /> }] : []),
-    ...(project.features?.length || gallery.length
-      ? [
-          {
-            id: 'features',
-            title: CASE_PARTS.features,
-            content: (
-              <>
-                {project.features && project.features.length > 0 && <Features items={project.features} />}
-                {gallery.length > 0 && <Gallery media={gallery} />}
-              </>
-            ),
-          },
-        ]
-      : []),
+    ...(project.features?.length ? [{ id: 'features', title: CASE_PARTS.features, content: <Features items={project.features} /> }] : []),
     ...(project.architecture ? [{ id: 'architecture', title: CASE_PARTS.architecture, content: <ArchitectureBlock architecture={project.architecture} /> }] : []),
     ...(project.cases?.length ? [{ id: 'cases', title: CASE_PARTS.cases, content: <Cases items={project.cases} prefix="case" /> }] : []),
     ...tail,
