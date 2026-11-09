@@ -260,7 +260,7 @@ describe('main: SkillPilot', () => {
     const [http200, shapes] = skillpilot.cases ?? []
     expect(koText(http200.action)).toContain('0.5초, 1초 간격으로 최대 2회 재시도')
     expect(koText(http200.analysis)).toContain('`SERVICE ERROR`')
-    expect(koText(shapes.result)).toContain('자격증 34종목과 시험일정 87건')
+    expect(koText(shapes.result)).toContain('자격증 34종목과 시험 일정 87건')
   })
 
   it('links the repository first, then the client, sync and AI-reuse code and the final presentation directly', () => {

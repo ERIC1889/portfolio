@@ -106,7 +106,7 @@ export const skillpilot: Project = {
   ],
   background: pairs([
     [
-      "IT 산업의 급격한 성장으로 인해 취업준비생, 경력 초년생들에게 요구되는 기술 스택과 자격증의 종류가 매우 방대해졌다. 하지만 정작 취업을 준비하는 개인에게는 교육, 자격증 정보, 프로젝트준비, 채용 정보 등이 여러 플랫폼에 분산되어 있어 비효율적이다. 이러한 문제를 해결하기 위해 React와 Node.js 및 MySQL, MongoDB를 이용하여 모바일/웹 호환 IT 커리어 올인원 플랫폼 'SkillPilot'을 개발했다.",
+      "IT 산업의 급격한 성장으로 인해 취업준비생, 경력 초년생들에게 요구되는 기술 스택과 자격증의 종류가 매우 방대해졌다. 하지만 정작 취업을 준비하는 개인에게는 교육, 자격증 정보, 프로젝트 준비, 채용 정보 등이 여러 플랫폼에 분산되어 있어 비효율적이다. 이러한 문제를 해결하기 위해 React와 Node.js 및 MySQL, MongoDB를 이용하여 모바일/웹 호환 IT 커리어 올인원 플랫폼 'SkillPilot'을 개발했다.",
       'With the rapid growth of the IT industry, the range of tech stacks and certifications expected of job seekers and early-career engineers has become vast. Yet for the individual preparing for a job, courses, certification information, project preparation and job postings are scattered across many platforms, which is inefficient. To solve this, we built SkillPilot, an all-in-one IT career platform for mobile and web, with React, Node.js, MySQL and MongoDB.',
     ],
   ]),
@@ -183,7 +183,7 @@ export const skillpilot: Project = {
     ),
     body: pairs([
       [
-        '백엔드는 라우트(routes) → 컨트롤러(controllers) → 서비스(services) → 모델(models)의 4계층으로 책임을 분리했습니다. 공공데이터 동기화는 스케줄러(node-cron)가 담당하며, 자격증 정보는 공공데이터에서 제공하는 고유 일련번호(externalId)를 기준으로 findOrCreate되어 중복 없이 갱신됩니다. 사용자의 학습 활동(학습 시간·시험 결과 등)은 즉시 MongoDB에 로깅되어 대시보드 집계와 AI 분석의 컨텍스트(Context)로 활용된다',
+        '백엔드는 라우트(routes) → 컨트롤러(controllers) → 서비스(services) → 모델(models)의 4계층으로 책임을 분리했습니다. 공공데이터 동기화는 스케줄러(node-cron)가 담당하며, 자격증 정보는 공공데이터에서 제공하는 고유 일련번호(externalId)를 기준으로 findOrCreate되어 중복 없이 갱신됩니다. 사용자의 학습 활동(학습 시간·시험 결과 등)은 즉시 MongoDB에 로깅되어 대시보드 집계와 AI 분석의 컨텍스트(Context)로 활용됩니다',
         "The backend separates responsibilities into four layers: routes → controllers → services → models. A scheduler (node-cron) handles public-data syncing; certifications are findOrCreate'd by the unique serial number (externalId) the public data provides, so they refresh without duplicates. Users' study activity (study time, exam results and so on) is logged to MongoDB immediately and used for dashboard aggregates and as context for AI analysis.",
       ],
     ]),
@@ -264,11 +264,11 @@ export const skillpilot: Project = {
       analysis: step(
         [
           [
-            '각 API의 응답을 비교한 결과 XML, JSON 해석과 오류 검사, 목록 추출등은 공통으로 처리할 수 있었습니다. 하지만 자격증 코드나 이름, 시험일에 해당하는 필드와 데이터 연결 방식은 API 마다 달랐습니다. 일부 일정 API의 경우 종목코드를 제공하지 않아 호출한 뒤 자격증과 연결해야했습니다.',
+            '각 API의 응답을 비교한 결과 XML, JSON 해석과 오류 검사, 목록 추출 등은 공통으로 처리할 수 있었습니다. 하지만 자격증 코드나 이름, 시험일에 해당하는 필드와 데이터 연결 방식은 API마다 달랐습니다. 일부 일정 API의 경우 종목코드를 제공하지 않아 호출한 뒤 자격증과 연결해야 했습니다.',
             'Comparing the responses showed that parsing XML and JSON, checking for errors and extracting the list could be handled in one place. The fields for the certification code, name and exam date, and how records linked together, differed per API. Some schedule APIs did not provide the item code, so the schedule had to be linked to the certification after the call.',
           ],
           [
-            '필드명을 설정 파일로 매핑하는 방식도 고려했지만, 누락된 데이터 처리와 날짜변환 등 API별 예외까지 처리하면 설정이 복잡해진다고 판단해 응답 해석과 목록 추출은 공통 API 클라이언트에서 처리하고, 필드 변환은 엔드포인트별 정규화 함수로 분리했고 정규화된 데이터를 자격증과 연결하고 저장하는 작업은 동기화 서비스가 처리했습니다.',
+            '필드명을 설정 파일로 매핑하는 방식도 고려했지만, 누락된 데이터 처리와 날짜 변환 등 API별 예외까지 처리하면 설정이 복잡해진다고 판단해 응답 해석과 목록 추출은 공통 API 클라이언트에서 처리하고, 필드 변환은 엔드포인트별 정규화 함수로 분리했고 정규화된 데이터를 자격증과 연결하고 저장하는 작업은 동기화 서비스가 처리했습니다.',
             'I considered mapping field names in a config file, but handling missing data, date conversion and other per-API exceptions there would have made the config complicated. So response parsing and list extraction went into the shared API client, field conversion into a normalization function per endpoint, and linking the normalized data to certifications and saving it into the sync service.',
           ],
         ],
@@ -290,11 +290,11 @@ export const skillpilot: Project = {
       result: step(
         [
           [
-            '전체 국가자격 613종목에서 IT 분야를 선별해 자격증 34종목과 시험일정 87건을 MySQL에 저장했습니다. API별 변환 규칙을 분리했으며, 공통 클라이언트와 정규화 함수는 네트워크 호출 없이 실행하는 단위 테스트 31개로 검증했습니다.',
+            '전체 국가자격 613종목에서 IT 분야를 선별해 자격증 34종목과 시험 일정 87건을 MySQL에 저장했습니다. API별 변환 규칙을 분리했으며, 공통 클라이언트와 정규화 함수는 네트워크 호출 없이 실행하는 단위 테스트 31개로 검증했습니다.',
             'From all 613 national certifications I selected the IT field and stored 34 certifications and 87 exam schedules in MySQL. The conversion rules are separated per API, and the shared client and normalization functions are verified by 31 unit tests that run without network calls.',
           ],
         ],
-        ['IT 자격증 34종목과 시험일정 87건을 저장했습니다', '34 IT certifications and 87 exam schedules were stored.'],
+        ['IT 자격증 34종목과 시험 일정 87건을 저장했습니다', '34 IT certifications and 87 exam schedules were stored.'],
       ),
     },
   ],

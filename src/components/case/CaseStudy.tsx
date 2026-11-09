@@ -3,11 +3,11 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { useLang } from '@/components/providers/LanguageProvider'
-import { Gallery } from '@/components/common/Media'
+import { Gallery, MediaFigure } from '@/components/common/Media'
 import { Rich } from '@/components/common/Rich'
 import { LinkList } from '@/components/common/bits'
 import { PageNav } from '@/components/shell/PageNav'
-import { caseGallery, hasNewShape } from '@/content/select'
+import { caseDemo, caseGallery, hasNewShape } from '@/content/select'
 import type { Case, L, Product, Project } from '@/content/types'
 import { CASE_PARTS, UI, WORK_PARTS } from '@/content/ui'
 import { ArchitectureBlock } from './Architecture'
@@ -17,7 +17,7 @@ import { PaarCard } from './PaarCard'
 import { MetricsTable, ScopeRows } from './parts'
 
 type Neighbour = { slug: string; name: L }
-type Part = { id: string; title: L; content: ReactNode }
+type Part = { id: string; title: L; content: ReactNode; numbered?: boolean }
 
 export function sectionAnchors(project: Project): string[] {
   const seen = new Map<string, number>()
@@ -131,6 +131,10 @@ function ProductBlock({ product, index, part }: { product: Product; index: numbe
 function useParts(project: Project): Part[] {
   const gallery = caseGallery(project)
   const links = project.links ?? []
+  const demo = caseDemo(project)
+  const head: Part[] = demo
+    ? [{ id: 'demo', title: UI.demo, numbered: false, content: <MediaFigure media={demo} sizes="(max-width: 840px) 100vw, 760px" priority /> }]
+    : []
   const tail: Part[] = [
     ...(project.results?.length || project.metrics?.length || project.contribution?.verified?.length
       ? [{ id: 'results', title: CASE_PARTS.results, content: <Results project={project} /> }]
@@ -154,6 +158,7 @@ function useParts(project: Project): Part[] {
   if (project.kind === 'work') {
     const productsPart = 1 + (project.background?.length ? 1 : 0) + (project.duties?.length || project.contribution ? 1 : 0)
     return [
+      ...head,
       ...(project.background?.length ? [{ id: 'company', title: WORK_PARTS.company, content: <Paragraphs items={project.background} /> }] : []),
       ...(project.duties?.length || project.contribution
         ? [
@@ -188,6 +193,7 @@ function useParts(project: Project): Part[] {
     ]
   }
   return [
+    ...head,
     ...(project.background?.length ? [{ id: 'background', title: CASE_PARTS.background, content: <Paragraphs items={project.background} /> }] : []),
     ...(project.features?.length || gallery.length
       ? [
@@ -216,8 +222,13 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
   const back = project.kind === 'work' ? { href: '/#work', label: UI.backToWork } : { href: '/#projects', label: UI.backToProjects }
   const sections = project.sections ?? []
   const anchors = sectionAnchors(project)
+  const numbers = new Map<string, number>()
+  parts.forEach((part) => {
+    if (part.numbered !== false) numbers.set(part.id, numbers.size + 1)
+  })
+  const heading = (part: Part) => (numbers.has(part.id) ? `${numbers.get(part.id)}. ${t(part.title)}` : t(part.title))
   const toc: { href: string; label: string }[] = modern
-    ? parts.map((part, i) => ({ href: `#${part.id}`, label: `${i + 1}. ${t(part.title)}` }))
+    ? parts.map((part) => ({ href: `#${part.id}`, label: heading(part) }))
     : sections.map((section, i) => ({ href: `#${anchors[i]}`, label: t(section.title) }))
 
   return (
@@ -247,10 +258,12 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
 
           <div className="case-main">
             {modern
-              ? parts.map((part, i) => (
-                  <section key={part.id} id={part.id} className="case-block" aria-labelledby={`${part.id}-title`}>
+              ? parts.map((part) => (
+                  <section key={part.id} id={part.id} className={`case-block${numbers.has(part.id) ? '' : ' is-unnumbered'}`} aria-labelledby={`${part.id}-title`}>
                     <h2 id={`${part.id}-title`}>
-                      <span className="case-num mono">{i + 1}.</span> {t(part.title)}
+                      {numbers.has(part.id) && <span className="case-num mono">{numbers.get(part.id)}.</span>}
+                      {numbers.has(part.id) ? ' ' : ''}
+                      {t(part.title)}
                     </h2>
                     {part.content}
                   </section>

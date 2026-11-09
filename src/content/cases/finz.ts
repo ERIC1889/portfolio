@@ -291,13 +291,13 @@ export const finz: Project = {
   ],
   background: pairs([
     [
-      '주식회사 FInz는 설명 가능한 AI와 등록 세무사가 함께하는 세무 자동화 플랫폼. 세무대리와 최종 판단은 세무사가 수행합니다.',
+      '주식회사 Finz는 설명 가능한 AI와 등록 세무사가 함께하는 세무 자동화 플랫폼입니다. 세무대리와 최종 판단은 세무사가 수행합니다.',
       'Finz Inc. is a tax automation platform where explainable AI works together with registered tax accountants. Tax representation and final judgments are made by the tax accountants.',
     ],
   ]),
   duties: pairs([
     [
-      '초기 창업 멤버로 함께했고 회사내의 유일한 개발자로 서비스를 개발하고 검증하는 역할을 맡았고 단순 개발뿐 아니라 기획, 투자 제안, 웹, 모바일 어플리케이션 개발, 협력 개발사와의 공동 개발등 회사내에서 개발 총괄을 맡아 일했습니다.',
+      '초기 창업 멤버로 함께했고 회사 내의 유일한 개발자로 서비스를 개발하고 검증하는 역할을 맡았고 단순 개발뿐 아니라 기획, 투자 제안, 웹, 모바일 어플리케이션 개발, 협력 개발사와의 공동 개발 등 회사 내에서 개발 총괄을 맡아 일했습니다.',
       'I joined as an early founding member and, as the only developer in the company, took on building and verifying the service. Beyond development itself I worked as head of development across planning, investor proposals, web and mobile app development and joint development with a partner company.',
     ],
   ]),

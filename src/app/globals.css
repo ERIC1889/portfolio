@@ -1656,14 +1656,6 @@ a:hover {
   border-top: 3px solid var(--accent);
   border-radius: var(--radius);
 }
-.overview-grid {
-  display: grid;
-  gap: 28px;
-}
-.overview.has-demo .overview-grid {
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  align-items: start;
-}
 .overview h1 {
   margin-top: 6px;
   font-size: 32px;
@@ -1682,9 +1674,13 @@ a:hover {
 .overview .product-table {
   margin-top: 20px;
 }
-.overview-demo .label {
-  display: block;
-  margin-bottom: 8px;
+.case-main > .case-block > .media {
+  margin-top: 4px;
+}
+.case-main > .case-block > .media.is-portrait .media-frame {
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .highlights {
   display: grid;
@@ -2115,9 +2111,6 @@ a:hover {
 }
 
 @media (max-width: 900px) {
-  .overview.has-demo .overview-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .ai-tools,
   .ai-cards {
     grid-template-columns: minmax(0, 1fr);

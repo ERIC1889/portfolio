@@ -93,7 +93,7 @@ describe('overview card', () => {
     expect([...facts.querySelectorAll('.highlights > li')].map((li) => li.textContent)).toEqual(['SkillPilot 성과 하나', 'SkillPilot 성과 둘'])
   })
 
-  it('puts the first two links and a jump to the cases at the top, and the demo video beside the facts', () => {
+  it('puts the first two links and a jump to the cases at the top, and the demo video in its own block right under the card', () => {
     renderWithProviders(<CaseStudy project={project} />)
     const top = document.querySelector('.overview .actions') as HTMLElement
     expect(within(top).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual([
@@ -101,9 +101,11 @@ describe('overview card', () => {
       'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
       '#cases',
     ])
-    const demo = document.querySelector('.overview-demo') as HTMLElement
-    expect(demo).toHaveTextContent('대표 시연')
+    expect(document.querySelector('.overview video')).toBeNull()
+    const demo = sectionNamed('대표 시연')
+    expect(demo.classList.contains('is-unnumbered')).toBe(true)
     expect(demo.querySelector('video')).toHaveAttribute('poster', '/media/skillpilot/demo-poster.webp')
+    expect(demo.nextElementSibling?.id).toBe('background')
   })
 })
 
@@ -112,8 +114,8 @@ describe('numbered parts', () => {
     const { container } = renderWithProviders(<CaseStudy project={project} />)
     const toc = screen.getByRole('navigation', { name: '이 페이지' })
     const links = within(toc).getAllByRole('link')
-    expect(links.map((a) => a.getAttribute('href'))).toEqual(['#background', '#features', '#architecture', '#cases', '#results', '#retro', '#material'])
-    expect(links.map((a) => a.textContent)).toEqual(['1. 배경 및 목적', '2. 주요 기능', '3. 시스템 아키텍처', '4. 주요 문제 해결 사례', '5. 결과 및 성과', '6. 회고', '7. 관련 자료'])
+    expect(links.map((a) => a.getAttribute('href'))).toEqual(['#demo', '#background', '#features', '#architecture', '#cases', '#results', '#retro', '#material'])
+    expect(links.map((a) => a.textContent)).toEqual(['대표 시연', '1. 배경 및 목적', '2. 주요 기능', '3. 시스템 아키텍처', '4. 주요 문제 해결 사례', '5. 결과 및 성과', '6. 회고', '7. 관련 자료'])
     for (const a of links) expect(container.querySelector(a.getAttribute('href') as string)).not.toBeNull()
     expect(screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)).toEqual(links.map((a) => a.textContent))
     expect(container.querySelector('#screens')).toBeNull()
@@ -194,8 +196,8 @@ describe('work page', () => {
     const { container } = renderWithProviders(<CaseStudy project={work} />)
     const toc = screen.getByRole('navigation', { name: '이 페이지' })
     const links = within(toc).getAllByRole('link')
-    expect(links.map((a) => a.getAttribute('href'))).toEqual(['#company', '#duties', '#products', '#results', '#retro', '#material'])
-    expect(links.map((a) => a.textContent)).toEqual(['1. 회사 소개', '2. 맡은 일', '3. 회사에서 만든 것', '4. 결과 및 성과', '5. 회고', '6. 관련 자료'])
+    expect(links.map((a) => a.getAttribute('href'))).toEqual(['#demo', '#company', '#duties', '#products', '#results', '#retro', '#material'])
+    expect(links.map((a) => a.textContent)).toEqual(['대표 시연', '1. 회사 소개', '2. 맡은 일', '3. 회사에서 만든 것', '4. 결과 및 성과', '5. 회고', '6. 관련 자료'])
     for (const a of links) expect(container.querySelector(a.getAttribute('href') as string)).not.toBeNull()
     const duties = sectionNamed('2. 맡은 일')
     expect(duties).toHaveTextContent('맡은 일 문단')
@@ -234,13 +236,14 @@ describe('variants', () => {
     renderWithProviders(<CaseStudy project={noCases} />)
     expect(document.querySelector('.overview .actions')).toBeNull()
     const toc = screen.getByRole('navigation', { name: '이 페이지' })
-    expect(within(toc).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#background', '#features', '#architecture', '#results', '#retro', '#material'])
+    expect(within(toc).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#demo', '#background', '#features', '#architecture', '#results', '#retro', '#material'])
   })
 
   it('renders every label in English for an English browser', async () => {
     renderWithProviders(<CaseStudy project={project} />, 'en-US')
     const toc = await screen.findByRole('navigation', { name: 'On this page' })
     expect(within(toc).getAllByRole('link').map((a) => a.textContent)).toEqual([
+      'Demo',
       '1. Background and goals',
       '2. Key features',
       '3. System architecture',
@@ -275,7 +278,7 @@ describe('legacy page', () => {
     const toc = screen.getByRole('navigation', { name: '이 페이지' })
     expect(within(toc).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#role', '#problem', '#implementation', '#implementation-2'])
     expect(document.querySelector('.overview .actions')).toBeNull()
-    expect(document.querySelector('.overview-demo')).toBeNull()
+    expect(document.querySelector('#demo')).toBeNull()
   })
 
   it('breaks a "title. 문제: … 해결: …" paragraph into a bold title and two lines, and leaves other paragraphs alone', () => {

@@ -87,7 +87,7 @@ export const closetmate: Project = {
   ],
   background: pairs([
     [
-      '많은 사람들은 옷장이 꽉 차있는데도 매일 아침 무엇을 입지를 고민합니다. 실제로 옷이 없는 것이 아니라, 내가 가진 옷을 제대로 기억하지 못하고, 상황에 맞게 조합하지 못하는 것이 문제라고 생각해 이 문제를 사용자는 옷 사진을 찍어 등록하고 필요할때는 말이나 텍스트로 원하는 상황을 입력하고 AI가 옷장 데이터를 바탕으로 날씨와 상황에 맞는 옷을 추천하도록 구현했습니다.',
+      '많은 사람들은 옷장이 꽉 차 있는데도 매일 아침 무엇을 입지를 고민합니다. 실제로 옷이 없는 것이 아니라, 내가 가진 옷을 제대로 기억하지 못하고, 상황에 맞게 조합하지 못하는 것이 문제라고 생각해 이 문제를 사용자는 옷 사진을 찍어 등록하고 필요할 때는 말이나 텍스트로 원하는 상황을 입력하고 AI가 옷장 데이터를 바탕으로 날씨와 상황에 맞는 옷을 추천하도록 구현했습니다.',
       'Many people stand in front of a full wardrobe every morning and still wonder what to wear. The problem is not a lack of clothes but that we do not remember what we own and cannot combine it for the occasion. So I built an app where the user photographs clothes to add them, describes the occasion by voice or text when needed, and AI recommends clothes that suit the weather and the occasion from the wardrobe data.',
     ],
   ]),
@@ -163,7 +163,7 @@ export const closetmate: Project = {
     ),
     body: pairs([
       [
-        '전체 시스템을 세부분으로 나눴습니다. 모바일 앱은 Expo SDK 기반의 React Native앱으로 사용자 인터렉션과 결과 표시를 담당하고 백엔드의 경우 Next.js와 PostgresSQL로 데이터를 저장하고 OpenAI API와 학습된 머신러닝 모델을 호출하는 역할을 합니다.',
+        '전체 시스템을 세 부분으로 나눴습니다. 모바일 앱은 Expo SDK 기반의 React Native 앱으로 사용자 인터렉션과 결과 표시를 담당하고 백엔드의 경우 Next.js와 PostgreSQL로 데이터를 저장하고 OpenAI API와 학습된 머신러닝 모델을 호출하는 역할을 합니다.',
         'The system is split into three parts. The mobile app, a React Native app on the Expo SDK, handles user interaction and displays the results; the backend stores data with Next.js and PostgreSQL and calls the OpenAI API and the trained machine-learning model.',
       ],
     ]),
@@ -180,7 +180,7 @@ export const closetmate: Project = {
       problem: step(
         [
           [
-            'LLM모델에 옷 추천을 맡기게 되는 경우 없는 옷의 ID를 만들어 내거나 상의만 고르는등 만들 수 없는 조합을 만들어 내는 경우가 있었습니다.',
+            'LLM 모델에 옷 추천을 맡기게 되는 경우 없는 옷의 ID를 만들어 내거나 상의만 고르는 등 만들 수 없는 조합을 만들어 내는 경우가 있었습니다.',
             'When an LLM was left to pick outfits, it sometimes invented clothing IDs that did not exist or produced impossible combinations, such as choosing only tops.',
           ],
         ],
@@ -189,16 +189,16 @@ export const closetmate: Project = {
       analysis: step(
         [
           [
-            '세가지 선택지가 있었습니다. 프롬프트 엔지니어링을 통한 응답 지시를 해 원하는 응답을 기대하거나 응답 형식부분만 강제해 결과를 얻어내는 방법, 또는 후보를 규칙으로 먼저 만들고 그 안에서만 고를 수 있게 그리고 서버 검증까지 시키는 방식을 고려했습니다.',
+            '세 가지 선택지가 있었습니다. 프롬프트 엔지니어링을 통한 응답 지시를 해 원하는 응답을 기대하거나 응답 형식 부분만 강제해 결과를 얻어내는 방법, 또는 후보를 규칙으로 먼저 만들고 그 안에서만 고를 수 있게 그리고 서버 검증까지 시키는 방식을 고려했습니다.',
             'There were three options: instruct the model through prompt engineering and hope for the right answer, force only the response format and take the result, or build candidates by rules first, let the model choose only among them, and verify on the server as well.',
           ],
         ],
-        ['프롬프트엔지니어링, 응답 형식 강제?', 'Prompt engineering, or forcing the response format?'],
+        ['프롬프트 엔지니어링, 응답 형식 강제?', 'Prompt engineering, or forcing the response format?'],
       ),
       action: step(
         [
           [
-            '먼저 사용자의 프롬프트, 위치, 날씨, 옷장 데이터를 입력으로 들어옵니다. 그럼 먼저 서버가 룰 기반으로 후보 조합을 만듭니다. 상의 하의 아우터, 신발 조합을 색상, 스타일, 날씨 적합성 최근 착용으로 필터링해 좁히게 되고 이 후보 리스트들을 GPT에게 넘기되 OpenAI의 구조화된 출력을 통해 응답 포맷을 강제합니다. 이후 가장 중요한 검증 게이트를 통해 GPT가 반환한 Clothes_id가 실제 존재 하는지 확인하고 성공시 반환하고 실패시 자동으로 mini 모델을 재호출해 재생성합니다.',
+            '먼저 사용자의 프롬프트, 위치, 날씨, 옷장 데이터를 입력으로 들어옵니다. 그럼 먼저 서버가 룰 기반으로 후보 조합을 만듭니다. 상의, 하의, 아우터, 신발 조합을 색상, 스타일, 날씨 적합성, 최근 착용으로 필터링해 좁히게 되고 이 후보 리스트들을 GPT에게 넘기되 OpenAI의 구조화된 출력을 통해 응답 포맷을 강제합니다. 이후 가장 중요한 검증 게이트를 통해 GPT가 반환한 Clothes_id가 실제 존재하는지 확인하고 성공 시 반환하고 실패 시 자동으로 mini 모델을 재호출해 재생성합니다.',
             "The user's prompt, location, weather and wardrobe data come in as input. The server first builds candidate combinations by rules, narrowing top, bottom, outerwear and shoe combinations by color, style, weather suitability and recent wear. The candidate list is handed to GPT with the response format enforced through OpenAI's structured outputs. Then the most important step, the verification gate, checks that every Clothes_id GPT returned actually exists; on success it is returned, and on failure the mini model is called again automatically to regenerate.",
           ],
         ],
@@ -206,7 +206,7 @@ export const closetmate: Project = {
       ),
       result: step([
         [
-          '이 결과를 통해 형식이 틀리거나 옷장에 없는 옷을 담은 추천은 사용자에게 가지 않습니다. 실측한 23번의 테스트에서는 기본 모델 통과가 19번 보조 모델 모델 처리가 4건 최종실패는 0건 이였습니다.',
+          '이 결과를 통해 형식이 틀리거나 옷장에 없는 옷을 담은 추천은 사용자에게 가지 않습니다. 실측한 23번의 테스트에서는 기본 모델 통과가 19번, 보조 모델 처리가 4건, 최종 실패는 0건이었습니다.',
           'As a result, a recommendation with the wrong format or with clothes not in the wardrobe never reaches the user. In 23 measured runs, the base model passed 19 times, the backup model handled 4, and there were 0 final failures.',
         ],
       ]),
@@ -215,25 +215,25 @@ export const closetmate: Project = {
       title: k('분류 모델 선택과 적용', 'Choosing and applying the classification model'),
       problem: step([
         [
-          '옷 사진을 종류, 색상, 스타일로 분류할 모델이 필요했습니다. 크기와 속도가 서로 달랐고 파라미터 수 모델 크기 등 모바일에 최적화 되어 돌아가야하는 상황이였습니다. 모든 요청을 별도의 서버에서 처리하게 되면 서버의 비용은 올라가고 지연시간도 생깁니다. 때문에 모바일 최적화되고 속도가 빠른 효율성있는 모델을 찾는것이 중요했습니다.',
+          '옷 사진을 종류, 색상, 스타일로 분류할 모델이 필요했습니다. 크기와 속도가 서로 달랐고 파라미터 수 모델 크기 등 모바일에 최적화되어 돌아가야 하는 상황이었습니다. 모든 요청을 별도의 서버에서 처리하게 되면 서버의 비용은 올라가고 지연시간도 생깁니다. 때문에 모바일 최적화되고 속도가 빠른 효율성 있는 모델을 찾는 것이 중요했습니다.',
           'I needed a model to classify clothing photos by type, color and style. The candidates differed in size and speed, and in parameter count and model size it had to run well on mobile. Handling every request on a separate server raises server cost and adds latency, so finding an efficient, fast model optimized for mobile mattered.',
         ],
       ]),
       analysis: step([
         [
-          '같은 조건으로 MobileNetV3-small과 ResNet50을 비교했습니다. 백본을 고정해 전이학습 했고 3만 5천장의 Fashion Product Images을 활용해 10 Epoch 학습시켜 두 모델을 비교했습니다. 크기는 MobileNet이 6.0MB ResNet은 90.2MB 였고 CPU 추론은 ResNet이 더 빨랐습니다. 하지만 정확도의 경우 거의 동일 했고 서버 리소스 사용 측면에서 MobileNet모델이 더 좋은 성능을 냈습니다. 단순 추론 속도보다 모바일 최적화에 신경썼습니다.',
+          '같은 조건으로 MobileNetV3-Small과 ResNet50을 비교했습니다. 백본을 고정해 전이학습 했고 3만 5천 장의 Fashion Product Images를 활용해 10 epoch 학습시켜 두 모델을 비교했습니다. 크기는 MobileNet이 6.0MB, ResNet은 90.2MB였고 CPU 추론은 ResNet이 더 빨랐습니다. 하지만 정확도의 경우 거의 동일했고 서버 리소스 사용 측면에서 MobileNet 모델이 더 좋은 성능을 냈습니다. 단순 추론 속도보다 모바일 최적화에 신경썼습니다.',
           'I compared MobileNetV3-small and ResNet50 under the same conditions: transfer learning with a frozen backbone, trained for 10 epochs on 35,000 Fashion Product Images. MobileNet was 6.0 MB and ResNet 90.2 MB, and ResNet was faster at CPU inference. Accuracy was nearly identical, though, and MobileNet used server resources better. I weighted mobile optimization over raw inference speed.',
         ],
       ]),
       action: step([
         [
-          'MobileNetV3모델을 선택했고 고정 백본위에 카테고리 7가지 색상 11가지 스타일 5가지의 헤드를 얹어 모델 하나로 세가지의 분류를 했고 현재는 서버에서 ONNX로 추론합니다.',
+          'MobileNetV3 모델을 선택했고 고정 백본 위에 카테고리 7가지, 색상 11가지, 스타일 5가지의 헤드를 얹어 모델 하나로 세 가지의 분류를 했고 현재는 서버에서 ONNX로 추론합니다.',
           'I chose MobileNetV3 and put heads for 7 categories, 11 colors and 5 styles on the frozen backbone, so one model does all three classifications; it currently runs on the server with ONNX.',
         ],
       ]),
       result: step([
         [
-          '가중치는 ResNet대비 15분의 1이였고 학습시간은 절반 정도의 시간이였습니다. 하지만 추론 평균 시간이 조금 더 길었습니다. 그런데도 MobileNetV3모델을 선택한 이유는 이후 온디바이스 추론으로의 확장성 까지 고려한 선택이였습니다.',
+          '가중치는 ResNet 대비 15분의 1이었고 학습 시간은 절반 정도의 시간이었습니다. 하지만 추론 평균 시간이 조금 더 길었습니다. 그런데도 MobileNetV3 모델을 선택한 이유는 이후 온디바이스 추론으로의 확장성까지 고려한 선택이었습니다.',
           'The weights were one fifteenth of ResNet and training took about half the time, though average inference was a little slower. I still chose MobileNetV3 with later extension to on-device inference in mind.',
         ],
       ]),

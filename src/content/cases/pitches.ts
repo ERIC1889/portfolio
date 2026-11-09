@@ -89,7 +89,7 @@ export const pitches: Project = {
   ],
   background: pairs([
     [
-      '현대 사회에서 스피치 능력은 개인의 핵심 경쟁력으로 자리잡고 있습니다. 한 조사에 따르면 고용주들이 가장 중요하게 생각하는 소프트 스킬 중 효과적인 커뮤니케이션 능력이 1위를 차지했으며, **말로 자신의 생각을 명확하게 전달하는 능력**이 성공의 중요한 열쇠가 되고 있습니다. 이렇듯 말하기 능력은 중요해졌지만 오프라인 코칭은 접근성, 비용의 제약이 크고 기존의 서비스는 녹음 이후 분석이 대부분 이거나 영어 중심 이거나 실시간 피드백이 부재하다는 문제점이 있습니다. 이러한 문제점들을 해결하기 위해 **접근성이 높고, 데이터에 기반하며, 실시간 피드백을 제공**하고, 여러 언어를 지원하는 솔루션을 만들었습니다.',
+      '현대 사회에서 스피치 능력은 개인의 핵심 경쟁력으로 자리잡고 있습니다. 한 조사에 따르면 고용주들이 가장 중요하게 생각하는 소프트 스킬 중 효과적인 커뮤니케이션 능력이 1위를 차지했으며, **말로 자신의 생각을 명확하게 전달하는 능력**이 성공의 중요한 열쇠가 되고 있습니다. 이렇듯 말하기 능력은 중요해졌지만 오프라인 코칭은 접근성, 비용의 제약이 크고 기존의 서비스는 녹음 이후 분석이 대부분이거나 영어 중심이거나 실시간 피드백이 부재하다는 문제점이 있습니다. 이러한 문제점들을 해결하기 위해 **접근성이 높고, 데이터에 기반하며, 실시간 피드백을 제공**하고, 여러 언어를 지원하는 솔루션을 만들었습니다.',
       "Public speaking has become a core competency. In one survey, effective communication ranked first among the soft skills employers value most, and **the ability to convey one's thoughts clearly in speech** has become a key to success. Yet even as speaking skills grew more important, in-person coaching is limited by access and cost, and existing services mostly analyze after the recording, focus on English or offer no real-time feedback. To address these problems we built a solution that is **accessible, data-driven and gives real-time feedback**, and supports several languages.",
     ],
   ]),
@@ -164,8 +164,8 @@ export const pitches: Project = {
     ),
     body: pairs([
       [
-        'Pitches.ai는 여섯 개 구성 요소로 이루어진다. Expo(React Native) 모바일 앱이 발표 음성을 녹음해 서버로 스트리밍하고, 실시간 피드백(Pitches Circle)과 결과·기록·PDF를 보여준다. Node.js(Fastify·Socket.IO) API 서버는 인증과 세션 관리, 그리고 5초 단위 실시간 판정을 맡는다. 감정은 Python(FastAPI) 기반 감정 분석 서비스가 SenseVoiceSmall과 emotion2vec+로 분석한다. 발표가 끝나면 BullMQ 보고서 워커가 전체 전사, 지표 집계, GPT 보고서 작성, PDF 생성을 처리한다. 음성 전사와 보고서 생성에는 OpenAI(Whisper·gpt-5-nano)를 쓴다. 데이터는 PostgreSQL, 작업 큐는 Redis에 두고, 녹음과 PDF는 로컬 디스크에 저장한다. 앱과 서버는 zod로 정의한 공유 스키마를 함께 사용한다.',
-        'Pitches.ai is made of six components. An Expo (React Native) mobile app records the talk, streams the audio to the server, and shows real-time feedback (the Pitches Circle) along with results, history and the PDF. A Node.js (Fastify · Socket.IO) API server handles authentication, session management and the 5-second real-time judgments. Emotion is analyzed by a Python (FastAPI) emotion-analysis service with SenseVoiceSmall and emotion2vec+. When the talk ends, a BullMQ report worker handles the full transcript, metric aggregation, the GPT report and PDF generation. OpenAI (Whisper · gpt-5-nano) is used for transcription and the report. Data lives in PostgreSQL, the job queue in Redis, and recordings and PDFs on local disk. The app and the server share schemas defined with zod.',
+        'Pitches.ai는 여섯 개 구성 요소로 이루어진다. Expo(React Native) 모바일 앱이 발표 음성을 녹음해 서버로 스트리밍하고, 실시간 피드백(Pitches Circle)과 결과·기록·PDF를 보여준다. Node.js(Fastify·Socket.IO) API 서버는 인증과 세션 관리, 그리고 5초 단위 실시간 판정을 맡는다. 감정은 Python(FastAPI) 기반 감정 분석 서비스가 SenseVoice-Small과 emotion2vec+로 분석한다. 발표가 끝나면 BullMQ 보고서 워커가 전체 전사, 지표 집계, GPT 보고서 작성, PDF 생성을 처리한다. 음성 전사와 보고서 생성에는 OpenAI(Whisper·gpt-5-nano)를 쓴다. 데이터는 PostgreSQL, 작업 큐는 Redis에 두고, 녹음과 PDF는 로컬 디스크에 저장한다. 앱과 서버는 zod로 정의한 공유 스키마를 함께 사용한다.',
+        'Pitches.ai is made of six components. An Expo (React Native) mobile app records the talk, streams the audio to the server, and shows real-time feedback (the Pitches Circle) along with results, history and the PDF. A Node.js (Fastify · Socket.IO) API server handles authentication, session management and the 5-second real-time judgments. Emotion is analyzed by a Python (FastAPI) emotion-analysis service with SenseVoice-Small and emotion2vec+. When the talk ends, a BullMQ report worker handles the full transcript, metric aggregation, the GPT report and PDF generation. OpenAI (Whisper · gpt-5-nano) is used for transcription and the report. Data lives in PostgreSQL, the job queue in Redis, and recordings and PDFs on local disk. The app and the server share schemas defined with zod.',
       ],
     ]),
     decisions: pairs([
@@ -212,7 +212,7 @@ export const pitches: Project = {
       problem: step(
         [
           [
-            '발표중 상태를 바로 보여줘 조절하도록 돕는 서비스인 만큼 실시간성이 가장 중요합니다. 이 지표를 만들기 위해 5초마다 Whisper API로 부분 전사와 별도의 감정 분석 서비스의 응답이 필요했습니다. 모든 결과를 기다리면 피드백이 늦어지고, 분석 하나의 실패가 그 구간의 피드백 전체를 막을 수 있습니다.',
+            '발표 중 상태를 바로 보여줘 조절하도록 돕는 서비스인 만큼 실시간성이 가장 중요합니다. 이 지표를 만들기 위해 5초마다 Whisper API로 부분 전사와 별도의 감정 분석 서비스의 응답이 필요했습니다. 모든 결과를 기다리면 피드백이 늦어지고, 분석 하나의 실패가 그 구간의 피드백 전체를 막을 수 있습니다.',
             "The service shows the speaker's state as they talk so they can adjust, so real-time behaviour matters most. To produce the indicators it needed a partial transcript from the Whisper API every 5 seconds and a response from a separate emotion-analysis service. Waiting for every result would delay the feedback, and one failed analysis could block the whole window's feedback.",
           ],
         ],
@@ -221,7 +221,7 @@ export const pitches: Project = {
       analysis: step(
         [
           [
-            '음량은 받은 음성에서 바로 계산되지만, 말 속도, 간투사, 자막은 전사가, 감정은 별도 모델이 필요합니다. 두 분석은 서로를 기다릴 필요가 없어 동시에 요청하고 다음 5초 구간이 쌓이기 전에 끝나도록 제한 시간을 그보다 짧게 두었습니다. 만약 분석이 시간을 넘기게 되면 그구간에서 빠져 그지표만 판정하지 못합니다.',
+            '음량은 받은 음성에서 바로 계산되지만, 말 속도, 간투사, 자막은 전사가, 감정은 별도 모델이 필요합니다. 두 분석은 서로를 기다릴 필요가 없어 동시에 요청하고 다음 5초 구간이 쌓이기 전에 끝나도록 제한 시간을 그보다 짧게 두었습니다. 만약 분석이 시간을 넘기게 되면 그 구간에서 빠져 그 지표만 판정하지 못합니다.',
             'Volume is computed directly from the incoming audio, but pace, filler words and captions need the transcript, and emotion needs a separate model. The two analyses do not depend on each other, so they are requested at the same time with a time limit shorter than the 5-second window so they finish before the next window piles up. An analysis that runs over is dropped from that window, and only that indicator goes unjudged.',
           ],
           [
@@ -234,7 +234,7 @@ export const pitches: Project = {
       action: step(
         [
           [
-            '서버는 약 5초 분량의 음성이 모이면 음량을 먼저 계산하고, 무음이면 두 분석 호출을 생략합니다. 말소리가 있으면 부분 전사(Whisper API)와 감정 분석(SenseVoice-Small·emotion2vec+)을 동시에 요청하고 제한 시간은 각각 4초, 3초로 제한해 재시도 하지 않습니다. 실패한 항목은 빼고 나머지 성공한 결과를 바탕으로 피드백을 생성합니다. 발표 후 전체 전사와 LLM 보고서·PDF 생성은 BullMQ 작업으로 넘겨 별도 워커가 처리합니다.',
+            '서버는 약 5초 분량의 음성이 모이면 음량을 먼저 계산하고, 무음이면 두 분석 호출을 생략합니다. 말소리가 있으면 부분 전사(Whisper API)와 감정 분석(SenseVoice-Small·emotion2vec+)을 동시에 요청하고 제한 시간은 각각 4초, 3초로 제한해 재시도하지 않습니다. 실패한 항목은 빼고 나머지 성공한 결과를 바탕으로 피드백을 생성합니다. 발표 후 전체 전사와 LLM 보고서·PDF 생성은 BullMQ 작업으로 넘겨 별도 워커가 처리합니다.',
             'Once about 5 seconds of audio has arrived, the server computes volume first and skips both analysis calls if the window is silent. If there is speech, it requests the partial transcript (Whisper API) and emotion analysis (SenseVoice-Small · emotion2vec+) at the same time, limited to 4 s and 3 s respectively, with no retries. Failed items are dropped and the feedback is built from the results that succeeded. After the talk, the full transcript and the LLM report and PDF are handed to BullMQ jobs processed by a separate worker.',
           ],
         ],
@@ -243,7 +243,7 @@ export const pitches: Project = {
       result: step(
         [
           [
-            '제한 시간 설계상 한 구간의 판정은 최대 4초 안에 끝나 5초를 넘지 않습니다. 시험 발표 5회에서 구간 피드백은 5초 구간이 끝난 뒤 평균 1.6초, 최대 3.2초 안에 도착했습니다. Whisper를 끈 시험에서도 말소리 구간 24개 중 24개에 자막이 표시됐고 실패, 생략 경로믐 실시간 파이프라인 테스트 10개 중 5개로 확인했습니다.',
+            '제한 시간 설계상 한 구간의 판정은 최대 4초 안에 끝나 5초를 넘지 않습니다. 시험 발표 5회에서 구간 피드백은 5초 구간이 끝난 뒤 평균 1.6초, 최대 3.2초 안에 도착했습니다. Whisper를 끈 시험에서도 말소리 구간 24개 중 24개에 자막이 표시됐고 실패, 생략 경로는 실시간 파이프라인 테스트 10개 중 5개로 확인했습니다.',
             "By design, a window's judgment finishes within 4 seconds at most and never exceeds the 5-second period. In 5 test talks, window feedback arrived on average 1.6 s and at most 3.2 s after the window ended. With Whisper turned off, captions still appeared on 24 of 24 speech windows, and the failure and skip paths are covered by 5 of the 10 real-time pipeline tests.",
           ],
         ],
@@ -255,25 +255,25 @@ export const pitches: Project = {
       problem: step(
         [
           [
-            'Whisper는 무음 잡은 구간에서 영상 자막과 전사 내용을 만들어 냅니다. 이 문장이 섞이는 경우 말 속도와 간투사 수가 틀어지고 하지 않은 말이 자막으로 뜨고 분석 결과에 활용됩니다.',
+            'Whisper는 무음·잡음 구간에서 영상 자막과 전사 내용을 만들어 냅니다. 이 문장이 섞이는 경우 말 속도와 간투사 수가 틀어지고 하지 않은 말이 자막으로 뜨고 분석 결과에 활용됩니다.',
             'In silent or noisy stretches Whisper produces video-caption phrases and transcript text. When those sentences get mixed in, pace and filler-word counts go wrong, words that were never said appear as captions, and they feed into the analysis.',
           ],
         ],
-        ['Whisper의 무음구간 전사를 만들어내는 문제', 'Whisper invented transcripts for silent stretches'],
+        ['Whisper의 무음 구간 전사를 만들어내는 문제', 'Whisper invented transcripts for silent stretches'],
       ),
       analysis: step(
         [
           [
-            '완전한 무음의 경우 음량으로 알 수 있어 호출 자체를 막으면 비용이 줄어들지만 기준을 넘는 잡음의 경우 같은 문구가 나올 수 있어 문구 목록이 더 필요했습니다. 때문에 Whisper가 무음 구간에 자주 만들어내는 내용을 수집 정제해 발표에서 쓰지 않는 몇가지를 바탕으로 방지했습니다.',
+            '완전한 무음의 경우 음량으로 알 수 있어 호출 자체를 막으면 비용이 줄어들지만 기준을 넘는 잡음의 경우 같은 문구가 나올 수 있어 문구 목록이 더 필요했습니다. 때문에 Whisper가 무음 구간에 자주 만들어내는 내용을 수집 정제해 발표에서 쓰지 않는 몇 가지를 바탕으로 방지했습니다.',
             'Complete silence can be detected from volume alone, and skipping the call there also saves cost; but noise above the threshold can produce the same phrases, so a phrase list was needed as well. I collected and cleaned the text Whisper tends to produce in silence and based the filter on a handful of phrases that never occur in a talk.',
           ],
         ],
-        ['음량 기준, 문구 목록 두가지의 방지 방법', 'Two safeguards: a volume threshold and a phrase list'],
+        ['음량 기준, 문구 목록 두 가지의 방지 방법', 'Two safeguards: a volume threshold and a phrase list'],
       ),
       action: step(
         [
           [
-            '음량이 -50dB 미만인 구간은 전사와 감정 분석을 호출하지 않습니다. 전사 결과는 공백과 문장 부호를 지운뒤 문구 목록과 비교해 잡히면 지우도록 설계 했습니다.',
+            '음량이 -50dB 미만인 구간은 전사와 감정 분석을 호출하지 않습니다. 전사 결과는 공백과 문장 부호를 지운 뒤 문구 목록과 비교해 잡히면 지우도록 설계했습니다.',
             'Windows below -50 dB are not sent for transcription or emotion analysis. Transcripts have whitespace and punctuation removed and are compared against the phrase list, and anything that matches is cleared.',
           ],
         ],
@@ -282,11 +282,11 @@ export const pitches: Project = {
       result: step(
         [
           [
-            '시험 발표 5회에서 5초구간의 18%를 무음으로 건너뛰어 Whisper 호출을 줄였고 무음 구간에 잡음으로 인해 Whisper가 만들어낸 3건의 문장을 걸러냈습니다.',
+            '시험 발표 5회에서 5초 구간의 18%를 무음으로 건너뛰어 Whisper 호출을 줄였고 무음 구간에 잡음으로 인해 Whisper가 만들어낸 3건의 문장을 걸러냈습니다.',
             'In 5 test talks, 18% of the 5-second windows were skipped as silence, cutting that many Whisper calls, and 3 sentences Whisper had produced from noise in silent stretches were filtered out.',
           ],
         ],
-        ['무음은 호출 하지않고 지어낸 문장은 빠집니다.', 'Silence is never sent, and invented sentences drop out.'],
+        ['무음은 호출하지 않고 지어낸 문장은 빠집니다.', 'Silence is never sent, and invented sentences drop out.'],
       ),
     },
   ],
@@ -300,7 +300,7 @@ export const pitches: Project = {
     ['소규모 사용자 조사(5명)에서 5명 모두 실시간 표시가 말 속도 교정에 도움이 된다고 답했습니다.', 'In a small user survey (5 people), all five said the live indicators helped them correct their pace.'],
   ]),
   retro: pairs([
-    ['실시간 피드백에서는 모델의 속도보다 무엇을 먼저 보내고 무엇을 기다리게 할지 정하는 설계가 더 중요하다는것을 배웠습니다.', 'In live feedback, deciding what to send first and what can wait mattered more than the speed of the model.'],
+    ['실시간 피드백에서는 모델의 속도보다 무엇을 먼저 보내고 무엇을 기다리게 할지 정하는 설계가 더 중요하다는 것을 배웠습니다.', 'In live feedback, deciding what to send first and what can wait mattered more than the speed of the model.'],
     ['5명뿐인 사용자 조사였지만, 실제 발표자가 색 표시를 보며 말 속도를 고치는 모습이 어떤 수치보다 설계 판단에 큰 영향을 줬습니다.', 'The user survey had only five people, but watching real speakers correct their pace from the color cues shaped the design more than any number did.'],
   ]),
   material: pairs([
