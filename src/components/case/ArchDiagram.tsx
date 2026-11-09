@@ -13,7 +13,7 @@ export function ArchDiagram({ diagram }: { diagram: Diagram }) {
       <div className="arch-columns" style={{ '--cols': diagram.columns.length } as CSSProperties}>
         {diagram.columns.map((column) => (
           <section key={column.title.ko} className="arch-column" aria-label={t(column.title)}>
-            <h4 className="arch-column-title">{t(column.title)}</h4>
+            <p className="arch-column-title">{t(column.title)}</p>
             <ul className="arch-nodes">
               {column.nodes.map((node) => (
                 <li key={node.id} className={`arch-node is-${node.owner}`}>

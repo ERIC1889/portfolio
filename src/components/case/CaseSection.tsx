@@ -2,10 +2,9 @@
 
 import { useLang } from '@/components/providers/LanguageProvider'
 import { Gallery } from '@/components/common/Media'
-import { LinkList } from '@/components/common/bits'
-import type { CaseSection as CaseSectionData, LinkItem, Metric } from '@/content/types'
+import type { CaseSection as CaseSectionData } from '@/content/types'
 import { UI } from '@/content/ui'
-import { MetricsTable, SectionTable } from './parts'
+import { SectionTable } from './parts'
 
 const STEP = /^(.*?)\s*(문제:|Problem:)\s*(.*?)\s*(해결:|Fix:)\s*(.*)$/s
 
@@ -26,7 +25,7 @@ function Paragraph({ text }: { text: string }) {
   )
 }
 
-export function CaseSection({ section, anchor, metrics, links }: { section: CaseSectionData; anchor: string; metrics?: Metric[]; links?: LinkItem[] }) {
+export function CaseSection({ section, anchor }: { section: CaseSectionData; anchor: string }) {
   const { t } = useLang()
   return (
     <section id={anchor} className="case-block" aria-labelledby={`${anchor}-title`}>
@@ -39,13 +38,6 @@ export function CaseSection({ section, anchor, metrics, links }: { section: Case
       ))}
       {section.table && <SectionTable table={section.table} />}
       {section.media && <Gallery media={section.media} />}
-      {metrics && metrics.length > 0 && (
-        <>
-          <h3 className="label">{t(UI.metricsHeading)}</h3>
-          <MetricsTable metrics={metrics} />
-        </>
-      )}
-      {links && links.length > 0 && <LinkList links={links} />}
     </section>
   )
 }

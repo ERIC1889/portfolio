@@ -4,6 +4,7 @@ import type { Media, Project } from './types'
 import {
   checkBanned,
   checkCaseShape,
+  checkDiagram,
   checkEn,
   checkKo,
   checkLinks,
@@ -132,6 +133,9 @@ describe('checkCaseShape', () => {
   it('accepts a work page with duties and products', () => {
     const work = sample({
       kind: 'work',
+      features: undefined,
+      architecture: undefined,
+      cases: undefined,
       duties: [l('맡은 일')],
       products: [
         { id: 'a', name: l('제품 A'), status: l('운영 중'), role: l('설계'), intro: [l('소개')], cases: [paar('A 사례')] },
@@ -149,9 +153,11 @@ describe('checkCaseShape', () => {
   })
 
   it('requires duties, products and distinct product ids on a work page', () => {
-    expect(checkCaseShape(sample({ kind: 'work' }))).toEqual(['sample: missing duties', 'sample: missing products'])
+    const bare = { features: undefined, architecture: undefined, cases: undefined }
+    expect(checkCaseShape(sample({ kind: 'work', ...bare }))).toEqual(['sample: missing duties', 'sample: missing products'])
     const twice = sample({
       kind: 'work',
+      ...bare,
       duties: [l('일')],
       products: [
         { id: 'same', name: l('A'), status: l('s'), role: l('r'), intro: [l('i')] },
@@ -165,6 +171,17 @@ describe('checkCaseShape', () => {
     expect(checkCaseShape(sample({ sections: [{ id: 'problem', title: l('문제'), body: [l('본문')] }] }))).toEqual(['sample: legacy sections with the new shape'])
     const legacyOnly = sample({ overview: undefined, background: undefined, cases: undefined, products: undefined })
     expect(checkCaseShape(legacyOnly)).toEqual(['sample: missing the case shape (overview, background, cases or products)'])
+  })
+
+  it('rejects top-level features, architecture or cases on a work page, where they never render', () => {
+    const work = sample({ kind: 'work', duties: [l('일')], products: [{ id: 'p', name: l('제품'), status: l('s'), role: l('r'), intro: [l('i')] }], architecture: undefined, cases: undefined, features: [l('기능')] })
+    expect(checkCaseShape(work)).toEqual(['sample: features never renders on a work page; move it into a product'])
+  })
+
+  it('accepts media that live only inside a product', () => {
+    const shot = { kind: 'screenshot' as const, src: '/media/a.webp', width: 10, height: 10, alt: l('화면', 'Screen'), caption: l('화면 · 실제 화면', 'Screen · real'), capturedAt: '2026-10-29' }
+    const work = sample({ kind: 'work', media: undefined, duties: [l('일')], features: undefined, architecture: undefined, cases: undefined, products: [{ id: 'p', name: l('제품'), status: l('s'), role: l('r'), intro: [l('i')], media: [shot] }] })
+    expect(checkCaseShape(work)).toEqual([])
   })
 
   it('names a case that lacks a problem or an action', () => {
@@ -182,6 +199,27 @@ describe('checkCaseShape', () => {
       'sample: missing media or image',
     ])
     expect(checkCaseShape({ ...sample(), media: undefined, image: '/images/x.png', imageSize: [10, 10], imageCaption: l('x', 'x') })).toEqual([])
+  })
+})
+
+describe('checkDiagram', () => {
+  const diagramOf = (links: { to: string; label: { ko: string; en: string }; kind?: 'sync' | 'paid' }[], ids = ['a', 'b'], legend = [{ kind: 'sync' as const, label: l('요청') }]) => ({
+    diagram: {
+      columns: [{ title: l('열'), nodes: ids.map((id, i) => ({ id, title: l(id), owner: 'mine' as const, links: i === 0 ? links : undefined })) }],
+      caption: l('설명'),
+      legend,
+    },
+  })
+
+  it('accepts a diagram whose links all resolve and whose legend lists every kind used', () => {
+    expect(checkDiagram('x', diagramOf([{ to: 'b', label: l('연결') }]))).toEqual([])
+    expect(checkDiagram('x', undefined)).toEqual([])
+  })
+
+  it('reports repeated node ids, links to unknown nodes and a legend that misses a kind in use', () => {
+    expect(checkDiagram('x', diagramOf([], ['a', 'a']))).toEqual(['x: diagram node ids repeat'])
+    expect(checkDiagram('x', diagramOf([{ to: 'zzz', label: l('연결') }]))).toEqual(['x: diagram link from a points at unknown node zzz'])
+    expect(checkDiagram('x', diagramOf([{ to: 'b', label: l('연결'), kind: 'paid' }]))).toEqual(['x: diagram legend misses paid'])
   })
 })
 

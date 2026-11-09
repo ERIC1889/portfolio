@@ -72,9 +72,9 @@ describe('/projects/[slug]', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('SkillPilot 자격증·커리어 플랫폼')
   })
 
-  it('links the flagship to the list and the next case, with no previous link', async () => {
+  it('links the work page back to the work section and on to the next case, with no previous link', async () => {
     renderWithProviders(await ProjectRoute.default(slugParams('finz')))
-    expect(pageNavHrefs()).toEqual(['/#projects', '/projects/skillpilot'])
+    expect(pageNavHrefs()).toEqual(['/#work', '/projects/skillpilot'])
   })
 
   it('links the last case to the previous one and the list, with no next link', async () => {

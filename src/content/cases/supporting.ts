@@ -91,8 +91,8 @@ export const edumatrix: Project = {
       result: step(
         [
           [
-            '이 저장 구조를 포함한 설계를 한국디지털콘텐츠학회 2025 하계·추계 학술대회에서 1저자 논문 2편으로 발표해 각각 대학생 논문경진대회 은상을 받았습니다.',
-            'The design, including this storage structure, was presented as two first-author papers at the 2025 summer and fall Korea Digital Contents Society conferences, each winning a Silver Award in the student paper competition.',
+            'EduMatrix 설계를 한국디지털콘텐츠학회 2025 하계·추계 학술대회에서 1저자 논문 2편으로 발표해 각각 대학생 논문경진대회 은상을 받았습니다.',
+            'The EduMatrix design was presented as two first-author papers at the 2025 summer and fall Korea Digital Contents Society conferences, each winning a Silver Award in the student paper competition.',
           ],
         ],
         ['설계는 논문 2편으로 발표해 은상 2회를 받았습니다.', 'The design was published in two papers and won two Silver Awards.'],

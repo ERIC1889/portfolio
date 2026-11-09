@@ -157,7 +157,7 @@ describe('work: Finz Labs', () => {
     expect(finz.kind).toBe('work')
     expect(finz.workTitle?.ko).toBe('주식회사 Finz Labs · 개발 총괄')
     expect(finz.title?.ko).toBe('Finz 개인 세금 계산기')
-    expect(finz.team?.ko).toContain('주식회사 Finz Labs')
+    expect(finz.team?.ko).toBe('직원 5명, 인력 관리는 맡지 않음')
     expect(finz.period).toBe('2026.01–')
   })
 
@@ -167,8 +167,9 @@ describe('work: Finz Labs', () => {
 
   it('describes the three products in order with their status and role', () => {
     expect(finz.products?.map((p) => p.id)).toEqual(['calculators', 'refund-app', 'finz-saas'])
-    expect(finz.products?.map((p) => p.name.ko)).toEqual(['Finz 개인 세금 계산기', 'Finz 모바일 앱', '세무사용 FINZ'])
-    expect(finz.products?.map((p) => p.status.ko)).toEqual(['운영 중 (finz.kr, 2026.04–)', '미출시', '출시 전 · 협력 개발사와 공동 개발'])
+    expect(finz.products?.map((p) => p.name.ko)).toEqual(['개인 세금 계산기', 'Finz 모바일 앱', '세무사용 FINZ'])
+    expect(finz.products?.map((p) => p.status.ko)).toEqual(['운영 중', '미출시', '출시 전, 협력 개발사와 공동 개발'])
+    expect(finz.products?.map((p) => p.role.ko)).toEqual(['설계·개발·운영', '앱·백엔드', '사양·검증·장애 분석·실배포 준비'])
   })
 
   it('puts the web demo at the top, the four calculator screens under the calculators and the app video under the app', () => {
@@ -236,7 +237,9 @@ describe('work: Finz Labs', () => {
 
   it('credits the crypto engine and the valuation module to the company SaaS it was adapted from', () => {
     expect(koText(finz.contribution?.direct)).toContain('회사 세무 SaaS의 코드를 개인용으로 옮기고')
-    expect(koText(finz.features)).not.toMatch(/가상자산 (계산 )?엔진을 (직접 )?(만들|작성)/)
+    expect(koText(finz.products?.[0].features)).not.toMatch(/가상자산 (계산 )?엔진을 (직접 )?(만들|작성)/)
+    expect(finz.features).toBeUndefined()
+    expect(finz.resumeItems).toHaveLength(4)
     expect(finz.contribution?.joint && koText(finz.contribution.joint)).toContain('세무사')
   })
 
@@ -251,6 +254,7 @@ describe('main: SkillPilot', () => {
   const skillpilot = bySlug('skillpilot')
 
   it("lists the owner's five features and two PAAR cases word for word", () => {
+    expect(skillpilot.team?.ko).toBe('프론트엔드 2, AI 1, 백엔드·총괄 1')
     expect(skillpilot.features?.map((f) => f.ko)).toEqual(['AI 기반의 맞춤형 자격증 추천', '주차별 학습 로드맵 자동 생성', '실전 CBT 모의고사 및 오답 분석', '포트폴리오 구축', '모의면접'])
     expect(skillpilot.cases?.map((c) => c.title.ko)).toEqual(['HTTP 200 응답에 포함된 공공 API 오류 처리', 'XML, JSON 등 제각각인 응답구조'])
     const [http200, shapes] = skillpilot.cases ?? []
@@ -318,7 +322,7 @@ describe('main: Pitches', () => {
 
   it('separates the three versions in one table under the architecture, with the 2026 diagram drawn', () => {
     expect(pitches.architecture?.table?.rows.map((row) => row[0].ko)).toEqual(['2024–25 팀 버전', 'APIC-IST 2025 논문', '2026 개인 리뉴얼'])
-    expect(pitches.architecture?.diagram?.legend?.map((l) => l.kind)).toEqual(['realtime', 'async', 'paid', 'local'])
+    expect(pitches.architecture?.diagram?.legend?.map((l) => l.kind)).toEqual(['sync', 'realtime', 'async', 'paid', 'local'])
     expect(pitches.architecture?.decisions).toHaveLength(3)
   })
 

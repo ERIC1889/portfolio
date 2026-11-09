@@ -214,6 +214,61 @@ describe('work page', () => {
   })
 })
 
+describe('variants', () => {
+  it('shows the owner’s role paragraph under 기여 범위 when there is no contribution table, and the AI row only when given', () => {
+    const supporting = featuredProject('edumatrix', 'EduMatrix', [2025], {
+      contribution: undefined,
+      overview: { highlights: [l('성과 하나'), l('성과 둘')], scope: [l('구조 설계를 맡았습니다.')], aiUse: l('명세를 먼저 쓰고 AI와 구현') },
+    })
+    renderWithProviders(<CaseStudy project={supporting} />)
+    const facts = document.querySelector('dl.facts') as HTMLElement
+    const scope = [...facts.querySelectorAll(':scope > .fact')].find((row) => row.querySelector('dt')?.textContent === '기여 범위') as HTMLElement
+    expect(scope.querySelector('.scope-rows')).toBeNull()
+    expect(scope).toHaveTextContent('구조 설계를 맡았습니다.')
+    expect([...facts.querySelectorAll(':scope > .fact > dt')].map((dt) => dt.textContent)).toContain('AI 활용')
+    expect(facts).toHaveTextContent('명세를 먼저 쓰고 AI와 구현')
+  })
+
+  it('offers no jump button when a page has no cases, and skips the cases part', () => {
+    const noCases = featuredProject('edumatrix', 'EduMatrix', [2025], { cases: undefined, links: undefined })
+    renderWithProviders(<CaseStudy project={noCases} />)
+    expect(document.querySelector('.overview .actions')).toBeNull()
+    const toc = screen.getByRole('navigation', { name: '이 페이지' })
+    expect(within(toc).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#background', '#features', '#architecture', '#results', '#retro', '#material'])
+  })
+
+  it('renders every label in English for an English browser', async () => {
+    renderWithProviders(<CaseStudy project={project} />, 'en-US')
+    const toc = await screen.findByRole('navigation', { name: 'On this page' })
+    expect(within(toc).getAllByRole('link').map((a) => a.textContent)).toEqual([
+      '1. Background and goals',
+      '2. Key features',
+      '3. System architecture',
+      '4. Key problems solved',
+      '5. Results',
+      '6. Reflection',
+      '7. Related material',
+    ])
+    const facts = document.querySelector('dl.facts') as HTMLElement
+    expect([...facts.querySelectorAll(':scope > .fact > dt')].map((dt) => dt.textContent)).toEqual(['For', 'Period', 'Team', 'Role', 'Status', 'Scope of my work', 'Key results', 'Stack'])
+    expect([...facts.querySelectorAll('.scope-rows dt')].map((dt) => dt.textContent)).toEqual(['My own work', 'By others'])
+    const [full, short] = [...document.querySelectorAll('.paar')]
+    expect([...full.querySelectorAll('.paar-label')].map((b) => b.textContent)).toEqual(['Problem', 'Analysis', 'Action', 'Result'])
+    expect([...short.querySelectorAll('.paar-label')].map((b) => b.textContent)).toEqual(['Problem', 'Fix'])
+    expect(screen.getByRole('heading', { level: 3, name: 'Design decisions' })).toBeInTheDocument()
+  })
+
+  it('sends the work page back to the work section', () => {
+    renderWithProviders(<CaseStudy project={work} next={{ slug: 'skillpilot', name: l('SkillPilot') }} />)
+    const nav = screen.getByRole('navigation', { name: '페이지 이동' })
+    expect(within(nav).getAllByRole('link').map((a) => [a.getAttribute('href'), a.textContent?.trim()])).toEqual([
+      ['/#work', '실무 경험으로'],
+      ['/projects/skillpilot', 'SkillPilot →'],
+    ])
+    expect(document.querySelector('.breadcrumb a')).toHaveAttribute('href', '/#work')
+  })
+})
+
 describe('legacy page', () => {
   it('keeps the old sections for a page without the new shape, with no jump button', () => {
     renderWithProviders(<CaseStudy project={legacy} />)

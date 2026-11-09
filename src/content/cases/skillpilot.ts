@@ -16,7 +16,7 @@ export const skillpilot: Project = {
   ),
   audience: k('IT 취업을 준비하는 학생', 'Students preparing for IT jobs'),
   period: '2025.09–2026.06',
-  team: k('4인 캡스톤 (프론트엔드 2, AI 1, 백엔드·총괄 1)', '4-person capstone (frontend 2, AI 1, backend and lead 1)'),
+  team: k('프론트엔드 2, AI 1, 백엔드·총괄 1', 'Frontend 2, AI 1, backend and lead 1'),
   role: k('팀장 · 백엔드 전체 · 프론트엔드 개편', 'Team lead · the entire backend · frontend overhaul'),
   status: k('캡스톤 완료', 'Capstone completed'),
   statusCheckedAt: '2026-10-29',
@@ -180,7 +180,6 @@ export const skillpilot: Project = {
         ),
       ],
       ['화면 → Express API → MySQL·MongoDB · 공공데이터는 node-cron이 주기적으로 동기화', 'Screens → Express API → MySQL and MongoDB · public data synced periodically by node-cron'],
-      ['sync', 'paid'],
     ),
     body: pairs([
       [

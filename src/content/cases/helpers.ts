@@ -42,6 +42,10 @@ export function node(id: string, owner: DiagramOwner, title: Pair, extra: NodeEx
 
 export const column = (title: Pair, nodes: DiagramNode[]): DiagramColumn => ({ title: pair(title), nodes })
 
-export function diagram(columns: DiagramColumn[], caption: Pair, kinds: DiagramLinkKind[]): Diagram {
-  return { columns, caption: pair(caption), legend: kinds.map((kind) => ({ kind, label: DIAGRAM_LINK_KINDS[kind] })) }
+const LINK_KIND_ORDER: DiagramLinkKind[] = ['sync', 'realtime', 'async', 'paid', 'local']
+
+export function diagram(columns: DiagramColumn[], caption: Pair): Diagram {
+  const used = new Set(columns.flatMap((c) => c.nodes.flatMap((n) => (n.links ?? []).map((l) => l.kind ?? 'sync'))))
+  const legend = LINK_KIND_ORDER.filter((kind) => used.has(kind)).map((kind) => ({ kind, label: DIAGRAM_LINK_KINDS[kind] }))
+  return { columns, caption: pair(caption), legend }
 }

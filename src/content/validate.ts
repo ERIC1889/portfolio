@@ -1,5 +1,5 @@
 import { allMedia, hasNewShape } from './select'
-import type { Lang, Project } from './types'
+import type { Architecture, Lang, Project } from './types'
 
 type Found = { path: string; lang: Lang; value: string }
 
@@ -106,7 +106,7 @@ export function checkCaseShape(project: Project): string[] {
   }
   if (!project.showcase) errors.push(`${where}: missing showcase`)
   if (!project.statusCheckedAt || !DATE.test(project.statusCheckedAt)) errors.push(`${where}: statusCheckedAt must be YYYY-MM-DD`)
-  if (!project.media?.length && !project.image) errors.push(`${where}: missing media or image`)
+  if (!allMedia(project).length && !project.image) errors.push(`${where}: missing media or image`)
   if (!hasNewShape(project)) {
     errors.push(`${where}: missing the case shape (overview, background, cases or products)`)
     return errors
@@ -117,6 +117,9 @@ export function checkCaseShape(project: Project): string[] {
   if (!project.results?.length) errors.push(`${where}: missing results`)
   if (!project.retro?.length) errors.push(`${where}: missing retro`)
   if (project.kind === 'work') {
+    for (const field of ['features', 'architecture', 'cases'] as const) {
+      if (project[field]) errors.push(`${where}: ${field} never renders on a work page; move it into a product`)
+    }
     if (!project.duties?.length) errors.push(`${where}: missing duties`)
     if (!project.products?.length) errors.push(`${where}: missing products`)
     const ids = (project.products ?? []).map((product) => product.id)
@@ -129,6 +132,26 @@ export function checkCaseShape(project: Project): string[] {
   for (const item of cases) {
     if (!item.problem.body.length || !item.action.body.length) errors.push(`${where}: case "${item.title.ko}" needs problem and action`)
   }
+  const architectures = [project.architecture, ...(project.products ?? []).map((product) => product.architecture)]
+  for (const architecture of architectures) errors.push(...checkDiagram(where, architecture))
+  return errors
+}
+
+export function checkDiagram(where: string, architecture?: Architecture): string[] {
+  const diagram = architecture?.diagram
+  if (!diagram) return []
+  const errors: string[] = []
+  const nodes = diagram.columns.flatMap((column) => column.nodes)
+  const ids = nodes.map((node) => node.id)
+  if (new Set(ids).size !== ids.length) errors.push(`${where}: diagram node ids repeat`)
+  for (const node of nodes) {
+    for (const link of node.links ?? []) {
+      if (!ids.includes(link.to)) errors.push(`${where}: diagram link from ${node.id} points at unknown node ${link.to}`)
+    }
+  }
+  const used = new Set(nodes.flatMap((node) => (node.links ?? []).map((link) => link.kind ?? 'sync')))
+  const listed = new Set((diagram.legend ?? []).map((item) => item.kind))
+  for (const kind of used) if (!listed.has(kind)) errors.push(`${where}: diagram legend misses ${kind}`)
   return errors
 }
 

@@ -91,12 +91,15 @@ function Results({ project }: { project: Project }) {
   )
 }
 
-function ProductBlock({ product, index }: { product: Product; index: number }) {
+function ProductBlock({ product, index, part }: { product: Product; index: number; part: number }) {
   const { t } = useLang()
   return (
     <article id={product.id} className="product-block" aria-labelledby={`${product.id}-title`}>
       <h3 id={`${product.id}-title`} className="product-title">
-        <span className="case-num mono">3-{index + 1}</span> {t(product.name)}
+        <span className="case-num mono">
+          {part}-{index + 1}
+        </span>{' '}
+        {t(product.name)}
       </h3>
       <p className="product-meta muted">
         {t(product.status)} · {t(product.role)}
@@ -149,6 +152,7 @@ function useParts(project: Project): Part[] {
       : []),
   ]
   if (project.kind === 'work') {
+    const productsPart = 1 + (project.background?.length ? 1 : 0) + (project.duties?.length || project.contribution ? 1 : 0)
     return [
       ...(project.background?.length ? [{ id: 'company', title: WORK_PARTS.company, content: <Paragraphs items={project.background} /> }] : []),
       ...(project.duties?.length || project.contribution
@@ -173,7 +177,7 @@ function useParts(project: Project): Part[] {
               content: (
                 <div className="product-list">
                   {project.products.map((product, i) => (
-                    <ProductBlock key={product.id} product={product} index={i} />
+                    <ProductBlock key={product.id} product={product} index={i} part={productsPart} />
                   ))}
                 </div>
               ),
@@ -209,6 +213,7 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
   const { t } = useLang()
   const modern = hasNewShape(project)
   const parts = useParts(project)
+  const back = project.kind === 'work' ? { href: '/#work', label: UI.backToWork } : { href: '/#projects', label: UI.backToProjects }
   const sections = project.sections ?? []
   const anchors = sectionAnchors(project)
   const toc: { href: string; label: string }[] = modern
@@ -219,8 +224,8 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
     <main id="main" className="case">
       <div className="wrap">
         <p className="breadcrumb">
-          <Link href="/#projects">
-            <span aria-hidden="true">←</span> {t(UI.backToProjects)}
+          <Link href={back.href}>
+            <span aria-hidden="true">←</span> {t(back.label)}
           </Link>
         </p>
 
@@ -256,7 +261,7 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
 
         <PageNav
           prev={prev && { href: `/projects/${prev.slug}`, label: prev.name }}
-          center={{ href: '/#projects', label: UI.backToProjects }}
+          center={back}
           next={next && { href: `/projects/${next.slug}`, label: next.name }}
         />
       </div>

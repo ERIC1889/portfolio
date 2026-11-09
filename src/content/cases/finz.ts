@@ -160,7 +160,7 @@ export const finz: Project = {
     'A web service that works out tax on disposing of two homes (6Way), on digital assets and on foreign stocks (capital gains and gift valuation) without sign-up, citing the statute behind each step',
   ),
   period: '2026.01–',
-  team: k('주식회사 Finz Labs (직원 5명) · 인력 관리는 맡지 않음', 'Finz Labs (five people) · no people management'),
+  team: k('직원 5명, 인력 관리는 맡지 않음', 'Five people, no people management'),
   role: k('개발 총괄', 'Head of development'),
   status: k('운영 중 (finz.kr)', 'Live (finz.kr)'),
   statusCheckedAt: '2026-10-29',
@@ -181,7 +181,7 @@ export const finz: Project = {
       "The company website was built spec → plan → AI implementation and verified against the reference case and 192 tests. For the app's simple authentication I found why the AI draft stalled, confirmed the fix with a prototype and built it myself.",
     ),
   },
-  features: pairs([
+  resumeItems: pairs([
     [
       '해외주식 양도세·증여세: 매수·매도를 각자의 결제일 환율로 환산하고 이익을 주가 몫·환율 몫으로 나눠 표시, 증여 평가(전후 2개월 평균 종가)와 증여세 추정',
       'Foreign-stock capital gains and gift tax: each buy and sell converted at its own settlement-date rate, the gain shown split into a price part and a currency part, plus gift valuation (two-month average close) and a gift-tax estimate',
@@ -304,8 +304,8 @@ export const finz: Project = {
   products: [
     {
       id: 'calculators',
-      name: k('Finz 개인 세금 계산기', 'Finz personal tax calculators'),
-      status: k('운영 중 (finz.kr, 2026.04–)', 'Live (finz.kr, since Apr 2026)'),
+      name: k('개인 세금 계산기', 'Personal tax calculators'),
+      status: k('운영 중', 'Live'),
       role: k('설계·개발·운영', 'Design · build · operation'),
       intro: pairs([
         [
@@ -399,8 +399,13 @@ export const finz: Project = {
             ),
           ],
           ['운영 중인 finz.kr 코드를 기준으로 그린 구조입니다.', 'The structure as it runs in the finz.kr code.'],
-          ['sync'],
         ),
+        body: pairs([
+          [
+            '입력 화면에서 받은 주택·거래·종목 정보는 Next.js API 라우트가 외부에서 시세·환율·실거래가를 조회해 채우고, TypeScript 계산 엔진이 결과와 세법 조문 근거를 만들어 결과 화면과 PDF로 보여 줍니다. 외부 조회가 실패하면 대체 출처로 바꾸고 그 값에 표시를 남기며, 확정된 값만 오래 캐시합니다.',
+            'The homes, trades and stocks entered on screen are filled in by Next.js API routes that fetch prices, rates and transaction data from outside, and the TypeScript calculation engines produce the results with their statutes for the results screen and the PDF. When an external lookup fails the route switches to a fallback source and marks the value, and only settled values are cached for long.',
+          ],
+        ]),
         decisions: pairs([
           [
             '계산 엔진을 웹 안으로: 세무사와 Python으로 작성한 6Way 계산 로직을 서버로 따로 띄우지 않고 TypeScript로 옮겨 Next.js 안에서 계산했습니다. 저장할 상태가 없고 혼자 운영하는 단계라 배포 단위를 하나로 두는 편이 낫다고 봤습니다.',
@@ -418,7 +423,7 @@ export const finz: Project = {
       id: 'refund-app',
       name: k('Finz 모바일 앱', 'Finz mobile app'),
       status: k('미출시', 'Not released'),
-      role: k('앱·백엔드 개발', 'App and backend development'),
+      role: k('앱·백엔드', 'App and backend'),
       intro: pairs([
         [
           'Finz 모바일 앱은 같은 회사에서 진행한 청년 세금 환급 MVP입니다. Expo·FastAPI로 간편인증 → 지급명세서 조회 → 환급액 계산 → 결제로 이어지는 흐름을 만들었습니다. CODEF로 조회한 소득 자료는 서버 DB에 저장하지 않고 계산에만 씁니다.',
@@ -453,7 +458,7 @@ export const finz: Project = {
     {
       id: 'finz-saas',
       name: k('세무사용 FINZ', 'FINZ for tax accountants'),
-      status: k('출시 전 · 협력 개발사와 공동 개발', 'Pre-launch · co-developed with a partner company'),
+      status: k('출시 전, 협력 개발사와 공동 개발', 'Pre-launch, co-developed with a partner company'),
       role: k('사양·검증·장애 분석·실배포 준비', 'Specs, verification, failure analysis, launch preparation'),
       intro: pairs([
         [
@@ -483,8 +488,8 @@ export const finz: Project = {
       'For FINZ for tax accountants, each of the 269 items the vendor reported as done was re-checked against code, tests and screens: 233 confirmed and 36 left open, plus 45 new defects. Two had to be fixed before launch (payment and plan locking), and for a defect where a parcel with no standard price was silently dropped from the tax and understated it, the exact code was traced and sent as the top fix request.',
     ],
     [
-      '문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 결과가 끊기는 원인을 출력 토큰 상한(1,200)으로 짚어 8,000으로 올렸고, CI에는 한 줄짜리 버그 7개를 심어 7개 모두 잡아내는 것을 확인했습니다.',
-      'In an OCR field test (11 document types, 17 files) the cut-off was traced to the output-token cap (1,200) and raised to 8,000, and seven one-line bugs planted in CI were all caught.',
+      '문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 결과가 끊기는 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사가 상한을 8,000으로 올려 해결했습니다. CI에는 한 줄짜리 버그 7개를 심어 7개 모두 잡아내는 것을 확인했습니다.',
+      'In an OCR field test (11 document types, 17 files) the cut-off was traced to the output-token cap (1,200), which the vendor raised to 8,000 to fix it. Seven one-line bugs planted in CI were all caught.',
     ],
   ]),
   retro: pairs([

@@ -40,7 +40,7 @@ export const closetmate: Project = {
     ['Expo 앱: 사진 등록·분류 확인, 옷장, 통계, 음성 입력(Whisper)', 'The Expo app: adding photos and checking labels, the wardrobe, stats and voice input (Whisper)'],
   ]),
   contribution: {
-    direct: pairs([['기획, 모델 학습·비교, 서버 API, 모바일 앱 전부', 'Everything: planning, model training and comparison, the server API and the mobile app']]),
+    direct: pairs([['기획 · 모델 학습 · 모바일·API 개발', 'Planning · model training · mobile and API development']]),
   },
   media: [
     video('/media/closetmate/demo.mp4', '/media/closetmate/demo-poster.webp', 540, 1030, ['ClosetMate 시연 영상', 'ClosetMate demo video'], ['시연 · 실제 앱 화면 녹화', 'Demo · real app screen recording'], '2026-05-25', 'device'),
@@ -160,7 +160,6 @@ export const closetmate: Project = {
         ),
       ],
       ['멀티모달 입력(사진 · 음성 · 위치 · 착용 기록) → Next.js 백엔드 → LLM 추천 + 자체 전이학습 분류기', 'Multimodal input (photo · voice · location · wear history) → Next.js backend → LLM suggestions + my own transfer-learned classifier'],
-      ['sync', 'paid', 'local'],
     ),
     body: pairs([
       [

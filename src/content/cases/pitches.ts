@@ -161,7 +161,6 @@ export const pitches: Project = {
         ),
       ],
       ['2026 리뉴얼 구조 · 발표 음성을 5초마다 분석해 색으로 피드백하고, 끝나면 AI 코칭 보고서를 만든다', '2026 renewal · audio is analyzed every 5 s for color feedback, and an AI coaching report follows the talk'],
-      ['realtime', 'async', 'paid', 'local'],
     ),
     body: pairs([
       [
