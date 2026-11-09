@@ -4,8 +4,8 @@ const k = (ko: string, en: string) => ({ ko, en })
 
 export const aiWork: AiWork = {
   lead: k(
-    'Claude Code · Codex · Antigravity를 거의 매일, 역할을 나눠 씁니다. AI로 빠르게 만들고, 무엇을 만들지와 결과가 맞는지는 제가 정하고 확인합니다.',
-    'I use Claude Code, Codex and Antigravity almost every day, each in its own role. AI builds fast; what to build, and whether the result is right, I decide and check myself.',
+    'Claude Code · Codex · Antigravity를 거의 매일, 역할을 나눠 씁니다. 구현 속도는 AI에 기대되, 무엇을 만들지, 어떤 구조로 갈지, 결과를 내보낼지는 제가 정하고, 내보낸 결과는 제가 책임집니다.',
+    'I use Claude Code, Codex and Antigravity almost every day, each in its own role. AI gives me speed; what to build, which structure to take and whether to ship the result are my decisions, and what ships is my responsibility.',
   ),
   tools: [
     { name: 'Claude Code', role: k('구현 · 기획과 문서', 'Implementation · planning and documents') },
@@ -22,31 +22,31 @@ export const aiWork: AiWork = {
   ],
   cards: [
     {
-      title: k('함께 고민하고 맡기는 일', 'What I think through with AI, and what I hand over'),
+      title: k('맡기는 일과 제가 정하는 일', 'What I hand over, and what I decide'),
       body: k(
-        '초기 스켈레톤 설계, 기술 스택 선택지와 시스템 구조를 같이 고민하고 피드백을 주고받습니다. 기획 단계의 자료 조사 일부와 기획 방향이 합리적인지 비교하는 일도 맡깁니다. 구현은 Claude Code가, 디자인은 Antigravity가 합니다.',
-        'We work out the initial skeleton, the stack options and the system structure together, trading feedback. I also hand over part of the research at the planning stage and the comparison of whether a direction makes sense. Claude Code builds; Antigravity designs.',
+        '초기 스켈레톤과 기술 스택 선택지, 시스템 구조는 같이 고민하고 피드백을 주고받습니다. 기획 단계의 자료 조사 일부와 방향이 합리적인지 비교하는 일도 맡깁니다. 구현은 Claude Code가, 디자인은 Antigravity가 합니다. 무엇을 만들지와 어떤 구조로 갈지, 언제 내보낼지는 제가 정합니다.',
+        'We work out the initial skeleton, the stack options and the system structure together, trading feedback. I also hand over part of the research at the planning stage and the comparison of whether a direction makes sense. Claude Code builds; Antigravity designs. What to build, which structure to take and when to ship are my calls.',
       ),
     },
     {
-      title: k('교차 리뷰와 직접 결정', 'Cross-review, then my own decision'),
+      title: k('교차 리뷰 다음은 제 검증', 'Cross-review, then my own verification'),
       body: k(
-        'Claude Code가 만든 결과는 Codex가 리뷰하고, Antigravity의 디자인은 Claude Code와 Codex가 리뷰합니다. 문서는 서로의 잘못된 점을 보완하게 합니다. 최종 리뷰와 내용 확인은 직접 하고, 새 방향이나 기술 선택은 제가 정해 보완합니다.',
-        'Codex reviews what Claude Code built, and Claude Code and Codex review Antigravity’s designs. Documents are checked by each tool against the other. The final review and the fact check are mine, and new directions and technical choices are my decisions.',
+        'Claude Code가 만든 결과는 Codex가, Antigravity의 디자인은 Claude Code와 Codex가 리뷰합니다. 그다음은 제 차례입니다. AI가 쓴 코드라고 그대로 믿지 않고 정적 분석과 타입 검사를 먼저 돌린 뒤 테스트와 실제 실행 결과를 확인하고, 인증이나 개인정보 처리처럼 민감한 영역은 직접 읽고 공식 문서와 대조한 뒤에만 반영합니다. 어떤 구조로 왜 그렇게 동작하는지 설명할 수 없는 코드는 제 이름으로 내보내지 않습니다.',
+        'Codex reviews what Claude Code built, and Claude Code and Codex review Antigravity’s designs. Then it is my turn. I do not trust code because an AI wrote it: static analysis and type checks run first, then tests and real runs, and sensitive areas such as authentication or personal data are read by me and checked against the official documentation before anything lands. Code whose structure and reasons I cannot explain does not ship under my name.',
       ),
     },
     {
       title: k('통제와 보안', 'Control and security'),
       body: k(
-        '권한을 제한해 저장소 전체를 고치지 못하게 하고, 자동 허용 명령은 최소로 둡니다. 필요한 자료와 문맥을 먼저 줘서 답변의 효율을 높이고, 플러그인·skills·MCP로 품질을 관리합니다. API 키는 도구에 절대 보여 주지 않고, 민감한 고객 자료는 미리 마스킹합니다.',
-        'Permissions are limited so no tool can rewrite the whole repository, and auto-approved commands are kept to a minimum. I give the material and context first so answers are efficient, and manage quality with plugins, skills and MCP servers. API keys are never shown to the tools, and sensitive client data is masked beforehand.',
+        '저장소 전체를 고칠 권한은 주지 않고 자동 허용 명령은 최소로 둡니다. 필요한 자료와 문맥을 먼저 줘서 답변의 효율을 높이고, 플러그인·skills·MCP로 품질을 관리합니다. API 키는 도구에 절대 보여 주지 않고, 민감한 고객 자료는 미리 마스킹합니다. 이 기준은 도구가 아니라 제가 정한 것입니다.',
+        'No tool gets permission to rewrite the whole repository, and auto-approved commands are kept to a minimum. I give the material and context first so answers are efficient, and manage quality with plugins, skills and MCP servers. API keys are never shown to the tools, and sensitive client data is masked beforehand. These rules are mine, not the tools’.',
       ),
     },
   ],
   example: {
     text: k(
-      '간편인증 — AI 초안이 첫 연도에서 멈춘 원인을 코드에서 찾아, 서비스와 분리한 스크립트로 가설을 확인한 뒤 백엔드를 직접 다시 구현했습니다.',
-      'Simple authentication — I found in the code why the AI draft stalled after the first year, checked the hypothesis with a script kept apart from the service, and then rebuilt the backend myself.',
+      '간편인증 — AI 초안이 특정 연도만 조회하고 느려지자, 다시 시키는 대신 코드를 읽어 연도마다 재인증하는 구조를 찾았습니다. 서비스와 분리한 스크립트로 "첫 인증 세션을 재사용할 수 있다"는 가설을 먼저 확인한 뒤, 인증과 조회를 분리해 백엔드에 직접 반영했습니다.',
+      'Simple authentication — when the AI draft fetched only one year and slowed down, I read the code instead of re-prompting and found it re-authenticated for every year. A script kept apart from the service first confirmed that the first session could be reused; then I split authentication from fetching and rebuilt the backend myself.',
     ),
     figure: k('휴대폰 인증 5번 → 1번 · 조회 연도 1개 → 5개', 'Phone approvals 5 → 1 · years fetched 1 → 5'),
     href: '/projects/finz#refund-app',
