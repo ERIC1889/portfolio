@@ -1,3 +1,4 @@
+import { aiWork } from './ai'
 import { archive } from './archive'
 import { chapters } from './chapters'
 import { profile } from './profile'
@@ -19,13 +20,14 @@ import {
 import type { L, Showcase, Stat, Year } from './types'
 import { STAT_LABELS, STAT_NOTES, paperNote } from './ui'
 
-export { archive, chapters, profile, projects, CASE_ORDER, YEARS }
+export { aiWork, archive, chapters, profile, projects, CASE_ORDER, YEARS }
 
 export const SITE_URL = 'https://junyoung-portfolio.vercel.app'
 
 export const getCases = () => selectCases(projects)
 export const getResumeProjects = () => selectResumeProjects(projects)
 export const getShowcase = (showcase: Showcase) => selectShowcase(projects, showcase)
+export const getWork = () => selectShowcase(projects, 'work')[0]
 export const getProject = (slug: string) => selectProject(projects, slug)
 export const getByYear = (year: Year) => selectByYear(projects, year)
 export const getChapter = (year: Year) => selectChapter(chapters, year)

@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { featuredProject, l } from '@/test/fixtures'
-import type { Media, Project, SectionId } from './types'
+import { featuredProject, l, paar } from '@/test/fixtures'
+import type { Media, Project } from './types'
 import {
   checkBanned,
+  checkCaseShape,
   checkEn,
-  checkFeaturedShape,
   checkKo,
   checkLinks,
   checkMedia,
@@ -27,11 +27,7 @@ function card(overrides: Partial<Project> = {}): Project {
   }
 }
 
-function withSections(ids: SectionId[]): Project {
-  return featuredProject('sample', 'Sample', [2025], { sections: ids.map((id) => ({ id, title: l(id), body: [l('본문')] })) })
-}
-
-const FULL_ORDER: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'retro', 'evidence']
+const sample = (extra: Partial<Project> = {}) => featuredProject('sample', 'Sample', [2025], extra)
 
 describe('collectStrings', () => {
   it('finds every bilingual string with its path', () => {
@@ -120,78 +116,115 @@ describe('checkBanned', () => {
     expect(checkBanned(card({ summary: l('GPT-4o 기반') }), [rule])).toHaveLength(1)
   })
 
-  it('also checks section bodies and plain-string fields such as the stack', () => {
-    expect(checkBanned(withSections(FULL_ORDER), ['본문'])).toHaveLength(FULL_ORDER.length)
+  it('also checks case bodies, product text and plain-string fields such as the stack', () => {
+    expect(checkBanned(sample({ cases: [paar('X')] }), [/^X 행동$/])).toHaveLength(1)
+    const work = sample({ kind: 'work', duties: [l('일')], products: [{ id: 'p', name: l('제품'), status: l('상태'), role: l('역할'), intro: [l('금지된 소개')] }] })
+    expect(checkBanned(work, ['금지된'])).toHaveLength(1)
     expect(checkBanned(card({ stack: ['Canvas'] }), ['Canvas'])).toHaveLength(1)
   })
 })
 
-describe('checkFeaturedShape', () => {
-  it('accepts the full case-study order', () => {
-    expect(checkFeaturedShape(withSections(FULL_ORDER))).toEqual([])
+describe('checkCaseShape', () => {
+  it('accepts a project with the new shape', () => {
+    expect(checkCaseShape(sample())).toEqual([])
   })
 
-  it('accepts an optional paper section between result and retro, and repeated implementation sections', () => {
-    const ids: SectionId[] = ['problem', 'implementation', 'implementation', 'validation', 'result', 'paper', 'retro', 'evidence']
-    expect(checkFeaturedShape(withSections(ids))).toEqual([])
+  it('accepts a work page with duties and products', () => {
+    const work = sample({
+      kind: 'work',
+      duties: [l('맡은 일')],
+      products: [
+        { id: 'a', name: l('제품 A'), status: l('운영 중'), role: l('설계'), intro: [l('소개')], cases: [paar('A 사례')] },
+        { id: 'b', name: l('제품 B'), status: l('미출시'), role: l('개발'), intro: [l('소개')] },
+      ],
+    })
+    expect(checkCaseShape(work)).toEqual([])
   })
 
-  it('reports a missing retro section', () => {
-    expect(checkFeaturedShape(withSections(FULL_ORDER.filter((id) => id !== 'retro')))).toEqual(['sample: missing section retro'])
+  it('requires at least two highlights, a background, results and a reflection', () => {
+    expect(checkCaseShape(sample({ overview: { highlights: [l('하나')] } }))).toEqual(['sample: overview needs at least 2 highlights'])
+    expect(checkCaseShape(sample({ background: [] }))).toEqual(['sample: missing background'])
+    expect(checkCaseShape(sample({ results: undefined }))).toEqual(['sample: missing results'])
+    expect(checkCaseShape(sample({ retro: [] }))).toEqual(['sample: missing retro'])
   })
 
-  it('reports evidence placed before the problem', () => {
-    expect(checkFeaturedShape(withSections(['evidence', ...FULL_ORDER.filter((id) => id !== 'evidence')]))).toHaveLength(1)
+  it('requires duties, products and distinct product ids on a work page', () => {
+    expect(checkCaseShape(sample({ kind: 'work' }))).toEqual(['sample: missing duties', 'sample: missing products'])
+    const twice = sample({
+      kind: 'work',
+      duties: [l('일')],
+      products: [
+        { id: 'same', name: l('A'), status: l('s'), role: l('r'), intro: [l('i')] },
+        { id: 'same', name: l('B'), status: l('s'), role: l('r'), intro: [] },
+      ],
+    })
+    expect(checkCaseShape(twice)).toEqual(['sample: product ids repeat', 'sample: product same needs an intro'])
   })
 
-  it('requires what it is, who made it, its status with a check date, a showcase and media', () => {
-    const bare = { ...withSections(FULL_ORDER), title: undefined, product: undefined, team: undefined, statusCheckedAt: '2026/10/29', showcase: undefined, media: [] }
-    expect(checkFeaturedShape(bare)).toEqual([
-      'sample: missing title',
+  it('refuses legacy sections next to the new shape, and a page with neither', () => {
+    expect(checkCaseShape(sample({ sections: [{ id: 'problem', title: l('문제'), body: [l('본문')] }] }))).toEqual(['sample: legacy sections with the new shape'])
+    const legacyOnly = sample({ overview: undefined, background: undefined, cases: undefined, products: undefined })
+    expect(checkCaseShape(legacyOnly)).toEqual(['sample: missing the case shape (overview, background, cases or products)'])
+  })
+
+  it('names a case that lacks a problem or an action', () => {
+    const broken = { ...paar('빈 사례'), action: { body: [] } }
+    expect(checkCaseShape(sample({ cases: [broken] }))).toEqual(['sample: case "빈 사례" needs problem and action'])
+  })
+
+  it('requires what it is, who made it, its status with a check date, a showcase and a picture', () => {
+    const bare = { ...sample(), product: undefined, team: undefined, statusCheckedAt: '2026/10/29', showcase: undefined, media: [] }
+    expect(checkCaseShape(bare)).toEqual([
       'sample: missing product',
       'sample: missing team',
       'sample: missing showcase',
       'sample: statusCheckedAt must be YYYY-MM-DD',
-      'sample: missing media',
+      'sample: missing media or image',
     ])
-  })
-
-  it('reports a section anchor used twice', () => {
-    const project = withSections(FULL_ORDER)
-    project.sections![1] = { ...project.sections![1], anchor: 'x' }
-    project.sections![2] = { ...project.sections![2], anchor: 'x' }
-    expect(checkFeaturedShape(project)).toEqual(['sample: section anchors repeat'])
+    expect(checkCaseShape({ ...sample(), media: undefined, image: '/images/x.png', imageSize: [10, 10], imageCaption: l('x', 'x') })).toEqual([])
   })
 })
 
 describe('checkMedia', () => {
   const shot: Media = { kind: 'screenshot', src: '/media/a.webp', width: 10, height: 10, alt: l('화면', 'Screen'), caption: l('화면 · 실제 화면', 'Screen · real'), capturedAt: '2026-10-29' }
 
-  it('accepts a captioned, dated screenshot, including ones inside sections', () => {
-    const project = featuredProject('a', 'A', [2026], { media: [shot], sections: [{ id: 'implementation', title: l('t'), body: [], media: [shot] }] })
+  it('accepts a captioned, dated screenshot wherever it sits: top level, a case or a product', () => {
+    const project = sample({
+      media: [shot],
+      cases: [{ ...paar('사례'), media: [shot] }],
+      kind: 'work',
+      duties: [l('일')],
+      products: [{ id: 'p', name: l('제품'), status: l('s'), role: l('r'), intro: [l('i')], media: [shot], cases: [{ ...paar('제품 사례'), media: [shot] }] }],
+    })
     expect(checkMedia(project)).toEqual([])
+  })
+
+  it('finds an undated picture inside a product', () => {
+    const undated = { ...shot, capturedAt: undefined }
+    const project = sample({ media: [shot], kind: 'work', duties: [l('일')], products: [{ id: 'p', name: l('제품'), status: l('s'), role: l('r'), intro: [l('i')], media: [undated] }] })
+    expect(checkMedia(project)).toEqual(['sample /media/a.webp: capturedAt must be YYYY-MM-DD'])
   })
 
   it('requires a poster for a video, a date, a site path and both captions', () => {
     const video: Media = { ...shot, kind: 'video', src: 'media/v.mp4', capturedAt: '2026-10', caption: l('영상', '') }
-    expect(checkMedia(featuredProject('a', 'A', [2026], { media: [video] }))).toHaveLength(4)
+    expect(checkMedia(sample({ media: [video] }))).toHaveLength(4)
   })
 
   it('makes a mockup say so in both languages', () => {
     const mockup: Media = { ...shot, kind: 'mockup' }
-    expect(checkMedia(featuredProject('a', 'A', [2026], { media: [mockup] }))).toEqual(['a /media/a.webp: a mockup must be labelled as one'])
+    expect(checkMedia(sample({ media: [mockup] }))).toEqual(['sample /media/a.webp: a mockup must be labelled as one'])
     const labelled: Media = { ...mockup, caption: l('디자인 목업', 'Design mockup') }
-    expect(checkMedia(featuredProject('a', 'A', [2026], { media: [labelled] }))).toEqual([])
+    expect(checkMedia(sample({ media: [labelled] }))).toEqual([])
   })
 })
 
 describe('checkMetrics', () => {
   it('requires a value, what was measured, the conditions and a check date', () => {
     const metric = { label: l('지표'), value: '', target: l(''), condition: l('조건'), source: 'measured' as const, checkedAt: 'yesterday' }
-    expect(checkMetrics(featuredProject('a', 'A', [2026], { metrics: [metric] }))).toEqual([
-      'a 지표: missing value',
-      'a 지표: missing target',
-      'a 지표: checkedAt must be YYYY-MM-DD',
+    expect(checkMetrics(sample({ metrics: [metric] }))).toEqual([
+      'sample 지표: missing value',
+      'sample 지표: missing target',
+      'sample 지표: checkedAt must be YYYY-MM-DD',
     ])
   })
 })

@@ -6,7 +6,9 @@ export type Year = 2023 | 2024 | 2025 | 2026
 
 export type Tier = 'featured' | 'supporting' | 'card' | 'line'
 
-export type Showcase = 'flagship' | 'main' | 'supporting' | 'other'
+export type Showcase = 'work' | 'main' | 'supporting' | 'other'
+
+export type CaseKind = 'project' | 'work'
 
 export type LinkKind = 'live' | 'code' | 'paper' | 'slides' | 'video' | 'test' | 'site'
 
@@ -43,20 +45,77 @@ export interface Contribution {
   joint?: L[]
   others?: L[]
   verified?: L[]
-  notYet?: L[]
 }
 
-export interface FlowStep {
+export type DiagramOwner = 'mine' | 'external' | 'data' | 'local'
+
+export type DiagramLinkKind = 'sync' | 'realtime' | 'async' | 'paid' | 'local'
+
+export interface DiagramLink {
+  to: string
   label: L
-  detail?: L
-  owner: 'mine' | 'external'
-  branches?: { when: L; then: L }[]
+  kind?: DiagramLinkKind
 }
 
-export interface Flow {
+export interface DiagramNode {
+  id: string
   title: L
-  steps: FlowStep[]
+  subtitle?: L
+  items?: L[]
+  owner: DiagramOwner
+  links?: DiagramLink[]
+}
+
+export interface DiagramColumn {
+  title: L
+  nodes: DiagramNode[]
+}
+
+export interface Diagram {
+  columns: DiagramColumn[]
   caption: L
+  legend?: { kind: DiagramLinkKind; label: L }[]
+}
+
+export interface Architecture {
+  diagram?: Diagram
+  body?: L[]
+  decisions?: L[]
+  table?: { head: L[]; rows: L[][] }
+}
+
+export type PaarKey = 'problem' | 'analysis' | 'action' | 'result'
+
+export interface PaarStep {
+  lead?: L
+  body: L[]
+}
+
+export interface Case {
+  title: L
+  problem: PaarStep
+  analysis?: PaarStep
+  action: PaarStep
+  result?: PaarStep
+  media?: Media[]
+}
+
+export interface Overview {
+  highlights: L[]
+  scope?: L[]
+  aiUse?: L
+}
+
+export interface Product {
+  id: string
+  name: L
+  status: L
+  role: L
+  intro: L[]
+  features?: L[]
+  media?: Media[]
+  architecture?: Architecture
+  cases?: Case[]
 }
 
 export type SectionId = 'problem' | 'implementation' | 'validation' | 'result' | 'paper' | 'retro' | 'evidence'
@@ -80,6 +139,7 @@ export interface Project {
   years: Year[]
   tier: Tier
   showcase?: Showcase
+  kind?: CaseKind
   period: string
   team?: L
   role?: L
@@ -88,20 +148,37 @@ export interface Project {
   stack: string[]
   summary: L
   title?: L
+  workTitle?: L
   product?: L
   audience?: L
-  featuresHeading?: L
   features?: L[]
   resumeItems?: L[]
   contribution?: Contribution
   media?: Media[]
-  flow?: Flow
   metrics?: Metric[]
   links?: LinkItem[]
   image?: string
   imageSize?: [number, number]
   imageCaption?: L
+  overview?: Overview
+  background?: L[]
+  duties?: L[]
+  products?: Product[]
+  architecture?: Architecture
+  cases?: Case[]
+  results?: L[]
+  retro?: L[]
+  material?: L[]
   sections?: CaseSection[]
+}
+
+export interface AiWork {
+  lead: L
+  tools: { name: string; role: L }[]
+  flow: { step: L; who: L }[]
+  cards: { title: L; body: L }[]
+  example: { text: L; figure: L; href: string }
+  blog: { label: L; href: string }
 }
 
 export interface Stat {

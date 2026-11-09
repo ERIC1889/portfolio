@@ -1,4 +1,4 @@
-import type { Archive, Award, Chapter, L, Media, Project, Showcase, Year } from './types'
+import type { Archive, Award, Case, Chapter, L, Media, Project, Showcase, Year } from './types'
 
 export function projectName(project: Pick<Project, 'name' | 'nameEn'>): L {
   return { ko: project.name, en: project.nameEn ?? project.name }
@@ -6,6 +6,10 @@ export function projectName(project: Pick<Project, 'name' | 'nameEn'>): L {
 
 export function projectTitle(project: Pick<Project, 'name' | 'nameEn' | 'title'>): L {
   return project.title ?? projectName(project)
+}
+
+export function pageTitle(project: Pick<Project, 'name' | 'nameEn' | 'title' | 'workTitle'>): L {
+  return project.workTitle ?? projectTitle(project)
 }
 
 export const YEARS: Year[] = [2023, 2024, 2025, 2026]
@@ -31,12 +35,32 @@ export function selectProject(projects: Project[], slug: string): Project | unde
   return selectCases(projects).find((p) => p.slug === slug)
 }
 
+export function hasNewShape(project: Project): boolean {
+  return Boolean(project.overview || project.background || project.cases || project.products)
+}
+
+const caseMedia = (cases?: Case[]) => (cases ?? []).flatMap((c) => c.media ?? [])
+
+export function allMedia(project: Project): Media[] {
+  return [
+    ...(project.media ?? []),
+    ...caseMedia(project.cases),
+    ...(project.products ?? []).flatMap((product) => [...(product.media ?? []), ...caseMedia(product.cases)]),
+    ...(project.sections ?? []).flatMap((section) => section.media ?? []),
+  ]
+}
+
 export function casePictures(project: Project): Media[] {
-  if (project.media?.length) return project.media
+  const media = allMedia(project)
+  if (media.length) return media
   if (!project.image || !project.imageCaption || !project.imageSize) return []
   const [width, height] = project.imageSize
   return [{ kind: 'screenshot', src: project.image, width, height, alt: project.imageCaption, caption: project.imageCaption }]
 }
+
+export const caseDemo = (project: Project): Media | undefined => project.media?.find((m) => m.kind === 'video')
+
+export const caseGallery = (project: Project): Media[] => (project.media ?? []).filter((m) => m.kind !== 'video')
 
 export function selectByYear(projects: Project[], year: Year) {
   const inYear = projects.filter((p) => p.years.includes(year))

@@ -4,15 +4,20 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { useLang } from '@/components/providers/LanguageProvider'
 import { Gallery } from '@/components/common/Media'
-import { SmartLink, StackList, StatusBadge } from '@/components/common/bits'
+import { Rich } from '@/components/common/Rich'
+import { LinkList } from '@/components/common/bits'
 import { PageNav } from '@/components/shell/PageNav'
-import { casePictures, projectTitle } from '@/content/select'
-import type { L, Project } from '@/content/types'
-import { SHOWCASE_LABELS, UI } from '@/content/ui'
+import { caseGallery, hasNewShape } from '@/content/select'
+import type { Case, L, Product, Project } from '@/content/types'
+import { CASE_PARTS, UI, WORK_PARTS } from '@/content/ui'
+import { ArchitectureBlock } from './Architecture'
 import { CaseSection } from './CaseSection'
-import { ContributionTable, FlowDiagram } from './parts'
+import { Overview } from './Overview'
+import { PaarCard } from './PaarCard'
+import { MetricsTable, ScopeRows } from './parts'
 
 type Neighbour = { slug: string; name: L }
+type Part = { id: string; title: L; content: ReactNode }
 
 export function sectionAnchors(project: Project): string[] {
   const seen = new Map<string, number>()
@@ -24,49 +29,191 @@ export function sectionAnchors(project: Project): string[] {
   })
 }
 
-function Fact({ label, children }: { label: L; children: ReactNode }) {
+function Paragraphs({ items }: { items?: L[] }) {
   const { t } = useLang()
   return (
-    <div className="fact">
-      <dt>{t(label)}</dt>
-      <dd>{children}</dd>
+    <>
+      {items?.map((paragraph) => (
+        <p key={paragraph.ko}>
+          <Rich text={t(paragraph)} />
+        </p>
+      ))}
+    </>
+  )
+}
+
+function Features({ items }: { items: L[] }) {
+  const { t } = useLang()
+  return (
+    <ol className="feature-list">
+      {items.map((feature) => (
+        <li key={feature.ko}>
+          <Rich text={t(feature)} />
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+function Cases({ items, prefix, level = 3 }: { items: Case[]; prefix: string; level?: 3 | 4 }) {
+  return (
+    <div className="paar-list">
+      {items.map((item, i) => (
+        <PaarCard key={item.title.ko} item={item} id={`${prefix}-${i + 1}`} level={level} />
+      ))}
     </div>
   )
 }
 
+function Results({ project }: { project: Project }) {
+  const { t } = useLang()
+  const verified = project.contribution?.verified
+  return (
+    <>
+      <Paragraphs items={project.results} />
+      {project.metrics && project.metrics.length > 0 && (
+        <>
+          <h3 className="label">{t(UI.metricsHeading)}</h3>
+          <MetricsTable metrics={project.metrics} />
+        </>
+      )}
+      {verified && verified.length > 0 && (
+        <>
+          <h3 className="label">{t(UI.verifiedHeading)}</h3>
+          <ul className="dash-list verified-list">
+            {verified.map((item) => (
+              <li key={item.ko}>{t(item)}</li>
+            ))}
+          </ul>
+        </>
+      )}
+    </>
+  )
+}
+
+function ProductBlock({ product, index }: { product: Product; index: number }) {
+  const { t } = useLang()
+  return (
+    <article id={product.id} className="product-block" aria-labelledby={`${product.id}-title`}>
+      <h3 id={`${product.id}-title`} className="product-title">
+        <span className="case-num mono">3-{index + 1}</span> {t(product.name)}
+      </h3>
+      <p className="product-meta muted">
+        {t(product.status)} · {t(product.role)}
+      </p>
+      <Paragraphs items={product.intro} />
+      {product.features && product.features.length > 0 && (
+        <>
+          <h4 className="label">{t(CASE_PARTS.features)}</h4>
+          <Features items={product.features} />
+        </>
+      )}
+      {product.media && product.media.length > 0 && <Gallery media={product.media} />}
+      {product.architecture && (
+        <>
+          <h4 className="label">{t(CASE_PARTS.architecture)}</h4>
+          <ArchitectureBlock architecture={product.architecture} level={4} />
+        </>
+      )}
+      {product.cases && product.cases.length > 0 && (
+        <>
+          <h4 className="label">{t(CASE_PARTS.cases)}</h4>
+          <Cases items={product.cases} prefix={`${product.id}-case`} level={4} />
+        </>
+      )}
+    </article>
+  )
+}
+
+function useParts(project: Project): Part[] {
+  const gallery = caseGallery(project)
+  const links = project.links ?? []
+  const tail: Part[] = [
+    ...(project.results?.length || project.metrics?.length || project.contribution?.verified?.length
+      ? [{ id: 'results', title: CASE_PARTS.results, content: <Results project={project} /> }]
+      : []),
+    ...(project.retro?.length ? [{ id: 'retro', title: CASE_PARTS.retro, content: <Paragraphs items={project.retro} /> }] : []),
+    ...(project.material?.length || links.length
+      ? [
+          {
+            id: 'material',
+            title: CASE_PARTS.material,
+            content: (
+              <>
+                <Paragraphs items={project.material} />
+                {links.length > 0 && <LinkList links={links} />}
+              </>
+            ),
+          },
+        ]
+      : []),
+  ]
+  if (project.kind === 'work') {
+    return [
+      ...(project.background?.length ? [{ id: 'company', title: WORK_PARTS.company, content: <Paragraphs items={project.background} /> }] : []),
+      ...(project.duties?.length || project.contribution
+        ? [
+            {
+              id: 'duties',
+              title: WORK_PARTS.duties,
+              content: (
+                <>
+                  <Paragraphs items={project.duties} />
+                  {project.contribution && <ScopeRows contribution={project.contribution} />}
+                </>
+              ),
+            },
+          ]
+        : []),
+      ...(project.products?.length
+        ? [
+            {
+              id: 'products',
+              title: WORK_PARTS.products,
+              content: (
+                <div className="product-list">
+                  {project.products.map((product, i) => (
+                    <ProductBlock key={product.id} product={product} index={i} />
+                  ))}
+                </div>
+              ),
+            },
+          ]
+        : []),
+      ...tail,
+    ]
+  }
+  return [
+    ...(project.background?.length ? [{ id: 'background', title: CASE_PARTS.background, content: <Paragraphs items={project.background} /> }] : []),
+    ...(project.features?.length || gallery.length
+      ? [
+          {
+            id: 'features',
+            title: CASE_PARTS.features,
+            content: (
+              <>
+                {project.features && project.features.length > 0 && <Features items={project.features} />}
+                {gallery.length > 0 && <Gallery media={gallery} />}
+              </>
+            ),
+          },
+        ]
+      : []),
+    ...(project.architecture ? [{ id: 'architecture', title: CASE_PARTS.architecture, content: <ArchitectureBlock architecture={project.architecture} /> }] : []),
+    ...(project.cases?.length ? [{ id: 'cases', title: CASE_PARTS.cases, content: <Cases items={project.cases} prefix="case" /> }] : []),
+    ...tail,
+  ]
+}
+
 export function CaseStudy({ project, prev, next }: { project: Project; prev?: Neighbour; next?: Neighbour }) {
   const { t } = useLang()
+  const modern = hasNewShape(project)
+  const parts = useParts(project)
   const sections = project.sections ?? []
   const anchors = sectionAnchors(project)
-  const pictures = casePictures(project)
-  const featuresHeading = project.featuresHeading ?? UI.featuresHeading
-  const validationIndex = sections.findIndex((section) => section.id === 'validation')
-  const metricsIndex = validationIndex !== -1 ? validationIndex : sections.findIndex((section) => section.id === 'result')
-  const evidenceIndex = sections.findIndex((section) => section.id === 'evidence')
-  const links = project.links ?? []
-  const headerLinks = links.slice(0, 2)
-
-  const toc: { href: string; label: L }[] = [
-    ...(pictures.length ? [{ href: '#screens', label: UI.mediaHeading }] : []),
-    ...(project.features?.length ? [{ href: '#features', label: featuresHeading }] : []),
-    ...sections.flatMap((section, i) => (section.lead ? [{ href: `#${anchors[i]}`, label: section.title }] : [])),
-    ...(project.contribution ? [{ href: '#contribution', label: UI.contributionHeading }] : []),
-    ...(project.flow ? [{ href: '#flow', label: project.flow.title }] : []),
-    ...sections.flatMap((section, i) => (section.lead ? [] : [{ href: `#${anchors[i]}`, label: section.title }])),
-  ]
-
-  const renderSections = (lead: boolean) =>
-    sections.map((section, i) =>
-      Boolean(section.lead) === lead ? (
-        <CaseSection
-          key={anchors[i]}
-          section={section}
-          anchor={anchors[i]}
-          metrics={i === metricsIndex ? project.metrics : undefined}
-          links={i === evidenceIndex ? links : undefined}
-        />
-      ) : null,
-    )
+  const toc: { href: string; label: string }[] = modern
+    ? parts.map((part, i) => ({ href: `#${part.id}`, label: `${i + 1}. ${t(part.title)}` }))
+    : sections.map((section, i) => ({ href: `#${anchors[i]}`, label: t(section.title) }))
 
   return (
     <main id="main" className="case">
@@ -77,46 +224,7 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
           </Link>
         </p>
 
-        <header className="case-header">
-          {project.showcase && <p className="kicker">{t(SHOWCASE_LABELS[project.showcase])}</p>}
-          <h1>{t(projectTitle(project))}</h1>
-          <p className="case-product">{t(project.product ?? project.summary)}</p>
-          <dl className="facts">
-            {project.audience && <Fact label={UI.audience}>{t(project.audience)}</Fact>}
-            <Fact label={UI.period}>
-              <span className="mono">{project.period}</span>
-            </Fact>
-            {project.team && <Fact label={UI.team}>{t(project.team)}</Fact>}
-            {project.role && <Fact label={UI.role}>{t(project.role)}</Fact>}
-            {project.status && (
-              <Fact label={UI.status}>
-                <StatusBadge project={project} />
-              </Fact>
-            )}
-            <Fact label={UI.stack}>
-              <StackList items={project.stack} />
-            </Fact>
-          </dl>
-          {(headerLinks.length > 0 || validationIndex !== -1) && (
-            <div className="actions">
-              {headerLinks.map((link, i) => (
-                <SmartLink key={link.href} href={link.href} className={i === 0 ? 'btn btn-primary' : 'btn'}>
-                  {t(link.label)}
-                </SmartLink>
-              ))}
-              {validationIndex !== -1 && (
-                <a href={`#${anchors[validationIndex]}`} className="btn">
-                  {t(sections[validationIndex].title)} <span aria-hidden="true">↓</span>
-                </a>
-              )}
-              {links.length > headerLinks.length && evidenceIndex !== -1 && (
-                <a href={`#${anchors[evidenceIndex]}`} className="btn">
-                  {t(sections[evidenceIndex].title)} <span aria-hidden="true">↓</span>
-                </a>
-              )}
-            </div>
-          )}
-        </header>
+        <Overview project={project} />
 
         <div className="case-layout">
           <nav className="toc" aria-labelledby="toc-title">
@@ -126,43 +234,23 @@ export function CaseStudy({ project, prev, next }: { project: Project; prev?: Ne
             <ol>
               {toc.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href}>{t(item.label)}</a>
+                  <a href={item.href}>{item.label}</a>
                 </li>
               ))}
             </ol>
           </nav>
 
           <div className="case-main">
-            {pictures.length > 0 && (
-              <section id="screens" className="case-block" aria-labelledby="screens-title">
-                <h2 id="screens-title">{t(UI.mediaHeading)}</h2>
-                <Gallery media={pictures} />
-              </section>
-            )}
-            {project.features && project.features.length > 0 && (
-              <section id="features" className="case-block" aria-labelledby="features-title">
-                <h2 id="features-title">{t(featuresHeading)}</h2>
-                <ol className="feature-list">
-                  {project.features.map((feature) => (
-                    <li key={feature.ko}>{t(feature)}</li>
-                  ))}
-                </ol>
-              </section>
-            )}
-            {renderSections(true)}
-            {project.contribution && (
-              <section id="contribution" className="case-block" aria-labelledby="contribution-title">
-                <h2 id="contribution-title">{t(UI.contributionHeading)}</h2>
-                <ContributionTable contribution={project.contribution} />
-              </section>
-            )}
-            {project.flow && (
-              <section id="flow" className="case-block" aria-labelledby="flow-title">
-                <h2 id="flow-title">{t(project.flow.title)}</h2>
-                <FlowDiagram flow={project.flow} />
-              </section>
-            )}
-            {renderSections(false)}
+            {modern
+              ? parts.map((part, i) => (
+                  <section key={part.id} id={part.id} className="case-block" aria-labelledby={`${part.id}-title`}>
+                    <h2 id={`${part.id}-title`}>
+                      <span className="case-num mono">{i + 1}.</span> {t(part.title)}
+                    </h2>
+                    {part.content}
+                  </section>
+                ))
+              : sections.map((section, i) => <CaseSection key={anchors[i]} section={section} anchor={anchors[i]} />)}
           </div>
         </div>
 

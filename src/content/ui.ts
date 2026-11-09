@@ -1,11 +1,12 @@
-import type { Contribution, FlowStep, L, Metric, PaperKind, Showcase } from './types'
+import type { Contribution, DiagramLinkKind, DiagramOwner, L, Metric, PaarKey, PaperKind, Showcase } from './types'
 
 export const HOME_IDS = {
-  flagship: 'projects',
-  main: 'main-projects',
+  work: 'work',
+  projects: 'projects',
   skills: 'skills',
+  ai: 'ai',
   supporting: 'more-projects',
-  experience: 'experience',
+  record: 'record',
   contact: 'contact',
 } as const
 
@@ -17,11 +18,12 @@ export const NAV_LABELS = {
 } satisfies Record<string, L>
 
 export const SECTION_TITLES = {
-  flagship: { ko: '대표 프로젝트', en: 'Main projects' },
+  work: { ko: '실무 경험', en: 'Work experience' },
   main: { ko: '대표 프로젝트', en: 'Main projects' },
   skills: { ko: '기술', en: 'Skills' },
+  ai: { ko: 'AI와 일하는 방식', en: 'How I work with AI' },
   supporting: { ko: '보조 프로젝트', en: 'Supporting projects' },
-  experience: { ko: '경력과 기록', en: 'Experience' },
+  record: { ko: '수상과 활동', en: 'Awards and activities' },
   contact: { ko: '연락', en: 'Contact' },
 } satisfies Record<string, L>
 
@@ -33,30 +35,101 @@ export const SECTION_LEADS = {
 } satisfies Record<string, L>
 
 export const SHOWCASE_LABELS: Record<Showcase, L> = {
-  flagship: { ko: '대표 프로젝트', en: 'Main project' },
+  work: { ko: '실무 경험', en: 'Work experience' },
   main: { ko: '대표 프로젝트', en: 'Main project' },
   supporting: { ko: '보조 프로젝트', en: 'Supporting project' },
   other: { ko: '그 밖의 프로젝트', en: 'Other projects' },
 }
+
+export const CASE_PARTS = {
+  background: { ko: '배경 및 목적', en: 'Background and goals' },
+  features: { ko: '주요 기능', en: 'Key features' },
+  architecture: { ko: '시스템 아키텍처', en: 'System architecture' },
+  cases: { ko: '주요 문제 해결 사례', en: 'Key problems solved' },
+  results: { ko: '결과 및 성과', en: 'Results' },
+  retro: { ko: '회고', en: 'Reflection' },
+  material: { ko: '관련 자료', en: 'Related material' },
+} satisfies Record<string, L>
+
+export const WORK_PARTS = {
+  company: { ko: '회사 소개', en: 'About the company' },
+  duties: { ko: '맡은 일', en: 'What I was in charge of' },
+  products: { ko: '회사에서 만든 것', en: 'What I built at the company' },
+  results: CASE_PARTS.results,
+  retro: CASE_PARTS.retro,
+  material: CASE_PARTS.material,
+} satisfies Record<string, L>
+
+export const OVERVIEW_LABELS = {
+  audience: { ko: '대상', en: 'For' },
+  period: { ko: '기간', en: 'Period' },
+  team: { ko: '팀 구성', en: 'Team' },
+  role: { ko: '담당 역할', en: 'Role' },
+  status: { ko: '상태', en: 'Status' },
+  scope: { ko: '기여 범위', en: 'Scope of my work' },
+  highlights: { ko: '주요 성과', en: 'Key results' },
+  stack: { ko: '기술 스택', en: 'Stack' },
+  aiUse: { ko: 'AI 활용', en: 'AI tools' },
+} satisfies Record<string, L>
+
+export const SCOPE_LABELS: Record<keyof Contribution, L> = {
+  direct: { ko: '직접 맡음', en: 'My own work' },
+  joint: { ko: '함께 진행', en: 'Done together' },
+  others: { ko: '다른 사람', en: 'By others' },
+  verified: { ko: '직접 검증', en: 'Verified myself' },
+}
+
+export const PAAR_LABELS: Record<PaarKey, L> = {
+  problem: { ko: 'Problem', en: 'Problem' },
+  analysis: { ko: 'Analysis', en: 'Analysis' },
+  action: { ko: 'Action', en: 'Action' },
+  result: { ko: 'Result', en: 'Result' },
+}
+
+export const LEGACY_LABELS = {
+  problem: { ko: '문제', en: 'Problem' },
+  fix: { ko: '해결', en: 'Fix' },
+} satisfies Record<string, L>
+
+export const ARCH_LABELS = {
+  decisions: { ko: '설계 판단', en: 'Design decisions' },
+  versions: { ko: '시기별 구조', en: 'Structure by period' },
+  legend: { ko: '범례', en: 'Legend' },
+} satisfies Record<string, L>
+
+export const DIAGRAM_OWNER: Record<DiagramOwner, L> = {
+  mine: { ko: '내 부분', en: 'Mine' },
+  external: { ko: '외부', en: 'External' },
+  data: { ko: '저장', en: 'Storage' },
+  local: { ko: '로컬', en: 'Local' },
+}
+
+export const DIAGRAM_LINK_KINDS: Record<DiagramLinkKind, L> = {
+  sync: { ko: '요청 · 응답', en: 'Request · response' },
+  realtime: { ko: '실시간 (WebSocket)', en: 'Real-time (WebSocket)' },
+  async: { ko: '비동기 작업', en: 'Async job' },
+  paid: { ko: '유료 API', en: 'Paid API' },
+  local: { ko: '로컬 처리', en: 'Local processing' },
+}
+
+export const PRODUCT_HEADINGS = {
+  product: { ko: '제품', en: 'Product' },
+  status: { ko: '상태', en: 'Status' },
+  role: { ko: '내 역할', en: 'My part' },
+} satisfies Record<string, L>
+
+export const AI_LABELS = {
+  tools: { ko: '도구별 역할', en: 'Tool roles' },
+  flow: { ko: '작업 흐름', en: 'Workflow' },
+  example: { ko: '대표 사례', en: 'Example' },
+  caseLink: { ko: '사례 보기', en: 'See the case' },
+} satisfies Record<string, L>
 
 export const SKILL_HEADINGS = {
   area: { ko: '역량', en: 'Area' },
   items: { ko: '기술', en: 'Tools' },
   did: { ko: '무엇을 했나', en: 'What I did' },
 } satisfies Record<string, L>
-
-export const CONTRIBUTION_LABELS: Record<keyof Contribution, L> = {
-  direct: { ko: '직접 구현', en: 'Built myself' },
-  joint: { ko: '함께 진행', en: 'Done together' },
-  others: { ko: '다른 사람 구현', en: 'Built by others' },
-  verified: { ko: '직접 검증', en: 'Verified myself' },
-  notYet: { ko: '아직 안 한 일', en: 'Not done yet' },
-}
-
-export const FLOW_OWNER: Record<FlowStep['owner'], L> = {
-  mine: { ko: '직접 구현', en: 'Built myself' },
-  external: { ko: '외부', en: 'External' },
-}
 
 export const METRIC_HEADINGS = {
   label: { ko: '항목', en: 'Item' },
@@ -134,6 +207,7 @@ export const UI = {
   ctaResume: { ko: '이력서', en: 'Résumé' },
   blog: { ko: '기술 블로그', en: 'Tech blog' },
   details: { ko: '자세히 보기', en: 'Read the case study' },
+  workDetails: { ko: '실무 상세 보기', en: 'See the work in detail' },
   verification: { ko: '검증', en: 'Verification' },
   stack: { ko: '기술', en: 'Stack' },
   allProjects: { ko: '전체 기록 보기', en: 'See the full record' },
@@ -150,11 +224,10 @@ export const UI = {
   gpa: { ko: '학점', en: 'GPA' },
   backToProjects: { ko: '프로젝트 목록으로', en: 'Back to projects' },
   onThisPage: { ko: '이 페이지', en: 'On this page' },
-  mediaHeading: { ko: '화면과 시연', en: 'Screens and demo' },
-  contributionHeading: { ko: '담당 역할 및 기여', en: 'My role and contribution' },
+  demo: { ko: '대표 시연', en: 'Demo' },
   metricsHeading: { ko: '확인한 수치', en: 'Numbers I checked' },
+  verifiedHeading: { ko: '직접 검증', en: 'Verified myself' },
   featuresHeading: { ko: '주요 기능', en: 'Key features' },
-  audience: { ko: '대상', en: 'For' },
   period: { ko: '기간', en: 'Period' },
   role: { ko: '역할', en: 'Role' },
   status: { ko: '상태', en: 'Status' },

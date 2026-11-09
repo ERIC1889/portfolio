@@ -20,44 +20,13 @@ export function activityMonths(period: string): string {
 
 type Props = { archive: Archive; topAwards: Award[]; topActivities: Activity[]; stats: Stat[]; caseNames: Record<string, L> }
 
-export function Experience({ archive, topAwards, topActivities, stats, caseNames }: Props) {
+export function Record({ archive, topAwards, topActivities, stats, caseNames }: Props) {
   const { t } = useLang()
   const { education } = archive
   return (
-    <section className="section" aria-labelledby={HOME_IDS.experience}>
+    <section className="section" aria-labelledby={HOME_IDS.record}>
       <div className="wrap">
-        <SectionHead id={HOME_IDS.experience} title={SECTION_TITLES.experience} />
-        <ol className="exp-timeline">
-          {archive.experience.map((job) => (
-            <li key={job.org.ko} className="exp-row">
-              <p className="exp-when mono">{job.period}</p>
-              <div className="exp-what">
-                <h3 className="exp-title">
-                  {t(job.org)} <span className="exp-role">· {t(job.title)}</span>
-                </h3>
-                <p className="muted">{t(job.context)}</p>
-                {job.responsibilities.length > 0 && (
-                  <ul className="dash-list">
-                    {job.responsibilities.map((item) => (
-                      <li key={item.ko}>{t(item)}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </li>
-          ))}
-          <li className="exp-row">
-            <p className="exp-when mono">{education.period}</p>
-            <div className="exp-what">
-              <h3 className="exp-title">
-                {t(education.school)} <span className="exp-role">· {t(education.major)}</span>
-              </h3>
-              <p className="muted">
-                {t(education.note)} · {t(UI.gpa)} <span className="mono">{education.gpa}</span>
-              </p>
-            </div>
-          </li>
-        </ol>
+        <SectionHead id={HOME_IDS.record} title={SECTION_TITLES.record} />
 
         <StatTiles stats={stats} label={UI.recordStats} />
 
@@ -91,6 +60,20 @@ export function Experience({ archive, topAwards, topActivities, stats, caseNames
               <span className="award-org">{t(activity.org)}</span>
             </li>
           ))}
+        </ol>
+
+        <ol className="exp-timeline record-education">
+          <li className="exp-row">
+            <p className="exp-when mono">{education.period}</p>
+            <div className="exp-what">
+              <h3 className="exp-title">
+                {t(education.school)} <span className="exp-role">· {t(education.major)}</span>
+              </h3>
+              <p className="muted">
+                {t(education.note)} · {t(UI.gpa)} <span className="mono">{education.gpa}</span>
+              </p>
+            </div>
+          </li>
         </ol>
 
         <div className="actions">

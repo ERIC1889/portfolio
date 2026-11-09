@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { archive, chapters, getPaperCounts, getRecordStats, getTopActivities, getTopAwards, profile, projects } from './index'
+import { aiWork, archive, chapters, getPaperCounts, getRecordStats, getTopActivities, getTopAwards, profile, projects } from './index'
 import * as ui from './ui'
 import { checkEn, checkKo, checkLinks, checkNoLocalPaths, checkNoPhoneNumbers, collectStrings } from './validate'
 
-const ALL_CONTENT = { profile, chapters, projects, archive, ui: { ...ui } }
+const ALL_CONTENT = { profile, chapters, projects, archive, aiWork, ui: { ...ui } }
 
 const textOf = (content: unknown) =>
   collectStrings(content)

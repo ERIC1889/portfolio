@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { CaseStudy } from '@/components/case/CaseStudy'
 import { getCases, getProject } from '@/content'
-import { projectTitle } from '@/content/select'
+import { pageTitle } from '@/content/select'
 import { getCasePage, pageMetadata } from '../../_lib/pages'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProject(slug)
   if (!project) return {}
   return pageMetadata({
-    title: projectTitle(project).ko,
+    title: pageTitle(project).ko,
     description: (project.product ?? project.summary).ko,
     path: `/projects/${slug}`,
   })

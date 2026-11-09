@@ -1,4 +1,5 @@
-import type { Lang, Project, SectionId } from './types'
+import { allMedia, hasNewShape } from './select'
+import type { Lang, Project } from './types'
 
 type Found = { path: string; lang: Lang; value: string }
 
@@ -97,34 +98,43 @@ export function checkBanned(project: Project, rules: (string | RegExp)[]): strin
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 
-const SECTION_ORDER: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'paper', 'retro', 'evidence']
-const REQUIRED_SECTIONS: SectionId[] = ['problem', 'implementation', 'result', 'retro', 'evidence']
-
-export function checkFeaturedShape(project: Project): string[] {
+export function checkCaseShape(project: Project): string[] {
   const errors: string[] = []
-  for (const field of ['title', 'product', 'status', 'role', 'team'] as const) {
-    if (!project[field]?.ko.trim()) errors.push(`${project.slug}: missing ${field}`)
+  const where = project.slug
+  for (const field of ['product', 'status', 'role', 'team'] as const) {
+    if (!project[field]?.ko.trim()) errors.push(`${where}: missing ${field}`)
   }
-  if (!project.showcase) errors.push(`${project.slug}: missing showcase`)
-  if (!project.statusCheckedAt || !DATE.test(project.statusCheckedAt)) errors.push(`${project.slug}: statusCheckedAt must be YYYY-MM-DD`)
-  if (!project.media?.length) errors.push(`${project.slug}: missing media`)
-  const ids = (project.sections ?? []).map((section) => section.id)
-  for (const required of REQUIRED_SECTIONS) {
-    if (!ids.includes(required)) errors.push(`${project.slug}: missing section ${required}`)
+  if (!project.showcase) errors.push(`${where}: missing showcase`)
+  if (!project.statusCheckedAt || !DATE.test(project.statusCheckedAt)) errors.push(`${where}: statusCheckedAt must be YYYY-MM-DD`)
+  if (!project.media?.length && !project.image) errors.push(`${where}: missing media or image`)
+  if (!hasNewShape(project)) {
+    errors.push(`${where}: missing the case shape (overview, background, cases or products)`)
+    return errors
   }
-  const ordered = (project.sections ?? []).filter((section) => !section.lead).map((section) => section.id)
-  const ranks = ordered.map((id) => SECTION_ORDER.indexOf(id))
-  const outOfOrder = ranks.findIndex((rank, i) => i > 0 && rank < ranks[i - 1])
-  if (outOfOrder !== -1) errors.push(`${project.slug}: section ${ordered[outOfOrder]} is out of order`)
-  const anchors = (project.sections ?? []).flatMap((section) => (section.anchor ? [section.anchor] : []))
-  if (new Set(anchors).size !== anchors.length) errors.push(`${project.slug}: section anchors repeat`)
+  if (project.sections?.length) errors.push(`${where}: legacy sections with the new shape`)
+  if ((project.overview?.highlights.length ?? 0) < 2) errors.push(`${where}: overview needs at least 2 highlights`)
+  if (!project.background?.length) errors.push(`${where}: missing background`)
+  if (!project.results?.length) errors.push(`${where}: missing results`)
+  if (!project.retro?.length) errors.push(`${where}: missing retro`)
+  if (project.kind === 'work') {
+    if (!project.duties?.length) errors.push(`${where}: missing duties`)
+    if (!project.products?.length) errors.push(`${where}: missing products`)
+    const ids = (project.products ?? []).map((product) => product.id)
+    if (new Set(ids).size !== ids.length) errors.push(`${where}: product ids repeat`)
+    for (const product of project.products ?? []) {
+      if (!product.intro.length) errors.push(`${where}: product ${product.id} needs an intro`)
+    }
+  }
+  const cases = [...(project.cases ?? []), ...(project.products ?? []).flatMap((product) => product.cases ?? [])]
+  for (const item of cases) {
+    if (!item.problem.body.length || !item.action.body.length) errors.push(`${where}: case "${item.title.ko}" needs problem and action`)
+  }
   return errors
 }
 
 export function checkMedia(project: Project): string[] {
-  const all = [...(project.media ?? []), ...(project.sections ?? []).flatMap((section) => section.media ?? [])]
   const errors: string[] = []
-  for (const media of all) {
+  for (const media of allMedia(project)) {
     const where = `${project.slug} ${media.src}`
     if (!media.src.startsWith('/')) errors.push(`${where}: src must be a site path`)
     if (!media.capturedAt || !DATE.test(media.capturedAt)) errors.push(`${where}: capturedAt must be YYYY-MM-DD`)

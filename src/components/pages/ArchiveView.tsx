@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
 import { useLang } from '@/components/providers/LanguageProvider'
 import { SmartLink } from '@/components/common/bits'
 import { StatTiles } from '@/components/common/StatTiles'
-import { projectName } from '@/content/select'
+import { casePictures, projectName } from '@/content/select'
 import type { Archive, L, PaperKind, Project, Stat } from '@/content/types'
 import { ARCHIVE_HEADINGS, PAPER_KINDS, SHOWCASE_LABELS, UI, authorOrderLabel } from '@/content/ui'
 
@@ -27,7 +27,7 @@ function Block({ id, title, count, children }: { id: string; title: L; count?: n
 }
 
 export function cardPicture(project: Project): { src: string; alt: L; caption: L } | undefined {
-  const media = project.media?.find((m) => m.kind !== 'video')
+  const media = casePictures(project).find((m) => m.kind !== 'video')
   if (media) return { src: media.src, alt: media.alt, caption: media.caption }
   if (project.image && project.imageCaption) return { src: project.image, alt: project.imageCaption, caption: project.imageCaption }
   return undefined

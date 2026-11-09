@@ -88,7 +88,7 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
                 <strong>{t(projectTitle(project))}</strong> <span className="mono">{project.period}</span>
               </p>
               <p className="muted">
-                {[project.team, project.role, project.showcase === 'flagship' ? project.status : undefined]
+                {[project.team, project.role, project.showcase === 'work' ? project.status : undefined]
                   .flatMap((part) => (part ? [t(part)] : []))
                   .join(' · ')}
               </p>
@@ -96,7 +96,7 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
                 {(project.resumeItems ?? project.features ?? [project.summary]).map((item) => (
                   <li key={item.ko}>{t(item)}</li>
                 ))}
-                {project.showcase === 'flagship' &&
+                {project.showcase === 'work' &&
                   project.metrics?.slice(0, 1).map((metric) => (
                     <li key={metric.label.ko}>
                       {t(metric.label)}: <span className="mono">{metric.value}</span> — {t(metric.target)} ({t(metric.condition)})

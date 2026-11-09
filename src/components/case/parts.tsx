@@ -1,26 +1,52 @@
 'use client'
 
 import { useLang } from '@/components/providers/LanguageProvider'
-import type { CaseSection, Contribution, Flow, Metric } from '@/content/types'
-import { CONTRIBUTION_LABELS, FLOW_OWNER, METRIC_HEADINGS, METRIC_SOURCES } from '@/content/ui'
+import type { CaseSection, Contribution, Metric, Product } from '@/content/types'
+import { METRIC_HEADINGS, METRIC_SOURCES, PRODUCT_HEADINGS, SCOPE_LABELS } from '@/content/ui'
 
-const CONTRIBUTION_ORDER: (keyof Contribution)[] = ['direct', 'joint', 'others', 'verified', 'notYet']
+const SCOPE_ORDER: (keyof Contribution)[] = ['direct', 'joint', 'others', 'verified']
 
-export function ContributionTable({ contribution }: { contribution: Contribution }) {
+export function ScopeRows({ contribution, keys = ['direct', 'joint', 'others'] }: { contribution: Contribution; keys?: (keyof Contribution)[] }) {
+  const { t } = useLang()
+  const rows = SCOPE_ORDER.filter((key) => keys.includes(key) && contribution[key]?.length)
+  if (rows.length === 0) return null
+  return (
+    <dl className="scope-rows">
+      {rows.map((key) => (
+        <div key={key} className={`scope-row is-${key}`}>
+          <dt>{t(SCOPE_LABELS[key])}</dt>
+          <dd>
+            <ul className="dash-list">
+              {contribution[key]!.map((item) => (
+                <li key={item.ko}>{t(item)}</li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+export function ProductTable({ products, hrefBase = '' }: { products: Product[]; hrefBase?: string }) {
   const { t } = useLang()
   return (
-    <table className="table contribution-table">
+    <table className="table product-table">
+      <thead>
+        <tr>
+          <th scope="col">{t(PRODUCT_HEADINGS.product)}</th>
+          <th scope="col">{t(PRODUCT_HEADINGS.status)}</th>
+          <th scope="col">{t(PRODUCT_HEADINGS.role)}</th>
+        </tr>
+      </thead>
       <tbody>
-        {CONTRIBUTION_ORDER.filter((key) => contribution[key]?.length).map((key) => (
-          <tr key={key} className={`row-${key}`}>
-            <th scope="row">{t(CONTRIBUTION_LABELS[key])}</th>
-            <td>
-              <ul className="dash-list">
-                {contribution[key]!.map((item) => (
-                  <li key={item.ko}>{t(item)}</li>
-                ))}
-              </ul>
-            </td>
+        {products.map((product) => (
+          <tr key={product.id}>
+            <th scope="row">
+              <a href={`${hrefBase}#${product.id}`}>{t(product.name)}</a>
+            </th>
+            <td data-label={t(PRODUCT_HEADINGS.status)}>{t(product.status)}</td>
+            <td data-label={t(PRODUCT_HEADINGS.role)}>{t(product.role)}</td>
           </tr>
         ))}
       </tbody>
@@ -89,38 +115,5 @@ export function SectionTable({ table }: { table: NonNullable<CaseSection['table'
         ))}
       </tbody>
     </table>
-  )
-}
-
-export function FlowDiagram({ flow }: { flow: Flow }) {
-  const { t } = useLang()
-  return (
-    <figure className="flow">
-      <ol className="flow-steps">
-        {flow.steps.map((step) => (
-          <li key={step.label.ko} className={`flow-step is-${step.owner}`}>
-            <div className="flow-box">
-              <span className="flow-owner">{t(FLOW_OWNER[step.owner])}</span>
-              <strong className="flow-label">{t(step.label)}</strong>
-              {step.detail && <span className="flow-detail">{t(step.detail)}</span>}
-              {step.branches && (
-                <ul className="flow-branches">
-                  {step.branches.map((branch) => (
-                    <li key={branch.when.ko}>
-                      <span className="flow-when">{t(branch.when)}</span>
-                      <span className="flow-arrow" aria-hidden="true">
-                        →
-                      </span>
-                      <span className="flow-then">{t(branch.then)}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </li>
-        ))}
-      </ol>
-      <figcaption>{t(flow.caption)}</figcaption>
-    </figure>
   )
 }

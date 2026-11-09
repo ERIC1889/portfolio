@@ -1,0 +1,177 @@
+import type { Project } from '../types'
+import { k, section } from './helpers'
+
+const ROLE: [string, string] = ['담당 역할 및 기여', 'My role and contribution']
+const MEMORABLE: [string, string] = ['인상적인 문제', 'A memorable problem']
+
+export const mediaPulse: Project = {
+  slug: 'media-pulse',
+  name: 'Media Pulse',
+  years: [2023],
+  tier: 'card',
+  showcase: 'other',
+  period: '2023.03–2023.10',
+  team: k('3인 · 첫 웹 프로젝트', 'Team of 3 · my first web project'),
+  role: k('팀장 · 백엔드 · DB · API 연동 · 프론트엔드 구조와 피드백', 'Team lead · backend · database · API integration · frontend structure and feedback'),
+  stack: ['Node.js', 'Express', 'MongoDB', 'Python', 'Plotly.js', 'Naver API'],
+  summary: k(
+    '유명인 키워드의 월별 네이버 검색량 추이를 추정해 기기별 차트로 보여 주는 웹 서비스. 트렌드 API가 상대값만 주자 세 API를 비교 검증하고, 네이버 검색광고 API의 월간 검색 수를 기준값으로 삼아 검색량을 추정했습니다.',
+    'A web service that estimates monthly Naver search volume for celebrity keywords and charts it by device. The trend API gave only relative values, so I compared and checked three APIs and used the monthly search counts from the Naver search ad API as the baseline for the estimate.',
+  ),
+  product: k('유명인 키워드의 월별 네이버 검색량 추이를 추정해 기기별 차트로 보여 주는 첫 웹 서비스', 'My first web service, which estimates monthly Naver search volume for celebrity keywords and charts it by device'),
+  sections: [
+    section('implementation', ROLE, [['팀장으로서 백엔드·DB·네이버 API 연동을 맡았고, 프론트엔드는 화면 구조를 잡고 피드백으로 참여했습니다.', 'As team lead I handled the backend, database and Naver API integration, and on the frontend I set the screen structure and gave feedback.']], { lead: true, anchor: 'role' }),
+    section(
+      'implementation',
+      MEMORABLE,
+      [
+        [
+          '트렌드 API가 실제 횟수 없이 상대값만 주어 세 API를 비교 검증하고, 네이버 검색광고 API의 월간 검색 수를 기준값으로 삼아 검색량을 추정했습니다. 값은 추정치입니다.',
+          'The trend API gives only relative values, so I compared and checked three APIs and used the monthly search counts from the Naver search ad API as the baseline. The figures are estimates.',
+        ],
+      ],
+      { anchor: 'problem' },
+    ),
+  ],
+  imageSize: [955, 782],
+  image: '/images/projects/media-pulse.png',
+  imageCaption: k('월별 검색량 추이 차트 · 실제 화면', 'Monthly search-volume chart · real screen'),
+}
+
+export const others: Project[] = [
+  {
+    slug: 'wildfire',
+    name: '산불 예측',
+    nameEn: 'Wildfire Risk Model',
+    years: [2025],
+    tier: 'card',
+    period: '2025',
+    team: k('3인 · 통계청 논문 공모전', 'Team of 3 · Statistics Korea paper contest'),
+    stack: ['Python', 'pandas', 'LightGBM', 'Prophet'],
+    summary: k(
+      '동해안 10개 시·군의 2022–2024년 시간 단위 데이터 21만여 행에 날씨·공식 산불위험지수·관광객 수·공휴일과 축제를 엮은 다요인 산불 위험 모델. 실제 화재가 드물어 목표를 공식 위험 등급으로 두고, 실제 화재일과의 일치는 따로 확인했습니다.',
+      'A multi-factor wildfire risk model joining over 210,000 hourly rows (2022–2024) for 10 east-coast cities and counties with weather, the official risk index, tourist numbers, holidays and festivals. Actual fires are rare, so the target is the official risk level, checked separately against actual fire days.',
+    ),
+  },
+  {
+    slug: 'restplanner',
+    name: 'RestPlanner',
+    years: [2025],
+    tier: 'card',
+    period: '2025.09–2025.12',
+    team: k('개인 · 논문', 'Solo · paper'),
+    stack: ['Express', 'React', 'OpenAI API', 'Google Calendar API'],
+    summary: k(
+      'LLM이 일정을 제안하면 다른 LLM 역할이 휴식과 과부하 기준으로 검토하고(최대 2번), 사용자가 승인해야 Google 캘린더에 기록하는 일정 관리 서비스. 한국정보통신학회 2026 춘계 논문 「A2A 협업 기반 웰니스 일정 관리 시스템」(1저자).',
+      'A scheduling service where one LLM proposes a schedule, another LLM role reviews it against rest and overload criteria (up to twice), and nothing goes into Google Calendar until the user approves. First-author paper at the 2026 KIICE spring conference: “A Wellness Scheduling System Based on A2A Collaboration”.',
+    ),
+    image: '/images/projects/restplanner.png',
+    imageCaption: k('일정 요청 입력 화면 · 실제 화면', 'Schedule request screen · real screen'),
+  },
+  {
+    slug: 'ai-hiring-textmining',
+    name: 'AI 채용 담론 텍스트마이닝',
+    nameEn: 'AI-era Hiring Text Mining',
+    years: [2026],
+    tier: 'card',
+    period: '2026.05–2026.06',
+    team: k('4인 · 수업 논문', 'Team of 4 · course paper'),
+    role: k('뉴스 담론 분석 · 국내외 비교 분석', 'News discourse analysis · Korea vs. global comparison'),
+    stack: ['Python', 'KoNLPy', 'BERTopic'],
+    summary: k(
+      '"AI가 개발자를 대체한다"는 뉴스 담론이 실제 채용 공고(점핏·원티드)의 요구 역량과 맞는지 비교한 연구. 링크드인 글로벌 공고와의 비교 분석을 맡았고, 데이터가 받쳐 주지 않는 주장은 낮춰 적었습니다.',
+      'A study comparing the news narrative that "AI will replace developers" with the skills real job postings ask for (Jumpit, Wanted). I handled the comparison with global LinkedIn postings and toned down claims the data didn\'t support.',
+    ),
+  },
+  {
+    slug: 'jarvis',
+    name: 'J.A.R.V.I.S',
+    years: [2026],
+    tier: 'card',
+    period: '2026.04',
+    team: k('개인 · 취미', 'Solo · hobby'),
+    stack: ['Electron', 'React', 'Three.js', 'MediaPipe Hands', 'Ollama', 'faster-whisper', 'Kokoro TTS'],
+    summary: k(
+      'Mac 안에서만 도는 홀로그램 비서 실험. 손동작으로 화면을 다루고, 말로 물으면 답을 읽어 줍니다. 로컬 LLM 답을 문장 단위로 끊어 나오는 대로 읽게 했습니다.',
+      'A holographic assistant experiment that runs entirely on a Mac: hand gestures to work the screen, and spoken questions answered aloud. The local LLM’s answer is read aloud sentence by sentence as it arrives.',
+    ),
+  },
+  {
+    slug: 'dev-blog',
+    name: '개발 블로그',
+    nameEn: 'Dev Blog',
+    years: [2026],
+    tier: 'card',
+    period: '2026.05–2026.09',
+    team: k('개인', 'Solo'),
+    stack: ['Next.js 16', 'MDX', 'Keystatic', 'Vercel'],
+    summary: k(
+      '배운 것을 글로 남기는 기술 블로그. 글 메타데이터가 틀리면 빌드 전에 zod 검사로 멈추게 했습니다.',
+      'A tech blog where I write down what I learn. Wrong post metadata stops the build through a zod check before it ships.',
+    ),
+    links: [{ kind: 'site', label: k('junyoung-dev-notes.vercel.app', 'junyoung-dev-notes.vercel.app'), href: 'https://junyoung-dev-notes.vercel.app' }],
+  },
+  {
+    slug: 'llm-dolbom',
+    name: 'LLM 디지털 돌봄',
+    nameEn: 'LLM Digital Care',
+    years: [2024],
+    tier: 'line',
+    period: '2024.06–2024.12',
+    stack: ['Express', 'OpenAI Assistants', 'Whisper'],
+    summary: k(
+      '메타버스(Quest 3) 속 NPC 돌봄이 서비스의 LLM 대화 백엔드. 한신 ABC 캠프 해커톤 우수상(팀).',
+      'The LLM conversation backend for an NPC caregiver service in the metaverse (Quest 3). Excellence Award at the Hanshin ABC Camp Hackathon (team).',
+    ),
+    image: '/images/projects/llm-dolbom.png',
+    imageCaption: k('메타버스 속 NPC 대화 장면 · 팀 결과물 화면', "An NPC conversation in the metaverse · the team's build"),
+  },
+  {
+    slug: 'patentry',
+    name: 'Patentry',
+    years: [2024],
+    tier: 'line',
+    period: '2024.01–2024.04',
+    stack: ['OpenAI Assistants'],
+    summary: k('특허법·통계 문서를 근거로 답하는 AI 변리사 챗봇 프로토타입.', 'A prototype AI patent-attorney chatbot that answers from patent law and statistics documents.'),
+  },
+  {
+    slug: 'dreamtrack',
+    name: 'DreamTrack',
+    years: [2025],
+    tier: 'line',
+    period: '2025.10',
+    stack: ['React', 'TypeScript', 'Express', 'MySQL', 'OpenAI API'],
+    summary: k('고등학생 진로 진단과 로드맵 플랫폼. SUMTECH 해커톤 장려상(팀).', 'A career assessment and roadmap platform for high-school students. Honorable Mention at the SUMTECH Hackathon (team).'),
+    image: '/images/projects/dreamtrack.png',
+    imageCaption: k('회원가입 화면 · 실제 화면', 'Sign-up screen · real screen'),
+  },
+  {
+    slug: 'teamflow',
+    name: 'TeamFlow',
+    years: [2025, 2026],
+    tier: 'line',
+    period: '2025.09–2026.04',
+    stack: ['React', 'Gemini API'],
+    summary: k(
+      '회의 발언을 받아 적어 문장별 감정과 회의 요약을 보여 주는 브라우저 프로토타입(3인). 한국디지털콘텐츠학회 2026 하계 논문(1저자).',
+      'A browser prototype that transcribes what is said in a meeting and shows the emotion of each sentence and a summary of the meeting (team of 3). First-author paper at the 2026 Korea Digital Contents Society summer conference.',
+    ),
+    image: '/images/projects/teamflow.png',
+    imageCaption: k('회의 화면과 AI 퍼실리테이터 패널 · 실제 화면', 'Meeting screen with the AI facilitator panel · real screen'),
+  },
+  {
+    slug: 'unifit',
+    name: 'UniFit',
+    years: [2026],
+    tier: 'line',
+    period: '2026.02–2026.03',
+    stack: ['React', 'TypeScript', 'Express', 'MySQL', 'JWT'],
+    summary: k(
+      '학업·진로·팀 프로젝트를 한곳에서 관리하는 풀스택 프로토타입(29개 테이블, 역할 기반 권한).',
+      'A full-stack prototype for managing coursework, career plans and team projects in one place (29 tables, role-based permissions).',
+    ),
+    image: '/images/projects/unifit.png',
+    imageCaption: k('진로 로드맵 화면 · 실제 화면', 'Career roadmap screen · real screen'),
+  },
+]

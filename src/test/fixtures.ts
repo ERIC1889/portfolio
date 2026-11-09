@@ -1,8 +1,16 @@
-import type { Chapter, Project, SectionId } from '@/content/types'
+import type { Case, Chapter, Project } from '@/content/types'
 
 export const l = (ko: string, en = '') => ({ ko, en })
 
-const SECTION_IDS: SectionId[] = ['problem', 'implementation', 'validation', 'result', 'retro', 'evidence']
+export function paar(title: string): Case {
+  return {
+    title: l(title),
+    problem: { lead: l(`${title} 문제 요약`), body: [l(`${title} 문제`)] },
+    analysis: { lead: l(`${title} 분석 요약`), body: [l(`${title} 분석`)] },
+    action: { lead: l(`${title} 행동 요약`), body: [l(`${title} 행동`)] },
+    result: { lead: l(`${title} 결과 요약`), body: [l(`${title} 결과`)] },
+  }
+}
 
 export function featuredProject(slug: string, name: string, years: Project['years'], extra: Partial<Project> = {}): Project {
   return {
@@ -20,6 +28,7 @@ export function featuredProject(slug: string, name: string, years: Project['year
     statusCheckedAt: '2026-10-29',
     stack: ['Next.js', 'TypeScript'],
     summary: l(`${name} 요약`),
+    overview: { highlights: [l(`${name} 성과 하나`), l(`${name} 성과 둘`)] },
     features: [l(`${name} 기능 하나`), l(`${name} 기능 둘`)],
     media: [
       {
@@ -31,15 +40,30 @@ export function featuredProject(slug: string, name: string, years: Project['year
         caption: l(`${name} 화면 · 실제 화면`),
         capturedAt: '2026-10-01',
       },
+      {
+        kind: 'video',
+        src: `/media/${slug}/demo.mp4`,
+        poster: `/media/${slug}/demo-poster.webp`,
+        width: 1280,
+        height: 720,
+        alt: l(`${name} 시연`),
+        caption: l(`${name} 시연 · 실제 화면`),
+        capturedAt: '2026-10-01',
+      },
     ],
-    sections: SECTION_IDS.map((id) => ({ id, title: l(`${id} 제목`), body: [l(`${id} 본문`)] })),
+    background: [l(`${name} 배경`)],
+    architecture: { body: [l(`${name} 구조`)], decisions: [l(`${name} 설계 판단`)] },
+    cases: [paar(`${name} 사례`)],
+    results: [l(`${name} 결과`)],
+    retro: [l(`${name} 회고`)],
+    material: [l(`${name} 자료`)],
     ...extra,
   }
 }
 
 export const FIXTURE_PROJECTS: Project[] = [
   featuredProject('pitches', 'Pitches', [2024, 2026], { showcase: 'main' }),
-  featuredProject('finz', 'Finz', [2026], { showcase: 'flagship' }),
+  featuredProject('finz', 'Finz', [2026], { showcase: 'work', kind: 'work' }),
   featuredProject('skillpilot', 'SkillPilot', [2025], { showcase: 'main' }),
   featuredProject('closetmate', 'ClosetMate', [2026], { showcase: 'main' }),
   {

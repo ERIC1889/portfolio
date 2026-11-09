@@ -3,15 +3,17 @@
 import Link from 'next/link'
 import { useLang } from '@/components/providers/LanguageProvider'
 import { MediaFigure } from '@/components/common/Media'
+import { Rich } from '@/components/common/Rich'
 import { SmartLink, StackList, StatusBadge } from '@/components/common/bits'
 import { casePictures, projectTitle } from '@/content/select'
 import type { Project } from '@/content/types'
-import { UI } from '@/content/ui'
+import { OVERVIEW_LABELS, UI } from '@/content/ui'
 
 export function ProjectRow({ project }: { project: Project }) {
   const { t } = useLang()
   const picture = casePictures(project).find((m) => m.kind !== 'video')
   const link = project.links?.[0]
+  const highlights = project.overview?.highlights ?? []
   return (
     <article className={`project-row${picture && picture.height > picture.width ? ' has-tall' : ''}`}>
       {picture && (
@@ -30,15 +32,29 @@ export function ProjectRow({ project }: { project: Project }) {
             {project.role && t(project.role)}
           </p>
         )}
-        {project.features && project.features.length > 0 && (
+        {highlights.length > 0 ? (
           <>
-            <h4 className="label">{t(project.featuresHeading ?? UI.featuresHeading)}</h4>
+            <h4 className="label">{t(OVERVIEW_LABELS.highlights)}</h4>
             <ul className="feature-list is-plain">
-              {project.features.map((feature) => (
-                <li key={feature.ko}>{t(feature)}</li>
+              {highlights.map((item) => (
+                <li key={item.ko}>
+                  <Rich text={t(item)} />
+                </li>
               ))}
             </ul>
           </>
+        ) : (
+          project.features &&
+          project.features.length > 0 && (
+            <>
+              <h4 className="label">{t(UI.featuresHeading)}</h4>
+              <ul className="feature-list is-plain">
+                {project.features.map((feature) => (
+                  <li key={feature.ko}>{t(feature)}</li>
+                ))}
+              </ul>
+            </>
+          )
         )}
         <StackList items={project.stack} label={UI.stack} />
         <div className="actions">

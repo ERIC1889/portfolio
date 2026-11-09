@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { FIXTURE_PROJECTS, l } from '@/test/fixtures'
-import type { Archive, Chapter } from './types'
+import { FIXTURE_PROJECTS, featuredProject, l, paar } from '@/test/fixtures'
+import type { Archive, Chapter, Media } from './types'
 import {
+  allMedia,
+  caseDemo,
+  caseGallery,
+  casePictures,
+  pageTitle,
   projectName,
   projectTitle,
   selectByYear,
@@ -23,7 +28,7 @@ describe('selectCases', () => {
 
 describe('selectShowcase', () => {
   it('picks the projects of one home section, keeping page order', () => {
-    expect(selectShowcase(FIXTURE_PROJECTS, 'flagship').map((p) => p.slug)).toEqual(['finz'])
+    expect(selectShowcase(FIXTURE_PROJECTS, 'work').map((p) => p.slug)).toEqual(['finz'])
     expect(selectShowcase(FIXTURE_PROJECTS, 'main').map((p) => p.slug)).toEqual(['skillpilot', 'pitches', 'closetmate'])
     expect(selectShowcase(FIXTURE_PROJECTS, 'supporting')).toEqual([])
   })
@@ -50,7 +55,7 @@ describe('selectByYear', () => {
   })
 })
 
-describe('projectName / projectTitle', () => {
+describe('projectName / projectTitle / pageTitle', () => {
   const finz = FIXTURE_PROJECTS[1]
 
   it('uses the English name for English readers when one exists', () => {
@@ -61,6 +66,38 @@ describe('projectName / projectTitle', () => {
   it('prefers the product title and falls back to the name', () => {
     expect(projectTitle(finz).ko).toBe('Finz 제품')
     expect(projectTitle({ name: 'Patentry' })).toEqual({ ko: 'Patentry', en: 'Patentry' })
+  })
+
+  it('heads a work page by its work title and every other page by the product title', () => {
+    expect(pageTitle({ name: 'Finz', title: l('Finz 제품'), workTitle: l('회사 · 직함') }).ko).toBe('회사 · 직함')
+    expect(pageTitle(finz).ko).toBe('Finz 제품')
+  })
+})
+
+describe('media selection', () => {
+  const shot = (src: string): Media => ({ kind: 'screenshot', src, width: 10, height: 10, alt: l('a'), caption: l('c'), capturedAt: '2026-10-29' })
+  const video: Media = { kind: 'video', src: '/v.mp4', poster: '/p.webp', width: 10, height: 10, alt: l('v'), caption: l('c'), capturedAt: '2026-10-29' }
+  const project = featuredProject('x', 'X', [2026], {
+    media: [video, shot('/top.webp')],
+    cases: [{ ...paar('사례'), media: [shot('/case.webp')] }],
+    products: [{ id: 'p', name: l('p'), status: l('s'), role: l('r'), intro: [l('i')], media: [shot('/product.webp')], cases: [{ ...paar('제품 사례'), media: [shot('/product-case.webp')] }] }],
+  })
+
+  it('gathers every picture and video on the page, in page order', () => {
+    expect(allMedia(project).map((m) => m.src)).toEqual(['/v.mp4', '/top.webp', '/case.webp', '/product.webp', '/product-case.webp'])
+    expect(casePictures(project).map((m) => m.src)).toEqual(['/v.mp4', '/top.webp', '/case.webp', '/product.webp', '/product-case.webp'])
+  })
+
+  it('separates the demo video from the gallery', () => {
+    expect(caseDemo(project)?.src).toBe('/v.mp4')
+    expect(caseGallery(project).map((m) => m.src)).toEqual(['/top.webp'])
+    expect(caseDemo(FIXTURE_PROJECTS[4])).toBeUndefined()
+  })
+
+  it('falls back to the card image for a project without media', () => {
+    const card = { ...FIXTURE_PROJECTS[4], image: '/images/x.png', imageSize: [100, 50] as [number, number], imageCaption: l('x 화면') }
+    expect(casePictures(card)).toEqual([{ kind: 'screenshot', src: '/images/x.png', width: 100, height: 50, alt: l('x 화면'), caption: l('x 화면') }])
+    expect(casePictures(FIXTURE_PROJECTS[4])).toEqual([])
   })
 })
 

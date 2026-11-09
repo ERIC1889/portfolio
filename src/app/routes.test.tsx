@@ -61,7 +61,7 @@ describe('/projects/[slug]', () => {
 
   it('titles and describes the page by the product, with its own canonical address', async () => {
     const meta = await ProjectRoute.generateMetadata(slugParams('finz'))
-    expect(meta.title).toBe('Finz 개인 세금 계산기')
+    expect(meta.title).toBe('주식회사 Finz Labs · 개발 총괄')
     expect(meta.description).toContain('해외주식 양도세·증여 평가')
     expect(meta.alternates?.canonical).toBe('/projects/finz')
     expect(meta.openGraph).toMatchObject({ url: '/projects/finz', images: [expect.objectContaining({ url: '/og.png' })] })

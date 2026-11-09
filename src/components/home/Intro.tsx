@@ -26,7 +26,7 @@ export function Intro({ profile }: { profile: Profile }) {
         <p className="intro-text">{t(profile.intro)}</p>
         <StackList items={profile.coreStack} label={UI.stack} />
         <div className="actions">
-          <a href={`#${HOME_IDS.flagship}`} className="btn btn-primary">
+          <a href={`#${HOME_IDS.projects}`} className="btn btn-primary">
             {t(UI.ctaProjects)} <span aria-hidden="true">↓</span>
           </a>
           <Link href="/resume" className="btn">

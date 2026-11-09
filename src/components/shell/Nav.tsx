@@ -7,9 +7,9 @@ import { profile } from '@/content/profile'
 import { HOME_IDS, NAV_LABELS, UI } from '@/content/ui'
 
 const ITEMS = [
-  { href: `/#${HOME_IDS.flagship}`, label: NAV_LABELS.projects },
+  { href: `/#${HOME_IDS.projects}`, label: NAV_LABELS.projects },
   { href: `/#${HOME_IDS.skills}`, label: NAV_LABELS.skills },
-  { href: `/#${HOME_IDS.experience}`, label: NAV_LABELS.experience },
+  { href: `/#${HOME_IDS.work}`, label: NAV_LABELS.experience },
   { href: '/resume', label: NAV_LABELS.resume },
 ]
 
