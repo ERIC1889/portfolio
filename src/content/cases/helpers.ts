@@ -1,4 +1,4 @@
-import type { CaseSection, Diagram, DiagramColumn, DiagramLinkKind, DiagramNode, DiagramOwner, Media, Metric, PaarStep } from '../types'
+import type { CaseSection, Diagram, DiagramColumn, DiagramFooter, DiagramIconName, DiagramLinkKind, DiagramNode, DiagramOwner, Media, Metric, PaarStep } from '../types'
 import { DIAGRAM_LINK_KINDS } from '../ui'
 
 export type Pair = [ko: string, en: string]
@@ -27,13 +27,14 @@ export function step(body: Pair[], lead?: Pair): PaarStep {
   return { ...(lead ? { lead: pair(lead) } : {}), body: pairs(body) }
 }
 
-type NodeExtra = { subtitle?: Pair; items?: Pair[]; links?: [to: string, label: Pair, kind?: DiagramLinkKind][] }
+type NodeExtra = { icon?: DiagramIconName; subtitle?: Pair; items?: Pair[]; links?: [to: string, label: Pair, kind?: DiagramLinkKind][] }
 
 export function node(id: string, owner: DiagramOwner, title: Pair, extra: NodeExtra = {}): DiagramNode {
   return {
     id,
     owner,
     title: pair(title),
+    ...(extra.icon ? { icon: extra.icon } : {}),
     ...(extra.subtitle ? { subtitle: pair(extra.subtitle) } : {}),
     ...(extra.items ? { items: pairs(extra.items) } : {}),
     ...(extra.links ? { links: extra.links.map(([to, label, kind]) => ({ to, label: pair(label), ...(kind ? { kind } : {}) })) } : {}),
@@ -44,8 +45,11 @@ export const column = (title: Pair, nodes: DiagramNode[]): DiagramColumn => ({ t
 
 const LINK_KIND_ORDER: DiagramLinkKind[] = ['sync', 'realtime', 'async', 'paid', 'local']
 
-export function diagram(columns: DiagramColumn[], caption: Pair): Diagram {
-  const used = new Set(columns.flatMap((c) => c.nodes.flatMap((n) => (n.links ?? []).map((l) => l.kind ?? 'sync'))))
+export const footer = (title: Pair, icon: DiagramIconName, nodes: DiagramNode[]): DiagramFooter => ({ title: pair(title), icon, nodes })
+
+export function diagram(columns: DiagramColumn[], caption: Pair, footerRow?: DiagramFooter): Diagram {
+  const nodes = [...columns.flatMap((c) => c.nodes), ...(footerRow?.nodes ?? [])]
+  const used = new Set(nodes.flatMap((n) => (n.links ?? []).map((l) => l.kind ?? 'sync')))
   const legend = LINK_KIND_ORDER.filter((kind) => used.has(kind)).map((kind) => ({ kind, label: DIAGRAM_LINK_KINDS[kind] }))
-  return { columns, caption: pair(caption), legend }
+  return { columns, ...(footerRow ? { footer: footerRow } : {}), caption: pair(caption), legend }
 }

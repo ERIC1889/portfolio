@@ -1,4 +1,4 @@
-import type { Contribution, DiagramLinkKind, DiagramOwner, L, Metric, PaarKey, PaperKind, Showcase } from './types'
+import type { Contribution, DiagramLinkKind, L, Metric, PaarKey, PaperKind, Showcase } from './types'
 
 export const HOME_IDS = {
   work: 'work',
@@ -96,13 +96,6 @@ export const ARCH_LABELS = {
   versions: { ko: '시기별 구조', en: 'Structure by period' },
   legend: { ko: '범례', en: 'Legend' },
 } satisfies Record<string, L>
-
-export const DIAGRAM_OWNER: Record<DiagramOwner, L> = {
-  mine: { ko: '내 부분', en: 'Mine' },
-  external: { ko: '외부', en: 'External' },
-  data: { ko: '저장', en: 'Storage' },
-  local: { ko: '로컬', en: 'Local' },
-}
 
 export const DIAGRAM_LINK_KINDS: Record<DiagramLinkKind, L> = {
   sync: { ko: '요청 · 응답', en: 'Request · response' },

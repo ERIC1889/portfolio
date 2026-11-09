@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { featuredProject, l, paar } from '@/test/fixtures'
-import type { Media, Project } from './types'
+import type { Diagram, Media, Project } from './types'
 import {
   checkBanned,
   checkCaseShape,
@@ -203,7 +203,7 @@ describe('checkCaseShape', () => {
 })
 
 describe('checkDiagram', () => {
-  const diagramOf = (links: { to: string; label: { ko: string; en: string }; kind?: 'sync' | 'paid' }[], ids = ['a', 'b'], legend = [{ kind: 'sync' as const, label: l('요청') }]) => ({
+  const diagramOf = (links: { to: string; label: { ko: string; en: string }; kind?: 'sync' | 'paid' }[], ids = ['a', 'b'], legend = [{ kind: 'sync' as const, label: l('요청') }]): { diagram: Diagram } => ({
     diagram: {
       columns: [{ title: l('열'), nodes: ids.map((id, i) => ({ id, title: l(id), owner: 'mine' as const, links: i === 0 ? links : undefined })) }],
       caption: l('설명'),
@@ -211,9 +211,12 @@ describe('checkDiagram', () => {
     },
   })
 
-  it('accepts a diagram whose links all resolve and whose legend lists every kind used', () => {
+  it('accepts a diagram whose links all resolve and whose legend lists every kind used, footer nodes included', () => {
     expect(checkDiagram('x', diagramOf([{ to: 'b', label: l('연결') }]))).toEqual([])
     expect(checkDiagram('x', undefined)).toEqual([])
+    const withFooter = diagramOf([{ to: 'store', label: l('저장') }])
+    withFooter.diagram.footer = { title: l('데이터'), nodes: [{ id: 'store', title: l('store'), owner: 'data' }] }
+    expect(checkDiagram('x', withFooter)).toEqual([])
   })
 
   it('reports repeated node ids, links to unknown nodes and a legend that misses a kind in use', () => {

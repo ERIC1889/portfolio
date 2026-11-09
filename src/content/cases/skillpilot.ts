@@ -1,5 +1,5 @@
 import type { Project } from '../types'
-import { column, diagram, k, node, pairs, shot, step, video } from './helpers'
+import { column, diagram, footer, k, node, pairs, shot, step, video } from './helpers'
 
 const REPO = 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot'
 
@@ -117,12 +117,10 @@ export const skillpilot: Project = {
           ['브라우저 · 앱', 'Browser · app'],
           [
             node('web', 'mine', ['React 19 앱', 'React 19 app'], {
+              icon: 'browser',
               subtitle: ['Vite · OnboardingGuard', 'Vite · OnboardingGuard'],
-              items: [
-                ['로그인 · 목표 · 추천 · 학습 · CBT · 면접 · 포트폴리오', 'Login · goals · recommendations · study · CBT · interviews · portfolio'],
-                ['OnboardingGuard: 이전 단계를 마치지 않으면 자동으로 되돌림', 'OnboardingGuard: redirects back until the previous step is done'],
-              ],
-              links: [['api', ['HTTPS · REST 요청', 'HTTPS · REST requests'], 'sync']],
+              items: [['로그인 · 추천 · 학습 · CBT · 면접 · 포트폴리오', 'Login · recommendations · study · CBT · interviews · portfolio']],
+              links: [['api', ['REST', 'REST'], 'sync']],
             }),
           ],
         ),
@@ -130,39 +128,22 @@ export const skillpilot: Project = {
           ['API 서버', 'API server'],
           [
             node('api', 'mine', ['Node.js Express', 'Node.js Express'], {
+              icon: 'server',
               subtitle: ['라우트 → 컨트롤러 → 서비스 → 모델', 'routes → controllers → services → models'],
-              items: [
-                ['인증 · 입력 검증', 'Auth · input validation'],
-                ['16개 라우트 모듈', '16 route modules'],
-              ],
+              items: [['인증 · 검증 · 라우트 모듈 16개', 'Auth · validation · 16 route modules']],
               links: [
-                ['mysql', ['계정 · 프로필 · 목표 · 자격증 CRUD', 'accounts, profiles, goals, certifications CRUD'], 'sync'],
-                ['mongo', ['문제은행 · 학습 기록 · 오답 · 면접 CRUD', 'question bank, study log, wrong answers, interviews CRUD'], 'sync'],
-                ['openai', ['추천 · 로드맵 · 문제 생성 · 오답 분석 · 모의면접', 'recommendations, roadmaps, question generation, answer review, mock interviews'], 'paid'],
+                ['mysql', ['CRUD', 'CRUD'], 'sync'],
+                ['mongo', ['학습 로그', 'study log'], 'sync'],
+                ['openai', ['AI 호출', 'AI calls'], 'paid'],
               ],
             }),
-            node('cron', 'mine', ['node-cron 스케줄러', 'node-cron scheduler'], {
-              items: [
-                ['자격증 매일 04:00 · 시험 일정 매주 월 05:00', 'Certifications daily at 04:00 · exam schedules on Mondays at 05:00'],
-                ['관리자 수동 실행', 'Manual admin run'],
-              ],
+            node('cron', 'mine', ['node-cron', 'node-cron'], {
+              icon: 'clock',
+              subtitle: ['자격증 매일 04:00 · 시험 일정 매주 월 05:00', 'Certifications daily 04:00 · schedules Mondays 05:00'],
               links: [
-                ['data', ['자격증·시험 일정 동기화 · XML 파싱 · 정규화', 'syncs certifications and schedules · XML parsing · normalization'], 'sync'],
-                ['mysql', ['externalId 기준 findOrCreate', 'findOrCreate by externalId'], 'sync'],
+                ['data', ['XML · 정규화', 'XML · normalization'], 'sync'],
+                ['mysql', ['findOrCreate', 'findOrCreate'], 'sync'],
               ],
-            }),
-          ],
-        ),
-        column(
-          ['데이터 (하이브리드 DB)', 'Data (hybrid DB)'],
-          [
-            node('mysql', 'data', ['MySQL', 'MySQL'], {
-              subtitle: ['Sequelize', 'Sequelize'],
-              items: [['사람 · 프로필 · 목표 · 자격증 · 시험 일정', 'People · profiles · goals · certifications · exam schedules']],
-            }),
-            node('mongo', 'data', ['MongoDB', 'MongoDB'], {
-              subtitle: ['Mongoose', 'Mongoose'],
-              items: [['문제은행 · 학습 기록 · 오답 분석 · AI 모의면접', 'Question bank · study log · wrong-answer analysis · AI mock interviews']],
             }),
           ],
         ),
@@ -170,16 +151,27 @@ export const skillpilot: Project = {
           ['외부 서비스', 'External services'],
           [
             node('openai', 'external', ['OpenAI', 'OpenAI'], {
+              icon: 'sparkles',
               subtitle: ['GPT-4o-mini', 'GPT-4o-mini'],
-              items: [['추천 · 로드맵 · 문제 생성 · 목표 · 오답 분석 · 모의면접', 'Recommendations · roadmaps · question generation · goals · answer review · mock interviews']],
+              items: [['추천 · 로드맵 · 오답 분석 · 모의면접', 'Recommendations · roadmaps · answer review · mock interviews']],
             }),
-            node('data', 'external', ['공공데이터 (data.go.kr)', 'Public data (data.go.kr)'], {
+            node('data', 'external', ['공공데이터', 'Public data'], {
+              icon: 'globe',
+              subtitle: ['data.go.kr', 'data.go.kr'],
               items: [['자격증 · 시험 일정 API 7종', '7 certification and exam-schedule APIs']],
             }),
           ],
         ),
       ],
       ['화면 → Express API → MySQL·MongoDB · 공공데이터는 node-cron이 주기적으로 동기화', 'Screens → Express API → MySQL and MongoDB · public data synced periodically by node-cron'],
+      footer(
+        ['데이터 (하이브리드 DB)', 'Data (hybrid DB)'],
+        'database',
+        [
+          node('mongo', 'data', ['MongoDB', 'MongoDB'], { icon: 'database', subtitle: ['Mongoose · 문제은행 · 학습 기록 · 모의면접', 'Mongoose · question bank · study log · mock interviews'] }),
+          node('mysql', 'data', ['MySQL', 'MySQL'], { icon: 'database', subtitle: ['Sequelize · 사람 · 프로필 · 목표 · 자격증', 'Sequelize · people · profiles · goals · certifications'] }),
+        ],
+      ),
     ),
     body: pairs([
       [

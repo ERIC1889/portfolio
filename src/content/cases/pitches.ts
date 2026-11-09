@@ -1,5 +1,5 @@
 import type { Project } from '../types'
-import { column, diagram, k, metric, node, pairs, shot, step, video } from './helpers'
+import { column, diagram, footer, k, metric, node, pairs, shot, step, video } from './helpers'
 
 export const pitches: Project = {
   slug: 'pitches',
@@ -100,14 +100,15 @@ export const pitches: Project = {
           ['모바일 앱', 'Mobile app'],
           [
             node('app', 'mine', ['모바일 앱', 'Mobile app'], {
-              subtitle: ['Expo · React Native · iOS / Android', 'Expo · React Native · iOS / Android'],
+              icon: 'phone',
+              subtitle: ['Expo · React Native', 'Expo · React Native'],
               items: [
-                ['Pitches Circle: 5초마다 색 피드백', 'Pitches Circle: color feedback every 5 s'],
-                ['녹음 · 결과 · 기록 · PDF 공유', 'Recording · results · history · PDF sharing'],
+                ['Pitches Circle · 5초마다 색 피드백', 'Pitches Circle · color feedback every 5 s'],
+                ['녹음 · 결과 · PDF', 'Recording · results · PDF'],
               ],
               links: [
-                ['api', ['음성 ↑ · 피드백 ↓', 'audio ↑ · feedback ↓'], 'realtime'],
-                ['api', ['REST · 결과 조회', 'REST · results'], 'sync'],
+                ['api', ['음성 · 피드백', 'audio · feedback'], 'realtime'],
+                ['api', ['REST', 'REST'], 'sync'],
               ],
             }),
           ],
@@ -116,24 +117,27 @@ export const pitches: Project = {
           ['API 서버 · 워커', 'API server · worker'],
           [
             node('api', 'mine', ['API 서버', 'API server'], {
+              icon: 'server',
               subtitle: ['Node.js · Fastify · Socket.IO', 'Node.js · Fastify · Socket.IO'],
               items: [
-                ['실시간 5초 판정: 음량 · 속도 · 간투사 · 감정 → 초록 / 노랑 / 빨강', 'Real-time 5 s judgment: volume · pace · fillers · emotion → green / yellow / red'],
-                ['REST · JWT 인증', 'REST · JWT auth'],
+                ['5초 판정 · 음량 · 속도 · 간투사 · 감정', '5 s judgment · volume · pace · fillers · emotion'],
+                ['REST · JWT', 'REST · JWT'],
               ],
               links: [
                 ['emotion', ['5초 음성', '5 s audio'], 'local'],
                 ['openai', ['부분 전사', 'partial transcript'], 'paid'],
-                ['worker', ['종료 → 보고서 잡', 'end of talk → report job'], 'async'],
-                ['db', ['사용자 · 세션', 'users · sessions'], 'sync'],
+                ['worker', ['종료 → 보고서 잡', 'end → report job'], 'async'],
+                ['db', ['세션', 'sessions'], 'sync'],
               ],
             }),
             node('worker', 'mine', ['보고서 워커', 'Report worker'], {
+              icon: 'repeat',
               subtitle: ['BullMQ · 전사 → GPT → PDF', 'BullMQ · transcript → GPT → PDF'],
               links: [
-                ['openai', ['전체 전사 · 보고서', 'full transcript · report'], 'paid'],
+                ['openai', ['전사 · 보고서', 'transcript · report'], 'paid'],
                 ['redis', ['작업 큐', 'job queue'], 'async'],
-                ['db', ['보고서 저장', 'saves the report'], 'sync'],
+                ['db', ['보고서', 'reports'], 'sync'],
+                ['files', ['PDF', 'PDF'], 'sync'],
               ],
             }),
           ],
@@ -141,31 +145,34 @@ export const pitches: Project = {
         column(
           ['AI 분석', 'AI analysis'],
           [
-            node('emotion', 'local', ['감정 분석 서비스', 'Emotion analysis service'], {
-              subtitle: ['Python · SenseVoice-Small · emotion2vec+', 'Python · SenseVoice-Small · emotion2vec+'],
+            node('emotion', 'local', ['감정 분석', 'Emotion analysis'], {
+              icon: 'cpu',
+              subtitle: ['SenseVoice-Small · emotion2vec+', 'SenseVoice-Small · emotion2vec+'],
               items: [['로컬 CPU · 무료', 'Local CPU · free']],
             }),
             node('openai', 'external', ['OpenAI', 'OpenAI'], {
-              subtitle: ['Whisper 전사 · GPT 보고서', 'Whisper transcription · GPT report'],
+              icon: 'sparkles',
+              subtitle: ['Whisper · gpt-5-nano', 'Whisper · gpt-5-nano'],
               items: [['유일한 유료 항목', 'The only paid item']],
             }),
           ],
         ),
-        column(
-          ['데이터', 'Data'],
-          [
-            node('db', 'data', ['PostgreSQL', 'PostgreSQL'], { items: [['사용자 · 세션 · 보고서', 'Users · sessions · reports']] }),
-            node('redis', 'data', ['Redis', 'Redis'], { items: [['보고서 작업 큐', 'Report job queue']] }),
-            node('files', 'data', ['uploads/', 'uploads/'], { items: [['녹음 WAV · 보고서 PDF', 'Recording WAV · report PDF']] }),
-          ],
-        ),
       ],
       ['2026 리뉴얼 구조 · 발표 음성을 5초마다 분석해 색으로 피드백하고, 끝나면 AI 코칭 보고서를 만든다', '2026 renewal · audio is analyzed every 5 s for color feedback, and an AI coaching report follows the talk'],
+      footer(
+        ['데이터', 'Data'],
+        'database',
+        [
+          node('db', 'data', ['PostgreSQL', 'PostgreSQL'], { icon: 'database', subtitle: ['사용자 · 세션 · 보고서', 'Users · sessions · reports'] }),
+          node('redis', 'data', ['Redis', 'Redis'], { icon: 'layers', subtitle: ['보고서 작업 큐', 'Report job queue'] }),
+          node('files', 'data', ['uploads/', 'uploads/'], { icon: 'folder', subtitle: ['녹음 WAV · 보고서 PDF', 'Recording WAV · report PDF'] }),
+        ],
+      ),
     ),
     body: pairs([
       [
-        'Pitches.ai는 여섯 개 구성 요소로 이루어진다. Expo(React Native) 모바일 앱이 발표 음성을 녹음해 서버로 스트리밍하고, 실시간 피드백(Pitches Circle)과 결과·기록·PDF를 보여준다. Node.js(Fastify·Socket.IO) API 서버는 인증과 세션 관리, 그리고 5초 단위 실시간 판정을 맡는다. 감정은 Python(FastAPI) 기반 감정 분석 서비스가 SenseVoice-Small과 emotion2vec+로 분석한다. 발표가 끝나면 BullMQ 보고서 워커가 전체 전사, 지표 집계, GPT 보고서 작성, PDF 생성을 처리한다. 음성 전사와 보고서 생성에는 OpenAI(Whisper·gpt-5-nano)를 쓴다. 데이터는 PostgreSQL, 작업 큐는 Redis에 두고, 녹음과 PDF는 로컬 디스크에 저장한다. 앱과 서버는 zod로 정의한 공유 스키마를 함께 사용한다.',
-        'Pitches.ai is made of six components. An Expo (React Native) mobile app records the talk, streams the audio to the server, and shows real-time feedback (the Pitches Circle) along with results, history and the PDF. A Node.js (Fastify · Socket.IO) API server handles authentication, session management and the 5-second real-time judgments. Emotion is analyzed by a Python (FastAPI) emotion-analysis service with SenseVoice-Small and emotion2vec+. When the talk ends, a BullMQ report worker handles the full transcript, metric aggregation, the GPT report and PDF generation. OpenAI (Whisper · gpt-5-nano) is used for transcription and the report. Data lives in PostgreSQL, the job queue in Redis, and recordings and PDFs on local disk. The app and the server share schemas defined with zod.',
+        'Expo 모바일 앱이 발표 음성을 스트리밍하면 Fastify·Socket.IO 서버가 5초 단위로 음량·말 속도·간투사·감정을 분석하고, 규칙에 따라 색상과 개선 팁을 제공하는 구조입니다. 전사는 Whisper, 감정 분석은 별도 Python 서비스의 SenseVoice-Small과 emotion2vec+가 담당하며, 분석별 대기 시간을 제한해 일부 요청이 실패해도 확보한 지표로 피드백을 이어갑니다. 무음 구간은 외부 분석을 생략하고, 확신도가 높은 감정만 판정에 반영합니다. 발표 종료 후 전체 전사·지표 집계·gpt-5-nano 보고서 작성·PDF 생성은 BullMQ 워커에서 비동기로 처리합니다. 데이터는 PostgreSQL, 작업 큐는 Redis, 녹음과 PDF는 로컬 디스크에 저장합니다. 앱과 API 서버는 공유 Zod 스키마로 데이터 형식을 맞추고 GPT 출력도 검증하며, 외부 호출을 분리해 실제 API 호출 없이 처리 로직을 테스트할 수 있도록 구성했습니다.',
+        "When the Expo mobile app streams the talk's audio, a Fastify · Socket.IO server analyzes volume, speaking pace, filler words and emotion every 5 seconds and returns a color and an improvement tip according to rules. Whisper handles transcription; SenseVoice-Small and emotion2vec+ in a separate Python service handle emotion analysis, and each analysis has its own time limit, so feedback continues from the metrics already in hand even when some requests fail. Silent stretches skip the external analyses, and only high-confidence emotions count toward the judgment. After the talk ends, the full transcript, metric aggregation, the gpt-5-nano report and PDF generation run asynchronously in a BullMQ worker. Data lives in PostgreSQL, the job queue in Redis, and recordings and PDFs on local disk. The app and the API server share Zod schemas to keep their data formats aligned and to validate GPT output as well, and external calls are isolated so the processing logic can be tested without real API calls.",
       ],
     ]),
     decisions: pairs([

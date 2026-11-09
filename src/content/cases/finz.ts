@@ -348,38 +348,31 @@ export const finz: Project = {
               ['브라우저', 'Browser'],
               [
                 node('input', 'mine', ['입력 화면', 'Input screens'], {
-                  items: [
-                    ['주택 두 채 · 가상자산 거래 · 해외주식 종목', 'Two homes · crypto trades · foreign stocks'],
-                    ['시세·환율은 날짜로 자동 채우되 직접 입력한 값은 덮어쓰지 않음', 'Prices and rates fill in by date but never overwrite what the user typed'],
-                  ],
+                  icon: 'browser',
+                  subtitle: ['주택 두 채 · 가상자산 거래 · 해외주식 종목', 'Two homes · crypto trades · foreign stocks'],
                   links: [
-                    ['routes', ['시세 · 환율 · 실거래가 조회', 'price, rate and transaction lookups'], 'sync'],
+                    ['routes', ['시세 · 환율', 'prices · rates'], 'sync'],
                     ['engine', ['계산 요청', 'calculation'], 'sync'],
                   ],
                 }),
                 node('result', 'mine', ['결과 화면 · PDF', 'Results · PDF'], {
-                  items: [
-                    ['계산 근거를 펼쳐 볼 수 있는 결과 화면', 'Results with the reasoning one tap away'],
-                    ['6Way는 브라우저 인쇄로 저장하는 PDF 리포트', 'A 6Way PDF report saved through the browser print dialog'],
-                  ],
+                  icon: 'file',
+                  subtitle: ['계산 근거 · 6Way PDF 리포트', 'Reasoning · 6Way PDF report'],
                 }),
               ],
             ),
             column(
               ['finz.kr (Next.js)', 'finz.kr (Next.js)'],
               [
-                node('routes', 'mine', ['시세·환율·실거래가 API 라우트', 'Market-data API routes'], {
-                  items: [
-                    ['실패하면 대체 출처로 조회하고 그 값에 표시를 남김', 'Falls back to a second source and marks the value'],
-                    ['확정된 값만 오래 캐시 · 사용자별·전체 요청 제한', 'Caches only settled values for long · per-user and global rate limits'],
-                  ],
-                  links: [['external', ['조회 · 실패 시 대체 출처', 'lookup · fallback source on failure'], 'sync']],
+                node('routes', 'mine', ['시세·환율 API 라우트', 'Market-data API routes'], {
+                  icon: 'server',
+                  subtitle: ['실패 시 대체 출처 · 확정 값만 캐시', 'Fallback source on failure · only settled values cached'],
+                  links: [['external', ['조회 · 대체', 'lookup · fallback'], 'sync']],
                 }),
                 node('engine', 'mine', ['TypeScript 계산 엔진', 'TypeScript calculation engines'], {
-                  items: [
-                    ['6Way · 가상자산 · 해외주식 양도세 · 증여 평가', '6Way · crypto · foreign-stock gains · gift valuation'],
-                    ['결과마다 세법 조문 근거', 'Each result with its statute'],
-                  ],
+                  icon: 'calculator',
+                  subtitle: ['6Way · 가상자산 · 해외주식 양도세 · 증여 평가', '6Way · crypto · foreign-stock gains · gift valuation'],
+                  items: [['결과마다 세법 조문 근거', 'Each result with its statute']],
                   links: [['result', ['결과 + 근거', 'results + reasoning'], 'sync']],
                 }),
               ],
@@ -388,12 +381,8 @@ export const finz: Project = {
               ['외부 데이터', 'External data'],
               [
                 node('external', 'external', ['시세 · 환율 · 실거래가', 'Prices · rates · transactions'], {
-                  items: [
-                    ['Upbit → CoinGecko', 'Upbit → CoinGecko'],
-                    ['한국은행 ECOS → ECB', 'Bank of Korea ECOS → ECB'],
-                    ['Yahoo Finance', 'Yahoo Finance'],
-                    ['국토교통부 실거래가', 'Land-ministry transaction prices'],
-                  ],
+                  icon: 'globe',
+                  subtitle: ['Upbit → CoinGecko · ECOS → ECB · Yahoo Finance · 국토교통부', 'Upbit → CoinGecko · ECOS → ECB · Yahoo Finance · land ministry'],
                 }),
               ],
             ),

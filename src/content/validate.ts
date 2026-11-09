@@ -141,7 +141,7 @@ export function checkDiagram(where: string, architecture?: Architecture): string
   const diagram = architecture?.diagram
   if (!diagram) return []
   const errors: string[] = []
-  const nodes = diagram.columns.flatMap((column) => column.nodes)
+  const nodes = [...diagram.columns.flatMap((column) => column.nodes), ...(diagram.footer?.nodes ?? [])]
   const ids = nodes.map((node) => node.id)
   if (new Set(ids).size !== ids.length) errors.push(`${where}: diagram node ids repeat`)
   for (const node of nodes) {

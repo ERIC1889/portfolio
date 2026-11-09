@@ -1,5 +1,5 @@
 import type { Project } from '../types'
-import { column, diagram, k, metric, node, pairs, shot, step, video } from './helpers'
+import { column, diagram, footer, k, metric, node, pairs, shot, step, video } from './helpers'
 
 export const closetmate: Project = {
   slug: 'closetmate',
@@ -98,16 +98,13 @@ export const closetmate: Project = {
           ['모바일 앱', 'Mobile app'],
           [
             node('app', 'mine', ['Mobile App', 'Mobile App'], {
+              icon: 'phone',
               subtitle: ['Expo SDK 56 · React Native', 'Expo SDK 56 · React Native'],
               items: [
-                ['5탭 (홈 · 옷장 · 추천 · 통계 · 설정) + 옷 추가', '5 tabs (home · wardrobe · suggestions · stats · settings) + add clothes'],
-                ['사진 선택 → 서버에서 AI 분류', 'Pick a photo → AI label on the server'],
-                ['음성으로 코디 요청 (expo-audio)', 'Outfit request by voice (expo-audio)'],
-                ['위치 → 날씨 반영 (expo-location)', 'Location → weather (expo-location)'],
-                ['"이거 입었어요" → 착용 기록 누적', '"I wore this" → wear history'],
-                ['기기 안 TFLite 분류기 번들 (dev build용 · 지금은 서버 추론 사용)', 'Bundled TFLite classifier (dev build only · server inference in use)'],
+                ['사진 → AI 분류 · 음성 코디 요청 · 날씨 반영', 'Photo → AI label · voice outfit request · weather'],
+                ['착용 기록 · 통계', 'Wear history · stats'],
               ],
-              links: [['api', ['HTTPS · JSON · multipart · x-user-id 헤더', 'HTTPS · JSON · multipart · x-user-id header'], 'sync']],
+              links: [['api', ['HTTPS', 'HTTPS'], 'sync']],
             }),
           ],
         ),
@@ -115,19 +112,16 @@ export const closetmate: Project = {
           ['백엔드 API', 'Backend API'],
           [
             node('api', 'mine', ['Backend API', 'Backend API'], {
-              subtitle: ['Next.js 16 · Vercel 배포 대상', 'Next.js 16 · deploys to Vercel'],
+              icon: 'server',
+              subtitle: ['Next.js 16 · Vercel', 'Next.js 16 · Vercel'],
               items: [
-                ['인증: x-user-id 헤더', 'Auth: x-user-id header'],
-                ['이미지 분류: MobileNetV3 ONNX 서버 추론', 'Image labels: MobileNetV3 ONNX on the server'],
-                ['음성 → 텍스트 (Whisper)', 'Speech → text (Whisper)'],
-                ['추천: 룰 기반 후보 → LLM 선택 → 서버 검증 → 실패 시 보조 모델로 재생성', 'Suggestions: rule-based candidates → LLM pick → server check → backup model on failure'],
-                ['옷장 · 착장 · 통계 CRUD (Drizzle ORM)', 'Wardrobe · outfits · stats CRUD (Drizzle ORM)'],
+                ['MobileNetV3 ONNX 분류 · Whisper', 'MobileNetV3 ONNX labels · Whisper'],
+                ['룰 후보 → LLM 선택 → 서버 검증', 'Rule candidates → LLM pick → server check'],
               ],
               links: [
-                ['openai', ['추천 · Whisper · Vision', 'suggestions · Whisper · Vision'], 'paid'],
-                ['weather', ['날씨 조회', 'weather lookup'], 'sync'],
-                ['db', ['SQL', 'SQL'], 'sync'],
-                ['blob', ['파일 저장', 'file storage'], 'sync'],
+                ['openai', ['AI 호출', 'AI calls'], 'paid'],
+                ['weather', ['날씨', 'weather'], 'sync'],
+                ['store', ['SQL · 파일', 'SQL · files'], 'sync'],
               ],
             }),
           ],
@@ -135,31 +129,42 @@ export const closetmate: Project = {
         column(
           ['외부 서비스 · 데이터', 'External services · data'],
           [
-            node('openai', 'external', ['OpenAI API', 'OpenAI API'], { items: [['추천 모델 · whisper-1 · Vision', 'Suggestion model · whisper-1 · Vision']] }),
-            node('weather', 'external', ['OpenWeather', 'OpenWeather'], { items: [['위치 → 온도 · 비/눈 여부', 'Location → temperature · rain or snow']] }),
-            node('db', 'data', ['PostgreSQL', 'PostgreSQL'], { items: [['Drizzle ORM · 로컬 Docker / 배포 Neon', 'Drizzle ORM · local Docker / Neon in deployment']] }),
-            node('blob', 'data', ['이미지 저장소', 'Image storage'], { items: [['로컬 파일 → 배포 시 Vercel Blob', 'Local files → Vercel Blob in deployment']] }),
-          ],
-        ),
-        column(
-          ['Python ML (오프라인 학습)', 'Python ML (offline training)'],
-          [
-            node('train', 'local', ['전이학습 파이프라인', 'Transfer-learning pipeline'], {
-              subtitle: ['PyTorch · Fashion Product Images (Small)', 'PyTorch · Fashion Product Images (Small)'],
-              items: [
-                ['약 35,000장 · 8:2 분할', 'About 35,000 images · 8:2 split'],
-                ['ImageNet 백본 동결 + 분류 헤드 3개 학습 (카테고리 7 · 색상 11 · 스타일 5)', 'Frozen ImageNet backbone + 3 heads trained (7 categories · 11 colors · 5 styles)'],
-                ['MobileNetV3-Small vs ResNet50 비교 → MobileNetV3-Small 채택', 'MobileNetV3-Small vs ResNet50 → MobileNetV3-Small chosen'],
-              ],
-              links: [
-                ['api', ['fashion_classifier.onnx → 서버 추론 (현재 활성)', 'fashion_classifier.onnx → server inference (active)'], 'local'],
-                ['app', ['fashion_classifier.tflite → dev build 기기 추론 (현재 비활성)', 'fashion_classifier.tflite → dev-build inference (inactive)'], 'local'],
-              ],
-            }),
+            node('openai', 'external', ['OpenAI API', 'OpenAI API'], { icon: 'sparkles', subtitle: ['추천 모델 · whisper-1 · Vision', 'Suggestion model · whisper-1 · Vision'] }),
+            node('weather', 'external', ['OpenWeather', 'OpenWeather'], { icon: 'cloud', subtitle: ['위치 → 온도 · 비/눈', 'Location → temperature · rain or snow'] }),
+            node('store', 'data', ['PostgreSQL · Blob', 'PostgreSQL · Blob'], { icon: 'database', subtitle: ['Drizzle ORM · Neon · 이미지는 Vercel Blob', 'Drizzle ORM · Neon · images on Vercel Blob'] }),
           ],
         ),
       ],
       ['멀티모달 입력(사진 · 음성 · 위치 · 착용 기록) → Next.js 백엔드 → LLM 추천 + 자체 전이학습 분류기', 'Multimodal input (photo · voice · location · wear history) → Next.js backend → LLM suggestions + my own transfer-learned classifier'],
+      footer(
+        ['Python ML · 오프라인 학습', 'Python ML · offline training'],
+        'chart',
+        [
+          node('dataset', 'local', ['Kaggle 데이터셋', 'Kaggle dataset'], {
+            icon: 'image',
+            subtitle: ['Fashion Product Images · 약 35,000장', 'Fashion Product Images · about 35,000 images'],
+            links: [['train', ['학습', 'training'], 'local']],
+          }),
+          node('train', 'local', ['전이학습', 'Transfer learning'], {
+            icon: 'cpu',
+            subtitle: ['PyTorch · 백본 동결 · 헤드 3개', 'PyTorch · frozen backbone · 3 heads'],
+            links: [['compare', ['두 모델', 'two models'], 'local']],
+          }),
+          node('compare', 'local', ['모델 비교', 'Model comparison'], {
+            icon: 'chart',
+            subtitle: ['MobileNetV3-Small 채택', 'MobileNetV3-Small chosen'],
+            links: [['export', ['채택 모델', 'chosen model'], 'local']],
+          }),
+          node('export', 'local', ['모델 내보내기', 'Model export'], {
+            icon: 'layers',
+            subtitle: ['ONNX · TFLite', 'ONNX · TFLite'],
+            links: [
+              ['api', ['ONNX', 'ONNX'], 'local'],
+              ['app', ['TFLite · 비활성', 'TFLite · inactive'], 'local'],
+            ],
+          }),
+        ],
+      ),
     ),
     body: pairs([
       [

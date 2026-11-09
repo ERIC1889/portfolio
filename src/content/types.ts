@@ -57,12 +57,33 @@ export interface DiagramLink {
   kind?: DiagramLinkKind
 }
 
+export type DiagramIconName =
+  | 'phone'
+  | 'browser'
+  | 'server'
+  | 'bolt'
+  | 'sparkles'
+  | 'cpu'
+  | 'cloud'
+  | 'database'
+  | 'layers'
+  | 'folder'
+  | 'repeat'
+  | 'globe'
+  | 'chart'
+  | 'calculator'
+  | 'file'
+  | 'clock'
+  | 'image'
+  | 'mic'
+
 export interface DiagramNode {
   id: string
   title: L
   subtitle?: L
   items?: L[]
   owner: DiagramOwner
+  icon?: DiagramIconName
   links?: DiagramLink[]
 }
 
@@ -71,8 +92,15 @@ export interface DiagramColumn {
   nodes: DiagramNode[]
 }
 
+export interface DiagramFooter {
+  title: L
+  icon?: DiagramIconName
+  nodes: DiagramNode[]
+}
+
 export interface Diagram {
   columns: DiagramColumn[]
+  footer?: DiagramFooter
   caption: L
   legend?: { kind: DiagramLinkKind; label: L }[]
 }

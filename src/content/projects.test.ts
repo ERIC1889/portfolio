@@ -276,7 +276,8 @@ describe('main: SkillPilot', () => {
     expect(skillpilot.media?.[0].kind).toBe('video')
     expect(skillpilot.media?.some((m) => m.src.includes('mate'))).toBe(false)
     expect(skillpilot.media?.some((m) => /login/i.test(m.src))).toBe(false)
-    expect(skillpilot.architecture?.diagram?.columns).toHaveLength(4)
+    expect(skillpilot.architecture?.diagram?.columns).toHaveLength(3)
+    expect(skillpilot.architecture?.diagram?.footer?.nodes.map((n) => n.id)).toEqual(['mongo', 'mysql'])
     expect(skillpilot.architecture?.decisions).toHaveLength(2)
   })
 })
@@ -323,6 +324,7 @@ describe('main: Pitches', () => {
   it('separates the three versions in one table under the architecture, with the 2026 diagram drawn', () => {
     expect(pitches.architecture?.table?.rows.map((row) => row[0].ko)).toEqual(['2024–25 팀 버전', 'APIC-IST 2025 논문', '2026 개인 리뉴얼'])
     expect(pitches.architecture?.diagram?.legend?.map((l) => l.kind)).toEqual(['sync', 'realtime', 'async', 'paid', 'local'])
+    expect(pitches.architecture?.diagram?.footer?.nodes.map((n) => n.id)).toEqual(['db', 'redis', 'files'])
     expect(pitches.architecture?.decisions).toHaveLength(3)
   })
 
