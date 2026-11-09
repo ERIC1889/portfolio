@@ -325,7 +325,7 @@ describe('main: Pitches', () => {
     expect(pitches.architecture?.table?.rows.map((row) => row[0].ko)).toEqual(['2024–25 팀 버전', 'APIC-IST 2025 논문', '2026 개인 리뉴얼'])
     expect(pitches.architecture?.diagram?.legend?.map((l) => l.kind)).toEqual(['sync', 'realtime', 'async', 'paid', 'local'])
     expect(pitches.architecture?.diagram?.footer?.nodes.map((n) => n.id)).toEqual(['db', 'redis', 'files'])
-    expect(pitches.architecture?.decisions).toHaveLength(3)
+    expect(pitches.architecture?.decisions).toBeUndefined()
   })
 
   it("keeps the owner's two cases with their numbers", () => {

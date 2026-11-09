@@ -175,20 +175,6 @@ export const pitches: Project = {
         "When the Expo mobile app streams the talk's audio, a Fastify · Socket.IO server analyzes volume, speaking pace, filler words and emotion every 5 seconds and returns a color and an improvement tip according to rules. Whisper handles transcription; SenseVoice-Small and emotion2vec+ in a separate Python service handle emotion analysis, and each analysis has its own time limit, so feedback continues from the metrics already in hand even when some requests fail. Silent stretches skip the external analyses, and only high-confidence emotions count toward the judgment. After the talk ends, the full transcript, metric aggregation, the gpt-5-nano report and PDF generation run asynchronously in a BullMQ worker. Data lives in PostgreSQL, the job queue in Redis, and recordings and PDFs on local disk. The app and the API server share Zod schemas to keep their data formats aligned and to validate GPT output as well, and external calls are isolated so the processing logic can be tested without real API calls.",
       ],
     ]),
-    decisions: pairs([
-      [
-        '실시간 피드백은 "멈추지 않고, 이유를 설명할 수 있게"를 원칙으로 설계했다. 앱은 녹음과 표시만 하고 판정은 서버가 규칙에 따라 내린다. 말하기 속도(220~340자/분), 음량(-35dB), 간투사, 부정 감정 중 걸린 이슈 개수로 초록·노랑·빨강을 정한다. 그래서 앱을 다시 배포하지 않고도 기준을 조정할 수 있고, 왜 그 색인지 팁으로 보여줄 수 있다. 양방향으로 오가는 음성과 피드백은 Socket.IO로, 나머지 요청은 REST로 처리한다. 5초마다 음량을 먼저 계산한 뒤 Whisper와 감정 분석을 시간 제한을 두고 병렬로 호출한다. 그래서 어느 한쪽이 늦거나 실패해도 판정은 계속 나온다. 무음 구간은 분석을 건너뛰어 비용을 줄이고, 음성 인식이 없는 말을 지어내는 것도 막는다.',
-        "Real-time feedback was designed on the principle of 'never stop, and be able to explain why'. The app only records and displays; the server makes the judgments by rules. Speaking pace (220–340 characters per minute), volume (-35 dB), filler words and negative emotion are the issues, and the count of those triggered decides green, yellow or red. So the thresholds can be tuned without redeploying the app, and the reason for a color can be shown as a tip. Audio and feedback flowing both ways go over Socket.IO; every other request is REST. Every 5 seconds the server computes volume first, then calls Whisper and emotion analysis in parallel with time limits, so a judgment still comes out when either one is late or fails. Silent stretches skip analysis, which cuts cost and also stops speech recognition from inventing words.",
-      ],
-      [
-        '분석과 보고서는 역할과 비용에 따라 나눴다. 감정 분석은 로컬 CPU에서 도는 별도 서비스로 분리해 비용이 들지 않고, 이 서비스가 꺼져 있어도 나머지 기능은 그대로 동작한다. 오판을 줄이기 위해 확신도가 높은 감정만 판정에 반영한다. 수십 초가 걸리는 보고서 생성은 비동기 큐로 넘겨 응답이 막히지 않게 했고, GPT 출력은 zod 스키마로 검증해 형식을 보장한다. PDF는 서버에서 Pretendard 폰트를 넣어 만들기 때문에 기기와 관계없이 같은 결과가 나온다.',
-        'Analysis and the report were split by role and cost. Emotion analysis is a separate service running on a local CPU, so it costs nothing, and the rest keeps working when it is down. To reduce misjudgments, only high-confidence emotions count toward the judgment. Report generation, which takes tens of seconds, goes to an async queue so responses are not blocked, and the GPT output is validated against a zod schema to guarantee its shape. The PDF is rendered on the server with the Pretendard font embedded, so it looks the same regardless of device.',
-      ],
-      [
-        '비용 면에서는 유료 서비스를 OpenAI 하나로 제한하고, DB·큐·감정 모델은 모두 로컬에서 운영했다. 앱·서버·감정 서비스는 하나의 모노레포에서 공유 스키마를 함께 써서 데이터 형식이 서로 어긋나지 않는다. 외부 서비스 호출은 갈아 끼울 수 있게 분리해 두어서, 비용 없이 테스트할 수 있다.',
-        'On cost, the only paid service is OpenAI; the database, the queue and the emotion model all run locally. The app, the server and the emotion service live in one monorepo and share schemas, so their data formats never drift apart. External calls sit behind swappable boundaries, so everything can be tested at no cost.',
-      ],
-    ]),
     table: {
       head: [k('구분', 'Version'), k('구조', 'Architecture'), k('내 역할', 'My part'), k('상태', 'Status')],
       rows: [
