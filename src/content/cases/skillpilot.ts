@@ -281,16 +281,20 @@ export const skillpilot: Project = {
   ],
   results: pairs([
     [
-      '공공데이터 API 7종을 하나의 자격증 데이터로 정규화해, 자격증은 매일 04:00에, 시험 일정은 매주 월요일 05:00에 자동으로 갱신됩니다.',
-      'Normalized 7 public data APIs into one set of certification data; certifications refresh every day at 04:00 and exam schedules every Monday at 05:00.',
+      '흩어진 IT 자격증 정보를 한곳에서 늘 최신으로 봐야 한다는 요구는, 공공데이터 API 7종을 하나의 자격증 데이터로 정규화하고 스케줄러가 자동으로 갱신하는 구조로 풀었습니다. 손으로 갱신할 일이 없고, 전체 국가자격 613종목 중 IT 34종목과 시험 일정 87건이 저장됩니다.',
+      'The need to see scattered IT certification information in one place, always current, was met by normalizing 7 public data APIs into one set of certification data that a scheduler refreshes on its own. Nothing is updated by hand, and 34 IT certifications and 87 exam schedules out of 613 national certifications are stored.',
     ],
     [
-      '전체 국가자격 613종목에서 IT 분야 34종목과 시험 일정 87건을 저장했고, 공통 클라이언트와 정규화 함수는 단위 테스트 31개로 검증했습니다. 동기화가 맞게 돌았는지는 관리자 수동 실행과 주기 실행으로 확인했습니다.',
-      'From 613 national certifications, 34 IT certifications and 87 exam schedules were stored, with the shared client and normalization functions covered by 31 unit tests. Whether the sync ran correctly was confirmed through manual admin runs and the scheduled runs.',
+      'API마다 응답 형식이 다르고 실패를 상태 코드로 알리지 않아도 데이터가 깨지지 않아야 한다는 요구는, 공통 클라이언트 1개와 API별 정규화 함수 7개로 나눠 풀었습니다. 단위 테스트 31개와 관리자 수동 실행으로 확인했습니다.',
+      'The need for data that stays intact even though each API answers in its own format and does not report failure through the status code was met by splitting the work into one shared client and seven per-API normalization functions, checked with 31 unit tests and manual admin runs.',
     ],
     [
-      '13개 화면과 16개 백엔드 라우트 모듈(인증·자격증·로드맵·모의고사·면접·대시보드 등)로 캡스톤을 마쳤습니다.',
-      'Finished the capstone with 13 screens and 16 backend route modules (auth, certifications, roadmap, mock exams, interviews, dashboard and more).',
+      'AI 호출이 실패해도 추천과 로드맵이 끊기지 않아야 한다는 요구는, 규칙 기반 대체 응답과 같은 조건의 저장 결과 재사용으로 풀었습니다.',
+      'The need for recommendations and roadmaps that keep going when an AI call fails was met with rule-based fallbacks and the reuse of stored results for the same request.',
+    ],
+    [
+      '13개 화면과 16개 백엔드 라우트 모듈로 캡스톤을 마쳤고, 최종 발표를 맡았습니다.',
+      'The capstone was finished with 13 screens and 16 backend route modules, and I gave the final presentation.',
     ],
   ]),
   retro: pairs([

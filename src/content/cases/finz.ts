@@ -334,12 +334,12 @@ export const finz: Project = {
   results: pairs([
     ['부동산 6Way, 디지털 자산, 해외주식 양도세·증여 평가 계산기를 finz.kr에서 운영하고 있습니다.', 'The property 6Way, digital-asset and foreign-stock capital gains and gift-valuation calculators are live at finz.kr.'],
     [
-      '세무사와 함께 만든 6Way 계산 로직을 웹으로 옮긴 뒤 기준 워크북의 결과 항목 21개와 대조해 최대 차이가 1원인 것을 확인했습니다.',
-      'After the 6Way logic built with a tax accountant was ported to the web, all 21 result items checked against the reference workbook matched with a largest gap of 1 won.',
-    ],
-    [
       'Finz 모바일 앱(청년 세금 환급·부동산 6Way)으로 출품한 2026 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회에서 우수상을 받았습니다(2026.05).',
       'The Finz mobile app (youth tax refund and property 6Way) won an Excellence Award at the 2026 AI-SW-Centered University AI & Blockchain Business Model Competition (May 2026).',
+    ],
+    [
+      '세무사와 함께 만든 6Way 계산 로직을 웹으로 옮긴 뒤 기준 워크북의 결과 항목 21개와 대조해 최대 차이가 1원인 것을 확인했습니다.',
+      'After the 6Way logic built with a tax accountant was ported to the web, all 21 result items checked against the reference workbook matched with a largest gap of 1 won.',
     ],
     [
       'Finz 모바일 앱에서는 간편인증 한 번으로 여러 연도의 근로소득 지급명세서를 조회하도록 바꿨고, CODEF 개발 환경에서 5개 연도를 조회해 홈택스에서 받은 자료와 대조했습니다.',

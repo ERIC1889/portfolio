@@ -244,9 +244,18 @@ export const closetmate: Project = {
     },
   ],
   results: pairs([
-    ['사진 등록부터 분류, 후보 생성, LLM 추천, 서버 검증까지 전체 흐름을 구현했습니다.', 'Built the whole flow from adding a photo through labeling, candidate outfits, LLM suggestions and the server check.'],
-    ['MobileNetV3-Small과 ResNet50을 같은 조건으로 비교해 약 15분의 1 크기(6.0MB 대 90.2MB)인 MobileNetV3-Small을 채택했습니다.', 'Compared MobileNetV3-Small and ResNet50 under the same settings and adopted MobileNetV3-Small at about one fifteenth of the size (6.0 MB against 90.2 MB).'],
-    ['형식이 틀렸거나 옷장에 없는 옷을 담은 추천은 사용자에게 보내기 전에 차단합니다. 실측 23회에서 기본 모델이 19회 통과하고 보조 모델이 4회 처리했으며 최종 실패는 0건이었습니다.', 'Suggestions with the wrong format or with clothes not in the wardrobe are blocked before they reach the user. In 23 measured runs the base model passed 19 times, the backup model handled 4, and there were 0 final failures.'],
+    [
+      '가진 옷으로만 추천해야 한다는 요구는, LLM에 옷장 안의 후보만 주고 답을 서버에서 다시 검증하는 구조로 풀었습니다. 형식이 틀렸거나 옷장에 없는 옷을 담은 추천은 사용자에게 가기 전에 막히고, 실측 23회에서 기본 모델이 19회 통과하고 보조 모델이 4회 처리했으며 최종 실패는 0건이었습니다.',
+      'The need to suggest outfits only from clothes the user owns was met by giving the LLM only candidates from the wardrobe and re-checking its answer on the server. Suggestions with the wrong format or with clothes not in the wardrobe are stopped before they reach the user; in 23 measured runs the base model passed 19 times, the backup model handled 4, and there were 0 final failures.',
+    ],
+    [
+      '사진 한 장으로 옷을 등록해야 한다는 요구는, 사진 등록부터 분류, 후보 생성, LLM 추천, 서버 검증까지 전체 흐름을 구현해 풀었습니다.',
+      'The need to add a garment from a single photo was met by building the whole flow from adding the photo through labeling, candidate outfits, LLM suggestion and the server check.',
+    ],
+    [
+      '분류 모델은 나중에 폰에서도 돌릴 수 있을 만큼 가벼워야 한다는 요구는, MobileNetV3-Small과 ResNet50을 같은 조건으로 비교해 약 15분의 1 크기(6.0MB 대 90.2MB)인 MobileNetV3-Small을 채택해 풀었습니다. 지금은 서버에서 ONNX로 추론합니다.',
+      'The need for a classifier light enough to run on the phone later was met by comparing MobileNetV3-Small and ResNet50 under the same settings and adopting MobileNetV3-Small at about one fifteenth of the size (6.0 MB against 90.2 MB); for now it runs on the server with ONNX.',
+    ],
   ]),
   retro: pairs([
     ['LLM의 답을 그대로 믿지 않고 후보를 정해 주고 서버에서 다시 검증하는 구조가, 어떤 모델을 쓰느냐보다 결과의 신뢰도에 더 큰 차이를 냈습니다.', 'Giving the LLM a fixed set of candidates and re-checking its answer on the server made more difference to the reliability of the results than which model was used.'],
