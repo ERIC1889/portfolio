@@ -1,5 +1,5 @@
 import type { Case, Project } from '../types'
-import { column, diagram, k, metric, node, pairs, shot, step, video } from './helpers'
+import { k, metric, pairs, shot, step, video } from './helpers'
 
 const portedEngine: Case = {
   title: k('옮긴 계산 엔진이 같은 값을 내는지', 'Does the ported calculation engine give the same numbers?'),
@@ -299,71 +299,6 @@ export const finz: Project = {
           'Digital assets: the crypto engine of FINZ for tax accountants (the company SaaS) adapted for individuals, adding tax-year filtering, a cautious fallback when a price is missing and plain-language errors',
         ],
       ]),
-      architecture: {
-        diagram: diagram(
-          [
-            column(
-              ['브라우저', 'Browser'],
-              [
-                node('input', 'mine', ['입력 화면', 'Input screens'], {
-                  icon: 'browser',
-                  subtitle: ['주택 두 채 · 가상자산 거래 · 해외주식 종목', 'Two homes · crypto trades · foreign stocks'],
-                  links: [
-                    ['routes', ['시세 · 환율', 'prices · rates'], 'sync'],
-                    ['engine', ['계산 요청', 'calculation'], 'sync'],
-                  ],
-                }),
-                node('result', 'mine', ['결과 화면 · PDF', 'Results · PDF'], {
-                  icon: 'file',
-                  subtitle: ['계산 근거 · 6Way PDF 리포트', 'Reasoning · 6Way PDF report'],
-                }),
-              ],
-            ),
-            column(
-              ['finz.kr (Next.js)', 'finz.kr (Next.js)'],
-              [
-                node('routes', 'mine', ['시세·환율 API 라우트', 'Market-data API routes'], {
-                  icon: 'server',
-                  subtitle: ['실패 시 대체 출처 · 확정 값만 캐시', 'Fallback source on failure · only settled values cached'],
-                  links: [['external', ['조회 · 대체', 'lookup · fallback'], 'sync']],
-                }),
-                node('engine', 'mine', ['TypeScript 계산 엔진', 'TypeScript calculation engines'], {
-                  icon: 'calculator',
-                  subtitle: ['6Way · 가상자산 · 해외주식 양도세 · 증여 평가', '6Way · crypto · foreign-stock gains · gift valuation'],
-                  items: [['결과마다 세법 조문 근거', 'Each result with its statute']],
-                  links: [['result', ['결과 + 근거', 'results + reasoning'], 'sync']],
-                }),
-              ],
-            ),
-            column(
-              ['외부 데이터', 'External data'],
-              [
-                node('external', 'external', ['시세 · 환율 · 실거래가', 'Prices · rates · transactions'], {
-                  icon: 'globe',
-                  subtitle: ['Upbit → CoinGecko · ECOS → ECB · Yahoo Finance · 국토교통부', 'Upbit → CoinGecko · ECOS → ECB · Yahoo Finance · land ministry'],
-                }),
-              ],
-            ),
-          ],
-          ['운영 중인 finz.kr 코드를 기준으로 그린 구조입니다.', 'The structure as it runs in the finz.kr code.'],
-        ),
-        body: pairs([
-          [
-            '입력 화면에서 받은 주택·거래·종목 정보는 Next.js API 라우트가 외부에서 시세·환율·실거래가를 조회해 채우고, TypeScript 계산 엔진이 결과와 세법 조문 근거를 만들어 결과 화면과 PDF로 보여 줍니다. 외부 조회가 실패하면 대체 출처로 바꾸고 그 값에 표시를 남기며, 확정된 값만 오래 캐시합니다.',
-            'The homes, trades and stocks entered on screen are filled in by Next.js API routes that fetch prices, rates and transaction data from outside, and the TypeScript calculation engines produce the results with their statutes for the results screen and the PDF. When an external lookup fails the route switches to a fallback source and marks the value, and only settled values are cached for long.',
-          ],
-        ]),
-        decisions: pairs([
-          [
-            '계산 엔진을 웹 안으로: 세무사와 Python으로 작성한 6Way 계산 로직을 서버로 따로 띄우지 않고 TypeScript로 옮겨 Next.js 안에서 계산했습니다. 저장할 상태가 없고 혼자 운영하는 단계라 배포 단위를 하나로 두는 편이 낫다고 봤습니다.',
-            'Moving the engine into the web app: rather than running the 6Way logic, written in Python with a tax accountant, as a separate server, I ported it to TypeScript and calculate inside Next.js. With no state to store and one person running it, a single deployment was the better trade.',
-          ],
-          [
-            'PDF 리포트: 별도 PDF 라이브러리 없이, 숨긴 iframe에 리포트를 그린 뒤 브라우저 인쇄로 저장합니다.',
-            'The PDF report: instead of a PDF library, the report is drawn in a hidden iframe and saved through the browser’s print dialog.',
-          ],
-        ]),
-      },
       cases: [portedEngine],
     },
     {

@@ -203,15 +203,14 @@ describe('work: Finz Labs', () => {
     expect(koText(finz.contribution?.verified)).toContain('5개 연도')
   })
 
-  it('writes every case in four PAAR steps, and draws the calculator architecture', () => {
+  it('writes every case in four PAAR steps, and shows no architecture under the products', () => {
     const cases = allCases(finz)
     expect(cases.map((c) => c.title.ko)).toEqual(['옮긴 계산 엔진이 같은 값을 내는지', 'AI 초안이 첫 연도에서 멈춘 간편인증', '배포 9번 연속 실패'])
     for (const item of cases) {
       expect(item.analysis?.body.length, item.title.ko).toBeGreaterThan(0)
       expect(item.result?.body.length, item.title.ko).toBeGreaterThan(0)
     }
-    expect(finz.products?.[0].architecture?.diagram?.columns.map((c) => c.title.ko)).toEqual(['브라우저', 'finz.kr (Next.js)', '외부 데이터'])
-    expect(finz.products?.[0].architecture?.decisions).toHaveLength(2)
+    expect(finz.products?.every((product) => product.architecture === undefined)).toBe(true)
   })
 
   it('links to the live calculators: the hub first, then 6Way (the one in the demo), then the rest', () => {
