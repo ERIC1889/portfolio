@@ -13,15 +13,14 @@ type Link = { key: string; from: string; to: string; kind: DiagramLinkKind; labe
 type Track = { key: string; span: [number, number]; straight: boolean; verticals: { x: number; end: 'col' | 'foot' }[] }
 type Geom = { colPt: Pt; gutterPt?: Pt; footPt: Pt; straight: boolean }
 export type Box = { left: number; top: number; right: number; bottom: number }
-/** A label pill never covers its line: `side` puts it beside a vertical (or steep) line, `above` puts it above a horizontal one. */
-export type Drawn = { key: string; d: string; kind: DiagramLinkKind; label: L; x: number; y: number; side: boolean; above: boolean; twoWay: boolean }
+export type Drawn = { key: string; d: string; kind: DiagramLinkKind; label: L; x: number; y: number; side: boolean; twoWay: boolean }
 export type Layout = { drawn: Drawn[]; levels: number }
 
 const KINDS: DiagramLinkKind[] = ['sync', 'realtime', 'async', 'paid', 'local']
 const NARROW = '(max-width: 760px)'
 /** Links between the columns and the footer band run along horizontal tracks above the band: the first one BAND_OFFSET above it, further ones BAND_GAP apart. */
 const BAND_OFFSET = 28
-const BAND_GAP = 30
+const BAND_GAP = 22
 /** A footer link that would run behind a lower card in its column leaves its card sideways HOOK above the bottom edge and runs down GUTTER outside the cards; several on one side nest outward. */
 const HOOK = 14
 const HOOK_STEP = 8
@@ -229,20 +228,18 @@ export function layoutLinks(diagram: Diagram, boxes: Map<string, Box>, footerEdg
       const y = trackY(levels.get(link.key) ?? 0)
       const points: Pt[] = straight ? [colPt, footPt] : gutterPt ? [colPt, gutterPt, { x: gutterPt.x, y }, { x: footPt.x, y }, footPt] : [colPt, { x: colPt.x, y }, { x: footPt.x, y }, footPt]
       const d = pathOf(fromFooter(link) ? [...points].reverse() : points)
-      if (straight) return { ...base, d, x: colPt.x, y: (colPt.y + trackY(maxLevel)) / 2, side: true, above: false }
-      return { ...base, d, x: ((gutterPt?.x ?? colPt.x) + footPt.x) / 2, y, side: false, above: true }
+      if (straight) return { ...base, d, x: colPt.x, y: (colPt.y + trackY(maxLevel)) / 2, side: true }
+      return { ...base, d, x: ((gutterPt?.x ?? colPt.x) + footPt.x) / 2, y, side: false }
     }
     const p = endPoint(link, 'from')
     const q = endPoint(link, 'to')
     if (isHorizontal(link.fromSide)) {
       const mx = (p.x + q.x) / 2
-      // The curve is steepest at its midpoint; when it climbs more than it travels, the pill goes beside it instead of above
-      const steep = Math.abs(q.y - p.y) > Math.abs(q.x - p.x) / 2
-      return { ...base, d: `M${round(p.x)} ${round(p.y)} C${round(mx)} ${round(p.y)}, ${round(mx)} ${round(q.y)}, ${round(q.x)} ${round(q.y)}`, x: mx, y: (p.y + q.y) / 2, side: steep, above: !steep }
+      return { ...base, d: `M${round(p.x)} ${round(p.y)} C${round(mx)} ${round(p.y)}, ${round(mx)} ${round(q.y)}, ${round(q.x)} ${round(q.y)}`, x: mx, y: (p.y + q.y) / 2, side: false }
     }
-    if (Math.abs(p.x - q.x) < 6) return { ...base, d: pathOf([p, q]), x: p.x, y: (p.y + q.y) / 2, side: true, above: false }
+    if (Math.abs(p.x - q.x) < 6) return { ...base, d: pathOf([p, q]), x: p.x, y: (p.y + q.y) / 2, side: true }
     const my = (p.y + q.y) / 2
-    return { ...base, d: pathOf([p, { x: p.x, y: my }, { x: q.x, y: my }, q]), x: (p.x + q.x) / 2, y: my, side: false, above: true }
+    return { ...base, d: pathOf([p, { x: p.x, y: my }, { x: q.x, y: my }, q]), x: (p.x + q.x) / 2, y: my, side: false }
   })
   return { drawn, levels: maxLevel }
 }
@@ -388,7 +385,7 @@ export function ArchDiagram({ diagram }: { diagram: Diagram }) {
         )}
         <div className="arch-labels" aria-hidden="true">
           {layout.drawn.map((line) => (
-            <span key={line.key} className={`arch-pill is-${line.kind}${line.side ? ' is-side' : ''}${line.above ? ' is-above' : ''}`} style={{ left: line.x, top: line.y }}>
+            <span key={line.key} className={`arch-pill is-${line.kind}${line.side ? ' is-side' : ''}`} style={{ left: line.x, top: line.y }}>
               {t(line.label)}
             </span>
           ))}
