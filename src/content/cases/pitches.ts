@@ -90,18 +90,14 @@ export const pitches: Project = {
     diagram: diagram(
       [
         column(
-          ['모바일 앱', 'Mobile app'],
+          ['클라이언트', 'Client'],
           [
             node('app', 'mine', ['모바일 앱', 'Mobile app'], {
               icon: 'phone',
               subtitle: ['Expo · React Native', 'Expo · React Native'],
-              items: [
-                ['Pitches Circle · 5초마다 색 피드백', 'Pitches Circle · color feedback every 5 s'],
-                ['녹음 · 결과 · PDF', 'Recording · results · PDF'],
-              ],
               links: [
-                ['api', ['음성 · 피드백', 'audio · feedback'], 'realtime'],
-                ['api', ['REST', 'REST'], 'sync'],
+                ['api', ['음성 스트림 · 색 피드백', 'audio stream · color feedback'], 'realtime'],
+                ['api', ['요청 · 응답', 'request · response'], 'sync'],
               ],
             }),
           ],
@@ -112,25 +108,20 @@ export const pitches: Project = {
             node('api', 'mine', ['API 서버', 'API server'], {
               icon: 'server',
               subtitle: ['Node.js · Fastify · Socket.IO', 'Node.js · Fastify · Socket.IO'],
-              items: [
-                ['5초 판정 · 음량 · 속도 · 간투사 · 감정', '5 s judgment · volume · pace · fillers · emotion'],
-                ['REST · JWT', 'REST · JWT'],
-              ],
               links: [
                 ['emotion', ['5초 음성', '5 s audio'], 'local'],
                 ['openai', ['부분 전사', 'partial transcript'], 'paid'],
-                ['worker', ['종료 → 보고서 잡', 'end → report job'], 'async'],
+                ['worker', ['발표 종료 → 보고서 잡', 'talk ends → report job'], 'async'],
                 ['db', ['세션', 'sessions'], 'sync'],
               ],
             }),
             node('worker', 'mine', ['보고서 워커', 'Report worker'], {
               icon: 'repeat',
-              subtitle: ['BullMQ · 전사 → GPT → PDF', 'BullMQ · transcript → GPT → PDF'],
+              subtitle: ['BullMQ · 전사 → GPT → PDF 저장', 'BullMQ · transcript → GPT → PDF on disk'],
               links: [
                 ['openai', ['전사 · 보고서', 'transcript · report'], 'paid'],
                 ['redis', ['작업 큐', 'job queue'], 'async'],
                 ['db', ['보고서', 'reports'], 'sync'],
-                ['files', ['PDF', 'PDF'], 'sync'],
               ],
             }),
           ],
@@ -138,27 +129,21 @@ export const pitches: Project = {
         column(
           ['AI 분석', 'AI analysis'],
           [
-            node('emotion', 'local', ['감정 분석', 'Emotion analysis'], {
-              icon: 'cpu',
-              subtitle: ['SenseVoice-Small · emotion2vec+', 'SenseVoice-Small · emotion2vec+'],
-              items: [['로컬 CPU · 무료', 'Local CPU · free']],
-            }),
-            node('openai', 'external', ['OpenAI', 'OpenAI'], {
-              icon: 'sparkles',
-              subtitle: ['Whisper · gpt-5-nano', 'Whisper · gpt-5-nano'],
-              items: [['유일한 유료 항목', 'The only paid item']],
-            }),
+            node('emotion', 'local', ['감정 분석 (Python)', 'Emotion analysis (Python)'], { icon: 'cpu', subtitle: ['SenseVoice-Small · emotion2vec+ · 로컬 CPU', 'SenseVoice-Small · emotion2vec+ · local CPU'] }),
+            node('openai', 'external', ['OpenAI', 'OpenAI'], { icon: 'sparkles', subtitle: ['Whisper · gpt-5-nano', 'Whisper · gpt-5-nano'] }),
           ],
         ),
       ],
-      ['2026 리뉴얼 구조 · 발표 음성을 5초마다 분석해 색으로 피드백하고, 끝나면 AI 코칭 보고서를 만든다', '2026 renewal · audio is analyzed every 5 s for color feedback, and an AI coaching report follows the talk'],
+      [
+        '2026 리뉴얼 구조 · 앱 → Fastify API → 감정 분석 · OpenAI · PostgreSQL. 발표 음성을 5초마다 분석해 색으로 피드백하고, 끝나면 워커가 AI 코칭 보고서를 만든다 · 로컬 · Docker로 실행',
+        '2026 renewal · app → Fastify API → emotion analysis · OpenAI · PostgreSQL. Audio is analyzed every 5 s for color feedback, and a worker builds the AI coaching report after the talk · runs locally and in Docker',
+      ],
       footer(
         ['데이터', 'Data'],
         'database',
         [
           node('db', 'data', ['PostgreSQL', 'PostgreSQL'], { icon: 'database', subtitle: ['사용자 · 세션 · 보고서', 'Users · sessions · reports'] }),
           node('redis', 'data', ['Redis', 'Redis'], { icon: 'layers', subtitle: ['보고서 작업 큐', 'Report job queue'] }),
-          node('files', 'data', ['uploads/', 'uploads/'], { icon: 'folder', subtitle: ['녹음 WAV · 보고서 PDF', 'Recording WAV · report PDF'] }),
         ],
       ),
     ),

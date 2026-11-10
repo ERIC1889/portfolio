@@ -330,7 +330,7 @@ describe('main: Pitches', () => {
   it('separates the three versions in one table under the architecture, with the 2026 diagram drawn', () => {
     expect(pitches.architecture?.table?.rows.map((row) => row[0].ko)).toEqual(['2024–25 팀 버전', 'APIC-IST 2025 논문', '2026 개인 리뉴얼'])
     expect(pitches.architecture?.diagram?.legend?.map((l) => l.kind)).toEqual(['sync', 'realtime', 'async', 'paid', 'local'])
-    expect(pitches.architecture?.diagram?.footer?.nodes.map((n) => n.id)).toEqual(['db', 'redis', 'files'])
+    expect(pitches.architecture?.diagram?.footer?.nodes.map((n) => n.id)).toEqual(['db', 'redis'])
     expect(pitches.architecture?.decisions).toBeUndefined()
     expect(pitches.links?.[0]).toMatchObject({ kind: 'code', href: 'https://github.com/ERIC1889/pitches' })
     expect(koText(pitches.material)).toContain('2026 리뉴얼 코드는 공개 저장소에 있습니다')

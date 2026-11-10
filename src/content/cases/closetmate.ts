@@ -94,33 +94,25 @@ export const closetmate: Project = {
     diagram: diagram(
       [
         column(
-          ['모바일 앱', 'Mobile app'],
+          ['클라이언트', 'Client'],
           [
-            node('app', 'mine', ['Mobile App', 'Mobile App'], {
+            node('app', 'mine', ['모바일 앱', 'Mobile app'], {
               icon: 'phone',
-              subtitle: ['Expo SDK 56 · React Native', 'Expo SDK 56 · React Native'],
-              items: [
-                ['사진 → AI 분류 · 음성 코디 요청 · 날씨 반영', 'Photo → AI label · voice outfit request · weather'],
-                ['착용 기록 · 통계', 'Wear history · stats'],
-              ],
-              links: [['api', ['HTTPS', 'HTTPS'], 'sync']],
+              subtitle: ['Expo · React Native', 'Expo · React Native'],
+              links: [['api', ['요청 · 응답', 'request · response'], 'sync']],
             }),
           ],
         ),
         column(
-          ['백엔드 API', 'Backend API'],
+          ['API 서버', 'API server'],
           [
-            node('api', 'mine', ['Backend API', 'Backend API'], {
+            node('api', 'mine', ['API 서버', 'API server'], {
               icon: 'server',
-              subtitle: ['Next.js 16 · Vercel', 'Next.js 16 · Vercel'],
-              items: [
-                ['MobileNetV3 ONNX 분류 · Whisper', 'MobileNetV3 ONNX labels · Whisper'],
-                ['룰 후보 → LLM 선택 → 서버 검증', 'Rule candidates → LLM pick → server check'],
-              ],
+              subtitle: ['Next.js · Vercel 호스팅', 'Next.js · hosted on Vercel'],
               links: [
-                ['openai', ['AI 호출', 'AI calls'], 'paid'],
-                ['weather', ['날씨', 'weather'], 'sync'],
-                ['store', ['SQL · 파일', 'SQL · files'], 'sync'],
+                ['openai', ['AI 요청', 'AI request'], 'paid'],
+                ['weather', ['날씨 조회', 'weather lookup'], 'sync'],
+                ['store', ['조회 · 저장', 'read · write'], 'sync'],
               ],
             }),
           ],
@@ -128,39 +120,24 @@ export const closetmate: Project = {
         column(
           ['외부 서비스 · 데이터', 'External services · data'],
           [
-            node('openai', 'external', ['OpenAI API', 'OpenAI API'], { icon: 'sparkles', subtitle: ['추천 모델 · whisper-1 · Vision', 'Suggestion model · whisper-1 · Vision'] }),
-            node('weather', 'external', ['OpenWeather', 'OpenWeather'], { icon: 'cloud', subtitle: ['위치 → 온도 · 비/눈', 'Location → temperature · rain or snow'] }),
-            node('store', 'data', ['PostgreSQL · Blob', 'PostgreSQL · Blob'], { icon: 'database', subtitle: ['Drizzle ORM · Neon · 이미지는 Vercel Blob', 'Drizzle ORM · Neon · images on Vercel Blob'] }),
+            node('openai', 'external', ['OpenAI', 'OpenAI'], { icon: 'sparkles', subtitle: ['추천 모델 · whisper-1 · Vision', 'Suggestion model · whisper-1 · Vision'] }),
+            node('weather', 'external', ['OpenWeather', 'OpenWeather'], { icon: 'cloud', subtitle: ['위치 → 날씨', 'Location → weather'] }),
+            node('store', 'data', ['PostgreSQL · Blob', 'PostgreSQL · Blob'], { icon: 'database', subtitle: ['Neon · 이미지는 Vercel Blob', 'Neon · images on Vercel Blob'] }),
           ],
         ),
       ],
-      ['멀티모달 입력(사진 · 음성 · 위치 · 착용 기록) → Next.js 백엔드 → LLM 추천 + 자체 전이학습 분류기', 'Multimodal input (photo · voice · location · wear history) → Next.js backend → LLM suggestions + my own transfer-learned classifier'],
+      [
+        '앱 → Vercel의 Next.js API → OpenAI · 날씨 · DB. 분류 모델은 오프라인에서 학습해 서버에서 ONNX로 추론한다',
+        'App → Next.js API on Vercel → OpenAI · weather · database. The classifier is trained offline and served on the server with ONNX',
+      ],
       footer(
-        ['Python ML · 오프라인 학습', 'Python ML · offline training'],
+        ['학습 파이프라인 (오프라인)', 'Training pipeline (offline)'],
         'chart',
         [
-          node('dataset', 'local', ['Kaggle 데이터셋', 'Kaggle dataset'], {
-            icon: 'image',
-            subtitle: ['Fashion Product Images · 약 35,000장', 'Fashion Product Images · about 35,000 images'],
-            links: [['train', ['학습', 'training'], 'local']],
-          }),
-          node('train', 'local', ['전이학습', 'Transfer learning'], {
+          node('train', 'local', ['모델 학습 · 내보내기', 'Training · export'], {
             icon: 'cpu',
-            subtitle: ['PyTorch · 백본 동결 · 헤드 3개', 'PyTorch · frozen backbone · 3 heads'],
-            links: [['compare', ['두 모델', 'two models'], 'local']],
-          }),
-          node('compare', 'local', ['모델 비교', 'Model comparison'], {
-            icon: 'chart',
-            subtitle: ['MobileNetV3-Small 채택', 'MobileNetV3-Small chosen'],
-            links: [['export', ['채택 모델', 'chosen model'], 'local']],
-          }),
-          node('export', 'local', ['모델 내보내기', 'Model export'], {
-            icon: 'layers',
-            subtitle: ['ONNX · TFLite', 'ONNX · TFLite'],
-            links: [
-              ['api', ['ONNX', 'ONNX'], 'local'],
-              ['app', ['TFLite · 비활성', 'TFLite · inactive'], 'local'],
-            ],
+            subtitle: ['PyTorch 전이학습 · 두 모델 비교 → ONNX', 'PyTorch transfer learning · two models compared → ONNX'],
+            links: [['api', ['ONNX 모델', 'ONNX model'], 'local']],
           }),
         ],
       ),

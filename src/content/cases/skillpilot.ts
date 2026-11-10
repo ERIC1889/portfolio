@@ -103,35 +103,33 @@ export const skillpilot: Project = {
     diagram: diagram(
       [
         column(
-          ['브라우저 · 앱', 'Browser · app'],
+          ['클라이언트', 'Client'],
           [
-            node('web', 'mine', ['React 19 앱', 'React 19 app'], {
+            node('web', 'mine', ['브라우저', 'Browser'], {
               icon: 'browser',
-              subtitle: ['Vite · OnboardingGuard', 'Vite · OnboardingGuard'],
-              items: [['로그인 · 추천 · 학습 · CBT · 면접 · 포트폴리오', 'Login · recommendations · study · CBT · interviews · portfolio']],
-              links: [['api', ['REST', 'REST'], 'sync']],
+              subtitle: ['React 19 · Vite', 'React 19 · Vite'],
+              links: [['api', ['요청 · 응답', 'request · response'], 'sync']],
             }),
           ],
         ),
         column(
           ['API 서버', 'API server'],
           [
-            node('api', 'mine', ['Node.js Express', 'Node.js Express'], {
+            node('api', 'mine', ['API 서버', 'API server'], {
               icon: 'server',
-              subtitle: ['라우트 → 컨트롤러 → 서비스 → 모델', 'routes → controllers → services → models'],
-              items: [['인증 · 검증 · 라우트 모듈 16개', 'Auth · validation · 16 route modules']],
+              subtitle: ['Node.js · Express', 'Node.js · Express'],
               links: [
-                ['mysql', ['CRUD', 'CRUD'], 'sync'],
-                ['mongo', ['학습 로그', 'study log'], 'sync'],
-                ['openai', ['AI 호출', 'AI calls'], 'paid'],
+                ['mysql', ['조회 · 저장', 'read · write'], 'sync'],
+                ['mongo', ['조회 · 저장', 'read · write'], 'sync'],
+                ['openai', ['AI 요청', 'AI request'], 'paid'],
               ],
             }),
-            node('cron', 'mine', ['node-cron', 'node-cron'], {
+            node('cron', 'mine', ['스케줄러', 'Scheduler'], {
               icon: 'clock',
-              subtitle: ['자격증 매일 04:00 · 시험 일정 매주 월 05:00', 'Certifications daily 04:00 · schedules Mondays 05:00'],
+              subtitle: ['node-cron · 주기 동기화', 'node-cron · periodic sync'],
               links: [
-                ['data', ['XML · 정규화', 'XML · normalization'], 'sync'],
-                ['mysql', ['findOrCreate', 'findOrCreate'], 'sync'],
+                ['data', ['가져오기', 'fetch'], 'sync'],
+                ['mysql', ['저장', 'write'], 'sync'],
               ],
             }),
           ],
@@ -139,33 +137,28 @@ export const skillpilot: Project = {
         column(
           ['외부 서비스', 'External services'],
           [
-            node('openai', 'external', ['OpenAI', 'OpenAI'], {
-              icon: 'sparkles',
-              subtitle: ['GPT-4o-mini', 'GPT-4o-mini'],
-              items: [['추천 · 로드맵 · 오답 분석 · 모의면접', 'Recommendations · roadmaps · answer review · mock interviews']],
-            }),
-            node('data', 'external', ['공공데이터', 'Public data'], {
-              icon: 'globe',
-              subtitle: ['data.go.kr', 'data.go.kr'],
-              items: [['자격증 · 시험 일정 API 7종', '7 certification and exam-schedule APIs']],
-            }),
+            node('openai', 'external', ['OpenAI', 'OpenAI'], { icon: 'sparkles', subtitle: ['GPT-4o-mini', 'GPT-4o-mini'] }),
+            node('data', 'external', ['공공데이터 API', 'Public data API'], { icon: 'globe', subtitle: ['data.go.kr · 7종', 'data.go.kr · 7 APIs'] }),
           ],
         ),
       ],
-      ['화면 → Express API → MySQL·MongoDB · 공공데이터는 node-cron이 주기적으로 동기화', 'Screens → Express API → MySQL and MongoDB · public data synced periodically by node-cron'],
+      [
+        '브라우저 → Express API → MySQL · MongoDB. 공공데이터는 스케줄러가 주기적으로 가져와 MySQL에 넣고, AI 기능은 OpenAI를 부른다 · 로컬 · Docker로 실행',
+        'Browser → Express API → MySQL · MongoDB. A scheduler pulls the public data into MySQL periodically, and the AI features call OpenAI · runs locally and in Docker',
+      ],
       footer(
-        ['데이터 (하이브리드 DB)', 'Data (hybrid DB)'],
+        ['데이터', 'Data'],
         'database',
         [
-          node('mongo', 'data', ['MongoDB', 'MongoDB'], { icon: 'database', subtitle: ['Mongoose · 문제은행 · 학습 기록 · 모의면접', 'Mongoose · question bank · study log · mock interviews'] }),
-          node('mysql', 'data', ['MySQL', 'MySQL'], { icon: 'database', subtitle: ['Sequelize · 사람 · 프로필 · 목표 · 자격증', 'Sequelize · people · profiles · goals · certifications'] }),
+          node('mongo', 'data', ['MongoDB', 'MongoDB'], { icon: 'database', subtitle: ['시험 결과 · 로드맵 · 면접 대화', 'Exam results · roadmaps · interview conversations'] }),
+          node('mysql', 'data', ['MySQL', 'MySQL'], { icon: 'database', subtitle: ['계정 · 학습 목표 · 자격증', 'Accounts · study goals · certifications'] }),
         ],
       ),
     ),
     body: pairs([
       [
-        '백엔드는 라우트(routes) → 컨트롤러(controllers) → 서비스(services) → 모델(models)의 4계층으로 책임을 분리했습니다. 공공데이터 동기화는 스케줄러(node-cron)가 담당하며, 자격증 정보는 공공데이터에서 제공하는 고유 일련번호(externalId)를 기준으로 findOrCreate되어 중복 없이 갱신됩니다. 사용자의 학습 활동(학습 시간·시험 결과 등)은 즉시 MongoDB에 로깅되어 대시보드 집계와 AI 분석의 컨텍스트(Context)로 활용됩니다',
-        "The backend separates responsibilities into four layers: routes → controllers → services → models. A scheduler (node-cron) handles public-data syncing; certifications are findOrCreate'd by the unique serial number (externalId) the public data provides, so they refresh without duplicates. Users' study activity (study time, exam results and so on) is logged to MongoDB immediately and used for dashboard aggregates and as context for AI analysis.",
+        '사용자는 React 앱으로 들어오고, 모든 요청은 Express API 서버 하나를 거칩니다. API 서버는 계정·학습 목표·자격증처럼 서로 연결되는 데이터는 MySQL에, 시험 결과·로드맵·면접 대화처럼 한 덩어리로 읽고 쓰는 데이터는 MongoDB에 저장하고, 추천·로드맵·모의면접은 OpenAI를 호출해 만듭니다. 자격증 정보는 사용자가 요청할 때마다 공공데이터를 부르지 않고, 스케줄러가 주기적으로 7종 API에서 가져와 MySQL에 넣어 둔 것을 읽습니다. 서버 코드는 라우트 → 컨트롤러 → 서비스 → 모델 4계층으로 나눴고, 로컬과 Docker에서 실행했습니다.',
+        'Users come in through the React app, and every request goes through one Express API server. The server keeps data that connects to other data (accounts, study goals, certifications) in MySQL and data read and written as one piece (exam results, roadmaps, interview conversations) in MongoDB, and calls OpenAI for recommendations, roadmaps and mock interviews. Certification information is not fetched from the public APIs on each request: a scheduler pulls it periodically from the 7 APIs into MySQL, and the server reads it from there. The server code is split into four layers, routes → controllers → services → models, and it ran locally and in Docker.',
       ],
     ]),
     decisions: pairs([
