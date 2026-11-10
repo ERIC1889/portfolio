@@ -35,9 +35,14 @@ export const closetmate: Project = {
     ['착용 기록, 옷장 통계, 선택형 OpenAI Vision 상세 분석', 'Wear history, wardrobe stats and optional detailed OpenAI Vision analysis'],
   ]),
   resumeItems: pairs([
-    ['LLM 추천을 서버에서 형식 → 옷 ID → 후보 조합 순서로 검증하고, 어긋나면 보조 모델로 다시 받기', 'Checking LLM suggestions on the server in the order format → clothing IDs → candidate outfit, and asking a backup model when anything is off'],
-    ['MobileNetV3·ResNet50 전이학습 비교 후 MobileNetV3를 서버에서 ONNX로 추론', 'Compared transfer learning on MobileNetV3 and ResNet50, then served MobileNetV3 with ONNX on the server'],
-    ['Expo 앱: 사진 등록·분류 확인, 옷장, 통계, 음성 입력(Whisper)', 'The Expo app: adding photos and checking labels, the wardrobe, stats and voice input (Whisper)'],
+    [
+      'LLM 추천을 서버에서 형식 → 옷 ID → 후보 조합 순서로 검증하고, 어긋나면 보조 모델로 다시 받기 — 실측 23회 중 최종 실패 0건(기본 모델 통과 19 · 보조 모델 처리 4)',
+      'Checking LLM suggestions on the server in the order format → clothing IDs → candidate outfit, and asking a backup model when anything is off — 0 final failures in 23 measured runs (base model passed 19, backup handled 4)',
+    ],
+    [
+      'MobileNetV3-Small과 ResNet50 전이학습을 같은 조건으로 비교해 MobileNetV3-Small 채택(가중치 6.0MB 대 90.2MB), 서버에서 ONNX로 추론',
+      'Compared transfer learning on MobileNetV3-Small and ResNet50 under the same conditions and chose MobileNetV3-Small (weights 6.0 MB vs 90.2 MB), served with ONNX on the server',
+    ],
   ]),
   contribution: {
     direct: pairs([['기획 · 모델 학습 · 모바일·API 개발', 'Planning · model training · mobile and API development']]),

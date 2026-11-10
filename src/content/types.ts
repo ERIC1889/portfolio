@@ -181,6 +181,8 @@ export interface Project {
   audience?: L
   features?: L[]
   resumeItems?: L[]
+  /** Stack line printed on the résumé when the page's stack is too long */
+  resumeStack?: string[]
   contribution?: Contribution
   media?: Media[]
   metrics?: Metric[]
@@ -227,6 +229,18 @@ export interface Contact {
   label: L
   value: string
   href: string
+}
+
+/** One rendering of the résumé: the public page and the private submission copy share the data and differ only here */
+export interface ResumeVariant {
+  id: 'site' | 'daangn'
+  role?: L
+  /** 병역·입사 line; only the submission copy has it */
+  service?: L
+  summary: L[]
+  skills: SkillRow[]
+  /** Titles of the conference papers listed in full; the rest are counted */
+  topPapers: string[]
 }
 
 export interface Profile {

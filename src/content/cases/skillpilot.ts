@@ -41,12 +41,12 @@ export const skillpilot: Project = {
   ]),
   resumeItems: pairs([
     [
-      '공공 API 7종 응답 정규화: HTTP 200 속 오류 문구는 실패로 보고 재시도, XML·JSON 응답 모두 해석',
-      'Normalizing 7 public APIs: error text inside an HTTP 200 counts as a failure and is retried, and both XML and JSON responses are parsed',
+      '공공 API 7종 응답 정규화: HTTP 200 속 오류 문구는 실패로 보고 0.5초, 1초 간격으로 최대 2회 재시도, XML·JSON 응답 모두 해석',
+      'Normalizing 7 public APIs: error text inside an HTTP 200 counts as a failure and is retried up to twice at 0.5 s and 1 s, and both XML and JSON responses are parsed',
     ],
     [
-      'node-cron 주기 동기화와 관리자 수동 실행, 같은 사용자·같은 조건의 AI 결과 재사용(MongoDB)',
-      'Periodic syncing with node-cron plus a manual admin run, and reuse of AI results for the same user and request (MongoDB)',
+      'node-cron 주기 동기화(자격증 매일 04:00 · 시험 일정 매주 월 05:00)와 관리자 수동 실행, 같은 사용자·같은 조건의 AI 결과 재사용(MongoDB) · 백엔드 라우트 모듈 16개',
+      'Periodic syncing with node-cron (certifications daily at 04:00, exam schedules Mondays at 05:00) plus a manual admin run, reuse of AI results for the same user and request (MongoDB) · 16 backend route modules',
     ],
     [
       '프론트엔드 개편: 디자인 토큰, 공통 컴포넌트 6종, 13개 페이지 이전, 대시보드 위젯 5종, 학습메이트(학습동반 챗봇)',

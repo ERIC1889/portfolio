@@ -37,15 +37,15 @@ export const pitches: Project = {
   ]),
   resumeItems: pairs([
     [
-      'SenseVoice-Small 실시간 분석 백엔드, asyncio로 여러 세션 프레임 병렬 처리 (논문 보고 지연 평균 125ms)',
-      'Live-analysis backend on SenseVoice-Small, with frames from many sessions processed in parallel on asyncio (125 ms average latency as reported in the paper)',
+      '2026 리뉴얼(전체): Socket.IO 0.25초 음성 스트리밍, 5초 단위 음량·말 속도·간투사·감정 판정, 분석별 대기 시간 제한 · 발표 뒤 전사·집계·gpt-5-nano 보고서·PDF는 BullMQ 워커 · API 단위 테스트 41개',
+      '2026 renewal (everything): Socket.IO audio streaming in 0.25 s chunks, volume, pace, filler-word and emotion judgments every 5 s, a time limit per analysis · full transcript, aggregation, gpt-5-nano report and PDF in a BullMQ worker · 41 API unit tests',
     ],
     [
-      '2026 리뉴얼: Socket.IO 0.25초 음성 스트리밍, 5초 단위 음량·말 속도·간투사·감정 판정, BullMQ 발표 후 분석 큐',
-      '2026 renewal: Socket.IO audio streaming in 0.25 s chunks, volume, pace, filler-word and emotion judgments every 5 s, a BullMQ post-talk analysis queue',
+      'APIC-IST 2025 논문 구조(2024–25 팀 버전 기반, 백엔드·AI): SenseVoice-Small 실시간 분석 백엔드, asyncio로 여러 세션 프레임 병렬 처리 — 논문 보고 지연 평균 125ms · 최악 170ms(동시 20세션)',
+      'APIC-IST 2025 paper design (built on the 2024–25 team version, backend and AI): live-analysis backend on SenseVoice-Small with frames from many sessions processed in parallel on asyncio — 125 ms average and 170 ms worst-case latency as reported in the paper (20 concurrent sessions)',
     ],
-    ['해커톤 대상(1등) · 창업 경진대회 특별상 · APIC-IST 2025 논문 2저자', 'Hackathon grand prize (1st) · startup competition special award · second author of the APIC-IST 2025 paper'],
   ]),
+  resumeStack: ['Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'SenseVoice-Small', 'GPT-5-nano', 'Expo'],
   contribution: {
     direct: pairs([
       ['팀 버전: 백엔드 개발, AI 모델 선정·적용, 연구와 발표, 논문 2저자', 'Team version: backend, choosing and applying the AI models, research and presenting, second author of the paper'],

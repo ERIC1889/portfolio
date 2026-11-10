@@ -299,9 +299,22 @@ export const archive: Archive = {
       ),
       project: 'finz',
       responsibilities: [
-        k('회사 웹 finz.kr 설계·개발·운영 (부동산 6Way·디지털 자산·해외주식 계산기)', 'Designed, built and now run the company website finz.kr (property 6Way, digital asset and foreign stock calculators)'),
-        k('Finz 모바일 앱: 청년 세금 환급 MVP, 세무사 상담 연결 (Expo · FastAPI, 미출시)', 'Finz mobile app: tax refund MVP, tax-accountant connection (Expo · FastAPI, not released)'),
-        k('세무사용 FINZ (협력 개발사와 공동 개발): 엔진 초안·외부 API·배포 방식 결정에 참여, 사양 작성, 개발사 작업 재검증, 배포 장애 원인 분석, 실배포 준비', 'FINZ for tax accountants (co-developed with a partner company): took part in deciding the engine draft, external APIs and deployment; wrote specs, re-verified the vendor’s work, found the cause of deployment failures, prepared the production launch'),
+        k(
+          '회사 웹 finz.kr 설계·개발·운영 (2026.04–): 부동산 6Way · 디지털 자산 · 해외주식 양도세·증여 평가 계산기 4종 운영 중 · 저장소 테스트 192개 통과(계산 엔진 53 · 시세·환율 데이터 소스 31)',
+          'Designed, built and run the company website finz.kr (2026.04–): four calculators live — property 6Way, digital assets, foreign-stock capital gains and gift valuation · all 192 repository tests pass (53 calculation-engine, 31 market-data)',
+        ),
+        k(
+          'Finz 모바일 앱 (Expo · FastAPI, 미출시): 청년 세금 환급 MVP와 세무사 상담 연결 · 간편인증 1번으로 5개 연도 지급명세서 조회(CODEF 개발 환경, 홈택스 자료와 대조) · 보안 단위 테스트 57개(HTTP 권한 테스트 없음)',
+          'Finz mobile app (Expo · FastAPI, not released): youth tax-refund MVP and tax-accountant matching · five years of payment statements fetched with one simple authentication (CODEF development environment, checked against Hometax records) · 57 security unit tests (no HTTP permission tests)',
+        ),
+        k(
+          '세무사용 FINZ (협력 개발사와 공동 개발, 출시 전): 엔진 초안·외부 API·배포 방식 결정에 참여, 가격 정책·기능 잠금 범위 사양 작성 · 개발사 완료 보고 269건 재검증(233 확인 · 36 미완료 · 새 결함 45)',
+          'FINZ for tax accountants (co-developed with a partner company, pre-launch): took part in deciding the engine draft, external APIs and deployment, wrote the pricing and feature-lock spec · re-verified 269 vendor items (233 confirmed · 36 open · 45 new defects)',
+        ),
+        k(
+          '배포 9번 연속 실패 원인 재현(타입 검사 메모리 36% 증가, 서버와 같은 메모리 상한에서 재현) → 개발사가 진단을 확인하고 배포 실패가 서비스를 멈추지 않게 변경 · CI에 심은 한 줄짜리 버그 7개 모두 검출 · 실배포 준비',
+          'Reproduced the cause of nine failed deployments in a row (type-check memory up 36%, reproduced under the server’s memory cap) → the vendor confirmed the diagnosis and changed deploys so a failure no longer stops the service · all 7 one-line bugs planted in CI were caught · prepared the production rollout',
+        ),
       ],
     },
   ],

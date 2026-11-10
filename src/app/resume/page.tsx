@@ -1,5 +1,6 @@
 import { Resume } from '@/components/pages/Resume'
 import { SITE_URL, archive, getResumeProjects, getTopActivities, getTopAwards, profile } from '@/content'
+import { RESUME_SITE } from '@/content/resume'
 import { pageMetadata } from '../_lib/pages'
 
 export const metadata = pageMetadata({
@@ -9,5 +10,5 @@ export const metadata = pageMetadata({
 })
 
 export default function ResumePage() {
-  return <Resume profile={profile} archive={archive} projects={getResumeProjects()} topAwards={getTopAwards()} topActivities={getTopActivities()} siteUrl={SITE_URL} />
+  return <Resume profile={profile} archive={archive} projects={getResumeProjects()} topAwards={getTopAwards()} topActivities={getTopActivities()} siteUrl={SITE_URL} variant={RESUME_SITE} />
 }

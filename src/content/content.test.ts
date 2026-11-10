@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { aiWork, archive, chapters, getPaperCounts, getRecordStats, getTopActivities, getTopAwards, profile, projects } from './index'
+import { RESUME_SITE, daangnVariant } from './resume'
 import * as ui from './ui'
 import { checkEn, checkKo, checkLinks, checkNoLocalPaths, checkNoPhoneNumbers, collectStrings } from './validate'
 
-const ALL_CONTENT = { profile, chapters, projects, archive, aiWork, ui: { ...ui } }
+const ALL_CONTENT = { profile, chapters, projects, archive, aiWork, resume: { site: RESUME_SITE, daangn: daangnVariant({ ko: '병역 줄 예시', en: 'service line example' }) }, ui: { ...ui } }
 
 const textOf = (content: unknown) =>
   collectStrings(content)

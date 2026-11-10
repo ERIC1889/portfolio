@@ -242,4 +242,5 @@ export const UI = {
     en: 'Every project, paper, award and activity in one place.',
   },
   resumePdf: { ko: 'PDF 내려받기', en: 'Download PDF' },
+  resumeSummary: { ko: '요약', en: 'Summary' },
 } satisfies Record<string, L>
