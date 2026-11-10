@@ -23,6 +23,6 @@ const TOP_PAPERS = ['Pitches: Real-Time Presentation Coaching with Low-Latency S
 export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, skills: SKILLS, topPapers: TOP_PAPERS }
 
 /** The submission copy for 당근: a backend title and the 병역·입사 line, which stays out of the public site and the repository */
-export function daangnVariant(service?: L): ResumeVariant {
-  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, summary: SUMMARY, skills: SKILLS, topPapers: TOP_PAPERS }
+export function daangnVariant(service?: L, phone?: string): ResumeVariant {
+  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, skills: SKILLS, topPapers: TOP_PAPERS }
 }

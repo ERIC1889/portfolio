@@ -50,6 +50,11 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
           <h1>{t(profile.name)}</h1>
           <p className="resume-role">{t(variant.role ?? profile.role)}</p>
           <ul className="resume-contacts">
+            {variant.phone && (
+              <li>
+                <a href={`tel:${variant.phone.replace(/[^+\d]/g, '')}`}>{variant.phone}</a>
+              </li>
+            )}
             {profile.contacts.map((contact) => (
               <li key={contact.kind}>
                 <a href={contact.href}>{contact.value}</a>

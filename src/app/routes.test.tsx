@@ -250,13 +250,17 @@ describe('/resume', () => {
 
   it('prints the submission copy with the backend title and the service line from the environment, which the public page never shows', () => {
     process.env.RESUME_SERVICE_KO = '산업기능요원 · 보충역 신규 편입 (테스트)'
+    process.env.RESUME_PHONE = '010-0000-0000'
     try {
       const { container } = renderWithProviders(<DaangnResumePage />)
       expect(container.querySelector('.resume-role')).toHaveTextContent('백엔드 개발자')
+      expect(container.querySelector('.resume-contacts li:first-child a')).toHaveAttribute('href', 'tel:01000000000')
+      expect([...container.querySelectorAll('.resume-contacts li')].slice(0, 2).map((li) => li.textContent)).toEqual(['010-0000-0000', 'eric1889@naver.com'])
       expect(container.querySelector('.resume-service')).toHaveTextContent('산업기능요원 · 보충역 신규 편입 (테스트)')
       expect(container.querySelectorAll('.resume-summary > li')).toHaveLength(3)
     } finally {
       delete process.env.RESUME_SERVICE_KO
+      delete process.env.RESUME_PHONE
     }
     const { container: pub } = renderWithProviders(<ResumePage />)
     expect(pub).not.toHaveTextContent('산업기능요원')

@@ -237,6 +237,8 @@ export interface ResumeVariant {
   role?: L
   /** 병역·입사 line; only the submission copy has it */
   service?: L
+  /** Phone number; only the submission copy has it, read from the environment, never in the repository */
+  phone?: string
   summary: L[]
   /** Bare tool lists; what each tool was used for is in the bullets below them */
   skills: { area: L; items: string[] }[]
