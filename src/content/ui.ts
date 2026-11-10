@@ -243,4 +243,21 @@ export const UI = {
   },
   resumePdf: { ko: 'PDF 내려받기', en: 'Download PDF' },
   resumeSummary: { ko: '요약', en: 'Summary' },
+  resumePhone: { ko: '전화', en: 'Phone' },
+  resumeSite: { ko: '포트폴리오', en: 'Portfolio' },
+  resumeService: { ko: '병역 · 입사', en: 'Service · start' },
+  resumeAwards: { ko: '수상', en: 'Awards' },
+  resumeActivities: { ko: '활동', en: 'Activities' },
+} satisfies Record<string, L>
+
+/** Section titles of the résumé, in the order a Korean developer résumé is read: 제목·직무명 in the header, then these */
+export const RESUME_SECTIONS = {
+  profile: { ko: '인적 사항', en: 'Profile' },
+  intro: { ko: '자기 소개', en: 'About me' },
+  education: { ko: '학력 및 교육 사항', en: 'Education' },
+  career: { ko: '경력', en: 'Experience' },
+  projects: { ko: '프로젝트', en: 'Projects' },
+  activities: { ko: '직무 관련 활동', en: 'Related activities' },
+  other: { ko: '기타 경력 및 경험', en: 'Other experience' },
+  skills: { ko: '스킬', en: 'Skills' },
 } satisfies Record<string, L>

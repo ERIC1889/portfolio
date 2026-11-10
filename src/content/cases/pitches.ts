@@ -39,7 +39,7 @@ export const pitches: Project = {
     ['2026 리뉴얼(전체) — Socket.IO 스트리밍, 5초 단위 판정, 분석별 대기 시간 제한, BullMQ 보고서 워커, 테스트 41개', '2026 renewal (everything) — Socket.IO streaming, judgments every 5 s, a time limit per analysis, a BullMQ report worker, 41 tests'],
     ['APIC-IST 2025 논문(백엔드·AI) — SenseVoice-Small 실시간 분석 백엔드, 지연 평균 125ms(논문 보고값)', 'APIC-IST 2025 paper (backend and AI) — live-analysis backend on SenseVoice-Small, 125 ms average latency as reported in the paper'],
   ]),
-  resumeStack: ['Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'SenseVoice-Small', 'GPT-5-nano', 'Expo'],
+  resumeStack: ['Fastify', 'Socket.IO', 'BullMQ', 'PostgreSQL', 'Whisper', 'SenseVoice-Small', 'GPT-5-nano', 'Expo'],
   contribution: {
     direct: pairs([
       ['팀 버전: 백엔드 개발, AI 모델 선정·적용, 연구와 발표, 논문 2저자', 'Team version: backend, choosing and applying the AI models, research and presenting, second author of the paper'],

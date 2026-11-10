@@ -20,9 +20,12 @@ const SKILLS: ResumeVariant['skills'] = [
 /** Listed in full; the other conference papers are counted in one line */
 const TOP_PAPERS = ['Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI', 'LLM을 활용한 실시간 회의 인지·감성 분석 웹 시스템의 설계 및 구현']
 
-export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, skills: SKILLS, topPapers: TOP_PAPERS }
+/** Organisation experience that is not developer work but shows how the owner works with people */
+const OTHER = ['웹 프로그래밍 멘토링 멘토 · 스터디 리더', '오산시 해커톤 대회 멘토', '어학 연수']
+
+export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, skills: SKILLS, topPapers: TOP_PAPERS, otherExperiences: OTHER }
 
 /** The submission copy for 당근: a backend title and the 병역·입사 line, which stays out of the public site and the repository */
 export function daangnVariant(service?: L, phone?: string): ResumeVariant {
-  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, skills: SKILLS, topPapers: TOP_PAPERS }
+  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, skills: SKILLS, topPapers: TOP_PAPERS, otherExperiences: OTHER }
 }

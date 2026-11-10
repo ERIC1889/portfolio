@@ -244,6 +244,8 @@ export interface ResumeVariant {
   skills: { area: L; items: string[] }[]
   /** Titles of the conference papers listed in full; the rest are counted */
   topPapers: string[]
+  /** Names of archive activities shown under 기타 경력 및 경험 */
+  otherExperiences: string[]
 }
 
 export interface Profile {
