@@ -170,8 +170,8 @@ export const skillpilot: Project = {
     ]),
     decisions: pairs([
       [
-        'DB 분리: 서로 연결되는 데이터는 MySQL에, 한 덩어리로 읽고 쓰는 데이터는 MongoDB에 뒀습니다. 대신 두 DB 사이의 트랜잭션을 포기했고, 지금이라면 MySQL 하나로 시작하겠습니다.',
-        'Splitting the databases: data that connects to other data went in MySQL, and data read and written as one unit went in MongoDB. That gave up transactions across the two, and today I would start with MySQL alone.',
+        'DB 분리: 앞선 팀 프로젝트 EduMatrix에서는 AI 리포트를 MongoDB 문서로 저장하면서 같은 점수가 MySQL에도 들어가 두 DB의 경계가 흐려졌습니다. 그래서 SkillPilot에서는 읽고 쓰는 단위를 기준으로 삼아, 계정·학습 목표·자격증처럼 서로 연결되고 정합성이 중요한 데이터는 MySQL에, 시험 결과·로드맵·면접 대화처럼 한 덩어리로 읽고 쓰는 데이터는 MongoDB에 두고 같은 데이터가 양쪽에 있지 않게 했습니다. 팀이 MongoDB에 익숙했던 것도 이유였습니다. 대가는 두 DB 사이에 트랜잭션이 없다는 점이어서, 로드맵을 저장한 뒤 일정 갱신이 실패하면 두 DB가 어긋날 수 있습니다. 돌아보면 MongoDB에 둔 데이터를 내부 필드로 조회하는 코드가 없었고 자격증 과목 목록은 MySQL JSON 컬럼으로 충분했기 때문에, 지금 다시 한다면 MySQL 하나로 시작하고 부하나 구조 변경 빈도가 근거로 쌓일 때 분리하겠습니다.',
+        'Splitting the databases: in an earlier team project, EduMatrix, AI reports were stored as MongoDB documents while the same scores also went into MySQL, and the line between the two databases blurred. So in SkillPilot the rule was the unit of reading and writing: data that connects to other data and has to stay consistent (accounts, study goals, certifications) went in MySQL, data read and written as one piece (exam results, roadmaps, interview conversations) went in MongoDB, and nothing was stored on both sides. The team being used to MongoDB was part of the reason too. The price is that there are no transactions across the two databases, so if the schedule update fails after a roadmap is saved, the two drift apart. Looking back, no code queried the MongoDB data by its inner fields and the certification subject list was fine as a MySQL JSON column, so today I would start with MySQL alone and split only once load or the pace of schema changes gave a reason.',
       ],
       [
         'AI 실패 처리: AI 호출이 실패하면 오류 대신 규칙 기반 추천과 로드맵을 제공했습니다. 품질은 낮아져도 온보딩 흐름은 끊기지 않습니다. 같은 사용자의 같은 조건 요청은 저장된 결과를 다시 씁니다.',
