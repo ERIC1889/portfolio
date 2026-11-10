@@ -52,7 +52,6 @@ export const skillpilot: Project = {
       ],
       ['팀 운영(일정·역할 조율)과 최종 발표', 'Running the team (schedule and role coordination) and the final presentation'],
     ]),
-    others: pairs([['프론트엔드 초기 화면(팀원 2), AI 프롬프트·추천 로직(팀원 1)', 'The initial frontend screens (two teammates) and the AI prompts and recommendation logic (one teammate)']]),
   },
   media: [
     video(

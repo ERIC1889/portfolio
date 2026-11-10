@@ -1883,28 +1883,10 @@ a:hover {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px 28px;
 }
-.case-block > p + .scope-rows {
+.case-block > p + .scope-list {
   margin-top: 28px;
 }
-.scope-rows {
-  display: grid;
-  gap: 6px;
-}
-.scope-row {
-  display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
-  gap: 10px;
-}
-.scope-row dt {
-  padding-top: 1px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-2);
-}
-.scope-row.is-direct dt {
-  color: var(--accent);
-}
-.scope-row .dash-list {
+.facts .scope-list {
   margin-top: 0;
 }
 .product-table th a {
@@ -2487,10 +2469,6 @@ a:hover {
   }
   .paar-label {
     padding-top: 0;
-  }
-  .scope-row {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2px;
   }
   .table.product-table {
     font-size: 15px;

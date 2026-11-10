@@ -239,7 +239,8 @@ describe('work: Finz Labs', () => {
     expect(koText(finz.products?.[0].features)).not.toMatch(/가상자산 (계산 )?엔진을 (직접 )?(만들|작성)/)
     expect(finz.features).toBeUndefined()
     expect(finz.resumeItems).toBeUndefined()
-    expect(finz.contribution?.joint && koText(finz.contribution.joint)).toContain('세무사')
+    expect(koText(finz.contribution?.direct)).toContain('세무사와 함께')
+    expect(koText(finz.contribution?.direct)).toContain('협력 개발사와 함께')
   })
 
   it('reports the vendor re-verification as a result, never as fixes or a fix rate', () => {

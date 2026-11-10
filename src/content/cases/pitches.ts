@@ -45,7 +45,6 @@ export const pitches: Project = {
       ['팀 버전: 백엔드 개발, AI 모델 선정·적용, 연구와 발표, 논문 2저자', 'Team version: backend, choosing and applying the AI models, research and presenting, second author of the paper'],
       ['2026 리뉴얼: 전체', '2026 renewal: all of it'],
     ]),
-    others: pairs([['팀 버전의 앱 UI', 'The app UI of the team version']]),
   },
   media: [
     video(

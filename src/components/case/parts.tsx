@@ -2,29 +2,18 @@
 
 import { useLang } from '@/components/providers/LanguageProvider'
 import type { CaseSection, Contribution, Metric, Product } from '@/content/types'
-import { METRIC_HEADINGS, METRIC_SOURCES, PRODUCT_HEADINGS, SCOPE_LABELS } from '@/content/ui'
+import { METRIC_HEADINGS, METRIC_SOURCES, PRODUCT_HEADINGS } from '@/content/ui'
 
-const SCOPE_ORDER: (keyof Contribution)[] = ['direct', 'joint', 'others', 'verified']
-
-export function ScopeRows({ contribution, keys = ['direct', 'joint', 'others'] }: { contribution: Contribution; keys?: (keyof Contribution)[] }) {
+// 기여 범위 lists only what I did myself; team composition stays in the 팀 fact
+export function ScopeRows({ contribution }: { contribution: Contribution }) {
   const { t } = useLang()
-  const rows = SCOPE_ORDER.filter((key) => keys.includes(key) && contribution[key]?.length)
-  if (rows.length === 0) return null
+  if (contribution.direct.length === 0) return null
   return (
-    <dl className="scope-rows">
-      {rows.map((key) => (
-        <div key={key} className={`scope-row is-${key}`}>
-          <dt>{t(SCOPE_LABELS[key])}</dt>
-          <dd>
-            <ul className="dash-list">
-              {contribution[key]!.map((item) => (
-                <li key={item.ko}>{t(item)}</li>
-              ))}
-            </ul>
-          </dd>
-        </div>
+    <ul className="dash-list scope-list">
+      {contribution.direct.map((item) => (
+        <li key={item.ko}>{t(item)}</li>
       ))}
-    </dl>
+    </ul>
   )
 }
 

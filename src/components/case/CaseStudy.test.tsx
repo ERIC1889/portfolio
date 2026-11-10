@@ -16,7 +16,7 @@ const project: Project = featuredProject('skillpilot', 'SkillPilot', [2025], {
     { kind: 'code', label: l('저장소'), href: 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot' },
     { kind: 'slides', label: l('발표 자료'), href: 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/a.pdf' },
   ],
-  contribution: { direct: [l('백엔드 전체')], others: [l('디자인 시안')], verified: [l('수동 실행으로 확인')] },
+  contribution: { direct: [l('백엔드 전체', 'Backend, all of it')], verified: [l('수동 실행으로 확인')] },
   metrics: [{ label: l('대조'), value: '21/21', target: l('기준 사례'), condition: l('±10원'), source: 'measured', checkedAt: '2026-10-29' }],
   architecture: {
     diagram: {
@@ -39,7 +39,7 @@ const work: Project = featuredProject('finz', 'Finz', [2026], {
   workTitle: l('주식회사 Finz Labs · 개발 총괄'),
   links: undefined,
   duties: [l('맡은 일 문단')],
-  contribution: { direct: [l('웹 전체')], joint: [l('세무사와 로직 정리')] },
+  contribution: { direct: [l('웹 전체'), l('세무사와 함께 로직 정리')] },
   products: [
     {
       id: 'calculators',
@@ -89,7 +89,9 @@ describe('overview card', () => {
     const facts = document.querySelector('dl.facts') as HTMLElement
     expect([...facts.querySelectorAll(':scope > .fact > dt')].map((dt) => dt.textContent)).toEqual(['대상', '기간', '팀 구성', '담당 역할', '상태', '기여 범위', '주요 성과', '기술 스택'])
     expect(facts).toHaveTextContent('미출시')
-    expect([...facts.querySelectorAll('.scope-rows dt')].map((dt) => dt.textContent)).toEqual(['직접 맡음', '다른 사람'])
+    expect([...facts.querySelectorAll('.scope-list > li')].map((li) => li.textContent)).toEqual(['백엔드 전체'])
+    expect(facts.querySelector('.scope-list')?.previousElementSibling).toBeNull()
+    for (const label of ['직접 맡음', '함께 진행', '다른 사람']) expect(facts).not.toHaveTextContent(label)
     expect([...facts.querySelectorAll('.highlights > li')].map((li) => li.textContent)).toEqual(['SkillPilot 성과 하나', 'SkillPilot 성과 둘'])
   })
 
@@ -205,7 +207,8 @@ describe('work page', () => {
     for (const a of links) expect(container.querySelector(a.getAttribute('href') as string)).not.toBeNull()
     const duties = sectionNamed('2. 맡은 일')
     expect(duties).toHaveTextContent('맡은 일 문단')
-    expect([...duties.querySelectorAll('.scope-rows dt')].map((dt) => dt.textContent)).toEqual(['직접 맡음', '함께 진행'])
+    expect([...duties.querySelectorAll('.scope-list > li')].map((li) => li.textContent)).toEqual(['웹 전체', '세무사와 함께 로직 정리'])
+    for (const label of ['직접 맡음', '함께 진행', '다른 사람']) expect(duties).not.toHaveTextContent(label)
     const products = sectionNamed('3. 회사에서 만든 것')
     expect(within(products).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['3-1 개인 세금 계산기', '3-2 Finz 모바일 앱', '3-3 세무사용 FINZ'])
     expect([...products.querySelectorAll('.product-block')].map((el) => el.id)).toEqual(['calculators', 'refund-app', 'finz-saas'])
@@ -258,7 +261,7 @@ describe('variants', () => {
     ])
     const facts = document.querySelector('dl.facts') as HTMLElement
     expect([...facts.querySelectorAll(':scope > .fact > dt')].map((dt) => dt.textContent)).toEqual(['For', 'Period', 'Team', 'Role', 'Status', 'Scope of my work', 'Key results', 'Stack'])
-    expect([...facts.querySelectorAll('.scope-rows dt')].map((dt) => dt.textContent)).toEqual(['My own work', 'By others'])
+    expect([...facts.querySelectorAll('.scope-list > li')].map((li) => li.textContent)).toEqual(['Backend, all of it'])
     const [full, short] = [...document.querySelectorAll('.paar')]
     expect([...full.querySelectorAll('.paar-label')].map((b) => b.textContent)).toEqual(['Problem', 'Analysis', 'Action', 'Result'])
     expect([...short.querySelectorAll('.paar-label')].map((b) => b.textContent)).toEqual(['Problem', 'Fix'])

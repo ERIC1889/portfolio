@@ -151,12 +151,10 @@ export const finz: Project = {
       ],
       ['Finz 모바일 앱과 백엔드 (Expo · FastAPI, 미출시)', 'The Finz mobile app and its backend (Expo · FastAPI, not released)'],
       ['세무사용 FINZ 가격 정책·기능 잠금 범위 사양 작성', 'The pricing and feature-lock spec for FINZ for tax accountants'],
-    ]),
-    joint: pairs([
-      ['세금 계산 로직 정리 (세무사)', 'Working out the tax logic (with a tax accountant)'],
+      ['세무사와 함께 세금 계산 로직 정리', 'Working out the tax logic with a tax accountant'],
       [
-        '세무사용 FINZ의 세금 계산 엔진 초안, 외부 API 연동, 배포·운영 방식, 개발 도구 (협력 개발사)',
-        'For FINZ for tax accountants: the tax-engine draft, external API integrations, the deployment and operations approach and the development tools (with the partner developer)',
+        '협력 개발사와 함께 세무사용 FINZ의 세금 계산 엔진 초안, 외부 API 연동, 배포·운영 방식, 개발 도구 정리',
+        'With the partner developer: the tax-engine draft, external API integrations, the deployment and operations approach and the development tools for FINZ for tax accountants',
       ],
     ]),
     verified: pairs([

@@ -41,9 +41,8 @@ export interface Metric {
 }
 
 export interface Contribution {
+  /** What I did myself; shown as a plain list under 기여 범위 */
   direct: L[]
-  joint?: L[]
-  others?: L[]
   verified?: L[]
 }
 

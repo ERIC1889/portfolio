@@ -1,4 +1,4 @@
-import type { Contribution, DiagramLinkKind, L, Metric, PaarKey, PaperKind, Showcase } from './types'
+import type { DiagramLinkKind, L, Metric, PaarKey, PaperKind, Showcase } from './types'
 
 export const HOME_IDS = {
   work: 'work',
@@ -71,13 +71,6 @@ export const OVERVIEW_LABELS = {
   stack: { ko: '기술 스택', en: 'Stack' },
   aiUse: { ko: 'AI 활용', en: 'AI tools' },
 } satisfies Record<string, L>
-
-export const SCOPE_LABELS: Record<keyof Contribution, L> = {
-  direct: { ko: '직접 맡음', en: 'My own work' },
-  joint: { ko: '함께 진행', en: 'Done together' },
-  others: { ko: '다른 사람', en: 'By others' },
-  verified: { ko: '직접 검증', en: 'Verified myself' },
-}
 
 export const PAAR_LABELS: Record<PaarKey, L> = {
   problem: { ko: 'Problem', en: 'Problem' },
