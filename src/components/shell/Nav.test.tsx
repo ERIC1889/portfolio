@@ -18,9 +18,9 @@ describe('Nav', () => {
     renderWithProviders(<Nav />)
     expect(screen.getByRole('link', { name: '허준영' })).toHaveAttribute('href', '/')
     expect(menuLinks()).toEqual([
+      ['경력', '/#work'],
       ['프로젝트', '/#projects'],
       ['기술', '/#skills'],
-      ['경력', '/#work'],
       ['이력서', '/resume'],
     ])
     expect(screen.queryByRole('button', { expanded: false })).toBeNull()
@@ -34,7 +34,7 @@ describe('Nav', () => {
   it('switches the language and the menu follows', async () => {
     renderWithProviders(<Nav />)
     await userEvent.click(screen.getByRole('button', { name: 'Switch to English' }))
-    expect(menuLinks('Main menu').map(([label]) => label)).toEqual(['Projects', 'Skills', 'Experience', 'Résumé'])
+    expect(menuLinks('Main menu').map(([label]) => label)).toEqual(['Experience', 'Projects', 'Skills', 'Résumé'])
     expect(screen.getByRole('link', { name: 'Heo Jun Young' })).toBeInTheDocument()
     expect(document.documentElement.lang).toBe('en')
   })

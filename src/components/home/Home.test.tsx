@@ -15,6 +15,18 @@ describe('home page (real content)', () => {
     expect(screen.getByRole('link', { name: '이력서' })).toHaveAttribute('href', '/resume')
   })
 
+  it('offers the work experience first among the hero buttons, pointing at the section below', () => {
+    renderWithProviders(<Home />)
+    const intro = screen.getByRole('heading', { level: 1 }).closest('section') as HTMLElement
+    const buttons = [...intro.querySelectorAll('.actions a')]
+    expect(buttons.slice(0, 3).map((a) => a.getAttribute('href'))).toEqual(['#work', '#projects', '/resume'])
+    expect(buttons[0]).toHaveClass('btn-primary')
+    expect(buttons[0]).toHaveTextContent('실무 경험 보기')
+    expect(buttons[1]).not.toHaveClass('btn-primary')
+    expect(document.querySelector('#work')).not.toBeNull()
+    expect(document.querySelector('#projects')).not.toBeNull()
+  })
+
   it('shows no counts line in the first screen', () => {
     renderWithProviders(<Home />)
     const intro = screen.getByRole('heading', { level: 1 }).closest('section') as HTMLElement

@@ -189,6 +189,7 @@ export const UI = {
   footer: { ko: '© 2026 허준영', en: '© 2026 Heo Jun Young' },
   footerSource: { ko: '이 사이트의 코드', en: "This site's code" },
   photoAlt: { ko: '허준영 프로필 사진', en: 'Portrait of Heo Jun Young' },
+  ctaWork: { ko: '실무 경험 보기', en: 'See the work experience' },
   ctaProjects: { ko: '대표 프로젝트 보기', en: 'See the main projects' },
   ctaResume: { ko: '이력서', en: 'Résumé' },
   blog: { ko: '기술 블로그', en: 'Tech blog' },
