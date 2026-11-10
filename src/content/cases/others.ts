@@ -158,9 +158,9 @@ export const others: Project[] = [
       '회의 발언을 받아 적어 문장별 감정과 회의 요약을 보여 주는 브라우저 프로토타입(3인). 한국디지털콘텐츠학회 2026 하계 논문(1저자).',
       'A browser prototype that transcribes what is said in a meeting and shows the emotion of each sentence and a summary of the meeting (team of 3). First-author paper at the 2026 Korea Digital Contents Society summer conference.',
     ),
-    image: '/images/projects/teamflow.png',
+    image: '/images/projects/teamflow-report.png',
     links: [{ kind: 'code', label: k('공개 저장소', 'Public repository'), href: 'https://github.com/ERIC1889/TeamFlow' }],
-    imageCaption: k('회의 화면과 AI 퍼실리테이터 패널 · 실제 화면', 'Meeting screen with the AI facilitator panel · real screen'),
+    imageCaption: k('회의 리포트의 참가자별 발언 비율 · 실제 화면(샘플 데이터)', 'Per-participant speaking share in a meeting report · real screen (sample data)'),
   },
   {
     slug: 'unifit',

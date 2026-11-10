@@ -736,8 +736,10 @@ a:hover {
 .media-device .media-frame {
   max-width: 300px;
   margin: 0 auto;
-  border: 0;
-  background: transparent;
+  border: 6px solid var(--bezel);
+  border-radius: 38px;
+  background: var(--bezel);
+  overflow: hidden;
 }
 .media-mockup .media-frame {
   border-style: dashed;

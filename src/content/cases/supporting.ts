@@ -109,9 +109,9 @@ export const edumatrix: Project = {
       'Designing a structure and confirming that it works on real user data turned out to be different jobs, and I learned to decide how a design will be verified while drawing it.',
     ],
   ]),
-  imageSize: [1481, 843],
-  image: '/images/projects/edumatrix.png',
-  imageCaption: k('학습 진행률·계획 캘린더·추천 학습이 있는 대시보드 · 실제 화면', 'Dashboard with progress, a study calendar and recommendations · real screen'),
+  imageSize: [1440, 940],
+  image: '/images/projects/edumatrix-dashboard.png',
+  imageCaption: k('학습 진행률·계획 캘린더·추천 학습이 있는 대시보드 · 실제 화면(샘플 데이터)', 'Dashboard with progress, a study calendar and recommendations · real screen (sample data)'),
 }
 
 export const innoview: Project = {
@@ -240,8 +240,8 @@ export const innoview: Project = {
       'The quality of the interview questions depended more on what went into retrieval than on the model. Questions became specific only after the material was split by role and company, and the endless follow-ups were stopped by a server rule, not by the prompt.',
     ],
   ]),
-  imageSize: [1400, 767],
-  image: '/images/projects/innoview.png',
+  imageSize: [1440, 1010],
+  image: '/images/projects/innoview-room.png',
   imageCaption: k('면접 질문과 답변 입력 화면 · 실제 화면', 'Interview question and answer screen · real screen'),
 }
 
