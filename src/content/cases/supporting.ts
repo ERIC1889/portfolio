@@ -102,11 +102,19 @@ export const edumatrix: Project = {
   results: pairs([
     ['2025 한신 AISW 페스티벌 캡스톤 디자인 부문 특별상을 받았습니다.', 'Special Award (Capstone Design) at the 2025 Hanshin AISW Festival.'],
     ['한국디지털콘텐츠학회 2025 하계·추계 학술대회에서 논문 두 편을 1저자로 발표해 각각 대학생 논문경진대회 은상을 받았습니다.', 'Presented two first-author papers at the 2025 summer and fall Korea Digital Contents Society conferences, each winning a Silver Award in the student paper competition.'],
+    [
+      '학습 목표 설정부터 노트, 퀴즈, 피드백, 계획 조정까지 한 흐름으로 이어져야 한다는 요구에 맞춰, 6개 모듈과 요청 의도별로 모델·도구를 고르는 AI 에이전트 라우팅 구조를 설계했습니다.',
+      'For the need to carry a learner in one flow from setting a goal through notes, quizzes, feedback and plan adjustment, I designed six modules and AI agent routing that picks a model or tool by the intent of each request.',
+    ],
   ]),
   retro: pairs([
     [
       '구조를 설계하는 일과 그 구조가 실제 사용자 데이터에서 돌아가는지 확인하는 일은 다르다는 것을 느꼈고, 설계할 때 무엇으로 검증할지도 함께 정해야 한다는 것을 배웠습니다.',
       'Designing a structure and confirming that it works on real user data turned out to be different jobs, and I learned to decide how a design will be verified while drawing it.',
+    ],
+    [
+      'AI 리포트를 MongoDB 문서로 저장하면서 같은 점수가 MySQL에도 들어가 두 저장소의 경계가 흐려졌습니다. 이 경험이 다음 프로젝트 SkillPilot에서 읽고 쓰는 단위로 저장소를 나누는 기준이 됐습니다.',
+      'Storing AI reports as MongoDB documents while the same scores also went into MySQL blurred the line between the two stores. That experience became the rule in the next project, SkillPilot, of splitting storage by the unit of reading and writing.',
     ],
   ]),
   imageSize: [1440, 940],
@@ -166,16 +174,19 @@ export const innoview: Project = {
         'An interview runs from a self-introduction request → the first question → follow-ups → the next question → the close. An OpenAI Assistant matched to the company and role writes the questions, Google TTS reads them aloud, and Whisper transcribes the answers.',
       ],
       [
-        '표정, 시선, 자세는 브라우저에서, 발음, 감정, 말 속도, 간투사는 서버에서 분석해 세션 피드백과 PDF 리포트로 보여 줍니다. 데이터는 MySQL 14개 테이블에 저장합니다.',
-        'Expression, eye contact and posture are analyzed in the browser, and pronunciation, emotion, pace and filler words on the server, feeding session feedback and a PDF report. Data lives in 14 MySQL tables.',
+        '표정, 시선, 자세는 브라우저에서, 발음, 감정, 말 속도, 간투사는 서버에서 분석해 세션 피드백과 PDF 리포트로 보여 줍니다. 데이터는 MySQL에 저장합니다.',
+        'Expression, eye contact and posture are analyzed in the browser, and pronunciation, emotion, pace and filler words on the server, feeding session feedback and a PDF report. Data lives in MySQL.',
       ],
       [
-        '브라우저 녹음(WebM)은 Whisper가 바로 받지 못해, Label Light에서 쓴 파이프라인(WebM → ffmpeg → WAV → Whisper)을 가져왔고 연결 오류가 나면 다시 말해 달라고 안내합니다.',
-        'Whisper cannot take a browser recording (WebM) as it is, so the pipeline from Label Light (WebM → ffmpeg → WAV → Whisper) is reused, and a connection error prompts the user to try again.',
+        '브라우저 녹음은 Whisper가 바로 받지 못해 Label Light에서 쓴 변환 파이프라인을 가져와 서버에서 변환한 뒤 넘기고, 연결 오류가 나면 다시 말해 달라고 안내합니다.',
+        'Whisper cannot take a browser recording as it is, so the conversion pipeline from Label Light converts it on the server first, and a connection error prompts the user to speak again.',
       ],
     ]),
     decisions: pairs([
-      ['직무별·기업별 면접관: 프롬프트 하나에 모든 직무를 넣지 않고, 기업과 직무마다 Assistant를 나눴습니다.', 'Interviewers by role and company: instead of one prompt for every role, each company and role has its own Assistant.'],
+      [
+        '직무별·기업별 면접관: 프롬프트 하나에 모든 직무를 넣었을 때는 질문이 두루뭉술했습니다. 기업과 직무마다 Assistant와 자료를 나눈 뒤에야 질문이 구체적으로 나왔습니다.',
+        'Interviewers by role and company: with every role in one prompt, the questions came out vague. Only after each company and role got its own Assistant and material did the questions become specific.',
+      ],
       ['영상은 브라우저에서 분석: 프레임 이미지는 데이터가 너무 커서 결과 값만 서버로 넘깁니다.', 'Analyzing video in the browser: frame images are far too large, so only the results go to the server.'],
     ]),
   },
@@ -232,7 +243,10 @@ export const innoview: Project = {
   ],
   results: pairs([
     ['2025 한신 AISW 페스티벌 창업 아이디어 부문 장려상을 받았습니다.', 'Honorable Mention (Startup Idea) at the 2025 Hanshin AISW Festival.'],
-    ['오픈소스 개발자대회 출품작이며, 한신대 AI 면접 특강 2회(2025.10)와 쏘랩 시연(2025.11)에서 학생들이 직접 써 봤습니다.', 'Entered in the Open Source Developer Competition; students tried it themselves at two AI interview workshops at Hanshin University (Oct 2025) and a SoLab demo (Nov 2025).'],
+    [
+      '이력서와 직무에 맞는 질문으로 실제 면접처럼 연습해야 한다는 요구는, 기업·직무별 Assistant와 서버에서 15문항으로 제한한 꼬리 질문으로 풀었습니다. 오픈소스 개발자대회에 출품했고, 한신대 AI 면접 특강 2회(2025.10)와 쏘랩 시연(2025.11)에서 학생들이 직접 써 봤습니다.',
+      'The need to practise like a real interview, with questions that fit the résumé and the role, was met with an Assistant per company and role and follow-up questions capped at 15 on the server. It was entered in the Open Source Developer Competition, and students tried it themselves at two AI interview workshops at Hanshin University (Oct 2025) and a SoLab demo (Nov 2025).',
+    ],
   ]),
   retro: pairs([
     [
@@ -271,7 +285,7 @@ export const labelLight: Project = {
       ['한국디지털콘텐츠학회 2025 하계 논문 1저자 · 대학생 논문경진대회 동상', 'First-author paper at the 2025 Korea Digital Contents Society summer conference · Bronze Award'],
     ]),
     scope: pairs([
-      ['서비스 기획, AI 챗봇 설계, 백엔드 개발을 맡았고 논문 1저자로 참여했습니다. 화면 개발은 팀원이 맡았습니다.', 'I handled service planning, the AI chatbot design and backend development, and was first author of the paper. A teammate built the frontend.'],
+      ['서비스 기획, AI 챗봇 설계, 백엔드 개발을 맡았고 논문 1저자로 참여했습니다.', 'I handled service planning, the AI chatbot design and backend development, and was first author of the paper.'],
     ]),
   },
   features: pairs([
@@ -347,6 +361,10 @@ export const labelLight: Project = {
   results: pairs([
     ['2024 한신 AISW 페스티벌 일반 부문 특별상을 받았습니다.', 'Won the Special Award (General) at the 2024 Hanshin AISW Festival.'],
     ['2025 한국디지털콘텐츠학회 하계종합학술대회에 1저자로 논문을 발표해 대학생 논문경진대회 동상을 받았습니다.', 'Presented a first-author paper at the 2025 Korea Digital Contents Society summer conference and won a Bronze Award in the student paper competition.'],
+    [
+      '글을 읽고 입력하기 어려운 시니어도 쓸 수 있어야 한다는 요구는, 설문 대신 음성으로만 진행하는 일상 대화에서 GDS 문항을 끌어내는 방식과 큰 글씨 화면으로 풀었습니다.',
+      'The need for a service that seniors who find reading and typing hard can still use was met by drawing the GDS items out of an everyday voice-only conversation instead of a questionnaire, on a large-type screen.',
+    ],
   ]),
   retro: pairs([
     [
