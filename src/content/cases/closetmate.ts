@@ -252,5 +252,11 @@ export const closetmate: Project = {
   retro: pairs([
     ['LLM의 답을 그대로 믿지 않고 후보를 정해 주고 서버에서 다시 검증하는 구조가, 어떤 모델을 쓰느냐보다 결과의 신뢰도에 더 큰 차이를 냈습니다.', 'Giving the LLM a fixed set of candidates and re-checking its answer on the server made more difference to the reliability of the results than which model was used.'],
   ]),
-  material: pairs([['코드는 비공개 저장소에 있습니다. 화면과 시연 영상, 측정 조건을 이 페이지에 둡니다.', 'The code is in a private repository. Screens, a demo video and the measurement conditions are on this page.']]),
+  links: [
+    { kind: 'code', label: k('공개 저장소', 'Public repository'), href: 'https://github.com/ERIC1889/ClosetMate' },
+    { kind: 'code', label: k('백엔드 API · 추천 검증 (Next.js)', 'Backend API and suggestion checks (Next.js)'), href: 'https://github.com/ERIC1889/ClosetMate/tree/main/apps/web' },
+    { kind: 'code', label: k('분류 모델 학습·비교 (PyTorch)', 'Classifier training and comparison (PyTorch)'), href: 'https://github.com/ERIC1889/ClosetMate/tree/main/ml' },
+    { kind: 'code', label: k('모바일 앱 (Expo)', 'Mobile app (Expo)'), href: 'https://github.com/ERIC1889/ClosetMate/tree/main/apps/mobile' },
+  ],
+  material: pairs([['코드는 공개 저장소에 있습니다. 화면과 시연 영상, 측정 조건을 이 페이지에 둡니다.', 'The code is in a public repository. Screens, the demo video and the measurement conditions are on this page.']]),
 }

@@ -296,10 +296,16 @@ export const pitches: Project = {
     ['실시간 피드백에서는 모델의 속도보다 무엇을 먼저 보내고 무엇을 기다리게 할지 정하는 설계가 더 중요하다는 것을 배웠습니다.', 'In live feedback, deciding what to send first and what can wait mattered more than the speed of the model.'],
     ['5명뿐인 사용자 조사였지만, 실제 발표자가 색 표시를 보며 말 속도를 고치는 모습이 어떤 수치보다 설계 판단에 큰 영향을 줬습니다.', 'The user survey had only five people, but watching real speakers correct their pace from the color cues shaped the design more than any number did.'],
   ]),
+  links: [
+    { kind: 'code', label: k('공개 저장소 (2026 리뉴얼)', 'Public repository (2026 renewal)'), href: 'https://github.com/ERIC1889/pitches' },
+    { kind: 'code', label: k('실시간 판정 (API 서버)', 'Real-time judgments (API server)'), href: 'https://github.com/ERIC1889/pitches/tree/main/apps/api/src/realtime' },
+    { kind: 'code', label: k('보고서 워커', 'Report worker'), href: 'https://github.com/ERIC1889/pitches/tree/main/apps/api/src/workers' },
+    { kind: 'code', label: k('감정 분석 서비스 (Python)', 'Emotion analysis service (Python)'), href: 'https://github.com/ERIC1889/pitches/tree/main/apps/emotion' },
+  ],
   material: pairs([
     [
-      '2024·2026 코드는 공개하지 않았습니다. 2026 앱은 단위 테스트 41개가 통과하고 전체 흐름을 재현 스크립트로 확인했으며, iOS 시뮬레이터에서 로그인부터 보고서 PDF 저장까지 시연했습니다. 시연 영상과 화면은 이 페이지에 있고, 지연 수치는 APIC-IST 2025 발표 논문을 기준으로 적었습니다.',
-      'The 2024 and 2026 code are not public. For the 2026 app, 41 unit tests pass, a script replays the whole flow, and it was demonstrated in the iOS simulator from login to saving the report PDF. The demo video and screens are on this page, and the latency figures follow the paper presented at APIC-IST 2025.',
+      '2026 리뉴얼 코드는 공개 저장소에 있습니다. 2024–25 팀 버전 코드는 공개하지 않았습니다. 2026 앱은 단위 테스트 41개가 통과하고 전체 흐름을 재현 스크립트로 확인했으며, iOS 시뮬레이터에서 로그인부터 보고서 PDF 저장까지 시연했습니다. 시연 영상과 화면은 이 페이지에 있고, 지연 수치는 APIC-IST 2025 발표 논문을 기준으로 적었습니다.',
+      'The 2026 renewal code is in a public repository; the 2024–25 team code is not public. For the 2026 app, 41 unit tests pass, a script replays the whole flow, and it was demonstrated in the iOS simulator from login to saving the report PDF. The demo video and screens are on this page, and the latency figures follow the paper presented at APIC-IST 2025.',
     ],
   ]),
 }

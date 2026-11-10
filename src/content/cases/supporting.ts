@@ -125,6 +125,7 @@ export const innoview: Project = {
   role: k('백엔드·프론트엔드·AI 모델(초안) · 리뉴얼과 직무별 면접 전체(개인)', 'Backend, frontend and AI models (draft) · all of the renewal and role-based interviews (solo)'),
   status: k('리뉴얼 완료 · 특강 2회 사용', 'Renewal finished · used in two workshops'),
   statusCheckedAt: '2026-11-09',
+  links: [{ kind: 'code', label: k('공개 저장소', 'Public repository'), href: 'https://github.com/ERIC1889/InnoView' }],
   stack: ['React', 'Express', 'MySQL', 'Whisper', 'Google TTS', 'OpenAI Assistants', 'AssemblyAI', 'TensorFlow.js'],
   summary: k(
     '이력서와 직무에 맞는 면접 질문을 만들고, 답변을 음성, 텍스트, 영상으로 분석해 꼬리 질문을 이어 가는 모의 면접 서비스. 표정, 시선, 자세와 발음, 말 속도를 함께 살펴보고, 꼬리 질문이 끝없이 이어지지 않도록 면접을 서버에서 15문항으로 제한했습니다.',

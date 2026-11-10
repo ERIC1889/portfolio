@@ -74,7 +74,11 @@ describe('home page (real content)', () => {
     expect(main).toHaveTextContent('캡스톤 디자인 및 AI 해커톤 대상(1등, 2024.10)')
     expect(main).not.toHaveTextContent('AI 기반의 맞춤형 자격증 추천')
     expect(main).toHaveTextContent('Express 5')
-    expect(within(main).getByRole('link', { name: /공개 저장소/ })).toHaveAttribute('href', 'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot')
+    expect(within(main).getAllByRole('link', { name: /공개 저장소/ }).map((a) => a.getAttribute('href'))).toEqual([
+      'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
+      'https://github.com/ERIC1889/pitches',
+      'https://github.com/ERIC1889/ClosetMate',
+    ])
   })
 
   it('explains how I work with AI: three tools, a six-step flow, three cards, the simple-authentication case and the blog post', () => {

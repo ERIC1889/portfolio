@@ -145,6 +145,7 @@ export const others: Project[] = [
     summary: k('고등학생 진로 진단과 로드맵 플랫폼. SUMTECH 해커톤 장려상(팀).', 'A career assessment and roadmap platform for high-school students. Honorable Mention at the SUMTECH Hackathon (team).'),
     image: '/images/projects/dreamtrack.png',
     imageCaption: k('회원가입 화면 · 실제 화면', 'Sign-up screen · real screen'),
+    links: [{ kind: 'code', label: k('공개 저장소', 'Public repository'), href: 'https://github.com/ERIC1889/Dream_Track' }],
   },
   {
     slug: 'teamflow',
@@ -158,6 +159,7 @@ export const others: Project[] = [
       'A browser prototype that transcribes what is said in a meeting and shows the emotion of each sentence and a summary of the meeting (team of 3). First-author paper at the 2026 Korea Digital Contents Society summer conference.',
     ),
     image: '/images/projects/teamflow.png',
+    links: [{ kind: 'code', label: k('공개 저장소', 'Public repository'), href: 'https://github.com/ERIC1889/TeamFlow' }],
     imageCaption: k('회의 화면과 AI 퍼실리테이터 패널 · 실제 화면', 'Meeting screen with the AI facilitator panel · real screen'),
   },
   {

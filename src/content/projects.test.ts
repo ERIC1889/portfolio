@@ -299,9 +299,15 @@ describe('main: ClosetMate', () => {
     expect(closetmate.architecture?.decisions).toHaveLength(1)
   })
 
-  it('dates the project and links no repository', () => {
+  it('dates the project and links the public repository first, then the server, the training code and the app', () => {
     expect(closetmate.period).toBe('2026.03–2026.06')
-    expect(closetmate.links).toBeUndefined()
+    expect(closetmate.links?.map((l) => l.href)).toEqual([
+      'https://github.com/ERIC1889/ClosetMate',
+      'https://github.com/ERIC1889/ClosetMate/tree/main/apps/web',
+      'https://github.com/ERIC1889/ClosetMate/tree/main/ml',
+      'https://github.com/ERIC1889/ClosetMate/tree/main/apps/mobile',
+    ])
+    expect(closetmate.links?.every((l) => l.kind === 'code')).toBe(true)
   })
 })
 
@@ -325,6 +331,8 @@ describe('main: Pitches', () => {
     expect(pitches.architecture?.diagram?.legend?.map((l) => l.kind)).toEqual(['sync', 'realtime', 'async', 'paid', 'local'])
     expect(pitches.architecture?.diagram?.footer?.nodes.map((n) => n.id)).toEqual(['db', 'redis', 'files'])
     expect(pitches.architecture?.decisions).toBeUndefined()
+    expect(pitches.links?.[0]).toMatchObject({ kind: 'code', href: 'https://github.com/ERIC1889/pitches' })
+    expect(koText(pitches.material)).toContain('2026 리뉴얼 코드는 공개 저장소에 있습니다')
   })
 
   it("keeps the owner's two cases with their numbers", () => {

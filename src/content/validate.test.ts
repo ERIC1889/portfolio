@@ -73,7 +73,8 @@ describe('checkLinks', () => {
   })
 
   it.each([
-    'https://github.com/ERIC1889/InnoView',
+    'https://github.com/ERIC1889/AI_Exercise',
+    'https://github.com/ERIC1889/InnoViewer',
     'https://finz.kr.evil.example',
     '//evil.example/path',
     'mailto:someone@else.example',

@@ -50,6 +50,11 @@ const ALLOWED_DOMAIN_PREFIXES = [
   'https://junyoung-dev-notes.vercel.app',
   'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
   'https://github.com/ERIC1889/portfolio',
+  'https://github.com/ERIC1889/pitches',
+  'https://github.com/ERIC1889/ClosetMate',
+  'https://github.com/ERIC1889/InnoView',
+  'https://github.com/ERIC1889/TeamFlow',
+  'https://github.com/ERIC1889/Dream_Track',
 ]
 
 const ALLOWED_EXACT = [
