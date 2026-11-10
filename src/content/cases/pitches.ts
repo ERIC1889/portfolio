@@ -111,7 +111,7 @@ export const pitches: Project = {
               links: [
                 ['emotion', ['5초 음성', '5 s audio'], 'local'],
                 ['openai', ['부분 전사', 'partial transcript'], 'paid'],
-                ['worker', ['보고서 잡', 'report job'], 'async'],
+                ['worker', ['보고서', 'report'], 'async'],
                 ['db', ['세션', 'sessions'], 'sync'],
               ],
             }),
@@ -271,8 +271,8 @@ export const pitches: Project = {
       'Presented a paper at the APIC-IST 2025 international conference.',
     ],
     [
-      '발표가 끝난 뒤가 아니라 발표 중에 바로 알 수 있도록 5초 단위로 분석해 색으로 보여 줍니다. 음성→지표 지연은 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms였습니다(추론·네트워크·화면 표시 포함, NVIDIA A10G 1개, 5명의 3분 발표 · 영어 3·한국어 2). 2024–25 팀 버전 구조를 논문에서 측정한 값입니다.',
-      'Speakers see the feedback during the talk, not after it: the audio is analyzed every 5 seconds and shown as a color. The speech-to-indicator latency was 125 ms on average (σ = 18 ms) and 170 ms at worst with 20 concurrent sessions (inference, network and rendering included; one NVIDIA A10G; 3-minute talks by 5 people, 3 in English and 2 in Korean). These are the paper’s measurements of the 2024–25 team architecture.',
+      '발표가 끝난 뒤가 아니라 발표 중에 바로 알 수 있도록 5초 단위로 분석해 색으로 보여 줍니다. 음성→지표 지연은 평균 125ms(σ=18ms), 동시 20세션에서 최악 170ms였습니다.',
+      'Speakers see the feedback during the talk, not after it: the audio is analyzed every 5 seconds and shown as a color. The speech-to-indicator latency was 125 ms on average (σ = 18 ms) and 170 ms at worst with 20 concurrent sessions.',
     ],
     [
       '실시간 표시가 실제로 말 속도를 고치는 데 도움이 되는지 소규모 사용자 조사(5명)로 확인했고, 5명 모두 도움이 된다고 답했습니다.',

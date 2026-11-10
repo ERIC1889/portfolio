@@ -63,7 +63,7 @@ describe('ArchDiagram', () => {
     expect(document.querySelectorAll('.arch-lines marker')).toHaveLength(5)
     const pills = [...document.querySelectorAll('.arch-pill')]
     expect(pills.map((pill) => pill.textContent)).toEqual(['음성 ↑ · 피드백 ↓', '결과 조회', '부분 전사', '세션'])
-    expect(pills.map((pill) => pill.className)).toEqual(['arch-pill is-realtime', 'arch-pill is-sync', 'arch-pill is-paid', 'arch-pill is-sync is-side'])
+    expect(pills.map((pill) => pill.className)).toEqual(['arch-pill is-realtime is-above', 'arch-pill is-sync is-above', 'arch-pill is-paid is-above', 'arch-pill is-sync is-side'])
   })
 
   it('keeps the connections readable as text chips inside the cards for narrow screens', () => {
@@ -127,15 +127,15 @@ describe('layoutLinks', () => {
   it('stacks the tracks of footer links so that none runs through another', () => {
     const diagram = withFooter([[card('a')], [card('b')]], [card('f1'), card('f2', [{ to: 'a', label: 'TFLite', kind: 'local' }, { to: 'b', label: 'ONNX', kind: 'local' }])])
     const { drawn, levels } = layoutLinks(diagram, boxes({ a: [0, 0, 100, 100], b: [150, 0, 250, 100], f1: [0, 320, 100, 400], f2: [300, 320, 400, 400] }))
-    expect(drawn.map((line) => line.d)).toEqual(['M333.3 320 L333.3 292 L50 292 L50 100', 'M366.7 320 L366.7 270 L200 270 L200 100'])
-    expect(drawn.map((line) => line.y)).toEqual([292, 270])
+    expect(drawn.map((line) => line.d)).toEqual(['M333.3 320 L333.3 292 L50 292 L50 100', 'M366.7 320 L366.7 262 L200 262 L200 100'])
+    expect(drawn.map((line) => line.y)).toEqual([292, 262])
     expect(levels).toBe(1)
   })
 
   it('keeps neighbouring tracks on different levels so their horizontals never touch', () => {
     const diagram = withFooter([[card('a')], [card('b', [{ to: 'f1', label: '보고서' }, { to: 'f2', label: '작업 큐', kind: 'async' }])]], [card('f1'), card('f2')])
     const { drawn, levels } = layoutLinks(diagram, boxes({ a: [0, 0, 120, 100], b: [200, 0, 320, 100], f1: [0, 320, 100, 400], f2: [200, 320, 300, 400] }))
-    expect(drawn.map((line) => line.d)).toEqual(['M240 100 L240 292 L50 292 L50 320', 'M280 100 L280 270 L250 270 L250 320'])
+    expect(drawn.map((line) => line.d)).toEqual(['M240 100 L240 292 L50 292 L50 320', 'M280 100 L280 262 L250 262 L250 320'])
     expect(levels).toBe(1)
   })
 

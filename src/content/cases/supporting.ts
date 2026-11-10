@@ -1,5 +1,5 @@
 import type { Project } from '../types'
-import { k, pairs, step } from './helpers'
+import { column, diagram, footer, k, node, pairs, step } from './helpers'
 
 export const edumatrix: Project = {
   slug: 'edumatrix',
@@ -37,16 +37,61 @@ export const edumatrix: Project = {
     ],
   ]),
   architecture: {
-    body: pairs([
+    diagram: diagram(
       [
-        '시스템을 6개 모듈로 나눠 설계했습니다. 화면, 백엔드·외부 API 연결, 데이터 저장이 기반을 맡고, 학습 일정·성과 관리, AI 퀴즈 생성, AI 분석·추천 모듈이 학습 흐름을 맡습니다.',
-        'The system is designed as six modules. Interface, backend and external APIs, and storage form the base; schedule and progress, quiz generation, and analysis and recommendation carry the study flow.',
+        column(
+          ['클라이언트', 'Client'],
+          [
+            node('web', 'mine', ['브라우저', 'Browser'], {
+              icon: 'browser',
+              subtitle: ['React', 'React'],
+              links: [['api', ['요청 · 응답', 'request · response'], 'sync']],
+            }),
+          ],
+        ),
+        column(
+          ['API 서버', 'API server'],
+          [
+            node('api', 'mine', ['API 서버', 'API server'], {
+              icon: 'server',
+              subtitle: ['Node.js · Express', 'Node.js · Express'],
+              links: [
+                ['agent', ['AI 요청', 'AI request'], 'sync'],
+                ['mysql', ['조회 · 저장', 'read · write'], 'sync'],
+              ],
+            }),
+            node('agent', 'mine', ['AI 에이전트', 'AI agent'], {
+              icon: 'bolt',
+              subtitle: ['의도 분석 → 모델 선택 → MCP 데이터 연동', 'intent → model choice → data through MCP'],
+              links: [
+                ['llm', ['모델 호출', 'model call'], 'paid'],
+                ['tools', ['MCP', 'MCP'], 'sync'],
+                ['mongo', ['로그 · 피드백', 'logs · feedback'], 'sync'],
+              ],
+            }),
+          ],
+        ),
+        column(
+          ['외부 서비스', 'External services'],
+          [
+            node('llm', 'external', ['OpenAI Assistants', 'OpenAI Assistants'], { icon: 'sparkles', subtitle: ['퀴즈 생성 · 분석 · 추천', 'quiz generation · analysis · recommendations'] }),
+            node('tools', 'external', ['외부 API · 도구', 'External APIs · tools'], { icon: 'globe', subtitle: ['MCP로 연결', 'connected through MCP'] }),
+          ],
+        ),
       ],
       [
-        '요청은 의도 분석(AI Agent) → 모델 선택(라우팅) → 데이터 연동(MCP) → 응답 생성 → 로그 저장 순서로 처리하도록 설계했습니다.',
-        'Requests are designed to flow through intent analysis (AI Agent) → model selection (routing) → data access (MCP) → response → logging.',
+        '설계한 구조 · 브라우저 → Express API → AI 에이전트가 의도를 분석해 모델과 도구를 고른다 → MySQL · MongoDB',
+        'As designed · browser → Express API → an AI agent reads the intent and picks the model or tool → MySQL · MongoDB',
       ],
-    ]),
+      footer(
+        ['데이터', 'Data'],
+        'database',
+        [
+          node('mysql', 'data', ['MySQL', 'MySQL'], { icon: 'database', subtitle: ['개인정보 · 인증 · 학습 계획', 'personal details · auth · study plans'] }),
+          node('mongo', 'data', ['MongoDB', 'MongoDB'], { icon: 'database', subtitle: ['채팅 · 퀴즈 · AI 피드백 로그', 'chats · quizzes · AI feedback logs'] }),
+        ],
+      ),
+    ),
     decisions: pairs([
       [
         'AI 구조: 요청 의도를 먼저 분석해 GPT, Claude, Gemini 같은 모델이나 외부 도구로 보내는 AI Agent 라우팅을 구상했고, 외부 API와 내부 DB 연동은 MCP가 맡도록 나눴습니다.',
@@ -168,20 +213,52 @@ export const innoview: Project = {
     ],
   ]),
   architecture: {
-    body: pairs([
+    diagram: diagram(
       [
-        '면접은 자기소개 요청 → 초기 질문 → 꼬리 질문 → 다음 질문 → 마무리 순서로 진행합니다. 기업과 직무에 맞는 OpenAI Assistant가 질문을 만들고, Google TTS로 읽어 주며, 답변은 Whisper로 받아 적습니다.',
-        'An interview runs from a self-introduction request → the first question → follow-ups → the next question → the close. An OpenAI Assistant matched to the company and role writes the questions, Google TTS reads them aloud, and Whisper transcribes the answers.',
+        column(
+          ['클라이언트', 'Client'],
+          [
+            node('web', 'mine', ['브라우저', 'Browser'], {
+              icon: 'browser',
+              subtitle: ['React · TensorFlow.js로 표정 · 시선 · 자세 분석', 'React · expression, eye contact and posture analyzed with TensorFlow.js'],
+              links: [['api', ['녹음 · 결과', 'audio · results'], 'sync']],
+            }),
+          ],
+        ),
+        column(
+          ['API 서버', 'API server'],
+          [
+            node('api', 'mine', ['API 서버', 'API server'], {
+              icon: 'server',
+              subtitle: ['Node.js · Express · 면접 진행 · PDF 리포트', 'Node.js · Express · runs the interview · PDF report'],
+              links: [
+                ['assistant', ['질문 생성', 'questions'], 'paid'],
+                ['voice', ['녹음', 'recording'], 'local'],
+                ['speech', ['질문 읽기', 'read aloud'], 'paid'],
+                ['mysql', ['조회 · 저장', 'read · write'], 'sync'],
+              ],
+            }),
+            node('voice', 'mine', ['음성 변환 · 분석', 'Audio conversion · analysis'], {
+              icon: 'mic',
+              subtitle: ['녹음 변환 · 발음 · 감정 · 말 속도 · 간투사', 'converts the recording · pronunciation · emotion · pace · fillers'],
+              links: [['speech', ['받아쓰기', 'transcription'], 'paid']],
+            }),
+          ],
+        ),
+        column(
+          ['외부 서비스', 'External services'],
+          [
+            node('assistant', 'external', ['OpenAI Assistants', 'OpenAI Assistants'], { icon: 'sparkles', subtitle: ['기업 · 직무별 면접관 · 꼬리 질문', 'an interviewer per company and role · follow-ups'] }),
+            node('speech', 'external', ['음성 API', 'Speech APIs'], { icon: 'mic', subtitle: ['Whisper 받아쓰기 · AssemblyAI 음성 분석 · Google TTS 읽기', 'Whisper transcription · AssemblyAI voice analysis · Google TTS read-aloud'] }),
+          ],
+        ),
       ],
       [
-        '표정, 시선, 자세는 브라우저에서, 발음, 감정, 말 속도, 간투사는 서버에서 분석해 세션 피드백과 PDF 리포트로 보여 줍니다. 데이터는 MySQL에 저장합니다.',
-        'Expression, eye contact and posture are analyzed in the browser, and pronunciation, emotion, pace and filler words on the server, feeding session feedback and a PDF report. Data lives in MySQL.',
+        '브라우저(영상 분석) → Express API(음성 변환 · 분석) → OpenAI Assistant · Whisper · Google TTS · MySQL. 영상은 브라우저에서, 음성은 서버에서 분석한다',
+        'Browser (video analysis) → Express API (audio conversion and analysis) → OpenAI Assistant · Whisper · Google TTS · MySQL. Video is analyzed in the browser, audio on the server',
       ],
-      [
-        '브라우저 녹음은 Whisper가 바로 받지 못해 Label Light에서 쓴 변환 파이프라인을 가져와 서버에서 변환한 뒤 넘기고, 연결 오류가 나면 다시 말해 달라고 안내합니다.',
-        'Whisper cannot take a browser recording as it is, so the conversion pipeline from Label Light converts it on the server first, and a connection error prompts the user to speak again.',
-      ],
-    ]),
+      footer(['데이터', 'Data'], 'database', [node('mysql', 'data', ['MySQL', 'MySQL'], { icon: 'database', subtitle: ['면접 세션 · 답변 · 피드백', 'sessions · answers · feedback'] })]),
+    ),
     decisions: pairs([
       [
         '직무별·기업별 면접관: 프롬프트 하나에 모든 직무를 넣었을 때는 질문이 두루뭉술했습니다. 기업과 직무마다 Assistant와 자료를 나눈 뒤에야 질문이 구체적으로 나왔습니다.',
@@ -300,12 +377,52 @@ export const labelLight: Project = {
     ],
   ]),
   architecture: {
-    body: pairs([
+    diagram: diagram(
       [
-        'Express 서버와 MySQL을 쓰고, OpenAI Assistants API가 대화를 맡습니다. 음성 대화는 브라우저 녹음(WebM) → ffmpeg로 WAV 변환 → Whisper 받아쓰기 → Assistant 응답 → Google TTS 재생 순서로 이어집니다. 글을 읽고 입력하기 어려운 사용자를 위해 대화는 음성으로만 진행하고, 화면은 큰 글씨와 간결한 버튼으로 구성했습니다.',
-        'It uses an Express server and MySQL, with the OpenAI Assistants API handling conversation. A voice exchange runs from a browser recording (WebM) → conversion to WAV with ffmpeg → Whisper transcription → the Assistant’s response → Google TTS playback. For users who find reading and typing hard, the conversation is voice-only and the screens use large text and simple buttons.',
+        column(
+          ['클라이언트', 'Client'],
+          [
+            node('web', 'mine', ['브라우저', 'Browser'], {
+              icon: 'browser',
+              subtitle: ['큰 글씨 · 음성으로만 대화', 'large type · voice-only conversation'],
+              links: [['api', ['녹음 · 응답', 'audio · reply'], 'sync']],
+            }),
+          ],
+        ),
+        column(
+          ['API 서버', 'API server'],
+          [
+            node('api', 'mine', ['API 서버', 'API server'], {
+              icon: 'server',
+              subtitle: ['Node.js · Express · 대화 진행', 'Node.js · Express · runs the conversation'],
+              links: [
+                ['convert', ['녹음', 'recording'], 'local'],
+                ['assistant', ['GDS 대화', 'GDS conversation'], 'paid'],
+                ['speech', ['답변 읽기', 'read aloud'], 'paid'],
+                ['mysql', ['조회 · 저장', 'read · write'], 'sync'],
+              ],
+            }),
+            node('convert', 'mine', ['음성 변환', 'Audio conversion'], {
+              icon: 'mic',
+              subtitle: ['ffmpeg · WebM → WAV', 'ffmpeg · WebM → WAV'],
+              links: [['speech', ['받아쓰기', 'transcription'], 'paid']],
+            }),
+          ],
+        ),
+        column(
+          ['외부 서비스', 'External services'],
+          [
+            node('assistant', 'external', ['OpenAI Assistants', 'OpenAI Assistants'], { icon: 'sparkles', subtitle: ['GPT-4o-mini · 파인튜닝 · RAG · 프롬프트', 'GPT-4o-mini · fine-tuning · RAG · prompts'] }),
+            node('speech', 'external', ['Whisper · Google TTS', 'Whisper · Google TTS'], { icon: 'mic', subtitle: ['받아쓰기 · 읽어 주기', 'transcription · read-aloud'] }),
+          ],
+        ),
       ],
-    ]),
+      [
+        '브라우저 녹음 → Express API가 변환해 Whisper로 받아쓰고 → Assistant가 대화 속에서 GDS 문항을 묻고 → Google TTS로 읽어 준다 · 기록은 MySQL',
+        'Browser recording → the Express API converts it and Whisper transcribes it → the Assistant asks the GDS items inside the conversation → Google TTS reads the reply aloud · records in MySQL',
+      ],
+      footer(['데이터', 'Data'], 'database', [node('mysql', 'data', ['MySQL', 'MySQL'], { icon: 'database', subtitle: ['대화 · 검사 기록', 'conversations · assessment records'] })]),
+    ),
     decisions: pairs([
       [
         '검사 방식: 직접 설문은 명확하지만 거부감을 일으킬 수 있고, 일상 대화는 다소 부정확해도 거부감이 적습니다. 두 방식을 시험해 보고 일상 대화 방식으로 구성했습니다.',

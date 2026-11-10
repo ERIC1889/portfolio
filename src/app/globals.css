@@ -2207,7 +2207,7 @@ a:hover {
 .arch-footer {
   position: relative;
   z-index: 1;
-  margin-top: calc(50px + 22px * var(--levels, 0));
+  margin-top: calc(58px + 30px * var(--levels, 0));
   padding: 14px 16px 16px;
   border: 1.5px dashed var(--border-strong);
   border-radius: 14px;
@@ -2270,6 +2270,9 @@ a:hover {
 }
 .arch-pill.is-side {
   transform: translate(10px, -50%);
+}
+.arch-pill.is-above {
+  transform: translate(-50%, calc(-100% - 3px));
 }
 
 /* ---------- AI section ---------- */
