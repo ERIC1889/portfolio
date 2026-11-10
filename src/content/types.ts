@@ -238,7 +238,8 @@ export interface ResumeVariant {
   /** 병역·입사 line; only the submission copy has it */
   service?: L
   summary: L[]
-  skills: SkillRow[]
+  /** Bare tool lists; what each tool was used for is in the bullets below them */
+  skills: { area: L; items: string[] }[]
   /** Titles of the conference papers listed in full; the rest are counted */
   topPapers: string[]
 }
@@ -278,9 +279,7 @@ export interface Experience {
   title: L
   period: string
   context: L
-  /** The owner's own description of the role; shown on the résumé only */
-  summary?: L
-  /** Slug of the work page whose résumé items, first metric and stack the résumé lists under this job */
+  /** Slug of the work page this job belongs to; the résumé links its live site and detail page */
   project?: string
   responsibilities: L[]
 }

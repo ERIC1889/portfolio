@@ -141,24 +141,6 @@ export const finz: Project = {
       "The company website was built spec → plan → AI implementation and verified against the reference case and 192 tests. For the app's simple authentication I found why the AI draft stalled, confirmed the fix with a prototype and built it myself.",
     ),
   },
-  resumeItems: pairs([
-    [
-      '부동산 6Way: 세무사와 Python으로 만든 계산 로직을 TypeScript로 이식, 2주택 기준 사례 1건의 워크북 결과 항목 21개를 ±10원 허용으로 대조해 최대 차이 1원 · 비율 곱셈의 1원 오차를 정수(BigInt) 산술로 고치고 회귀 테스트 추가',
-      'Property 6Way: ported the tax logic written in Python with a tax accountant to TypeScript and matched the 21 workbook items of a real two-home reference case within ±10 won, largest gap 1 won · fixed a 1-won error in ratio multiplication with integer (BigInt) arithmetic and added regression tests',
-    ],
-    [
-      '시세·환율 데이터 계층: Upbit→CoinGecko, 한국은행 ECOS→ECB 대체 조회, 확정된 값만 오래 캐시, 사용자별·전체 요청 제한 · 데이터 소스 테스트 31개',
-      'Market-data layer: Upbit→CoinGecko and Bank of Korea ECOS→ECB fallbacks, long caching only for settled values, per-user and global rate limits · 31 market-data tests',
-    ],
-    [
-      '해외주식 양도세·증여세: 매수·매도를 각자의 결제일 환율로 환산하고 이익을 주가 몫·환율 몫으로 나눠 표시, 증여 평가(전후 2개월 평균 종가)와 증여세 추정 · 엔진 테스트 28개',
-      'Foreign-stock capital gains and gift tax: each buy and sell converted at its own settlement-date rate, the gain shown split into a price part and a currency part, plus gift valuation (two-month average close) and a gift-tax estimate · 28 engine tests',
-    ],
-    [
-      '디지털 자산: 세무사용 FINZ(회사 세무 SaaS)의 가상자산 엔진을 개인용으로 이식, 과세연도 판정·시가 없을 때의 보수적 대체값·쉬운 오류 문구 추가 · 엔진 테스트 25개',
-      'Digital assets: the crypto engine of FINZ for tax accountants (the company SaaS) adapted for individuals, adding tax-year filtering, a cautious fallback when a price is missing and plain-language errors · 25 engine tests',
-    ],
-  ]),
   contribution: {
     direct: pairs([
       ['회사 웹 finz.kr 전체: 화면, 계산 라이브러리, 시세·환율·실거래가 연동, API (2026.04–)', 'All of the company website finz.kr: screens, calculation library, market-data and price integrations, API (2026.04–)'],

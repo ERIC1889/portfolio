@@ -184,41 +184,41 @@ describe('/archive', () => {
 })
 
 describe('/resume', () => {
-  it('opens with the role, contacts and a four-line fact summary, then 경력 → 프로젝트 → 기술 → 학력 → 수상 → 활동 → 논문', () => {
+  it('opens with the role, contacts and three one-line facts, then 기술 → 경력 → 프로젝트 → 학력 → 수상·활동 → 논문', () => {
     const { container } = renderWithProviders(<ResumePage />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('허준영')
     expect(screen.getByRole('link', { name: 'PDF 내려받기' })).toHaveAttribute('href', '/resume.pdf')
     expect(container.querySelector('.resume-role')).toHaveTextContent('백엔드 중심 풀스택 개발자')
     expect(container.querySelector('.resume-service')).toBeNull()
     const summary = [...container.querySelectorAll('.resume-summary > li')].map((li) => li.textContent ?? '')
-    expect(summary).toHaveLength(4)
-    expect(summary[0]).toContain('주식회사 Finz Labs 개발 총괄 (2026.01–, 직원 5명)')
+    expect(summary).toHaveLength(3)
+    expect(summary[0]).toContain('주식회사 Finz Labs 개발 총괄(2026.01–, 직원 5명)')
     expect(summary[1]).toContain('최대 차이 1원 · 테스트 192개 통과')
-    expect(summary[3]).toContain('내보낸 결과는 제가 책임집니다')
-    expect([...container.querySelectorAll('.resume-part > h2')].map((h) => h.textContent)).toEqual(['경력', '프로젝트', '기술', '학력·자격', '수상', '대표 활동', '논문'])
+    expect(summary[2]).toContain('결과의 책임은 직접 집니다')
+    expect([...container.querySelectorAll('.resume-part > h2')].map((h) => h.textContent)).toEqual(['기술', '경력', '프로젝트', '학력·자격', '수상·활동', '논문'])
+    expect([...container.querySelectorAll('.resume-skills dt')].map((dt) => dt.textContent)).toEqual(['백엔드', '데이터·비동기', 'AI', '도구'])
     expect(container).not.toHaveTextContent('문제를 이해하는 것에서 시작해')
     expect(container).toHaveTextContent('eric1889@naver.com')
     expect(container.textContent).not.toMatch(/010[\s-]?\d{4}|\+82/)
   })
 
-  it('lists the work under 경력 with its live and detail links, eight result bullets and the stack', () => {
+  it('lists the work under 경력 with its live and detail links and five one-line result bullets', () => {
     const { container } = renderWithProviders(<ResumePage />)
     const parts = [...container.querySelectorAll('.resume-part')]
     const experience = parts.find((part) => part.querySelector('h2')?.textContent === '경력') as HTMLElement
     expect(experience).toHaveTextContent('주식회사 Finz Labs (finz.kr) · 개발 총괄 2026.01–')
     expect(experience).toHaveTextContent('직원 5명 스타트업 · www.finz.kr · junyoung-portfolio.vercel.app/projects/finz')
     expect(experience).not.toHaveTextContent('인력 관리')
-    expect(experience).toHaveTextContent('초기 창업 멤버로 함께했고 회사 내의 유일한 개발자로')
     const bullets = [...experience.querySelectorAll('li')].map((li) => li.textContent ?? '')
-    expect(bullets).toHaveLength(8)
-    expect(bullets[0]).toContain('계산기 4종 운영 중 · 저장소 테스트 192개 통과')
-    expect(bullets[3]).toContain('배포 9번 연속 실패 원인 재현')
-    expect(bullets[4]).toContain('워크북 결과 항목 21개를 ±10원 허용으로 대조해 최대 차이 1원')
+    expect(bullets).toHaveLength(5)
+    expect(bullets[0]).toContain('세금 계산기 4종 운영 중, 저장소 테스트 192개 통과')
+    expect(bullets[1]).toContain('기준 사례 21개 항목 대조, 최대 차이 1원')
+    expect(bullets[4]).toContain('배포 9번 연속 실패 원인 재현')
     expect(experience).not.toHaveTextContent('21/21')
-    expect(experience.querySelector('.resume-stack')).toHaveTextContent('Next.js · TypeScript')
+    expect(experience.querySelector('.resume-stack')).toBeNull()
   })
 
-  it('shows the three own projects with status, repository and detail links, newest-first awards and a paper summary', () => {
+  it('shows the three own projects with status, repository link and two bullets each, newest-first awards and a paper summary', () => {
     const { container } = renderWithProviders(<ResumePage />)
     const parts = [...container.querySelectorAll('.resume-part')]
     const projectsPart = parts.find((part) => part.querySelector('h2')?.textContent === '프로젝트') as HTMLElement
@@ -226,28 +226,25 @@ describe('/resume', () => {
     expect([...projectsPart.querySelectorAll('.resume-status')].map((el) => el.textContent)).toEqual(['캡스톤 완료', '2026 리뉴얼 구현', '미출시'])
     expect([...projectsPart.querySelectorAll('.resume-links a')].map((a) => a.getAttribute('href'))).toEqual([
       'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
-      'https://junyoung-portfolio.vercel.app/projects/skillpilot',
       'https://github.com/ERIC1889/pitches',
-      'https://junyoung-portfolio.vercel.app/projects/pitches',
       'https://github.com/ERIC1889/ClosetMate',
-      'https://junyoung-portfolio.vercel.app/projects/closetmate',
     ])
+    expect([...projectsPart.querySelectorAll('.resume-item')].map((item) => item.querySelectorAll('li').length)).toEqual([2, 2, 2])
     expect([...projectsPart.querySelectorAll('.resume-stack')][1]).toHaveTextContent('Fastify · Socket.IO · BullMQ')
     expect(container).not.toHaveTextContent('Finz 개인 세금 계산기')
-    const awards = parts.find((part) => part.querySelector('h2')?.textContent === '수상') as HTMLElement
-    const awardLines = [...awards.querySelectorAll('li')].map((li) => li.textContent ?? '')
-    expect(awardLines[0]).toContain('AI·블록체인 비즈니스모델 경진대회 우수상 (Finz)')
-    expect(awardLines[2]).toContain('캡스톤 디자인 및 AI 해커톤 대상(1등) (Pitches)')
-    expect(awards).toHaveTextContent('외 10건 · 전체 목록 junyoung-portfolio.vercel.app/archive')
-    const activities = parts.find((part) => part.querySelector('h2')?.textContent === '대표 활동') as HTMLElement
-    expect([...activities.querySelectorAll('li')].map((li) => li.textContent?.slice(0, 8))).toEqual(['CES 2026', 'WebDB 랩장', 'SW 인재 페스'])
-    expect(container).toHaveTextContent('WebDB 랩장 — 한신대학교')
+    const record = parts.find((part) => part.querySelector('h2')?.textContent === '수상·활동') as HTMLElement
+    const lines = [...record.querySelectorAll('li')].map((li) => li.textContent ?? '')
+    expect(lines).toHaveLength(6)
+    expect(lines[0]).toContain('AI·블록체인 비즈니스모델 경진대회 우수상 (Finz)')
+    expect(lines[2]).toContain('캡스톤 디자인 및 AI 해커톤 대상(1등) (Pitches)')
+    expect(lines.slice(3).map((line) => line.slice(0, 8))).toEqual(['CES 2026', 'WebDB 랩장', 'SW 인재 페스'])
+    expect(record).toHaveTextContent('WebDB 랩장 — 한신대학교')
+    expect(record).toHaveTextContent('수상 외 10건 · 전체 기록 junyoung-portfolio.vercel.app/archive')
     const papers = parts.find((part) => part.querySelector('h2')?.textContent === '논문') as HTMLElement
     expect(papers).toHaveTextContent('학술대회 논문 7편 (국제 1편 · 1저자 6편)')
-    expect(papers.querySelectorAll('li')).toHaveLength(3)
+    expect(papers.querySelectorAll('li')).toHaveLength(2)
     expect(papers).toHaveTextContent('APIC-IST, 2025 · 국제학술대회 · 제2저자')
     expect(papers).not.toHaveTextContent('· 국내학술대회')
-    expect(papers).toHaveTextContent('외 4편')
     expect(container).not.toHaveTextContent('컴세바')
   })
 
@@ -257,7 +254,7 @@ describe('/resume', () => {
       const { container } = renderWithProviders(<DaangnResumePage />)
       expect(container.querySelector('.resume-role')).toHaveTextContent('백엔드 개발자')
       expect(container.querySelector('.resume-service')).toHaveTextContent('산업기능요원 · 보충역 신규 편입 (테스트)')
-      expect(container.querySelectorAll('.resume-summary > li')).toHaveLength(4)
+      expect(container.querySelectorAll('.resume-summary > li')).toHaveLength(3)
     } finally {
       delete process.env.RESUME_SERVICE_KO
     }

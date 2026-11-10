@@ -1623,7 +1623,7 @@ a:hover {
   }
   body {
     font-size: 9.6pt;
-    line-height: 1.42;
+    line-height: 1.45;
   }
   .site-header,
   .site-footer,
@@ -1653,7 +1653,7 @@ a:hover {
     font-size: 9.5pt;
   }
   .resume-part {
-    margin-top: 8pt;
+    margin-top: 10pt;
   }
   .resume-part h2 {
     font-size: 11.5pt;
@@ -1679,7 +1679,7 @@ a:hover {
     gap: 0;
   }
   .resume-skills > div {
-    padding: 1px 0;
+    padding: 2px 0;
   }
   .resume-service {
     margin-top: 4pt;

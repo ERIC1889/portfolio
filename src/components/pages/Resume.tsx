@@ -25,20 +25,18 @@ function Part({ title, children }: { title: L; children: ReactNode }) {
 
 export function Resume({ profile, archive, projects, topAwards, topActivities, siteUrl, variant }: Props) {
   const { t } = useLang()
-  // Work goes under 경력 with the details of its page; the project list keeps the owner's own projects
+  // Work goes under 경력; the project list keeps the owner's own projects
   const work = projects.filter((project) => project.showcase === 'work')
   const own = projects.filter((project) => project.showcase !== 'work')
   const nameOf = (slug?: string) => projects.find((project) => project.slug === slug)?.name
-  const detailUrl = (slug: string) => `${siteUrl}/projects/${slug}`
-  const archiveUrl = `${siteUrl}/archive`
   const conference = archive.papers.filter((paper) => paper.kind === 'international' || paper.kind === 'domestic')
   const counts = selectPaperCounts(archive.papers)
   const selectedPapers = variant.topPapers.flatMap((title) => conference.filter((paper) => paper.title === title))
-  const otherPapers = counts.conference - selectedPapers.length
   // Newest first on the résumé; the home page keeps the owner's own order
   const awards = [...topAwards].sort((a, b) => startOf(b.date).localeCompare(startOf(a.date)))
   const activities = [...topActivities].sort((a, b) => startOf(b.period).localeCompare(startOf(a.period)))
   const otherAwards = archive.awards.length - topAwards.length
+  const archiveUrl = `${siteUrl}/archive`
   return (
     <main id="main" className="page resume">
       <div className="wrap narrow">
@@ -69,10 +67,20 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
           </ul>
         </header>
 
+        <Part title={SECTION_TITLES.skills}>
+          <dl className="resume-skills">
+            {variant.skills.map((row) => (
+              <div key={row.area.ko}>
+                <dt>{t(row.area)}</dt>
+                <dd className="mono">{row.items.join(' · ')}</dd>
+              </div>
+            ))}
+          </dl>
+        </Part>
+
         <Part title={ARCHIVE_HEADINGS.experience}>
           {archive.experience.map((job) => {
             const linked = work.find((project) => project.slug === job.project)
-            const items = [...job.responsibilities, ...(linked?.resumeItems ?? [])]
             const site = linked?.links?.find((link) => link.kind === 'site')?.href
             return (
               <div key={job.org.ko} className="resume-item">
@@ -90,19 +98,17 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
                   {linked && (
                     <>
                       {' · '}
-                      <a href={detailUrl(linked.slug)}>{host(detailUrl(linked.slug))}</a>
+                      <a href={`${siteUrl}/projects/${linked.slug}`}>{host(`${siteUrl}/projects/${linked.slug}`)}</a>
                     </>
                   )}
                 </p>
-                {job.summary && <p className="resume-item-summary">{t(job.summary)}</p>}
-                {items.length > 0 && (
+                {job.responsibilities.length > 0 && (
                   <ul>
-                    {items.map((item) => (
+                    {job.responsibilities.map((item) => (
                       <li key={item.ko}>{t(item)}</li>
                     ))}
                   </ul>
                 )}
-                {linked && <p className="mono resume-stack">{(linked.resumeStack ?? linked.stack).join(' · ')}</p>}
               </div>
             )
           })}
@@ -111,6 +117,7 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
         <Part title={{ ko: '프로젝트', en: 'Projects' }}>
           {own.map((project) => {
             const repo = project.links?.find((link) => link.kind === 'code')?.href
+            const meta = [project.team, project.role].flatMap((part) => (part ? [t(part)] : [])).join(' · ')
             return (
               <div key={project.slug} className="resume-item">
                 <p className="resume-item-head">
@@ -122,16 +129,12 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
                     </>
                   )}
                 </p>
-                <p className="muted">{[project.team, project.role].flatMap((part) => (part ? [t(part)] : [])).join(' · ')}</p>
-                <p className="mono resume-links">
-                  {repo && (
-                    <>
-                      <a href={repo}>{host(repo)}</a>
-                      {' · '}
-                    </>
-                  )}
-                  <a href={detailUrl(project.slug)}>{host(detailUrl(project.slug))}</a>
-                </p>
+                <p className="muted">{meta}</p>
+                {repo && (
+                  <p className="mono resume-links">
+                    <a href={repo}>{host(repo)}</a>
+                  </p>
+                )}
                 <ul>
                   {(project.resumeItems ?? project.features ?? [project.summary]).map((item) => (
                     <li key={item.ko}>{t(item)}</li>
@@ -141,19 +144,6 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
               </div>
             )
           })}
-        </Part>
-
-        <Part title={SECTION_TITLES.skills}>
-          <dl className="resume-skills">
-            {variant.skills.map((row) => (
-              <div key={row.area.ko}>
-                <dt>{t(row.area)}</dt>
-                <dd>
-                  <span className="mono">{row.items.join(', ')}</span> — {t(row.did)}
-                </dd>
-              </div>
-            ))}
-          </dl>
         </Part>
 
         <Part title={ARCHIVE_HEADINGS.educationAndCerts}>
@@ -171,7 +161,7 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
           </p>
         </Part>
 
-        <Part title={ARCHIVE_HEADINGS.awards}>
+        <Part title={{ ko: '수상·활동', en: 'Awards and activities' }}>
           <ul>
             {awards.map((award) => {
               const name = nameOf(award.project)
@@ -182,23 +172,18 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
                 </li>
               )
             })}
-          </ul>
-          {otherAwards > 0 && (
-            <p className="muted">
-              {t({ ko: `외 ${otherAwards}건 · 전체 목록 `, en: `${otherAwards} more · full list ` })}
-              <a href={archiveUrl}>{host(archiveUrl)}</a>
-            </p>
-          )}
-        </Part>
-
-        <Part title={UI.topActivities}>
-          <ul>
             {activities.map((activity) => (
               <li key={activity.name.ko}>
                 {t(activity.name)} — {t(activity.org)} <span className="mono">{activity.period}</span>
               </li>
             ))}
           </ul>
+          {otherAwards > 0 && (
+            <p className="muted">
+              {t({ ko: `수상 외 ${otherAwards}건 · 전체 기록 `, en: `${otherAwards} more awards · full record ` })}
+              <a href={archiveUrl}>{host(archiveUrl)}</a>
+            </p>
+          )}
         </Part>
 
         <Part title={UI.papers}>
@@ -217,12 +202,6 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
               </li>
             ))}
           </ul>
-          {otherPapers > 0 && (
-            <p className="muted">
-              {t({ ko: `외 ${otherPapers}편 · 전체 목록 `, en: `${otherPapers} more · full list ` })}
-              <a href={archiveUrl}>{host(archiveUrl)}</a>
-            </p>
-          )}
         </Part>
       </div>
     </main>

@@ -293,28 +293,13 @@ export const archive: Archive = {
       title: k('개발 총괄', 'Head of development'),
       period: '2026.01–',
       context: k('직원 5명 스타트업', 'A five-person startup'),
-      summary: k(
-        '초기 창업 멤버로 함께했고 회사 내의 유일한 개발자로 서비스를 개발하고 검증하는 역할을 맡았고 단순 개발뿐 아니라 기획, 투자 제안, 웹, 모바일 어플리케이션 개발, 협력 개발사와의 공동 개발 등 회사 내에서 개발 총괄로 일했습니다.',
-        'I joined as an early founding member and, as the only developer in the company, took on building and verifying the service. Beyond development itself I worked as head of development across planning, investor proposals, web and mobile app development and co-development with a partner company.',
-      ),
       project: 'finz',
       responsibilities: [
-        k(
-          '회사 웹 finz.kr 설계·개발·운영 (2026.04–): 부동산 6Way · 디지털 자산 · 해외주식 양도세·증여 평가 계산기 4종 운영 중 · 저장소 테스트 192개 통과(계산 엔진 53 · 시세·환율 데이터 소스 31)',
-          'Designed, built and run the company website finz.kr (2026.04–): four calculators live — property 6Way, digital assets, foreign-stock capital gains and gift valuation · all 192 repository tests pass (53 calculation-engine, 31 market-data)',
-        ),
-        k(
-          'Finz 모바일 앱 (Expo · FastAPI, 미출시): 청년 세금 환급 MVP와 세무사 상담 연결 · 간편인증 1번으로 5개 연도 지급명세서 조회(CODEF 개발 환경, 홈택스 자료와 대조) · 보안 단위 테스트 57개(HTTP 권한 테스트 없음)',
-          'Finz mobile app (Expo · FastAPI, not released): youth tax-refund MVP and tax-accountant matching · five years of payment statements fetched with one simple authentication (CODEF development environment, checked against Hometax records) · 57 security unit tests (no HTTP permission tests)',
-        ),
-        k(
-          '세무사용 FINZ (협력 개발사와 공동 개발, 출시 전): 엔진 초안·외부 API·배포 방식 결정에 참여, 가격 정책·기능 잠금 범위 사양 작성 · 개발사 완료 보고 269건 재검증(233 확인 · 36 미완료 · 새 결함 45)',
-          'FINZ for tax accountants (co-developed with a partner company, pre-launch): took part in deciding the engine draft, external APIs and deployment, wrote the pricing and feature-lock spec · re-verified 269 vendor items (233 confirmed · 36 open · 45 new defects)',
-        ),
-        k(
-          '배포 9번 연속 실패 원인 재현(타입 검사 메모리 36% 증가, 서버와 같은 메모리 상한에서 재현) → 개발사가 진단을 확인하고 배포 실패가 서비스를 멈추지 않게 변경 · CI에 심은 한 줄짜리 버그 7개 모두 검출 · 실배포 준비',
-          'Reproduced the cause of nine failed deployments in a row (type-check memory up 36%, reproduced under the server’s memory cap) → the vendor confirmed the diagnosis and changed deploys so a failure no longer stops the service · all 7 one-line bugs planted in CI were caught · prepared the production rollout',
-        ),
+        k('회사 웹 finz.kr 설계·개발·운영 — 세금 계산기 4종 운영 중, 저장소 테스트 192개 통과', 'Designed, built and run the company website finz.kr — four tax calculators live, all 192 repository tests pass'),
+        k('6Way 계산 로직을 Python에서 TypeScript로 이식 — 기준 사례 21개 항목 대조, 최대 차이 1원', 'Ported the 6Way tax logic from Python to TypeScript — 21 reference-case items matched, largest gap 1 won'),
+        k('시세·환율 데이터 계층 — 대체 출처(ECOS→ECB, Upbit→CoinGecko), 확정값만 캐시, 테스트 31개', 'Market-data layer — fallback sources (ECOS→ECB, Upbit→CoinGecko), caching only settled values, 31 tests'),
+        k('Finz 모바일 앱(Expo · FastAPI, 미출시) — 간편인증 1번으로 5개 연도 조회, 보안 단위 테스트 57개', 'Finz mobile app (Expo · FastAPI, not released) — five years fetched with one simple authentication, 57 security unit tests'),
+        k('세무사용 FINZ(협력 개발사와 공동 개발) — 완료 보고 269건 재검증·새 결함 45건, 배포 9번 연속 실패 원인 재현', 'FINZ for tax accountants (co-developed with a partner company) — re-verified 269 reported items, 45 new defects, reproduced the cause of nine failed deployments in a row'),
       ],
     },
   ],

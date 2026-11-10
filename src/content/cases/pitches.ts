@@ -36,14 +36,8 @@ export const pitches: Project = {
     ['발표 기록과 점수 추이', 'A history of talks and the score trend'],
   ]),
   resumeItems: pairs([
-    [
-      '2026 리뉴얼(전체): Socket.IO 0.25초 음성 스트리밍, 5초 단위 음량·말 속도·간투사·감정 판정, 분석별 대기 시간 제한 · 발표 뒤 전사·집계·gpt-5-nano 보고서·PDF는 BullMQ 워커 · API 단위 테스트 41개',
-      '2026 renewal (everything): Socket.IO audio streaming in 0.25 s chunks, volume, pace, filler-word and emotion judgments every 5 s, a time limit per analysis · full transcript, aggregation, gpt-5-nano report and PDF in a BullMQ worker · 41 API unit tests',
-    ],
-    [
-      'APIC-IST 2025 논문 구조(2024–25 팀 버전 기반, 백엔드·AI): SenseVoice-Small 실시간 분석 백엔드, asyncio로 여러 세션 프레임 병렬 처리 — 논문 보고 지연 평균 125ms · 최악 170ms(동시 20세션)',
-      'APIC-IST 2025 paper design (built on the 2024–25 team version, backend and AI): live-analysis backend on SenseVoice-Small with frames from many sessions processed in parallel on asyncio — 125 ms average and 170 ms worst-case latency as reported in the paper (20 concurrent sessions)',
-    ],
+    ['2026 리뉴얼(전체) — Socket.IO 스트리밍, 5초 단위 판정, 분석별 대기 시간 제한, BullMQ 보고서 워커, 테스트 41개', '2026 renewal (everything) — Socket.IO streaming, judgments every 5 s, a time limit per analysis, a BullMQ report worker, 41 tests'],
+    ['APIC-IST 2025 논문(백엔드·AI) — SenseVoice-Small 실시간 분석 백엔드, 지연 평균 125ms(논문 보고값)', 'APIC-IST 2025 paper (backend and AI) — live-analysis backend on SenseVoice-Small, 125 ms average latency as reported in the paper'],
   ]),
   resumeStack: ['Fastify', 'Socket.IO', 'BullMQ', 'Redis', 'PostgreSQL', 'Whisper', 'SenseVoice-Small', 'GPT-5-nano', 'Expo'],
   contribution: {

@@ -238,7 +238,7 @@ describe('work: Finz Labs', () => {
     expect(koText(finz.contribution?.direct)).toContain('회사 세무 SaaS의 코드를 개인용으로 옮기고')
     expect(koText(finz.products?.[0].features)).not.toMatch(/가상자산 (계산 )?엔진을 (직접 )?(만들|작성)/)
     expect(finz.features).toBeUndefined()
-    expect(finz.resumeItems).toHaveLength(4)
+    expect(finz.resumeItems).toBeUndefined()
     expect(finz.contribution?.joint && koText(finz.contribution.joint)).toContain('세무사')
   })
 
