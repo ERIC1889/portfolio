@@ -112,32 +112,37 @@ export const closetmate: Project = {
               links: [
                 ['openai', ['AI 요청', 'AI request'], 'paid'],
                 ['weather', ['날씨 조회', 'weather lookup'], 'sync'],
+                ['onnx', ['사진 분류', 'photo labels'], 'local'],
                 ['store', ['조회 · 저장', 'read · write'], 'sync'],
               ],
+            }),
+            node('onnx', 'mine', ['분류 모델 추론', 'Classifier inference'], {
+              icon: 'cpu',
+              subtitle: ['MobileNetV3-Small · ONNX · 서버 안에서 실행', 'MobileNetV3-Small · ONNX · runs inside the server'],
             }),
           ],
         ),
         column(
-          ['외부 서비스 · 데이터', 'External services · data'],
+          ['외부 서비스', 'External services'],
           [
             node('openai', 'external', ['OpenAI', 'OpenAI'], { icon: 'sparkles', subtitle: ['추천 모델 · whisper-1 · Vision', 'Suggestion model · whisper-1 · Vision'] }),
             node('weather', 'external', ['OpenWeather', 'OpenWeather'], { icon: 'cloud', subtitle: ['위치 → 날씨', 'Location → weather'] }),
-            node('store', 'data', ['PostgreSQL · Blob', 'PostgreSQL · Blob'], { icon: 'database', subtitle: ['Neon · 이미지는 Vercel Blob', 'Neon · images on Vercel Blob'] }),
           ],
         ),
       ],
       [
-        '앱 → Vercel의 Next.js API → OpenAI · 날씨 · DB. 분류 모델은 오프라인에서 학습해 서버에서 ONNX로 추론한다',
-        'App → Next.js API on Vercel → OpenAI · weather · database. The classifier is trained offline and served on the server with ONNX',
+        '앱 → Vercel의 Next.js API → OpenAI · 날씨 · DB. 분류 모델은 오프라인에서 학습해 서버 안에서 ONNX로 추론한다',
+        'App → Next.js API on Vercel → OpenAI · weather · database. The classifier is trained offline and served inside the server with ONNX',
       ],
       footer(
-        ['학습 파이프라인 (오프라인)', 'Training pipeline (offline)'],
-        'chart',
+        ['데이터 · 모델 학습', 'Data · model training'],
+        'database',
         [
-          node('train', 'local', ['모델 학습 · 내보내기', 'Training · export'], {
-            icon: 'cpu',
+          node('store', 'data', ['PostgreSQL · Blob', 'PostgreSQL · Blob'], { icon: 'database', subtitle: ['Neon · 이미지는 Vercel Blob', 'Neon · images on Vercel Blob'] }),
+          node('train', 'local', ['학습 파이프라인 (오프라인)', 'Training pipeline (offline)'], {
+            icon: 'chart',
             subtitle: ['PyTorch 전이학습 · 두 모델 비교 → ONNX', 'PyTorch transfer learning · two models compared → ONNX'],
-            links: [['api', ['ONNX 모델', 'ONNX model'], 'local']],
+            links: [['onnx', ['ONNX 모델', 'ONNX model'], 'local']],
           }),
         ],
       ),
@@ -190,7 +195,7 @@ export const closetmate: Project = {
           '이 결과를 통해 형식이 틀리거나 옷장에 없는 옷을 담은 추천은 사용자에게 가지 않습니다. 실측한 23번의 테스트에서는 기본 모델 통과가 19번, 보조 모델 처리가 4건, 최종 실패는 0건이었습니다.',
           'As a result, a recommendation with the wrong format or with clothes not in the wardrobe never reaches the user. In 23 measured runs, the base model passed 19 times, the backup model handled 4, and there were 0 final failures.',
         ],
-      ]),
+      ], ['실측 23회, 최종 실패 0건', 'Measured 23 times, 0 final failures']),
     },
     {
       title: k('분류 모델 선택과 적용', 'Choosing and applying the classification model'),
@@ -222,16 +227,16 @@ export const closetmate: Project = {
   ],
   results: pairs([
     [
-      '가진 옷으로만 추천해야 한다는 요구는, LLM에 옷장 안의 후보만 주고 답을 서버에서 다시 검증하는 구조로 풀었습니다. 형식이 틀렸거나 옷장에 없는 옷을 담은 추천은 사용자에게 가기 전에 막히고, 실측 23회에서 기본 모델이 19회 통과하고 보조 모델이 4회 처리했으며 최종 실패는 0건이었습니다.',
-      'The need to suggest outfits only from clothes the user owns was met by giving the LLM only candidates from the wardrobe and re-checking its answer on the server. Suggestions with the wrong format or with clothes not in the wardrobe are stopped before they reach the user; in 23 measured runs the base model passed 19 times, the backup model handled 4, and there were 0 final failures.',
+      '가진 옷으로만 추천하기 위해 LLM에 옷장 안의 후보만 주고 답을 서버에서 다시 검증합니다. 형식이 틀렸거나 옷장에 없는 옷을 담은 추천은 사용자에게 가기 전에 막히고, 실측 23회에서 기본 모델이 19회 통과하고 보조 모델이 4회 처리했으며 최종 실패는 0건이었습니다.',
+      'To suggest outfits only from clothes the user owns, the LLM gets candidates from the wardrobe alone and the server re-checks its answer. Suggestions with the wrong format or with clothes not in the wardrobe are stopped before they reach the user; in 23 measured runs the base model passed 19 times, the backup model handled 4, and there were 0 final failures.',
     ],
     [
-      '사진 한 장으로 옷을 등록해야 한다는 요구는, 사진 등록부터 분류, 후보 생성, LLM 추천, 서버 검증까지 전체 흐름을 구현해 풀었습니다.',
-      'The need to add a garment from a single photo was met by building the whole flow from adding the photo through labeling, candidate outfits, LLM suggestion and the server check.',
+      '사진 한 장으로 옷을 등록할 수 있도록 사진 등록부터 분류, 후보 생성, LLM 추천, 서버 검증까지 전체 흐름을 구현했습니다.',
+      'A garment goes in from a single photo: the whole flow from adding the photo through labeling, candidate outfits, LLM suggestion and the server check is built.',
     ],
     [
-      '분류 모델은 나중에 폰에서도 돌릴 수 있을 만큼 가벼워야 한다는 요구는, MobileNetV3-Small과 ResNet50을 같은 조건으로 비교해 약 15분의 1 크기(6.0MB 대 90.2MB)인 MobileNetV3-Small을 채택해 풀었습니다. 지금은 서버에서 ONNX로 추론합니다.',
-      'The need for a classifier light enough to run on the phone later was met by comparing MobileNetV3-Small and ResNet50 under the same settings and adopting MobileNetV3-Small at about one fifteenth of the size (6.0 MB against 90.2 MB); for now it runs on the server with ONNX.',
+      '나중에 폰에서도 돌릴 수 있을 만큼 가벼운 분류 모델이 필요해 MobileNetV3-Small과 ResNet50을 같은 조건으로 비교했고, 약 15분의 1 크기(6.0MB 대 90.2MB)인 MobileNetV3-Small을 채택했습니다. 지금은 서버에서 ONNX로 추론합니다.',
+      'The classifier had to be light enough to run on the phone later, so MobileNetV3-Small and ResNet50 were compared under the same settings and MobileNetV3-Small, about one fifteenth of the size (6.0 MB against 90.2 MB), was adopted; for now it runs on the server with ONNX.',
     ],
   ]),
   retro: pairs([

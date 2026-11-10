@@ -103,8 +103,8 @@ export const edumatrix: Project = {
     ['2025 한신 AISW 페스티벌 캡스톤 디자인 부문 특별상을 받았습니다.', 'Special Award (Capstone Design) at the 2025 Hanshin AISW Festival.'],
     ['한국디지털콘텐츠학회 2025 하계·추계 학술대회에서 논문 두 편을 1저자로 발표해 각각 대학생 논문경진대회 은상을 받았습니다.', 'Presented two first-author papers at the 2025 summer and fall Korea Digital Contents Society conferences, each winning a Silver Award in the student paper competition.'],
     [
-      '학습 목표 설정부터 노트, 퀴즈, 피드백, 계획 조정까지 한 흐름으로 이어져야 한다는 요구에 맞춰, 6개 모듈과 요청 의도별로 모델·도구를 고르는 AI 에이전트 라우팅 구조를 설계했습니다.',
-      'For the need to carry a learner in one flow from setting a goal through notes, quizzes, feedback and plan adjustment, I designed six modules and AI agent routing that picks a model or tool by the intent of each request.',
+      '학습 목표 설정부터 노트, 퀴즈, 피드백, 계획 조정까지 한 흐름으로 이어지도록 6개 모듈과, 요청 의도에 따라 모델·도구를 고르는 AI 에이전트 라우팅 구조를 설계했습니다.',
+      'Six modules and AI agent routing that picks a model or tool by the intent of each request were designed so that a learner moves in one flow from setting a goal through notes, quizzes, feedback and plan adjustment.',
     ],
   ]),
   retro: pairs([
@@ -227,7 +227,7 @@ export const innoview: Project = {
     },
     {
       title: k('직무에 맞는 질문', 'Questions that fit the role'),
-      problem: step([['직무와 무관한 자료가 검색되어 질문이 일반적으로 나왔습니다.', 'Unrelated material was retrieved, so the questions came out generic.']]),
+      problem: step([['직무와 무관한 자료가 검색되어 질문이 일반적으로 나왔습니다.', 'Unrelated material was retrieved, so the questions came out generic.']], ['직무와 무관한 자료가 섞인 검색', 'Searches that pulled in material unrelated to the role']),
       analysis: step(
         [['면접 질문의 품질은 모델보다 검색에 어떤 자료를 넣느냐에 더 좌우됐습니다.', 'The quality of the questions depended more on what went into retrieval than on the model.']],
         ['프롬프트 하나에 모든 직무를 넣는 대신 자료와 면접관을 나누기로 했습니다.', 'Rather than one prompt for every role, the material and the interviewers would be split.'],
@@ -237,15 +237,15 @@ export const innoview: Project = {
           '질문 데이터와 검색 자료를 직무·기업별로 나눠 두고, Assistant도 직무·기업마다 따로 만들었습니다.',
           'Question data and search material are kept separately by role and company, and each role and company has its own Assistant.',
         ],
-      ]),
-      result: step([['자료를 나눈 뒤에야 질문이 지원 직무와 기업에 맞게 구체적으로 나왔습니다.', 'Only after the material was split did the questions come out specific to the role and company.']]),
+      ], ['자료와 Assistant를 직무·기업별로 분리', 'Material and Assistants split by role and company']),
+      result: step([['자료를 나눈 뒤에야 질문이 지원 직무와 기업에 맞게 구체적으로 나왔습니다.', 'Only after the material was split did the questions come out specific to the role and company.']], ['지원 직무와 기업에 맞는 구체적인 질문', 'Specific questions that fit the role and the company']),
     },
   ],
   results: pairs([
     ['2025 한신 AISW 페스티벌 창업 아이디어 부문 장려상을 받았습니다.', 'Honorable Mention (Startup Idea) at the 2025 Hanshin AISW Festival.'],
     [
-      '이력서와 직무에 맞는 질문으로 실제 면접처럼 연습해야 한다는 요구는, 기업·직무별 Assistant와 서버에서 15문항으로 제한한 꼬리 질문으로 풀었습니다. 오픈소스 개발자대회에 출품했고, 한신대 AI 면접 특강 2회(2025.10)와 쏘랩 시연(2025.11)에서 학생들이 직접 써 봤습니다.',
-      'The need to practise like a real interview, with questions that fit the résumé and the role, was met with an Assistant per company and role and follow-up questions capped at 15 on the server. It was entered in the Open Source Developer Competition, and students tried it themselves at two AI interview workshops at Hanshin University (Oct 2025) and a SoLab demo (Nov 2025).',
+      '이력서와 직무에 맞는 질문으로 실제 면접처럼 연습할 수 있도록 기업·직무별 Assistant를 두고, 꼬리 질문은 서버에서 15문항으로 제한했습니다. 오픈소스 개발자대회에 출품했고, 한신대 AI 면접 특강 2회(2025.10)와 쏘랩 시연(2025.11)에서 학생들이 직접 써 봤습니다.',
+      'An Assistant per company and role makes the practice feel like a real interview with questions that fit the résumé and the role, and follow-up questions are capped at 15 on the server. It was entered in the Open Source Developer Competition, and students tried it themselves at two AI interview workshops at Hanshin University (Oct 2025) and a SoLab demo (Nov 2025).'
     ],
   ]),
   retro: pairs([
@@ -362,8 +362,8 @@ export const labelLight: Project = {
     ['2024 한신 AISW 페스티벌 일반 부문 특별상을 받았습니다.', 'Won the Special Award (General) at the 2024 Hanshin AISW Festival.'],
     ['2025 한국디지털콘텐츠학회 하계종합학술대회에 1저자로 논문을 발표해 대학생 논문경진대회 동상을 받았습니다.', 'Presented a first-author paper at the 2025 Korea Digital Contents Society summer conference and won a Bronze Award in the student paper competition.'],
     [
-      '글을 읽고 입력하기 어려운 시니어도 쓸 수 있어야 한다는 요구는, 설문 대신 음성으로만 진행하는 일상 대화에서 GDS 문항을 끌어내는 방식과 큰 글씨 화면으로 풀었습니다.',
-      'The need for a service that seniors who find reading and typing hard can still use was met by drawing the GDS items out of an everyday voice-only conversation instead of a questionnaire, on a large-type screen.',
+      '글을 읽고 입력하기 어려운 시니어도 쓸 수 있도록, 설문 대신 음성으로만 진행하는 일상 대화에서 GDS 문항을 끌어내고 화면은 큰 글씨로 구성했습니다.',
+      'So that seniors who find reading and typing hard can still use it, the GDS items are drawn out of an everyday voice-only conversation instead of a questionnaire, on a large-type screen.',
     ],
   ]),
   retro: pairs([

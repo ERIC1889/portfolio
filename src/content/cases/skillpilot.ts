@@ -274,16 +274,16 @@ export const skillpilot: Project = {
   ],
   results: pairs([
     [
-      '흩어진 IT 자격증 정보를 한곳에서 늘 최신으로 봐야 한다는 요구는, 공공데이터 API 7종을 하나의 자격증 데이터로 정규화하고 스케줄러가 자동으로 갱신하는 구조로 풀었습니다. 손으로 갱신할 일이 없고, 전체 국가자격 613종목 중 IT 34종목과 시험 일정 87건이 저장됩니다.',
-      'The need to see scattered IT certification information in one place, always current, was met by normalizing 7 public data APIs into one set of certification data that a scheduler refreshes on its own. Nothing is updated by hand, and 34 IT certifications and 87 exam schedules out of 613 national certifications are stored.',
+      '흩어진 IT 자격증 정보를 한곳에서 늘 최신으로 볼 수 있게, 공공데이터 API 7종을 하나의 자격증 데이터로 정규화하고 스케줄러가 자동으로 갱신하도록 만들었습니다. 손으로 갱신할 일이 없고, 전체 국가자격 613종목 중 IT 34종목과 시험 일정 87건이 저장됩니다.',
+      'So that scattered IT certification information can be seen in one place and stays current, 7 public data APIs are normalized into one set of certification data that a scheduler refreshes on its own. Nothing is updated by hand, and 34 IT certifications and 87 exam schedules out of 613 national certifications are stored.',
     ],
     [
-      'API마다 응답 형식이 다르고 실패를 상태 코드로 알리지 않아도 데이터가 깨지지 않아야 한다는 요구는, 공통 클라이언트 1개와 API별 정규화 함수 7개로 나눠 풀었습니다. 단위 테스트 31개와 관리자 수동 실행으로 확인했습니다.',
-      'The need for data that stays intact even though each API answers in its own format and does not report failure through the status code was met by splitting the work into one shared client and seven per-API normalization functions, checked with 31 unit tests and manual admin runs.',
+      'API마다 응답 형식이 다르고 실패를 상태 코드로 알리지 않는 문제는 공통 클라이언트 1개와 API별 정규화 함수 7개로 나눠 처리했고, 단위 테스트 31개와 관리자 수동 실행으로 확인했습니다.',
+      'Each API answers in its own format and does not report failure through the status code; one shared client and seven per-API normalization functions handle that, checked with 31 unit tests and manual admin runs.',
     ],
     [
-      'AI 호출이 실패해도 추천과 로드맵이 끊기지 않아야 한다는 요구는, 규칙 기반 대체 응답과 같은 조건의 저장 결과 재사용으로 풀었습니다.',
-      'The need for recommendations and roadmaps that keep going when an AI call fails was met with rule-based fallbacks and the reuse of stored results for the same request.',
+      'AI 호출이 실패해도 추천과 로드맵이 끊기지 않도록 규칙 기반 대체 응답을 두고, 같은 조건의 요청은 저장된 결과를 다시 씁니다.',
+      'Rule-based fallbacks keep recommendations and roadmaps going when an AI call fails, and the same request reuses the stored result.',
     ],
     [
       '13개 화면과 16개 백엔드 라우트 모듈로 캡스톤을 마쳤고, 최종 발표를 맡았습니다.',
