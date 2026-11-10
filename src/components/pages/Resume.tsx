@@ -23,6 +23,16 @@ function Part({ title, children }: { title: L; children: ReactNode }) {
   )
 }
 
+function Chips({ items }: { items: string[] }) {
+  return (
+    <ul className="resume-chips">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  )
+}
+
 export function Resume({ profile, archive, projects, topAwards, topActivities, siteUrl, variant }: Props) {
   const { t } = useLang()
   // Work goes under 경력; the project list keeps the owner's own projects
@@ -47,8 +57,11 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
         </p>
 
         <header className="resume-head">
-          <h1>{t(profile.name)}</h1>
-          <p className="resume-role">{t(variant.role ?? profile.role)}</p>
+          <div className="resume-head-main">
+            <h1>{t(profile.name)}</h1>
+            <p className="resume-role">{t(variant.role ?? profile.role)}</p>
+            {variant.service && <p className="resume-service">{t(variant.service)}</p>}
+          </div>
           <ul className="resume-contacts">
             {variant.phone && (
               <li>
@@ -64,20 +77,22 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
               <a href={siteUrl}>{host(siteUrl)}</a>
             </li>
           </ul>
-          {variant.service && <p className="resume-service">{t(variant.service)}</p>}
-          <ul className="resume-summary" aria-label={t(UI.resumeSummary)}>
-            {variant.summary.map((line) => (
-              <li key={line.ko}>{t(line)}</li>
-            ))}
-          </ul>
         </header>
+
+        <ul className="resume-summary" aria-label={t(UI.resumeSummary)}>
+          {variant.summary.map((line) => (
+            <li key={line.ko}>{t(line)}</li>
+          ))}
+        </ul>
 
         <Part title={SECTION_TITLES.skills}>
           <dl className="resume-skills">
             {variant.skills.map((row) => (
               <div key={row.area.ko}>
                 <dt>{t(row.area)}</dt>
-                <dd className="mono">{row.items.join(' · ')}</dd>
+                <dd>
+                  <Chips items={row.items} />
+                </dd>
               </div>
             ))}
           </dl>
@@ -90,9 +105,12 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
             return (
               <div key={job.org.ko} className="resume-item">
                 <p className="resume-item-head">
-                  <strong>{t(job.org)}</strong> · {t(job.title)} <span className="mono">{job.period}</span>
+                  <span className="resume-item-title">
+                    <strong>{t(job.org)}</strong> · {t(job.title)}
+                  </span>{' '}
+                  <span className="mono resume-period">{job.period}</span>
                 </p>
-                <p className="muted">
+                <p className="muted resume-meta">
                   {t(job.context)}
                   {site && (
                     <>
@@ -126,15 +144,13 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
             return (
               <div key={project.slug} className="resume-item">
                 <p className="resume-item-head">
-                  <strong>{t(projectTitle(project))}</strong> <span className="mono">{project.period}</span>
-                  {project.status && (
-                    <>
-                      {' · '}
-                      <span className="resume-status">{t(project.status)}</span>
-                    </>
-                  )}
+                  <span className="resume-item-title">
+                    <strong>{t(projectTitle(project))}</strong>
+                    {project.status && <span className="resume-status">{t(project.status)}</span>}
+                  </span>{' '}
+                  <span className="mono resume-period">{project.period}</span>
                 </p>
-                <p className="muted">{meta}</p>
+                <p className="muted resume-meta">{meta}</p>
                 {repo && (
                   <p className="mono resume-links">
                     <a href={repo}>{host(repo)}</a>
@@ -152,10 +168,13 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
         </Part>
 
         <Part title={ARCHIVE_HEADINGS.educationAndCerts}>
-          <p>
-            <strong>{t(archive.education.school)}</strong> · {t(archive.education.major)} <span className="mono">{archive.education.period}</span>
+          <p className="resume-item-head">
+            <span className="resume-item-title">
+              <strong>{t(archive.education.school)}</strong> · {t(archive.education.major)}
+            </span>{' '}
+            <span className="mono resume-period">{archive.education.period}</span>
           </p>
-          <p className="muted">
+          <p className="muted resume-meta">
             {t(archive.education.note)} · {t(UI.gpa)} {archive.education.gpa}
             {archive.certs.map((cert) => (
               <span key={cert.name.ko}>
@@ -167,24 +186,30 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
         </Part>
 
         <Part title={{ ko: '수상·활동', en: 'Awards and activities' }}>
-          <ul>
+          <ul className="resume-rows">
             {awards.map((award) => {
               const name = nameOf(award.project)
               return (
                 <li key={award.name.ko}>
-                  {t(award.name)}
-                  {name && ` (${name})`} — {t(award.org)} <span className="mono">{award.date}</span>
+                  <span>
+                    {t(award.name)}
+                    {name && ` (${name})`} — {t(award.org)}
+                  </span>{' '}
+                  <span className="mono resume-date">{award.date}</span>
                 </li>
               )
             })}
             {activities.map((activity) => (
               <li key={activity.name.ko}>
-                {t(activity.name)} — {t(activity.org)} <span className="mono">{activity.period}</span>
+                <span>
+                  {t(activity.name)} — {t(activity.org)}
+                </span>{' '}
+                <span className="mono resume-date">{activity.period}</span>
               </li>
             ))}
           </ul>
           {otherAwards > 0 && (
-            <p className="muted">
+            <p className="muted resume-meta">
               {t({ ko: `수상 외 ${otherAwards}건 · 전체 기록 `, en: `${otherAwards} more awards · full record ` })}
               <a href={archiveUrl}>{host(archiveUrl)}</a>
             </p>
@@ -192,7 +217,7 @@ export function Resume({ profile, archive, projects, topAwards, topActivities, s
         </Part>
 
         <Part title={UI.papers}>
-          <p>
+          <p className="resume-meta">
             {t({
               ko: `학술대회 논문 ${counts.conference}편 (국제 ${counts.international}편 · 1저자 ${counts.firstAuthor}편)`,
               en: `${counts.conference} conference papers (${counts.international} international · ${counts.firstAuthor} first-author)`,
