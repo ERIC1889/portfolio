@@ -68,14 +68,14 @@ function Entry({ period, sub, title, tags, compact, children }: { period: string
   )
 }
 
-/** "학점 | 3.76 / 4.5" style row */
+/** "학점 | 3.76 / 4.5" style row; a div, because the value may hold a list and a <ul> inside <p> breaks hydration */
 function KV({ label, children }: { label: L; children: ReactNode }) {
   const { t } = useLang()
   return (
-    <p className="resume-kv">
+    <div className="resume-kv">
       <span className="resume-kv-label">{t(label)}</span>
       <span className="resume-kv-value">{children}</span>
-    </p>
+    </div>
   )
 }
 

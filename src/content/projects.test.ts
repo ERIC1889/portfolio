@@ -245,7 +245,9 @@ describe('work: Finz Labs', () => {
 
   it('reports the vendor re-verification as a result, never as fixes or a fix rate', () => {
     const results = koText(finz.results)
-    for (const fact of ['269건', '233건', '36건', '45건', '7개 모두']) expect(results).toContain(fact)
+    for (const fact of ['269건', '233건', '36건', '45건']) expect(results).toContain(fact)
+    expect(results).not.toContain('기준시가')
+    expect(results).not.toContain('버그 7개')
     expect(koText(finz)).not.toMatch(/\d+건 해결|해결률/)
   })
 })

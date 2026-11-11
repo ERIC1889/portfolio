@@ -195,7 +195,9 @@ describe('/resume', () => {
     expect([...container.querySelectorAll('.resume-contacts dt')].map((dt) => dt.textContent)).toEqual(['이메일', 'GitHub', '포트폴리오'])
     expect(container.querySelector('.resume-contacts')).toHaveTextContent('eric1889@naver.com')
     expect(container).not.toHaveTextContent('junyoung-dev-notes')
-    expect(container.querySelector('.resume-photo.is-placeholder')).toHaveTextContent('사진')
+    expect(container.querySelector('img.resume-photo')).toHaveAttribute('src', '/images/resume/photo.jpg')
+    // a list inside a paragraph is invalid HTML and made the page fail hydration
+    expect(container.querySelectorAll('p ul, p div, p p')).toHaveLength(0)
     expect([...container.querySelectorAll('.resume-cards .resume-card-label')].map((el) => el.textContent)).toEqual(['학력', '경력', '수상 · 논문', '활동', '포트폴리오'])
     expect(container.querySelector('.resume-cards')).toHaveTextContent('13건 · 10편')
     expect(container.querySelector('.resume-skillbox h2')).toHaveTextContent('나의 스킬')

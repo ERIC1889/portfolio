@@ -346,12 +346,12 @@ export const finz: Project = {
       'In the Finz mobile app, a single simple authentication now fetches several years of employment-income statements; five years were fetched in the CODEF development environment and checked against records downloaded from Hometax.',
     ],
     [
-      '세무사용 FINZ에서는 개발사가 완료했다고 보고한 작업 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며, 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었고, 기준시가가 비어 있는 필지가 경고 없이 세액 계산에서 빠져 세액이 적게 나오는 결함은 원인 코드 위치까지 찾아 1순위 수정 요청으로 넘겼습니다.',
-      'For FINZ for tax accountants, each of the 269 items the vendor reported as done was re-checked against code, tests and screens: 233 confirmed and 36 left open, plus 45 new defects. Two had to be fixed before launch (payment and plan locking), and for a defect where a parcel with no standard price was silently dropped from the tax and understated it, the exact code was traced and sent as the top fix request.',
+      '세무사용 FINZ에서는 개발사가 완료했다고 보고한 작업 269건을 코드·테스트·화면 근거로 하나씩 다시 확인해 233건을 확인하고 36건은 미완료로 남겼으며, 새 결함 45건을 찾았습니다. 그중 2건은 출시 전에 막아야 할 결함(결제·요금제 잠금)이었습니다.',
+      'For FINZ for tax accountants, each of the 269 items the vendor reported as done was re-checked against code, tests and screens: 233 confirmed and 36 left open, plus 45 new defects. Two had to be fixed before launch (payment and plan locking).',
     ],
     [
-      '문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 결과가 끊기는 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사가 상한을 8,000으로 올려 해결했습니다. CI에는 한 줄짜리 버그 7개를 심어 7개 모두 잡아내는 것을 확인했습니다.',
-      'In an OCR field test (11 document types, 17 files) the cut-off was traced to the output-token cap (1,200), which the vendor raised to 8,000 to fix it. Seven one-line bugs planted in CI were all caught.',
+      '문서 인식(OCR) 현장 시험(서류 11종, 17개 파일)에서 결과가 끊기는 원인을 출력 토큰 상한(1,200)으로 짚었고, 개발사가 상한을 8,000으로 올려 해결했습니다.',
+      'In an OCR field test (11 document types, 17 files) the cut-off was traced to the output-token cap (1,200), which the vendor raised to 8,000 to fix it.',
     ],
   ]),
   retro: pairs([
