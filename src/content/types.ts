@@ -239,8 +239,16 @@ export interface ResumeVariant {
   phone?: string
   /** Portrait path under public/; the page passes it only when the file exists on disk, and the file stays out of the repository */
   photo?: string
-  /** 자기 소개서 paragraphs (the last part) that follow the site's own intro paragraph */
+  /** The site's hero line in plain style, shown under the name */
+  tagline: L
+  /** The résumé's own opening paragraph in plain (~했다/~한다) style; the site keeps its 합니다체 intro */
+  intro: L
+  /** 자기소개서 paragraphs after the opening, plain style */
   summary: L[]
+  /** The job's 내용 row, nominal style */
+  work: { content: L }
+  /** Per main-project résumé text in nominal style, keyed by slug: 문제 해결 lines and 결과 lines */
+  projects: Record<string, { solve: L[]; results: L[] }>
   /** 지원 동기 paragraphs; only the submission copy has them */
   motivation?: L[]
   /** Names of the awards listed in full; the rest are counted */

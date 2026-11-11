@@ -191,7 +191,8 @@ describe('/resume', () => {
     expect(container.querySelector('.resume-apply')).toBeNull()
     expect(container.querySelector('.resume-name')).toHaveTextContent('허준영')
     expect(container.querySelector('.resume-badge')).toHaveTextContent('백엔드 중심 풀스택 개발자')
-    expect(container.querySelector('.resume-tagline')).toHaveTextContent('문제를 이해하는 것에서 시작해, 신뢰할 수 있는 결과로 완성합니다.')
+    expect(container.querySelector('.resume-tagline')).toHaveTextContent('문제를 이해하는 것에서 시작해, 신뢰할 수 있는 결과로 완성한다.')
+    expect(container.textContent).not.toMatch(/습니다|입니다|합니다/)
     expect([...container.querySelectorAll('.resume-contacts dt')].map((dt) => dt.textContent)).toEqual(['이메일', 'GitHub', '포트폴리오'])
     expect(container.querySelector('.resume-contacts')).toHaveTextContent('eric1889@naver.com')
     expect(container).not.toHaveTextContent('junyoung-dev-notes')
@@ -235,9 +236,10 @@ describe('/resume', () => {
       ['내용', '개발 환경', '문제 해결', '결과'],
     ])
     expect(entries.map((item) => item.querySelectorAll('.resume-solve').length)).toEqual([2, 2, 2])
-    expect(entries.map((item) => item.querySelectorAll('.resume-dashes li').length)).toEqual([5, 5, 5])
-    expect(entries[0].querySelector('.resume-solve')).toHaveTextContent('HTTP 200 응답에 포함된 공공 API 오류 처리 — 상태 코드만으로 API 성공 여부를 판단하기 어려웠습니다. → 공통 API 클라이언트에 본문 검사와 재시도 처리를 추가했습니다.')
-    expect(entries[0]).toHaveTextContent('흩어진 IT 자격증 정보를 한곳에서 늘 최신으로 볼 수 있게')
+    expect(entries.map((item) => item.querySelectorAll('.resume-dashes li').length)).toEqual([6, 6, 5])
+    expect(entries[0].querySelector('.resume-solve')).toHaveTextContent('HTTP 200 응답에 포함된 공공 API 오류 처리 — 상태 코드만으로 성공 여부 판단 불가 → 공통 API 클라이언트에 본문 검사와 재시도 추가')
+    expect(entries[0]).toHaveTextContent('공공데이터 API 7종을 하나의 자격증 데이터로 정규화, 스케줄러 자동 갱신으로 수동 갱신 제거')
+    expect(projectsPart.textContent).not.toMatch(/습니다|입니다/)
     expect([...projectsPart.querySelectorAll('.resume-repo')].map((a) => a.getAttribute('href'))).toEqual([
       'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
       'https://github.com/ERIC1889/pitches',
@@ -270,7 +272,7 @@ describe('/resume', () => {
       '웹 프로그래밍 멘토링 멘토 · 스터디 리더',
     ])
     expect(entries.slice(0, 6).every((row) => row.querySelectorAll('.resume-dashes li').length >= 2)).toBe(true)
-    expect(entries[2]).toHaveTextContent('학부 연구실 WebDB의 운영을 총괄')
+    expect(entries[2]).toHaveTextContent('학부 연구실 WebDB 운영 총괄')
     expect([...experiences.querySelectorAll('.resume-more strong')].map((el) => el.textContent)).toEqual(['외 11건', '외 7편'])
     expect(experiences.querySelector('.resume-subhead')).toHaveTextContent('논문')
     expect(entries[6]).toHaveTextContent('APIC-IST')
@@ -285,7 +287,9 @@ describe('/resume', () => {
     const paragraphs = [...intro.querySelectorAll('.resume-prose p')].map((el) => el.textContent ?? '')
     expect(paragraphs).toHaveLength(4)
     expect(paragraphs[0]).toContain('사용자의 요구를 기술적 해결책으로 구체화하고')
+    expect(paragraphs[0]).toMatch(/생각한다\.$/)
     expect(paragraphs[3]).toContain('프로젝트 17개, 학술대회 논문 7편(국제 1편 · 1저자 6편), 수상 13건')
+    expect(intro.textContent).not.toMatch(/습니다|입니다/)
     expect(intro.querySelector('.resume-motivation')).toBeNull()
   })
 
@@ -304,7 +308,8 @@ describe('/resume', () => {
       expect(container.querySelector('.resume-service')).toHaveTextContent('보충역 신규 편입 (테스트)')
       const motivation = container.querySelector('.resume-motivation') as HTMLElement
       expect(motivation.querySelector('h3')).toHaveTextContent('지원 동기')
-      expect(motivation).toHaveTextContent('당근에 지원하는 이유는 세 가지입니다')
+      expect(motivation).toHaveTextContent('당근에 지원하는 이유는 세 가지다')
+      expect(container.textContent).not.toMatch(/습니다|입니다|합니다/)
     } finally {
       delete process.env.RESUME_SERVICE_KO
       delete process.env.RESUME_PHONE

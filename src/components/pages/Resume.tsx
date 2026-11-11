@@ -157,7 +157,7 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               <span className="resume-name">{t(profile.name)}</span>
               <span className="resume-badge">{t(variant.role ?? profile.role)}</span>
             </h1>
-            <p className="resume-tagline">{t(profile.quote).replace('\n', ' ')}</p>
+            <p className="resume-tagline">{t(variant.tagline)}</p>
             <dl className="resume-contacts">
               {contacts.map((contact) => (
                 <div key={contact.kind}>
@@ -265,7 +265,7 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               title={t(job.org)}
               tags={[t(job.title), t(job.context), ...(site ? [<a key="site" href={site}>{host(site)}</a>] : [])]}
             >
-              {linked && <KV label={UI.resumeContent}>{t(linked.summary)}</KV>}
+              <KV label={UI.resumeContent}>{t(variant.work.content)}</KV>
               {linked && <KV label={UI.resumeEnv}>{(linked.resumeStack ?? linked.stack).join(' · ')}</KV>}
               <KV label={UI.resumeCareerResults}>
                 <Dashes items={job.responsibilities} />
@@ -277,12 +277,13 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
         <Section title={RESUME_SECTIONS.projects} tag={t({ ko: `${own.length}개`, en: `${own.length}` })}>
           {own.map((project) => {
             const repo = project.links?.find((link) => link.kind === 'code')?.href
-            const cases = (project.cases ?? []).slice(0, 2).flatMap((item) => {
+            const own = variant.projects[project.slug]
+            const solve = own?.solve ?? (project.cases ?? []).slice(0, 2).flatMap((item) => {
               const problem = leadOf(item.problem)
               const action = leadOf(item.action)
-              return problem && action ? [{ title: item.title, problem, action }] : []
+              return problem && action ? [{ ...item.title, ko: `${item.title.ko} — ${problem.ko} → ${action.ko}`, en: `${item.title.en} — ${problem.en} → ${action.en}` }] : []
             })
-            const results = (project.results ?? []).slice(0, 3)
+            const results = own?.results ?? (project.results ?? []).slice(0, 3)
             const tags = [project.team, project.role].flatMap((part) => (part ? [t(part)] : []))
             return (
               <Entry
@@ -294,14 +295,18 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               >
                 <KV label={UI.resumeContent}>{t(project.product ?? project.summary)}</KV>
                 <KV label={UI.resumeEnv}>{(project.resumeStack ?? project.stack).join(' · ')}</KV>
-                {cases.length > 0 && (
+                {solve.length > 0 && (
                   <KV label={UI.resumeSolve}>
                     <ul className="resume-dashes">
-                      {cases.map((item) => (
-                        <li key={item.title.ko} className="resume-solve">
-                          <strong>{t(item.title)}</strong> — {t(item.problem)} → {t(item.action)}
-                        </li>
-                      ))}
+                      {solve.map((item) => {
+                        const [title, rest] = t(item).split(' — ')
+                        return (
+                          <li key={item.ko} className="resume-solve">
+                            <strong>{title}</strong>
+                            {rest && ` — ${rest}`}
+                          </li>
+                        )
+                      })}
                     </ul>
                   </KV>
                 )}
@@ -376,7 +381,7 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
 
         <Section title={RESUME_SECTIONS.intro} newPage>
           <div className="resume-statement">
-            <Paragraphs items={[profile.intro, ...variant.summary]} />
+            <Paragraphs items={[variant.intro, ...variant.summary]} />
             {variant.motivation && variant.motivation.length > 0 && (
               <div className="resume-motivation">
                 <h3 className="resume-subhead">{t(UI.resumeMotivation)}</h3>
