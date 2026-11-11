@@ -1510,6 +1510,12 @@ a:hover {
   min-width: 0;
   word-break: keep-all;
 }
+.resume-kv .resume-dashes {
+  margin-top: 0;
+}
+.resume-kv + .resume-kv {
+  margin-top: 10px;
+}
 .resume-repo {
   font-family: var(--font-mono, ui-monospace, monospace);
 }
@@ -1999,6 +2005,9 @@ a:hover {
   .resume-kv {
     gap: 10pt;
     margin-top: 6pt;
+  }
+  .resume-kv + .resume-kv {
+    margin-top: 7pt;
   }
   .resume-kv-label {
     min-width: 54pt;

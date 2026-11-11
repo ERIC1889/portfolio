@@ -250,6 +250,8 @@ export interface ResumeVariant {
   topPapers: string[]
   /** Flat skill chips under the header */
   skills: string[]
+  /** The activities told in two or three lines each; the rest are counted. `name` matches `archive.activities[].name.ko` */
+  topActivities: { name: string; lines: L[] }[]
   /** 지원 분야 and the application date shown above the header; only the submission copy has it */
   applying?: { field: L; date?: string }
 }

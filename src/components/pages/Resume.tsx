@@ -118,7 +118,11 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
     (award) => award.date,
   )
   const papers = variant.topPapers.flatMap((title) => archive.papers.filter((paper) => paper.title === title))
-  const activities = newestFirst(archive.activities, (activity) => activity.period)
+  const activities = newestFirst(
+    variant.topActivities.flatMap((top) => archive.activities.filter((activity) => activity.name.ko === top.name).map((activity) => ({ ...activity, lines: top.lines }))),
+    (activity) => activity.period,
+  )
+  const moreActivities = archive.activities.length - activities.length
   const archiveUrl = `${siteUrl}/archive`
   const contacts = profile.contacts.filter((contact) => RESUME_CONTACTS.includes(contact.kind))
   const moreAwards = archive.awards.length - awards.length
@@ -261,9 +265,11 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               title={t(job.org)}
               tags={[t(job.title), t(job.context), ...(site ? [<a key="site" href={site}>{host(site)}</a>] : [])]}
             >
-              {linked && <p className="resume-entry-lead">{t(linked.summary)}</p>}
-              <Dashes items={job.responsibilities} />
+              {linked && <KV label={UI.resumeContent}>{t(linked.summary)}</KV>}
               {linked && <KV label={UI.resumeEnv}>{(linked.resumeStack ?? linked.stack).join(' · ')}</KV>}
+              <KV label={UI.resumeCareerResults}>
+                <Dashes items={job.responsibilities} />
+              </KV>
             </Entry>
           </Section>
         )}
@@ -271,10 +277,12 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
         <Section title={RESUME_SECTIONS.projects} tag={t({ ko: `${own.length}개`, en: `${own.length}` })}>
           {own.map((project) => {
             const repo = project.links?.find((link) => link.kind === 'code')?.href
-            const first = project.cases?.[0]
-            const problem = leadOf(first?.problem)
-            const action = leadOf(first?.action)
-            const results = project.resumeItems ?? (project.results ?? []).slice(0, 2)
+            const cases = (project.cases ?? []).slice(0, 2).flatMap((item) => {
+              const problem = leadOf(item.problem)
+              const action = leadOf(item.action)
+              return problem && action ? [{ title: item.title, problem, action }] : []
+            })
+            const results = (project.results ?? []).slice(0, 3)
             const tags = [project.team, project.role].flatMap((part) => (part ? [t(part)] : []))
             return (
               <Entry
@@ -284,16 +292,24 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
                 title={t(projectTitle(project))}
                 tags={[...tags, ...(repo ? [<a key="repo" href={repo} className="resume-repo">{host(repo)}</a>] : [])]}
               >
-                <p className="resume-entry-lead">{t(project.product ?? project.summary)}</p>
-                {first && problem && action && (
+                <KV label={UI.resumeContent}>{t(project.product ?? project.summary)}</KV>
+                <KV label={UI.resumeEnv}>{(project.resumeStack ?? project.stack).join(' · ')}</KV>
+                {cases.length > 0 && (
                   <KV label={UI.resumeSolve}>
-                    <span className="resume-solve">
-                      <strong>{t(first.title)}</strong> — {t(problem)} → {t(action)}
-                    </span>
+                    <ul className="resume-dashes">
+                      {cases.map((item) => (
+                        <li key={item.title.ko} className="resume-solve">
+                          <strong>{t(item.title)}</strong> — {t(item.problem)} → {t(item.action)}
+                        </li>
+                      ))}
+                    </ul>
                   </KV>
                 )}
-                <Dashes items={results} />
-                <KV label={UI.resumeEnv}>{(project.resumeStack ?? project.stack).join(' · ')}</KV>
+                {results.length > 0 && (
+                  <KV label={UI.resumeResult}>
+                    <Dashes items={results} />
+                  </KV>
+                )}
               </Entry>
             )
           })}
@@ -321,9 +337,18 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
         >
           {activities.map((activity) => (
             <Entry key={activity.name.ko} period={activity.period} title={t(activity.name)} tags={[t(activity.org)]} compact>
-              <p className="resume-entry-note">{t(activity.desc)}</p>
+              <Dashes items={activity.lines} />
             </Entry>
           ))}
+          {moreActivities > 0 && (
+            <p className="resume-more">
+              <strong>{t({ ko: `외 ${moreActivities}건`, en: `and ${moreActivities} more` })}</strong>
+              <span className="muted">
+                {' · '}
+                <a href={archiveUrl}>{host(archiveUrl)}</a>
+              </span>
+            </p>
+          )}
           <h3 className="resume-subhead">
             {t(UI.resumePaperList)}
             <span className="resume-section-tag">

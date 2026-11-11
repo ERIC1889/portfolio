@@ -45,7 +45,47 @@ const TOP_PAPERS = [
 /** Skill chips, the tools that appear in the entries below */
 const SKILLS = ['TypeScript', 'Node.js', 'Next.js', 'Express', 'Fastify', 'Python', 'FastAPI', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'BullMQ', 'OpenAI API', 'Whisper', 'ONNX Runtime', 'PyTorch', 'Vitest', 'pytest', 'Docker', 'Expo']
 
-export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS, skills: SKILLS }
+/** Six activities with what was done, in the site's own facts; the other eleven are counted */
+const TOP_ACTIVITIES: ResumeVariant['topActivities'] = [
+  {
+    name: 'WebDB 랩장',
+    lines: [k('학부 연구실 WebDB의 운영을 총괄', 'Ran the WebDB undergraduate lab'), k('연구실 프로젝트의 기획과 관리를 맡음', 'Planned and managed the lab’s projects')],
+  },
+  {
+    name: 'AID 랩실 학부 연구생',
+    lines: [
+      k('대학원 연구실의 학부 연구생으로 LLM 서비스 연구에 참여', 'Undergraduate researcher in a graduate lab, working on LLM services'),
+      k('시니어 정신건강 검사 음성 챗봇 Label Light 연구 — 1저자 논문과 논문경진대회 동상으로 이어짐', 'The Label Light research, a voice chatbot for senior mental-health screening, led to a first-author paper and a Bronze Award'),
+    ],
+  },
+  {
+    name: '오픈소스 개발자대회',
+    lines: [
+      k('모의 면접 서비스 InnoView 초안을 팀으로 만들어 출품 — 백엔드·프론트엔드·AI 모델 담당', 'Built and entered the first version of InnoView, a mock-interview service, as a team — backend, frontend and AI models'),
+      k('이후 혼자 리뉴얼해 직무별 면접을 더함 (2025.10–12)', 'Later renewed it alone and added role-based interviews (Oct–Dec 2025)'),
+    ],
+  },
+  {
+    name: '한신대 AI 면접 특강 진행',
+    lines: [
+      k('AI 면접 서비스 InnoView를 소개하는 특강 2회 진행, 학생들이 직접 사용', 'Gave two workshops introducing InnoView, an AI interview service, which the students tried themselves'),
+      k('이어서 한신대 쏘랩에서 시연 (2025.11.11)', 'Followed by a demo at Hanshin SoLab (11 Nov 2025)'),
+    ],
+  },
+  {
+    name: 'SW 인재 페스티벌',
+    lines: [k('학교 대표로 부스 운영과 작품 출품', 'Ran a booth and exhibited a project as a Hanshin University representative'), k('타 대학 학생들과 교류', 'Met students from other universities')],
+  },
+  {
+    name: '웹 프로그래밍 멘토링 멘토 · 스터디 리더',
+    lines: [
+      k('교내 멘토링 프로그램의 멘토로 세 학기 참여', 'Mentor in the campus mentoring program for three terms'),
+      k('웹 프로그래밍 스터디를 이끌며 후배들의 웹 개발 학습을 지원', 'Led a web programming study group and helped junior students learn web development'),
+    ],
+  },
+]
+
+export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS, skills: SKILLS, topActivities: TOP_ACTIVITIES }
 
 /** The submission copy for 당근: a backend title, the 지원 동기 paragraph and the 병역·입사 line, which stays out of the public site and the repository */
 export function daangnVariant(service?: L, phone?: string, applyDate?: string): ResumeVariant {
@@ -60,5 +100,6 @@ export function daangnVariant(service?: L, phone?: string, applyDate?: string): 
     topAwards: TOP_AWARDS,
     topPapers: TOP_PAPERS,
     skills: SKILLS,
+    topActivities: TOP_ACTIVITIES,
   }
 }

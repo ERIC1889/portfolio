@@ -218,19 +218,26 @@ describe('/resume', () => {
     expect(career.querySelector('.resume-entry-title strong')).toHaveTextContent('주식회사 Finz Labs (finz.kr)')
     expect(career).toHaveTextContent('개발 총괄')
     expect(career).toHaveTextContent('www.finz.kr')
+    expect([...career.querySelectorAll('.resume-kv-label')].map((el) => el.textContent)).toEqual(['내용', '개발 환경', '결과 및 성과'])
     expect(career.querySelectorAll('.resume-dashes li')).toHaveLength(5)
     expect(career).toHaveTextContent('배포 9번 연속 실패 원인 재현')
-    expect(career.querySelector('.resume-kv')).toHaveTextContent('개발 환경')
   })
 
-  it('tells each main project with a lead, one problem and how it was solved, two result lines and the stack', () => {
+  it('tells each main project in four labelled rows: what it is, the stack, two problems with how they were solved, and three results', () => {
     const { container } = renderWithProviders(<ResumePage />)
     const projectsPart = sectionNamed(container, '대표 프로젝트')
     const entries = [...projectsPart.querySelectorAll('.resume-entry')]
     expect(entries.map((item) => item.querySelector('.resume-entry-title strong')?.textContent)).toEqual(['SkillPilot 자격증·커리어 플랫폼', 'Pitches 발표 코칭', 'ClosetMate 옷장·코디 추천 앱'])
     expect(entries.map((item) => item.querySelector('.resume-entry-sub')?.textContent)).toEqual(['캡스톤 완료', '2026 리뉴얼 구현', '미출시'])
-    expect(entries.map((item) => item.querySelectorAll('.resume-dashes li').length)).toEqual([2, 2, 2])
+    expect(entries.map((item) => [...item.querySelectorAll('.resume-kv-label')].map((el) => el.textContent))).toEqual([
+      ['내용', '개발 환경', '문제 해결', '결과'],
+      ['내용', '개발 환경', '문제 해결', '결과'],
+      ['내용', '개발 환경', '문제 해결', '결과'],
+    ])
+    expect(entries.map((item) => item.querySelectorAll('.resume-solve').length)).toEqual([2, 2, 2])
+    expect(entries.map((item) => item.querySelectorAll('.resume-dashes li').length)).toEqual([5, 5, 5])
     expect(entries[0].querySelector('.resume-solve')).toHaveTextContent('HTTP 200 응답에 포함된 공공 API 오류 처리 — 상태 코드만으로 API 성공 여부를 판단하기 어려웠습니다. → 공통 API 클라이언트에 본문 검사와 재시도 처리를 추가했습니다.')
+    expect(entries[0]).toHaveTextContent('흩어진 IT 자격증 정보를 한곳에서 늘 최신으로 볼 수 있게')
     expect([...projectsPart.querySelectorAll('.resume-repo')].map((a) => a.getAttribute('href'))).toEqual([
       'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
       'https://github.com/ERIC1889/pitches',
@@ -240,7 +247,7 @@ describe('/resume', () => {
     expect(container).not.toHaveTextContent('EduMatrix —')
   })
 
-  it('lists five awards and three papers in full with the rest counted, and every activity with what was done', () => {
+  it('lists five awards, six activities with two or three lines each and three papers in full, with the rest counted', () => {
     const { container } = renderWithProviders(<ResumePage />)
     const awards = sectionNamed(container, '수상')
     const awardEntries = [...awards.querySelectorAll('.resume-entry')]
@@ -253,14 +260,21 @@ describe('/resume', () => {
     const experiences = sectionNamed(container, '경험/활동/교육')
     expect(experiences.querySelector('.resume-section-tag')).toHaveTextContent('총 17건 · 논문 10편')
     const entries = [...experiences.querySelectorAll('.resume-entry')]
-    expect(entries).toHaveLength(20)
-    expect(entries[0]).toHaveTextContent('CES 2026 참관')
-    expect(entries[0].querySelector('.resume-entry-note')).toHaveTextContent('라스베이거스')
-    expect(entries.slice(0, 17).every((row) => (row.querySelector('.resume-entry-note')?.textContent ?? '').length > 0)).toBe(true)
+    expect(entries).toHaveLength(9)
+    expect(entries.slice(0, 6).map((row) => row.querySelector('.resume-entry-title strong')?.textContent)).toEqual([
+      '한신대 AI 면접 특강 진행',
+      '오픈소스 개발자대회',
+      'WebDB 랩장',
+      'SW 인재 페스티벌',
+      'AID 랩실 학부 연구생',
+      '웹 프로그래밍 멘토링 멘토 · 스터디 리더',
+    ])
+    expect(entries.slice(0, 6).every((row) => row.querySelectorAll('.resume-dashes li').length >= 2)).toBe(true)
+    expect(entries[2]).toHaveTextContent('학부 연구실 WebDB의 운영을 총괄')
+    expect([...experiences.querySelectorAll('.resume-more strong')].map((el) => el.textContent)).toEqual(['외 11건', '외 7편'])
     expect(experiences.querySelector('.resume-subhead')).toHaveTextContent('논문')
-    expect(entries[17]).toHaveTextContent('APIC-IST')
-    expect(entries[17]).toHaveTextContent('제2저자')
-    expect(experiences.querySelector('.resume-more strong')).toHaveTextContent('외 7편')
+    expect(entries[6]).toHaveTextContent('APIC-IST')
+    expect(entries[6]).toHaveTextContent('제2저자')
     expect(container).not.toHaveTextContent('컴세바')
   })
 
