@@ -34,12 +34,25 @@ const SKILLS: ResumeVariant['skills'] = [
   { area: k('도구', 'Tools'), items: ['Vitest', 'pytest', 'GitHub Actions', 'Vercel', 'Expo', 'Docker'] },
 ]
 
-/** Organisation experience that is not developer work but shows how the owner works with people */
-const OTHER = ['웹 프로그래밍 멘토링 멘토 · 스터디 리더', '오산시 해커톤 대회 멘토', '어학 연수']
+/** Five awards shown in full, newest first on the page; the other eight are counted */
+const TOP_AWARDS = [
+  '2026년 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회 우수상',
+  '2025년도 추계종합학술대회 및 대학생 논문경진대회 은상',
+  '2025 한신 AISW 페스티벌 캡스톤 디자인 부문 특별상',
+  'SW중심대학 AI 창업 아이디어 경진대회 특별상',
+  '캡스톤 디자인 및 AI 해커톤 대상(1등)',
+]
 
-export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, skills: SKILLS, otherExperiences: OTHER }
+/** Three papers shown in full: the international one, the newest first-author one and the award-winning EduMatrix paper */
+const TOP_PAPERS = [
+  'Pitches: Real-Time Presentation Coaching with Low-Latency Speech Analysis and Generative AI',
+  'LLM을 활용한 실시간 회의 인지·감성 분석 웹 시스템의 설계 및 구현',
+  '개인 맞춤형 AI 학습 비서 시스템: EduMatrix 설계 및 제작',
+]
+
+export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, skills: SKILLS, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
 
 /** The submission copy for 당근: a backend title, the 지원 동기 paragraph and the 병역·입사 line, which stays out of the public site and the repository */
 export function daangnVariant(service?: L, phone?: string): ResumeVariant {
-  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, motivation: MOTIVATION, skills: SKILLS, otherExperiences: OTHER }
+  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, motivation: MOTIVATION, skills: SKILLS, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
 }

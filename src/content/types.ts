@@ -240,14 +240,16 @@ export interface ResumeVariant {
   phone?: string
   /** Portrait path under public/; the page passes it only when the file exists on disk, and the file stays out of the repository */
   photo?: string
-  /** 자기 소개 paragraphs that follow the site's own intro paragraph */
+  /** 자기 소개서 paragraphs (the last part) that follow the site's own intro paragraph */
   summary: L[]
   /** 지원 동기 paragraphs; only the submission copy has them */
   motivation?: L[]
   /** Bare tool lists; what each tool was used for is in the bullets below them */
   skills: { area: L; items: string[] }[]
-  /** Names of archive activities shown under 기타 경력 및 경험 instead of 직무 관련 활동 */
-  otherExperiences: string[]
+  /** Names of the awards listed in full; the rest are counted */
+  topAwards: string[]
+  /** Titles of the papers listed in full; the rest are counted */
+  topPapers: string[]
 }
 
 export interface Profile {
