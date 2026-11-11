@@ -1959,11 +1959,23 @@ a:hover {
   .resume-section-tag {
     font-size: 10.5pt;
   }
+  /* Blocks fragment across pages where a grid will not: the period floats left and the body flows beside it */
   .resume-entry {
-    grid-template-columns: 112pt minmax(0, 1fr);
-    gap: 0 14pt;
+    display: block;
     padding: 11pt 0;
     border-bottom-color: #e5e7eb;
+  }
+  .resume-entry::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .resume-entry-period {
+    float: left;
+    width: 112pt;
+  }
+  .resume-entry-body {
+    margin-left: 126pt;
   }
   .resume-entry.is-compact {
     padding: 8pt 0;
@@ -2007,7 +2019,9 @@ a:hover {
   }
   .resume-kv {
     margin-top: 6pt;
-    break-inside: avoid;
+  }
+  .resume-kv-value {
+    box-decoration-break: slice;
   }
   .resume-kv + .resume-kv {
     margin-top: 7pt;
