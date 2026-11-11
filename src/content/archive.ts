@@ -306,38 +306,38 @@ export const archive: Archive = {
   skills: [
     {
       area: k('웹·API', 'Web · API'),
-      items: ['TypeScript', 'Next.js', 'Node.js · Express'],
-      did: k('세금 계산기 화면과 API, 시세·환율 데이터 연동과 대체 조회, 공공 API 7종 정규화', 'Tax calculator screens and APIs, market-data integration with fallbacks, normalizing 7 public APIs'),
-    },
-    {
-      area: k('Python 백엔드', 'Python backend'),
-      items: ['Python', 'FastAPI', 'pytest'],
-      did: k('간편인증 상태 흐름, 서버 권한·결제 검증, 계산 엔진 검증 테스트', 'Simple-auth state flow, server-side permission and payment checks, tests that verify the calculation engine'),
-    },
-    {
-      area: k('데이터', 'Data'),
-      items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis'],
-      did: k('정형 데이터와 AI 결과 분리 저장, 같은 요청의 AI 결과 재사용, 확정된 시세·환율만 캐시', 'Structured data and AI results stored apart, reuse of AI results for the same request, caching only settled prices and rates'),
-    },
-    {
-      area: k('비동기·배치', 'Async · batch'),
-      items: ['Celery', 'BullMQ', 'node-cron'],
+      items: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js · Express'],
       did: k(
-        '실거래가 주간 동기화와 재시도(Celery Beat), 발표 후 분석 작업 큐(BullMQ), 공공 데이터 주기 동기화(node-cron)',
-        'Weekly price syncing with retries (Celery Beat), a post-talk analysis job queue (BullMQ), periodic public-data syncing (node-cron)',
+        '세금 계산기 화면과 API, 시세·환율 데이터 연동과 대체 조회, 공공 API 7종 정규화, 공통 컴포넌트 기반 화면 개편',
+        'Tax calculator screens and APIs, market-data integration with fallbacks, normalizing 7 public APIs, a screen overhaul on shared components',
       ),
     },
     {
+      area: k('Python 백엔드', 'Python backend'),
+      items: ['Python', 'FastAPI'],
+      did: k('간편인증 상태 흐름, 서버 권한·결제 검증, 세금 계산 엔진', 'Simple-auth state flow, server-side permission and payment checks, the tax calculation engine'),
+    },
+    {
+      area: k('데이터', 'Data'),
+      items: ['MySQL', 'PostgreSQL', 'MongoDB'],
+      did: k('정형 데이터와 AI 결과 분리 저장, 같은 요청의 AI 결과 재사용, 확정된 시세·환율만 캐시', 'Structured data and AI results stored apart, reuse of AI results for the same request, caching only settled prices and rates'),
+    },
+    {
+      area: k('실시간·배치', 'Realtime · batch'),
+      items: ['Fastify · Socket.IO', 'node-cron'],
+      did: k('발표 음성 스트리밍과 5초 단위 판정(Fastify · Socket.IO), 공공 데이터 주기 동기화(node-cron)', 'Streaming talk audio with a judgment every 5 seconds (Fastify · Socket.IO), periodic public-data syncing (node-cron)'),
+    },
+    {
       area: k('AI 응용', 'Applied AI'),
-      items: ['OpenAI API', 'Whisper', 'ONNX Runtime', 'PyTorch'],
+      items: ['OpenAI API', 'Whisper', 'PyTorch'],
       did: k('LLM 응답을 서버에서 검증, 음성 입력, 이미지 분류 모델 학습과 서버 추론', 'Checking LLM responses on the server, voice input, training an image classifier and serving it'),
     },
     {
-      area: k('검증·배포', 'Testing · delivery'),
-      items: ['Vitest', 'pytest', 'GitHub Actions', 'Vercel'],
+      area: k('실행·배포', 'Delivery'),
+      items: ['Expo', 'Docker', 'GitHub Actions', 'Vercel'],
       did: k(
-        '기준값 대조 스크립트, push마다 도는 보안 테스트(GitHub Actions), 이 사이트의 콘텐츠 검증 테스트와 Vercel 배포',
-        'Expected-value comparison scripts, security tests on every push (GitHub Actions), content checks for this site and Vercel deploys',
+        'Finz · Pitches · ClosetMate 모바일 앱(Expo), 로컬·Docker 실행, push마다 도는 보안 테스트(GitHub Actions), 이 사이트의 콘텐츠 검증 테스트와 Vercel 배포',
+        'The Finz, Pitches and ClosetMate mobile apps (Expo), local and Docker runs, security tests on every push (GitHub Actions), content checks for this site and Vercel deploys',
       ),
     },
   ],

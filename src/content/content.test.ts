@@ -166,7 +166,7 @@ describe('archive', () => {
   })
 
   it('groups skills into six areas, each naming its tools and what was done with them', () => {
-    expect(archive.skills.map((row) => row.area.ko)).toEqual(['웹·API', 'Python 백엔드', '데이터', '비동기·배치', 'AI 응용', '검증·배포'])
+    expect(archive.skills.map((row) => row.area.ko)).toEqual(['웹·API', 'Python 백엔드', '데이터', '실시간·배치', 'AI 응용', '실행·배포'])
     for (const row of archive.skills) {
       expect(row.items.length, row.area.ko).toBeGreaterThan(0)
       expect(row.did.ko.trim(), row.area.ko).not.toBe('')

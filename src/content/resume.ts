@@ -121,7 +121,7 @@ const TOP_PAPERS = [
 ]
 
 /** Skill chips, the tools that appear in the entries below */
-const SKILLS = ['TypeScript', 'Node.js', 'Next.js', 'Express', 'Fastify', 'Python', 'FastAPI', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'BullMQ', 'OpenAI API', 'Whisper', 'ONNX Runtime', 'PyTorch', 'Vitest', 'pytest', 'Docker', 'Expo']
+const SKILLS = ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Next.js', 'Express', 'Fastify', 'Python', 'FastAPI', 'PostgreSQL', 'MySQL', 'MongoDB', 'OpenAI API', 'Whisper', 'PyTorch', 'Docker', 'Expo']
 
 /** Six activities with what was done (the user's wording); the other eleven are counted */
 const TOP_ACTIVITIES: ResumeVariant['topActivities'] = [
