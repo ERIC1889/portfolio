@@ -64,7 +64,7 @@ describe('checkLinks', () => {
     'https://www.finz.kr/personal/property',
     'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot/blob/main/SkillPilot-backend/src/integrations/dataGoKr/client.js',
     'https://github.com/ERIC1889/portfolio',
-    'https://junyoung-dev-notes.vercel.app/posts/1',
+    'https://github.com/ERIC1889/pitches/tree/main/apps/api',
     'https://github.com/ERIC1889',
     'https://www.linkedin.com/in/%EC%A4%80%EC%98%81-%ED%97%88-8142a130a/',
     'mailto:eric1889@naver.com',

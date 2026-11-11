@@ -13,8 +13,8 @@ const SUMMARY: L[] = [
     'Checking has taken longer than building. Before calling anything done I decide what will confirm it, and external data and AI output are doubted and checked on the receiving side. I use Claude Code, Codex and Antigravity every day in separate roles, but what to build and whether the result is right are mine to decide and verify, and I answer for what ships.',
   ),
   k(
-    '학부에서는 WebDB 랩장과 AID 랩 학부 연구생으로 지내며 프로젝트 18개, 학술대회 논문 7편(국제 1편 · 1저자 6편), 수상 13건을 쌓았습니다. 넓게 벌린 만큼 깊이가 고르지 않다는 것을 알고, 지금은 대표작을 정해 실패 복구까지 완성하는 방식으로 고치고 있습니다.',
-    'At university, as lead of the WebDB lab and an undergraduate researcher at the AID lab, I built up 18 projects, 7 conference papers (1 international, 6 as first author) and 13 awards. Spreading that wide left the depth uneven, so I now pick a flagship and finish it through to failure recovery.',
+    '학부에서는 WebDB 랩장과 AID 랩 학부 연구생으로 지내며 프로젝트 17개, 학술대회 논문 7편(국제 1편 · 1저자 6편), 수상 13건을 쌓았습니다. 넓게 벌린 만큼 깊이가 고르지 않다는 것을 알고, 지금은 대표작을 정해 실패 복구까지 완성하는 방식으로 고치고 있습니다.',
+    'At university, as lead of the WebDB lab and an undergraduate researcher at the AID lab, I built up 17 projects, 7 conference papers (1 international, 6 as first author) and 13 awards. Spreading that wide left the depth uneven, so I now pick a flagship and finish it through to failure recovery.',
   ),
 ]
 

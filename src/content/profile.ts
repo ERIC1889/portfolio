@@ -18,6 +18,5 @@ export const profile: Profile = {
       value: 'LinkedIn',
       href: 'https://www.linkedin.com/in/%EC%A4%80%EC%98%81-%ED%97%88-8142a130a/',
     },
-    { kind: 'blog', label: { ko: '기술 블로그', en: 'Tech blog' }, value: 'junyoung-dev-notes.vercel.app', href: 'https://junyoung-dev-notes.vercel.app' },
   ],
 }

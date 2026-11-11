@@ -56,11 +56,10 @@ describe('profile', () => {
   })
 
   it('lists email and professional profiles only — no phone, no address', () => {
-    expect(profile.contacts.map((c) => c.kind)).toEqual(['email', 'github', 'linkedin', 'blog'])
+    expect(profile.contacts.map((c) => c.kind)).toEqual(['email', 'github', 'linkedin'])
     const href = (kind: string) => profile.contacts.find((c) => c.kind === kind)?.href
     expect(href('email')).toBe('mailto:eric1889@naver.com')
     expect(href('github')).toBe('https://github.com/ERIC1889')
-    expect(href('blog')).toBe('https://junyoung-dev-notes.vercel.app')
     expect(textOf(profile)).not.toMatch(/서초|주소|address/i)
   })
 

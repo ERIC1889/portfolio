@@ -207,7 +207,6 @@ export interface AiWork {
   flow: { step: L; who: L }[]
   cards: { title: L; body: L }[]
   example: { text: L; figure: L; href: string }
-  blog: { label: L; href: string }
 }
 
 export interface Stat {
@@ -224,7 +223,7 @@ export interface Chapter {
 }
 
 export interface Contact {
-  kind: 'email' | 'github' | 'linkedin' | 'blog'
+  kind: 'email' | 'github' | 'linkedin'
   label: L
   value: string
   href: string

@@ -51,8 +51,4 @@ export const aiWork: AiWork = {
     figure: k('휴대폰 인증 5번 → 1번 · 조회 연도 1개 → 5개', 'Phone approvals 5 → 1 · years fetched 1 → 5'),
     href: '/projects/finz#refund-app',
   },
-  blog: {
-    label: k('AI 도구를 개발 과정에 안전하게 붙이는 법 (기술 블로그)', 'Attaching AI tools safely to the development process (tech blog)'),
-    href: 'https://junyoung-dev-notes.vercel.app/posts/ai-tools-in-the-workflow',
-  },
 }

@@ -47,7 +47,6 @@ export const checkEn = (content: unknown) => checkLang(content, 'en')
 const ALLOWED_DOMAIN_PREFIXES = [
   'https://finz.kr',
   'https://www.finz.kr',
-  'https://junyoung-dev-notes.vercel.app',
   'https://github.com/Hanshin-OSS-Hub/capstone25-skillpilot',
   'https://github.com/ERIC1889/portfolio',
   'https://github.com/ERIC1889/pitches',

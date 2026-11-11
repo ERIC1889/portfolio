@@ -133,7 +133,7 @@ describe('/archive', () => {
   it('opens with the record in four numbers and links to each part', () => {
     renderWithProviders(<ArchivePage />)
     const stats = document.querySelector('.stat-tiles') as HTMLElement
-    expect([...stats.querySelectorAll('.stat-value')].map((v) => v.textContent)).toEqual(['18', '7', '13', '17'])
+    expect([...stats.querySelectorAll('.stat-value')].map((v) => v.textContent)).toEqual(['17', '7', '13', '17'])
     const jump = screen.getByRole('navigation', { name: '기록 바로가기' })
     expect(within(jump).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#projects', '#papers', '#awards', '#background', '#activities'])
   })
@@ -142,7 +142,7 @@ describe('/archive', () => {
     renderWithProviders(<ArchivePage />)
     const list = document.getElementById('projects') as HTMLElement
     expect(within(list).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['2026', '2025', '2024', '2023'])
-    expect(within(list).getAllByRole('listitem')).toHaveLength(18)
+    expect(within(list).getAllByRole('listitem')).toHaveLength(17)
     const closetmate = within(list).getByText('ClosetMate').closest('li') as HTMLElement
     expect(within(closetmate).getByRole('link', { name: /자세히 보기/ })).toHaveAttribute('href', '/projects/closetmate')
   })
@@ -285,7 +285,7 @@ describe('/resume', () => {
     const paragraphs = [...intro.querySelectorAll('.resume-prose p')].map((el) => el.textContent ?? '')
     expect(paragraphs).toHaveLength(4)
     expect(paragraphs[0]).toContain('사용자의 요구를 기술적 해결책으로 구체화하고')
-    expect(paragraphs[3]).toContain('프로젝트 18개, 학술대회 논문 7편(국제 1편 · 1저자 6편), 수상 13건')
+    expect(paragraphs[3]).toContain('프로젝트 17개, 학술대회 논문 7편(국제 1편 · 1저자 6편), 수상 13건')
     expect(intro.querySelector('.resume-motivation')).toBeNull()
   })
 

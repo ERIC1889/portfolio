@@ -93,7 +93,7 @@ describe('home page (real content)', () => {
     ])
   })
 
-  it('explains how I work with AI: three tools, a six-step flow, three cards, the simple-authentication case and the blog post', () => {
+  it('explains how I work with AI: three tools, a six-step flow, three cards and the simple-authentication case', () => {
     renderWithProviders(<Home />)
     const ai = sectionOf('AI와 일하는 방식')
     expect(ai).toHaveTextContent('Claude Code · Codex · Antigravity를 거의 매일')
@@ -104,7 +104,7 @@ describe('home page (real content)', () => {
     expect(ai).toHaveTextContent('설명할 수 없는 코드는 제 이름으로 내보내지 않습니다')
     expect(within(ai).getByRole('link', { name: /사례 보기/ })).toHaveAttribute('href', '/projects/finz#refund-app')
     expect(ai).toHaveTextContent('휴대폰 인증 5번 → 1번')
-    expect(within(ai).getByRole('link', { name: /기술 블로그/ })).toHaveAttribute('href', 'https://junyoung-dev-notes.vercel.app/posts/ai-tools-in-the-workflow')
+    expect(within(ai).queryByRole('link', { name: /블로그/ })).toBeNull()
     expect(ai).not.toHaveTextContent('165')
   })
 
@@ -113,7 +113,7 @@ describe('home page (real content)', () => {
     const supporting = sectionOf('보조 프로젝트')
     expect(within(supporting).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['EduMatrix', 'InnoView', 'Label Light'])
     expect([...supporting.querySelectorAll('.project-row h4.label')].map((h) => h.textContent)).toEqual(['주요 성과', '주요 성과', '주요 성과'])
-    expect(within(supporting).getByRole('link', { name: /프로젝트 18개 모두 보기/ })).toHaveAttribute('href', '/archive#projects')
+    expect(within(supporting).getByRole('link', { name: /프로젝트 17개 모두 보기/ })).toHaveAttribute('href', '/archive#projects')
     expect(screen.queryByRole('heading', { name: '그 밖의 프로젝트' })).toBeNull()
     expect(screen.queryByText('Media Pulse')).toBeNull()
   })
@@ -123,7 +123,7 @@ describe('home page (real content)', () => {
     const record = sectionOf('수상과 활동')
     const stats = within(record).getByLabelText('기록 요약')
     expect([...stats.querySelectorAll('.stat')].map((s) => [s.querySelector('dt')?.textContent, s.querySelector('.stat-value')?.textContent])).toEqual([
-      ['프로젝트', '18'],
+      ['프로젝트', '17'],
       ['학술대회 논문', '7'],
       ['수상', '13'],
     ])
@@ -149,7 +149,6 @@ describe('home page (real content)', () => {
       'mailto:eric1889@naver.com',
       'https://github.com/ERIC1889',
       'https://www.linkedin.com/in/%EC%A4%80%EC%98%81-%ED%97%88-8142a130a/',
-      'https://junyoung-dev-notes.vercel.app',
     ])
     expect(document.querySelector('a[href^="tel:"]')).toBeNull()
   })

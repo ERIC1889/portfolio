@@ -53,11 +53,6 @@ export function AiSection({ ai }: { ai: AiWork }) {
           <p className="mono ai-figure">{t(ai.example.figure)}</p>
         </div>
 
-        <p className="more-link">
-          <a href={ai.blog.href} target="_blank" rel="noopener noreferrer">
-            {t(ai.blog.label)} <span aria-hidden="true">↗</span>
-          </a>
-        </p>
       </div>
     </section>
   )

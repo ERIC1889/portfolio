@@ -9,7 +9,6 @@ import { HOME_IDS, UI } from '@/content/ui'
 export function Intro({ profile }: { profile: Profile }) {
   const { t } = useLang()
   const github = profile.contacts.find((c) => c.kind === 'github')
-  const blog = profile.contacts.find((c) => c.kind === 'blog')
   return (
     <section className="intro" aria-labelledby="intro-name">
       <div className="wrap">
@@ -38,11 +37,6 @@ export function Intro({ profile }: { profile: Profile }) {
           {github && (
             <a href={github.href} className="btn" target="_blank" rel="noopener noreferrer">
               GitHub <span aria-hidden="true">↗</span>
-            </a>
-          )}
-          {blog && (
-            <a href={blog.href} className="btn" target="_blank" rel="noopener noreferrer">
-              {t(UI.blog)} <span aria-hidden="true">↗</span>
             </a>
           )}
         </div>

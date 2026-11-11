@@ -36,7 +36,6 @@ const PLACEMENT = [
   ['restplanner', 'card', undefined, [2025]],
   ['ai-hiring-textmining', 'card', undefined, [2026]],
   ['jarvis', 'card', undefined, [2026]],
-  ['dev-blog', 'card', undefined, [2026]],
   ['llm-dolbom', 'line', undefined, [2024]],
   ['patentry', 'line', undefined, [2024]],
   ['dreamtrack', 'line', undefined, [2025]],

@@ -192,7 +192,6 @@ export const UI = {
   ctaWork: { ko: '실무 경험 보기', en: 'See the work experience' },
   ctaProjects: { ko: '대표 프로젝트 보기', en: 'See the main projects' },
   ctaResume: { ko: '이력서', en: 'Résumé' },
-  blog: { ko: '기술 블로그', en: 'Tech blog' },
   details: { ko: '자세히 보기', en: 'Read the case study' },
   workDetails: { ko: '실무 상세 보기', en: 'See the work in detail' },
   stack: { ko: '기술', en: 'Stack' },

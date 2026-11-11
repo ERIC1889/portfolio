@@ -97,21 +97,6 @@ export const others: Project[] = [
     ),
   },
   {
-    slug: 'dev-blog',
-    name: '개발 블로그',
-    nameEn: 'Dev Blog',
-    years: [2026],
-    tier: 'card',
-    period: '2026.05–2026.09',
-    team: k('개인', 'Solo'),
-    stack: ['Next.js 16', 'MDX', 'Keystatic', 'Vercel'],
-    summary: k(
-      '배운 것을 글로 남기는 기술 블로그. 글 메타데이터가 틀리면 빌드 전에 zod 검사로 멈추게 했습니다.',
-      'A tech blog where I write down what I learn. Wrong post metadata stops the build through a zod check before it ships.',
-    ),
-    links: [{ kind: 'site', label: k('junyoung-dev-notes.vercel.app', 'junyoung-dev-notes.vercel.app'), href: 'https://junyoung-dev-notes.vercel.app' }],
-  },
-  {
     slug: 'llm-dolbom',
     name: 'LLM 디지털 돌봄',
     nameEn: 'LLM Digital Care',

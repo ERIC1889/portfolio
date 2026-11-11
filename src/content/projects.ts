@@ -6,7 +6,7 @@ import { skillpilot } from './cases/skillpilot'
 import { edumatrix, innoview, labelLight } from './cases/supporting'
 import type { Project } from './types'
 
-const [wildfire, restplanner, aiHiringTextmining, jarvis, devBlog, llmDolbom, patentry, dreamtrack, teamflow, unifit] = others
+const [wildfire, restplanner, aiHiringTextmining, jarvis, llmDolbom, patentry, dreamtrack, teamflow, unifit] = others
 
 export const projects: Project[] = [
   finz,
@@ -21,7 +21,6 @@ export const projects: Project[] = [
   restplanner,
   aiHiringTextmining,
   jarvis,
-  devBlog,
   llmDolbom,
   patentry,
   dreamtrack,
