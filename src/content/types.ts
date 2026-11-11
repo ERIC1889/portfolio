@@ -248,6 +248,10 @@ export interface ResumeVariant {
   topAwards: string[]
   /** Titles of the papers listed in full; the rest are counted */
   topPapers: string[]
+  /** Flat skill chips under the header */
+  skills: string[]
+  /** 지원 분야 and the application date shown above the header; only the submission copy has it */
+  applying?: { field: L; date?: string }
 }
 
 export interface Profile {

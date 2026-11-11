@@ -12,5 +12,5 @@ export default function DaangnResumePage() {
   if (process.env.NODE_ENV === 'production') notFound()
   const ko = process.env.RESUME_SERVICE_KO
   const service = ko ? { ko, en: process.env.RESUME_SERVICE_EN ?? ko } : undefined
-  return <Resume profile={profile} archive={archive} projects={projects} siteUrl={SITE_URL} variant={{ ...daangnVariant(service, process.env.RESUME_PHONE || undefined), photo: resumePhoto() }} />
+  return <Resume profile={profile} archive={archive} projects={projects} siteUrl={SITE_URL} variant={{ ...daangnVariant(service, process.env.RESUME_PHONE || undefined, process.env.RESUME_APPLY_DATE || undefined), photo: resumePhoto() }} />
 }

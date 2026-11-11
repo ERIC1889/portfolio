@@ -42,9 +42,23 @@ const TOP_PAPERS = [
   '개인 맞춤형 AI 학습 비서 시스템: EduMatrix 설계 및 제작',
 ]
 
-export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
+/** Skill chips, the tools that appear in the entries below */
+const SKILLS = ['TypeScript', 'Node.js', 'Next.js', 'Express', 'Fastify', 'Python', 'FastAPI', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'BullMQ', 'OpenAI API', 'Whisper', 'ONNX Runtime', 'PyTorch', 'Vitest', 'pytest', 'Docker', 'Expo']
+
+export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS, skills: SKILLS }
 
 /** The submission copy for 당근: a backend title, the 지원 동기 paragraph and the 병역·입사 line, which stays out of the public site and the repository */
-export function daangnVariant(service?: L, phone?: string): ResumeVariant {
-  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, motivation: MOTIVATION, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
+export function daangnVariant(service?: L, phone?: string, applyDate?: string): ResumeVariant {
+  return {
+    id: 'daangn',
+    role: k('백엔드 개발자', 'Backend developer'),
+    service,
+    phone,
+    applying: { field: k('Software Engineer, Backend', 'Software Engineer, Backend'), date: applyDate },
+    summary: SUMMARY,
+    motivation: MOTIVATION,
+    topAwards: TOP_AWARDS,
+    topPapers: TOP_PAPERS,
+    skills: SKILLS,
+  }
 }
