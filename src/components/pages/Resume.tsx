@@ -68,7 +68,7 @@ function Entry({ period, sub, title, tags, compact, children }: { period: string
   )
 }
 
-/** "학점 | 3.7 / 4.5" style row */
+/** "학점 | 3.76 / 4.5" style row */
 function KV({ label, children }: { label: L; children: ReactNode }) {
   const { t } = useLang()
   return (

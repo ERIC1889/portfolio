@@ -176,7 +176,7 @@ describe('archive', () => {
 
   it('states the current education', () => {
     expect(archive.education.period).toBe('2023.03–2027.02')
-    expect(archive.education.gpa).toBe('3.7 / 4.5')
+    expect(archive.education.gpa).toBe('3.76 / 4.5')
     expect(archive.education.major.ko).toContain('소프트웨어전공')
     expect(archive.education.note.ko).toContain('인지감성컴퓨팅')
   })

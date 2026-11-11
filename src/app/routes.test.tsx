@@ -211,7 +211,7 @@ describe('/resume', () => {
     expect(education.querySelector('.resume-entry-period')).toHaveTextContent('2023.03 ~ 2027.02')
     expect(education).toHaveTextContent('한신대학교')
     expect(education).toHaveTextContent('학점')
-    expect(education).toHaveTextContent('3.7 / 4.5')
+    expect(education).toHaveTextContent('3.76 / 4.5')
     expect(education).not.toHaveTextContent('TOPCIT')
     const career = sectionNamed(container, '경력')
     expect(career.querySelector('.resume-entry-period')).toHaveTextContent('2026.01 ~ 재직 중')

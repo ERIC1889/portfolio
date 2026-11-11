@@ -346,7 +346,7 @@ export const archive: Archive = {
     major: { ko: 'AI·SW대학 소프트웨어전공', en: 'Software major, College of AI·SW' },
     period: '2023.03–2027.02',
     note: { ko: '졸업 예정 · 인지감성컴퓨팅 특화전공', en: 'Expected graduation · Cognitive & Affective Computing specialization' },
-    gpa: '3.7 / 4.5',
+    gpa: '3.76 / 4.5',
   },
   certs: [{ name: k('TOPCIT 2수준', 'TOPCIT Level 2'), detail: k('2024', '2024') }],
 }

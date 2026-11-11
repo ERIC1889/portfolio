@@ -135,7 +135,7 @@ describe('home page (real content)', () => {
     expect([...record.querySelectorAll('.activity-rows > li .award-date')].map((el) => el.textContent)).toEqual(['2025.01–2026.07', '2024.12', '2026.01'])
     const rows = [...record.querySelectorAll('.exp-row')]
     expect(rows.map((row) => row.querySelector('.exp-when')?.textContent)).toEqual(['2023.03–2027.02'])
-    expect(rows[0]).toHaveTextContent('3.7 / 4.5')
+    expect(rows[0]).toHaveTextContent('3.76 / 4.5')
     expect(record).not.toHaveTextContent('Finz Labs')
     expect(record).not.toHaveTextContent('컴세바')
     expect(within(record).getByRole('link', { name: /전체 기록 보기/ })).toHaveAttribute('href', '/archive')
