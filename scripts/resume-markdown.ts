@@ -76,7 +76,6 @@ line(`**${ko(RESUME_SECTIONS.skills)}** ${variant.skills.map((s) => `\`${s}\``).
 h2(RESUME_SECTIONS.education, `${ko(UI.resumeUniversity)} ${ko(UI.resumeGraduating)}`)
 line(`**${ko(archive.education.school)}** · ${ko(archive.education.major)} — ${rangeOf(archive.education.period, ko(UI.resumeGraduating))}`)
 line(`- ${ko(UI.gpa)} | ${archive.education.gpa}`)
-line(`- ${ko(UI.resumeTrack)} | ${ko(archive.education.note).replace(/^졸업 예정 · /, '')}`)
 
 if (job) {
   h2(RESUME_SECTIONS.career, `${ko(UI.resumeTotal)} ${months}${ko(UI.resumeMonths)}`)
@@ -84,7 +83,7 @@ if (job) {
   line(`- ${ko(UI.resumeContent)} | ${ko(variant.work.content)}`)
   if (linked) line(`- ${ko(UI.resumeEnv)} | ${(linked.resumeStack ?? linked.stack).join(' · ')}`)
   line(`- ${ko(UI.resumeCareerResults)}`)
-  for (const item of job.responsibilities) line(`  - ${ko(item)}`)
+  for (const item of variant.work.results) line(`  - ${ko(item)}`)
 }
 
 h2(RESUME_SECTIONS.projects, `${own.length}개`)
@@ -101,7 +100,7 @@ own.forEach((project, i) => {
   const results = mine?.results ?? (project.results ?? []).slice(0, 3)
   const tags = [project.team, project.role].flatMap((part) => (part ? [ko(part)] : []))
   if (i > 0) line()
-  line(`### ${ko(projectTitle(project))}${project.status ? ` \`${ko(project.status)}\`` : ''} — ${project.period.replace('–', ' ~ ')}`)
+  line(`### ${ko(projectTitle(project))}${project.status && !mine?.hideStatus ? ` \`${ko(project.status)}\`` : ''} — ${project.period.replace('–', ' ~ ')}`)
   line(`${tags.join(' · ')}${repo ? ` · ${host(repo)}` : ''}`)
   line(`- ${ko(UI.resumeContent)} | ${ko(project.product ?? project.summary)}`)
   line(`- ${ko(UI.resumeEnv)} | ${(project.resumeStack ?? project.stack).join(' · ')}`)

@@ -253,7 +253,6 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
         <Section title={RESUME_SECTIONS.education} tag={`${t(UI.resumeUniversity)} ${t(UI.resumeGraduating)}`}>
           <Entry period={rangeOf(archive.education.period, t(UI.resumeGraduating))} sub={t(UI.resumeGraduating)} title={t(archive.education.school)} tags={[t(archive.education.major)]}>
             <KV label={UI.gpa}>{archive.education.gpa}</KV>
-            <KV label={UI.resumeTrack}>{t(archive.education.note).replace(/^졸업 예정 · |^Expected graduation · /, '')}</KV>
           </Entry>
         </Section>
 
@@ -268,7 +267,7 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               <KV label={UI.resumeContent}>{t(variant.work.content)}</KV>
               {linked && <KV label={UI.resumeEnv}>{(linked.resumeStack ?? linked.stack).join(' · ')}</KV>}
               <KV label={UI.resumeCareerResults}>
-                <Dashes items={job.responsibilities} />
+                <Dashes items={variant.work.results} />
               </KV>
             </Entry>
           </Section>
@@ -289,7 +288,7 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               <Entry
                 key={project.slug}
                 period={project.period.replace('–', ' ~ ')}
-                sub={project.status && t(project.status)}
+                sub={own?.hideStatus ? undefined : project.status && t(project.status)}
                 title={t(projectTitle(project))}
                 tags={[...tags, ...(repo ? [<a key="repo" href={repo} className="resume-repo">{host(repo)}</a>] : [])]}
               >

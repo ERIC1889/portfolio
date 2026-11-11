@@ -245,10 +245,10 @@ export interface ResumeVariant {
   intro: L
   /** 자기소개서 paragraphs after the opening, plain style */
   summary: L[]
-  /** The job's 내용 row, nominal style */
-  work: { content: L }
-  /** Per main-project résumé text in nominal style, keyed by slug: 문제 해결 lines and 결과 lines */
-  projects: Record<string, { solve: L[]; results: L[] }>
+  /** The job's 내용 row and its 결과 및 성과 lines, nominal style */
+  work: { content: L; results: L[] }
+  /** Per main-project résumé text in nominal style, keyed by slug: 문제 해결 lines, 결과 lines, and whether the status pill stays off */
+  projects: Record<string, { solve: L[]; results: L[]; hideStatus?: boolean }>
   /** 지원 동기 paragraphs; only the submission copy has them */
   motivation?: L[]
   /** Names of the awards listed in full; the rest are counted */
