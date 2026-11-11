@@ -6,7 +6,7 @@
 
 백엔드 중심 풀스택 개발자 허준영의 포트폴리오입니다.
 실무 경험(주식회사 Finz Labs)을 먼저 보여 주고, 대표 프로젝트(SkillPilot, Pitches, ClosetMate) → 기술 표 → AI와 일하는 방식 → 보조 프로젝트(EduMatrix, InnoView, Label Light) → 수상과 활동 → 연락 순서로 이어집니다.
-프로젝트 상세는 오버뷰 카드 → 배경 및 목적 → 주요 기능 → 시스템 아키텍처(코드로 그린 구조도) → 주요 문제 해결 사례(Problem · Analysis · Action · Result) → 결과 및 성과 → 회고 → 관련 자료 순서입니다.
+프로젝트 상세는 화면과 시연 → 배경 및 목적 → 주요 기능 → 시스템 아키텍처(역할 관점의 구조도, 코드로 그림) → 주요 문제 해결 사례(Problem · Analysis · Action · Result) → 결과 및 성과 → 회고 → 관련 자료 순서이고, 기여 범위에는 제가 한 일만 적습니다.
 그 밖의 프로젝트는 전체 기록(`/archive`)에 있습니다.
 한국어가 기본이고 영어로 바꿀 수 있으며, 밝은 화면이 기본이고 어두운 화면을 고를 수 있습니다.
 
@@ -40,7 +40,8 @@ npm run build       # 공개 보류 검사 후 next build
 ```
 src/
 ├── app/                     # 홈, /projects/[slug], /story, /archive, /resume, 404, sitemap·robots
-│   └── _lib/pages.ts        # 페이지 메타데이터와 조회 함수
+│   ├── _lib/pages.ts        # 페이지 메타데이터와 조회 함수
+│   └── resume/daangn/       # 제출용 이력서 (개발 서버에서만 열리고 운영은 404)
 ├── components/
 │   ├── home/                # 소개, 실무 경험, 대표·보조 프로젝트, 기술 표, AI와 일하는 방식, 수상과 활동, 연락
 │   ├── case/                # 프로젝트 상세: 오버뷰 카드, 목차, 구조도(ArchDiagram), PAAR 사례 카드, 수치 표
@@ -51,7 +52,9 @@ src/
 ├── content/                 # 모든 글과 데이터(한/영)와 검증 (프로젝트별 글은 content/cases/)
 └── lib/                     # 테마 초기화
 scripts/check-release.ts     # 빌드 전 공개 보류 검사
+scripts/resume-markdown.ts   # 이력서를 Markdown으로 출력
 public/media/                # 프로젝트 실제 화면(WebP)과 시연 영상(MP4)
+public/images/resume/        # 이력서 사진
 public/resume.pdf            # /resume 페이지를 A4로 인쇄한 이력서
 public/og.png                # 공유 카드 이미지
 ```
@@ -72,6 +75,7 @@ public/og.png                # 공유 카드 이미지
 | `projects.ts` · `cases/*.ts` | 프로젝트. `showcase`가 있으면 상세 페이지가 생기고 자리가 정해집니다(실무·대표·보조·그 밖의 프로젝트). 상세 페이지의 글은 `overview` · `background` · `features` · `architecture` · `cases`(PAAR) · `results` · `retro` · `material` 칸에, 실무 페이지는 `kind: 'work'`와 `duties` · `products` 칸에 있습니다. 나머지 `card`·`line`은 전체 기록에만 나옵니다 |
 | `ai.ts` | 홈 "AI와 일하는 방식" 섹션 |
 | `archive.ts` | 논문(종류·저자 순서), 수상, 활동, 경력, 기술 표, 학력 |
+| `resume.ts` | 이력서 전용 문장(자기소개서, 지원 동기, 경력·프로젝트 요약, 선별한 수상·논문·활동, 스킬) |
 | `ui.ts` | 메뉴·버튼 같은 화면 문구 |
 | `select.ts` | 상세 페이지와 이력서에 넣을 프로젝트의 순서 |
 
@@ -85,7 +89,7 @@ public/og.png                # 공유 카드 이미지
 
 화면에 나오지 않는 확인 날짜와 촬영일은 데이터에 기록으로만 남깁니다.
 
-이력서 내용을 바꾸면 `/resume` 페이지를 A4로 인쇄해 `public/resume.pdf`를 다시 만듭니다.
+이력서 내용을 바꾸면 `/resume` 페이지를 A4로 인쇄해 `public/resume.pdf`를 다시 만듭니다. 제출용 이력서는 `/resume/daangn`에서 인쇄하며, 전화번호·병역·지원일 같은 제출용 값은 `.env.local`(`RESUME_*`)에서 읽고 저장소에는 두지 않습니다. 같은 내용을 Markdown으로 뽑으려면 `npx tsx --tsconfig tsconfig.json scripts/resume-markdown.ts [daangn]`을 실행합니다.
 
 ---
 
