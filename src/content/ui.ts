@@ -243,6 +243,7 @@ export const UI = {
   resumeAwards: { ko: '수상', en: 'Awards' },
   resumeActivities: { ko: '활동', en: 'Activities' },
   resumePhotoAlt: { ko: '허준영 사진', en: 'Portrait of Heo Jun Young' },
+  resumePhotoSlot: { ko: '사진', en: 'Photo' },
   resumeMotivation: { ko: '지원 동기', en: 'Why this team' },
   resumeProducts: { ko: '맡은 제품', en: 'Products' },
   resumeCases: { ko: '문제 해결', en: 'Problem solving' },

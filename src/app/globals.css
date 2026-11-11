@@ -1281,6 +1281,13 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 10px;
 }
+.resume-photo.is-placeholder {
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--border-strong);
+  color: var(--text-2);
+  font-size: 13px;
+}
 .resume-title {
   font-size: 26px;
   font-weight: 800;
@@ -1843,11 +1850,11 @@ a:hover {
   }
   @page {
     size: A4;
-    margin: 10mm 12mm;
+    margin: 12mm 13mm;
   }
   body {
-    font-size: 10pt;
-    line-height: 1.5;
+    font-size: 11.5pt;
+    line-height: 1.7;
   }
   .site-header,
   .site-footer,
@@ -1869,7 +1876,7 @@ a:hover {
   }
   .resume-head {
     gap: 16pt;
-    padding-bottom: 7pt;
+    padding-bottom: 10pt;
   }
   .resume-photo {
     width: 30mm;
@@ -1878,14 +1885,14 @@ a:hover {
     border-radius: 6pt;
   }
   .resume-title {
-    font-size: 16.5pt;
+    font-size: 20pt;
   }
   .resume-role {
-    margin-top: 5pt;
-    font-size: 12.5pt;
+    margin-top: 7pt;
+    font-size: 15pt;
   }
   .resume-part {
-    margin-top: 8pt;
+    margin-top: 18pt;
   }
   .resume-part.is-break {
     break-before: page;
@@ -1895,97 +1902,96 @@ a:hover {
     margin-top: 0;
   }
   .resume-part > h2 {
-    margin-bottom: 5pt;
-    font-size: 13pt;
+    margin-bottom: 10pt;
+    font-size: 16pt;
     break-after: avoid;
   }
   .resume-part > h2::before {
-    font-size: 10pt;
+    font-size: 11pt;
   }
   .resume-part > h2::after {
     background: #cbd5e1;
   }
   .resume-group + .resume-group {
-    margin-top: 4pt;
+    margin-top: 11pt;
   }
   .resume-group h3 {
-    margin-bottom: 4pt;
-    font-size: 11pt;
+    margin-bottom: 6pt;
+    font-size: 12.5pt;
   }
   .resume-count {
-    font-size: 9.5pt;
+    font-size: 10.5pt;
   }
   .resume-sub {
-    margin: 16pt 0 6pt;
-    font-size: 11.5pt;
+    margin: 20pt 0 9pt;
+    font-size: 13pt;
   }
   .resume-h4 {
-    margin-top: 4pt;
-    font-size: 9.5pt;
+    margin-top: 8pt;
+    font-size: 11pt;
   }
   .resume-item ul {
-    margin-top: 2pt;
+    margin-top: 4pt;
   }
   .resume-stack {
-    margin-top: 3pt;
+    margin-top: 5pt;
   }
   .resume-prose p {
-    line-height: 1.5;
+    line-height: 1.8;
   }
   .resume-prose p + p {
-    margin-top: 3pt;
+    margin-top: 8pt;
   }
   .resume-motivation {
-    margin-top: 6pt;
+    margin-top: 11pt;
   }
   .resume-part ul:not(.resume-chips) > li {
-    line-height: 1.45;
+    line-height: 1.65;
   }
   .resume-part li + li {
-    margin-top: 1pt;
+    margin-top: 4pt;
   }
   .resume-rows > li {
-    line-height: 1.3;
+    line-height: 1.55;
   }
   .resume-activities {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1pt 12pt;
-    font-size: 9.5pt;
+    gap: 3pt 14pt;
   }
   .resume-activities > li + li {
     margin-top: 0;
   }
   .resume-facts {
-    gap: 4pt 20pt;
+    gap: 5pt 20pt;
   }
   .resume-facts > div {
-    grid-template-columns: 56pt minmax(0, 1fr);
+    grid-template-columns: 64pt minmax(0, 1fr);
     gap: 6pt;
   }
   .resume-skills > div {
     grid-template-columns: 84pt minmax(0, 1fr);
     gap: 8pt;
-    padding: 2pt 0;
+    padding: 4pt 0;
   }
   .resume-chips {
     gap: 4pt 5pt;
   }
   .resume-chips > li {
-    padding: 0 7pt;
+    padding: 0 8pt;
     border-color: #cbd5e1;
-    font-size: 9pt;
-    line-height: 1.55;
+    font-size: 10.5pt;
+    line-height: 1.7;
   }
   .resume-item + .resume-item {
-    margin-top: 6pt;
+    margin-top: 14pt;
   }
   .resume-cases tr,
   .resume-item-head {
     break-inside: avoid;
   }
   .resume-item-head {
-    font-size: 11.5pt;
+    font-size: 13.5pt;
     break-after: avoid;
   }
   .resume-period,
@@ -1993,40 +1999,45 @@ a:hover {
   .resume-meta,
   .resume-links,
   .resume-stack {
-    font-size: 9.5pt;
+    font-size: 10.5pt;
   }
   .resume-product {
-    margin-top: 4pt;
+    margin-top: 6pt;
   }
   .resume-products {
-    margin-top: 4pt;
-    line-height: 1.5;
+    margin-top: 6pt;
+    line-height: 1.6;
   }
   .resume-products-label {
-    font-size: 9.5pt;
+    font-size: 10.5pt;
   }
   .resume-case-line {
-    margin-top: 4pt;
-    font-size: 9.5pt;
-    line-height: 1.5;
+    margin-top: 6pt;
+    font-size: 11pt;
+    line-height: 1.7;
   }
   .resume-cases {
-    margin-top: 3pt;
-    font-size: 9pt;
-    line-height: 1.4;
+    margin-top: 5pt;
+    font-size: 10.5pt;
+    line-height: 1.6;
   }
   .resume-cases th,
   .resume-cases td {
-    padding: 2pt 5pt;
+    padding: 4pt 6pt;
     border-bottom: 1px solid #e5e7eb;
   }
   .resume-cases thead th {
-    font-size: 8.5pt;
+    font-size: 9.5pt;
     border-bottom-color: #cbd5e1;
   }
   .resume-status {
     border-color: #cbd5e1;
-    font-size: 8.5pt;
+    font-size: 9.5pt;
+  }
+  .resume-photo.is-placeholder {
+    border: 1px dashed #94a3b8;
+    color: #64748b;
+    font-size: 10pt;
   }
 }
 

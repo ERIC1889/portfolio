@@ -191,7 +191,13 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               {t(variant.role ?? profile.role)} <span className="resume-name">{t(profile.name)}</span>
             </h1>
           </div>
-          {variant.photo && <img className="resume-photo" src={variant.photo} alt={t(UI.resumePhotoAlt)} width={96} height={128} />}
+          {variant.photo ? (
+            <img className="resume-photo" src={variant.photo} alt={t(UI.resumePhotoAlt)} width={96} height={128} />
+          ) : (
+            <div className="resume-photo is-placeholder" aria-hidden="true">
+              {t(UI.resumePhotoSlot)}
+            </div>
+          )}
         </header>
 
         <Part title={RESUME_SECTIONS.profile}>
