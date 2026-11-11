@@ -296,7 +296,7 @@ export function Resume({ profile, archive, projects, siteUrl, variant }: Props) 
               ))}
             </ul>
           </div>
-          <div className="resume-group">
+          <div className="resume-group resume-papers">
             <h3>{t(UI.resumePaperList)}</h3>
             <p className="resume-meta">
               {t({

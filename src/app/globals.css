@@ -1897,11 +1897,11 @@ a:hover {
   }
   @page {
     size: A4;
-    margin: 12mm 14mm;
+    margin: 13mm 15mm;
   }
   body {
-    font-size: 11pt;
-    line-height: 1.55;
+    font-size: 11.5pt;
+    line-height: 1.65;
   }
   .site-header,
   .site-footer,
@@ -1923,7 +1923,7 @@ a:hover {
   }
   .resume-head {
     gap: 18pt;
-    padding-bottom: 12pt;
+    padding-bottom: 14pt;
   }
   .resume-photo {
     width: 30mm;
@@ -1944,56 +1944,59 @@ a:hover {
     font-size: 16pt;
   }
   .resume-part {
-    margin-top: 14pt;
+    margin-top: 30pt;
   }
   .resume-part.is-break {
     margin-top: 0;
     break-before: page;
   }
   .resume-part > h2 {
-    margin-bottom: 7pt;
-    font-size: 16.5pt;
+    gap: 10pt;
+    margin-bottom: 14pt;
+    padding-bottom: 6pt;
+    border-bottom: 1.5px solid #111827;
+    font-size: 17pt;
     break-after: avoid;
   }
   .resume-part > h2::before {
     font-size: 12pt;
   }
   .resume-part > h2::after {
-    background: #cbd5e1;
+    display: none;
   }
   .resume-group + .resume-group {
-    margin-top: 14pt;
+    margin-top: 20pt;
   }
   .resume-group h3 {
     margin-bottom: 8pt;
-    font-size: 13.5pt;
+    font-size: 13pt;
     break-after: avoid;
   }
   .resume-prose p {
-    line-height: 1.8;
+    line-height: 1.85;
   }
   .resume-prose p + p {
-    margin-top: 8pt;
+    margin-top: 10pt;
   }
   .resume-motivation {
     margin-top: 16pt;
   }
   .resume-part ul:not(.resume-chips) > li {
-    line-height: 1.5;
+    line-height: 1.6;
   }
   .resume-part li + li {
-    margin-top: 3pt;
+    margin-top: 4pt;
   }
   .resume-facts {
-    gap: 8pt 24pt;
+    gap: 9pt 24pt;
   }
   .resume-facts > div {
     grid-template-columns: 66pt minmax(0, 1fr);
     gap: 8pt;
   }
   .resume-item + .resume-item {
-    margin-top: 12pt;
-    padding-top: 11pt;
+    margin-top: 18pt;
+    padding-top: 16pt;
     border-top: 1px solid #e5e7eb;
   }
   .resume-item-head {
@@ -2011,33 +2014,33 @@ a:hover {
     font-size: 10pt;
   }
   .resume-kv {
-    margin-top: 8pt;
+    margin-top: 10pt;
   }
   .resume-kv-row {
-    grid-template-columns: 62pt minmax(0, 1fr);
-    gap: 10pt;
-    padding: 3pt 0;
+    grid-template-columns: 64pt minmax(0, 1fr);
+    gap: 12pt;
+    padding: 6pt 0;
     border-top: 1px dashed #e5e7eb;
   }
   .resume-kv-row dt {
     font-size: 11.5pt;
   }
   .resume-rows > li {
-    padding: 4pt 0;
+    padding: 6pt 0;
     border-bottom: 1px solid #e5e7eb;
-    line-height: 1.45;
+    line-height: 1.5;
     break-inside: avoid;
   }
   .resume-activities {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 18pt;
-    font-size: 10.5pt;
+    gap: 0 20pt;
+    font-size: 11pt;
   }
   .resume-activities > li {
     display: block;
-    padding: 3pt 0;
-    line-height: 1.4;
+    padding: 5pt 0;
+    line-height: 1.45;
   }
   .resume-activities .resume-date {
     margin-left: 5pt;
@@ -2050,8 +2053,12 @@ a:hover {
     display: none;
   }
   .resume-more {
-    margin-top: 12pt;
+    margin-top: 14pt;
     font-size: 14.5pt;
+    break-before: avoid;
+  }
+  .resume-papers {
+    break-inside: avoid;
   }
 }
 
