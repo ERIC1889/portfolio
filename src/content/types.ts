@@ -244,8 +244,6 @@ export interface ResumeVariant {
   summary: L[]
   /** 지원 동기 paragraphs; only the submission copy has them */
   motivation?: L[]
-  /** Bare tool lists; what each tool was used for is in the bullets below them */
-  skills: { area: L; items: string[] }[]
   /** Names of the awards listed in full; the rest are counted */
   topAwards: string[]
   /** Titles of the papers listed in full; the rest are counted */

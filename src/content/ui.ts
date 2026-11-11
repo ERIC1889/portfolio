@@ -254,6 +254,13 @@ export const UI = {
   resumeOutcome: { ko: '결과', en: 'Result' },
   resumeSupporting: { ko: '보조 프로젝트', en: 'Supporting projects' },
   resumeMore: { ko: '외', en: 'and' },
+  resumeContent: { ko: '내용', en: 'What' },
+  resumeEnv: { ko: '개발 환경', en: 'Stack' },
+  resumeSolve: { ko: '문제 해결', en: 'Problem solving' },
+  resumeResult: { ko: '결과', en: 'Results' },
+  resumeCareerResults: { ko: '결과 및 성과', en: 'Results' },
+  resumeActivityList: { ko: '활동', en: 'Activities' },
+  resumePaperList: { ko: '논문', en: 'Papers' },
 } satisfies Record<string, L>
 
 /** Section titles of the résumé, in the order a Korean developer résumé is read: 제목·직무명 in the header, then these */
@@ -261,10 +268,8 @@ export const RESUME_SECTIONS = {
   profile: { ko: '인적 사항', en: 'Profile' },
   education: { ko: '학력 및 교육 사항', en: 'Education' },
   career: { ko: '경력', en: 'Experience' },
-  projects: { ko: '프로젝트', en: 'Projects' },
+  projects: { ko: '대표 프로젝트', en: 'Main projects' },
   awards: { ko: '수상', en: 'Awards' },
-  papers: { ko: '논문', en: 'Papers' },
-  activities: { ko: '활동 및 교육', en: 'Activities and training' },
-  skills: { ko: '스킬', en: 'Skills' },
+  experiences: { ko: '경험 및 활동', en: 'Experience and activities' },
   intro: { ko: '자기 소개서', en: 'Personal statement' },
 } satisfies Record<string, L>

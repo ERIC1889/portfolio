@@ -1521,7 +1521,43 @@ a:hover {
   color: var(--text-2);
 }
 .resume-more {
-  margin-top: 6px;
+  margin-top: 10px;
+  font-size: 17px;
+}
+.resume-more strong {
+  color: var(--accent);
+}
+.resume-kv {
+  display: grid;
+  margin-top: 8px;
+}
+.resume-kv-row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px dashed var(--border);
+}
+.resume-kv-row:first-child {
+  border-top: 0;
+}
+.resume-kv-row dt {
+  padding-top: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.resume-kv-row .resume-bullets {
+  margin-top: 0;
+}
+.resume-rows > li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.resume-item + .resume-item {
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
 }
 .resume-cases {
   width: 100%;
@@ -1861,11 +1897,11 @@ a:hover {
   }
   @page {
     size: A4;
-    margin: 12mm 13mm;
+    margin: 12mm 14mm;
   }
   body {
-    font-size: 11.5pt;
-    line-height: 1.7;
+    font-size: 11pt;
+    line-height: 1.55;
   }
   .site-header,
   .site-footer,
@@ -1886,8 +1922,8 @@ a:hover {
     text-decoration: none;
   }
   .resume-head {
-    gap: 16pt;
-    padding-bottom: 10pt;
+    gap: 18pt;
+    padding-bottom: 12pt;
   }
   .resume-photo {
     width: 30mm;
@@ -1895,57 +1931,43 @@ a:hover {
     border-color: #cbd5e1;
     border-radius: 6pt;
   }
+  .resume-photo.is-placeholder {
+    border: 1px dashed #94a3b8;
+    color: #64748b;
+    font-size: 11pt;
+  }
   .resume-title {
-    font-size: 20pt;
+    font-size: 21pt;
   }
   .resume-role {
-    margin-top: 7pt;
-    font-size: 15pt;
+    margin-top: 8pt;
+    font-size: 16pt;
   }
   .resume-part {
-    margin-top: 18pt;
+    margin-top: 14pt;
   }
   .resume-part.is-break {
+    margin-top: 0;
     break-before: page;
   }
-  .resume-part.is-break:first-of-type,
-  .resume-part.is-break + .resume-part.is-break {
-    margin-top: 0;
-  }
   .resume-part > h2 {
-    margin-bottom: 10pt;
-    font-size: 16pt;
+    margin-bottom: 7pt;
+    font-size: 16.5pt;
     break-after: avoid;
   }
   .resume-part > h2::before {
-    font-size: 11pt;
+    font-size: 12pt;
   }
   .resume-part > h2::after {
     background: #cbd5e1;
   }
   .resume-group + .resume-group {
-    margin-top: 11pt;
+    margin-top: 14pt;
   }
   .resume-group h3 {
-    margin-bottom: 6pt;
-    font-size: 12.5pt;
-  }
-  .resume-count {
-    font-size: 10.5pt;
-  }
-  .resume-sub {
-    margin: 20pt 0 9pt;
-    font-size: 13pt;
-  }
-  .resume-h4 {
-    margin-top: 8pt;
-    font-size: 11pt;
-  }
-  .resume-item ul {
-    margin-top: 4pt;
-  }
-  .resume-stack {
-    margin-top: 5pt;
+    margin-bottom: 8pt;
+    font-size: 13.5pt;
+    break-after: avoid;
   }
   .resume-prose p {
     line-height: 1.8;
@@ -1954,103 +1976,82 @@ a:hover {
     margin-top: 8pt;
   }
   .resume-motivation {
-    margin-top: 11pt;
+    margin-top: 16pt;
   }
   .resume-part ul:not(.resume-chips) > li {
-    line-height: 1.65;
+    line-height: 1.5;
   }
   .resume-part li + li {
-    margin-top: 4pt;
-  }
-  .resume-rows > li {
-    line-height: 1.55;
-  }
-  .resume-activities > li + li {
-    margin-top: 7pt;
-  }
-  .resume-activity-desc {
-    margin-top: 1pt;
-    font-size: 10.5pt;
-  }
-  .resume-activities .resume-item-head {
-    font-size: 11.5pt;
+    margin-top: 3pt;
   }
   .resume-facts {
-    gap: 5pt 20pt;
+    gap: 8pt 24pt;
   }
   .resume-facts > div {
-    grid-template-columns: 64pt minmax(0, 1fr);
-    gap: 6pt;
-  }
-  .resume-skills > div {
-    grid-template-columns: 84pt minmax(0, 1fr);
+    grid-template-columns: 66pt minmax(0, 1fr);
     gap: 8pt;
-    padding: 4pt 0;
-  }
-  .resume-chips {
-    gap: 4pt 5pt;
-  }
-  .resume-chips > li {
-    padding: 0 8pt;
-    border-color: #cbd5e1;
-    font-size: 10.5pt;
-    line-height: 1.7;
   }
   .resume-item + .resume-item {
-    margin-top: 14pt;
+    margin-top: 12pt;
+    padding-top: 11pt;
+    border-top: 1px solid #e5e7eb;
   }
-  .resume-cases tr,
   .resume-item-head {
+    font-size: 14.5pt;
     break-inside: avoid;
-  }
-  .resume-item-head {
-    font-size: 13.5pt;
     break-after: avoid;
   }
   .resume-period,
   .resume-date,
-  .resume-meta,
-  .resume-links,
-  .resume-stack {
-    font-size: 10.5pt;
-  }
-  .resume-product {
-    margin-top: 6pt;
-  }
-  .resume-products {
-    margin-top: 6pt;
-    line-height: 1.6;
-  }
-  .resume-products-label {
-    font-size: 10.5pt;
-  }
-  .resume-case-line {
-    margin-top: 6pt;
-    font-size: 11pt;
-    line-height: 1.7;
-  }
-  .resume-cases {
-    margin-top: 5pt;
-    font-size: 10.5pt;
-    line-height: 1.6;
-  }
-  .resume-cases th,
-  .resume-cases td {
-    padding: 4pt 6pt;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  .resume-cases thead th {
-    font-size: 9.5pt;
-    border-bottom-color: #cbd5e1;
+  .resume-meta {
+    font-size: 11.5pt;
   }
   .resume-status {
     border-color: #cbd5e1;
-    font-size: 9.5pt;
-  }
-  .resume-photo.is-placeholder {
-    border: 1px dashed #94a3b8;
-    color: #64748b;
     font-size: 10pt;
+  }
+  .resume-kv {
+    margin-top: 8pt;
+  }
+  .resume-kv-row {
+    grid-template-columns: 62pt minmax(0, 1fr);
+    gap: 10pt;
+    padding: 3pt 0;
+    border-top: 1px dashed #e5e7eb;
+  }
+  .resume-kv-row dt {
+    font-size: 11.5pt;
+  }
+  .resume-rows > li {
+    padding: 4pt 0;
+    border-bottom: 1px solid #e5e7eb;
+    line-height: 1.45;
+    break-inside: avoid;
+  }
+  .resume-activities {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 18pt;
+    font-size: 10.5pt;
+  }
+  .resume-activities > li {
+    display: block;
+    padding: 3pt 0;
+    line-height: 1.4;
+  }
+  .resume-activities .resume-date {
+    margin-left: 5pt;
+    white-space: nowrap;
+  }
+  .resume-activities > li + li {
+    margin-top: 0;
+  }
+  .resume-activities .resume-activity-org {
+    display: none;
+  }
+  .resume-more {
+    margin-top: 12pt;
+    font-size: 14.5pt;
   }
 }
 

@@ -26,14 +26,6 @@ const MOTIVATION: L[] = [
   ),
 ]
 
-/** Bare tool lists; every tool appears in a bullet above or below with what it was used for */
-const SKILLS: ResumeVariant['skills'] = [
-  { area: k('백엔드', 'Backend'), items: ['TypeScript', 'Node.js (Next.js · Express 5 · Fastify)', 'Python (FastAPI)'] },
-  { area: k('데이터·비동기', 'Data · async'), items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'BullMQ', 'node-cron'] },
-  { area: k('AI', 'AI'), items: ['OpenAI API', 'Whisper', 'ONNX Runtime', 'PyTorch'] },
-  { area: k('도구', 'Tools'), items: ['Vitest', 'pytest', 'GitHub Actions', 'Vercel', 'Expo', 'Docker'] },
-]
-
 /** Five awards shown in full, newest first on the page; the other eight are counted */
 const TOP_AWARDS = [
   '2026년 AI-SW중심대학 AI·블록체인 비즈니스모델 경진대회 우수상',
@@ -50,9 +42,9 @@ const TOP_PAPERS = [
   '개인 맞춤형 AI 학습 비서 시스템: EduMatrix 설계 및 제작',
 ]
 
-export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, skills: SKILLS, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
+export const RESUME_SITE: ResumeVariant = { id: 'site', summary: SUMMARY, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
 
 /** The submission copy for 당근: a backend title, the 지원 동기 paragraph and the 병역·입사 line, which stays out of the public site and the repository */
 export function daangnVariant(service?: L, phone?: string): ResumeVariant {
-  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, motivation: MOTIVATION, skills: SKILLS, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
+  return { id: 'daangn', role: k('백엔드 개발자', 'Backend developer'), service, phone, summary: SUMMARY, motivation: MOTIVATION, topAwards: TOP_AWARDS, topPapers: TOP_PAPERS }
 }
