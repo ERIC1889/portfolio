@@ -1263,8 +1263,23 @@ a:hover {
   counter-reset: resume;
 }
 .resume-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
   padding-bottom: 20px;
   border-bottom: 2px solid var(--text);
+}
+.resume-head-text {
+  min-width: 0;
+}
+.resume-photo {
+  flex: none;
+  width: 96px;
+  height: 128px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 10px;
 }
 .resume-title {
   font-size: 26px;
@@ -1285,14 +1300,14 @@ a:hover {
 }
 .resume-part {
   counter-increment: resume;
-  margin-top: 30px;
+  margin-top: 34px;
 }
 .resume-part > h2 {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
-  font-size: 16px;
+  margin-bottom: 14px;
+  font-size: 17px;
   font-weight: 700;
 }
 .resume-part > h2::before {
@@ -1310,14 +1325,45 @@ a:hover {
   background: var(--border-strong);
 }
 .resume-group + .resume-group {
-  margin-top: 14px;
+  margin-top: 18px;
 }
 .resume-group h3 {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.resume-count {
+  margin-left: 6px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.resume-sub {
+  margin: 26px 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.resume-h4 {
+  margin-top: 10px;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--text-2);
+}
+.resume-prose p {
+  line-height: 1.8;
+  word-break: keep-all;
+}
+.resume-prose p + p {
+  margin-top: 10px;
+}
+.resume-motivation {
+  margin-top: 18px;
 }
 .resume-part ul:not(.resume-chips) {
   list-style: none;
@@ -1360,9 +1406,6 @@ a:hover {
 .resume-facts a {
   color: var(--text);
 }
-.resume-summary > li {
-  font-size: 1.02em;
-}
 .resume-skills > div {
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
@@ -1390,14 +1433,14 @@ a:hover {
   line-height: 1.7;
 }
 .resume-item + .resume-item {
-  margin-top: 18px;
+  margin-top: 22px;
 }
 .resume-item-head {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   align-items: baseline;
-  font-size: 1.04em;
+  font-size: 1.06em;
 }
 .resume-item-title {
   display: inline-flex;
@@ -1428,11 +1471,32 @@ a:hover {
   font-size: 13px;
   color: var(--text-2);
 }
+.resume-product {
+  margin-top: 8px;
+  line-height: 1.65;
+}
+.resume-products {
+  margin-top: 6px;
+  line-height: 1.65;
+}
+.resume-products-label {
+  margin-right: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.resume-case-line {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
 .resume-item ul {
   margin-top: 6px;
 }
 .resume-stack {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 13px;
   color: var(--text-2);
 }
@@ -1440,6 +1504,36 @@ a:hover {
   display: flex;
   justify-content: space-between;
   gap: 12px;
+}
+.resume-cases {
+  width: 100%;
+  margin-top: 6px;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.resume-cases th,
+.resume-cases td {
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  word-break: keep-all;
+}
+.resume-cases thead th {
+  padding-top: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  border-bottom-color: var(--border-strong);
+}
+.resume-cases tbody th {
+  width: 22%;
+  font-weight: 600;
+}
+.resume-cases td {
+  width: 26%;
 }
 
 @media (max-width: 1040px) {
@@ -1706,6 +1800,25 @@ a:hover {
     flex-direction: column;
     gap: 0;
   }
+  .resume-head {
+    flex-direction: column-reverse;
+  }
+  .resume-cases thead {
+    display: none;
+  }
+  .resume-cases tr,
+  .resume-cases th,
+  .resume-cases td {
+    display: block;
+    width: auto;
+  }
+  .resume-cases td {
+    padding-top: 2px;
+    border-bottom: 0;
+  }
+  .resume-cases tr {
+    border-bottom: 1px solid var(--border);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1730,10 +1843,10 @@ a:hover {
   }
   @page {
     size: A4;
-    margin: 12mm 14mm;
+    margin: 10mm 12mm;
   }
   body {
-    font-size: 10.2pt;
+    font-size: 10pt;
     line-height: 1.5;
   }
   .site-header,
@@ -1755,84 +1868,165 @@ a:hover {
     text-decoration: none;
   }
   .resume-head {
-    padding-bottom: 9pt;
+    gap: 16pt;
+    padding-bottom: 7pt;
+  }
+  .resume-photo {
+    width: 30mm;
+    height: 40mm;
+    border-color: #cbd5e1;
+    border-radius: 6pt;
   }
   .resume-title {
-    font-size: 15.5pt;
+    font-size: 16.5pt;
   }
   .resume-role {
     margin-top: 5pt;
-    font-size: 12pt;
+    font-size: 12.5pt;
   }
   .resume-part {
-    margin-top: 12pt;
+    margin-top: 8pt;
+  }
+  .resume-part.is-break {
+    break-before: page;
+  }
+  .resume-part.is-break:first-of-type,
+  .resume-part.is-break + .resume-part.is-break {
+    margin-top: 0;
   }
   .resume-part > h2 {
-    margin-bottom: 6pt;
-    font-size: 11pt;
+    margin-bottom: 5pt;
+    font-size: 13pt;
     break-after: avoid;
   }
   .resume-part > h2::before {
-    font-size: 8.5pt;
+    font-size: 10pt;
   }
   .resume-part > h2::after {
     background: #cbd5e1;
   }
   .resume-group + .resume-group {
-    margin-top: 7pt;
+    margin-top: 4pt;
   }
   .resume-group h3 {
-    margin-bottom: 2pt;
-    font-size: 9pt;
+    margin-bottom: 4pt;
+    font-size: 11pt;
   }
-  .resume-part ul:not(.resume-chips) > li {
-    line-height: 1.55;
+  .resume-count {
+    font-size: 9.5pt;
   }
-  .resume-part li + li {
+  .resume-sub {
+    margin: 16pt 0 6pt;
+    font-size: 11.5pt;
+  }
+  .resume-h4 {
+    margin-top: 4pt;
+    font-size: 9.5pt;
+  }
+  .resume-item ul {
     margin-top: 2pt;
   }
+  .resume-stack {
+    margin-top: 3pt;
+  }
+  .resume-prose p {
+    line-height: 1.5;
+  }
+  .resume-prose p + p {
+    margin-top: 3pt;
+  }
+  .resume-motivation {
+    margin-top: 6pt;
+  }
+  .resume-part ul:not(.resume-chips) > li {
+    line-height: 1.45;
+  }
+  .resume-part li + li {
+    margin-top: 1pt;
+  }
+  .resume-rows > li {
+    line-height: 1.3;
+  }
+  .resume-activities {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1pt 12pt;
+    font-size: 9.5pt;
+  }
+  .resume-activities > li + li {
+    margin-top: 0;
+  }
   .resume-facts {
-    gap: 2pt 18pt;
+    gap: 4pt 20pt;
   }
   .resume-facts > div {
-    grid-template-columns: 52pt minmax(0, 1fr);
+    grid-template-columns: 56pt minmax(0, 1fr);
     gap: 6pt;
   }
   .resume-skills > div {
-    grid-template-columns: 78pt minmax(0, 1fr);
+    grid-template-columns: 84pt minmax(0, 1fr);
     gap: 8pt;
     padding: 2pt 0;
   }
   .resume-chips {
-    gap: 3pt 4pt;
+    gap: 4pt 5pt;
   }
   .resume-chips > li {
-    padding: 0 6pt;
+    padding: 0 7pt;
     border-color: #cbd5e1;
-    font-size: 8.6pt;
-    line-height: 1.6;
+    font-size: 9pt;
+    line-height: 1.55;
   }
   .resume-item + .resume-item {
-    margin-top: 8pt;
+    margin-top: 6pt;
   }
-  .resume-item,
-  .resume-skills > div,
-  .resume-group {
+  .resume-cases tr,
+  .resume-item-head {
     break-inside: avoid;
   }
   .resume-item-head {
-    font-size: 10.4pt;
+    font-size: 11.5pt;
+    break-after: avoid;
   }
   .resume-period,
   .resume-date,
   .resume-meta,
   .resume-links,
   .resume-stack {
-    font-size: 8.8pt;
+    font-size: 9.5pt;
+  }
+  .resume-product {
+    margin-top: 4pt;
+  }
+  .resume-products {
+    margin-top: 4pt;
+    line-height: 1.5;
+  }
+  .resume-products-label {
+    font-size: 9.5pt;
+  }
+  .resume-case-line {
+    margin-top: 4pt;
+    font-size: 9.5pt;
+    line-height: 1.5;
+  }
+  .resume-cases {
+    margin-top: 3pt;
+    font-size: 9pt;
+    line-height: 1.4;
+  }
+  .resume-cases th,
+  .resume-cases td {
+    padding: 2pt 5pt;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .resume-cases thead th {
+    font-size: 8.5pt;
+    border-bottom-color: #cbd5e1;
   }
   .resume-status {
     border-color: #cbd5e1;
-    font-size: 8pt;
+    font-size: 8.5pt;
   }
 }
 

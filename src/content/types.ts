@@ -238,12 +238,15 @@ export interface ResumeVariant {
   service?: L
   /** Phone number; only the submission copy has it, read from the environment, never in the repository */
   phone?: string
+  /** Portrait path under public/; the page passes it only when the file exists on disk, and the file stays out of the repository */
+  photo?: string
+  /** 자기 소개 paragraphs that follow the site's own intro paragraph */
   summary: L[]
+  /** 지원 동기 paragraphs; only the submission copy has them */
+  motivation?: L[]
   /** Bare tool lists; what each tool was used for is in the bullets below them */
   skills: { area: L; items: string[] }[]
-  /** Titles of the conference papers listed in full; the rest are counted */
-  topPapers: string[]
-  /** Names of archive activities shown under 기타 경력 및 경험 */
+  /** Names of archive activities shown under 기타 경력 및 경험 instead of 직무 관련 활동 */
   otherExperiences: string[]
 }
 

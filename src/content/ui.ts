@@ -242,6 +242,16 @@ export const UI = {
   resumeService: { ko: '병역 · 입사', en: 'Service · start' },
   resumeAwards: { ko: '수상', en: 'Awards' },
   resumeActivities: { ko: '활동', en: 'Activities' },
+  resumePhotoAlt: { ko: '허준영 사진', en: 'Portrait of Heo Jun Young' },
+  resumeMotivation: { ko: '지원 동기', en: 'Why this team' },
+  resumeProducts: { ko: '맡은 제품', en: 'Products' },
+  resumeCases: { ko: '문제 해결', en: 'Problem solving' },
+  resumeResults: { ko: '성과', en: 'Results' },
+  resumeCase: { ko: '사례', en: 'Case' },
+  resumeProblem: { ko: '문제', en: 'Problem' },
+  resumeAction: { ko: '해결', en: 'Action' },
+  resumeOutcome: { ko: '결과', en: 'Result' },
+  resumeSupporting: { ko: '보조 프로젝트', en: 'Supporting projects' },
 } satisfies Record<string, L>
 
 /** Section titles of the résumé, in the order a Korean developer résumé is read: 제목·직무명 in the header, then these */
